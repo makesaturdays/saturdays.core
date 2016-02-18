@@ -3,6 +3,7 @@ environment
 data
 mongodb
 *.pem
+config/environment_dev.py
 /node_modules
 /.sass-cache
 /Design
