@@ -9,8 +9,8 @@ window.Saturdays =
 
 
 	settings:
-		api: "http://127.0.0.1:5000/"
-		# api: "https://api.makesaturdays.com/"
+		# api: "http://127.0.0.1:5000/"
+		api: "https://dev.makesaturdays.com/"
 
 
 
