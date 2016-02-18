@@ -1,0 +1,49 @@
+
+// #COLORS
+
+$white: #fff;
+$black: #020202;
+$red: #ED143D;
+$blue: #2656A7;
+$grey: #FAFAFA;
+
+$primary: $black;
+$highlight: $red;
+
+
+// #FONTS
+
+$body_font: "Cardo", serif;
+$headings_font: "Karla", sans-serif;
+$alternate_font: "Karla", sans-serif;
+
+
+// #LAYOUT
+
+$base_size: 14px;
+$huge_size: 48px;
+$big_size: 36px;
+$bigish_size: 28px;
+$medium_size: 20px;
+$line_height: 1.5;
+$vertical_rythm: $medium_size;
+$letter_spacing: 0;
+$border_radius: 0;
+
+$number_of_columns: 12;
+$gutter: 2.5rem;
+
+
+// #ANIMATIONS
+
+$fast: 0.333s;
+$slow: 0.666s;
+$very_slow: 1.666s;
+
+
+// #BREAKPOINTS
+
+$small: "all and (max-device-width:800px), all and (max-width:800px)";
+$medium: "all and (max-device-width:1100px), all and (max-width:1100px)";
+$breakpoints: "medium" $medium, "small" $small;
+

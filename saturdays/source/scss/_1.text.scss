@@ -1,0 +1,234 @@
+
+
+html {
+	font: #{$base_size}/#{$line_height} $body_font;
+}
+
+body {
+	color: $primary;
+	background: $white;
+
+	width: 100%;
+	overflow-x: hidden;
+}
+
+::selection {
+	color: $white;
+	background: $highlight;
+}
+
+
+
+// #HEADINGS
+h1, h2, h3, h4, h5, h6 {
+	font-family: $headings_font;
+	font-weight: normal;
+
+	color: inherit;
+	
+	margin: 0 0 $vertical_rythm;
+
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+	h1 {
+		font-size: $huge_size;
+
+		&.h1--normal {
+			font-size: $base_size;
+			font-family: $body_font;
+		}
+	}
+
+	h2 {
+		font-size: $big_size;
+	}
+
+	h3 {
+		font-size: $medium_size;
+		font-weight: bold;
+	}
+
+	h4 {
+		font-size: $medium_size;
+		font-weight: normal;
+	}
+	
+	h5, h6 {
+		font-size: $base_size;
+	}
+
+
+// #PARAGRAPHS
+
+p {
+	margin: 0 0 $vertical_rythm;
+
+	&.p--huge {
+		font-size: $huge_size;
+		@extend .medium_bottom;
+
+		@media #{$small} {
+			font-size: $huge_size*0.75;
+		}
+	}
+
+	&.p--medium,
+	.medium & {
+		font-size: $medium_size;
+	}
+
+	&:last-child {
+		margin-bottom: 0;
+	}
+
+	img {
+		padding: $vertical_rythm 0;
+	}
+}
+
+
+// #LINKS
+
+a {
+	position: relative;
+	outline: none;
+
+	color: inherit;
+	text-decoration: none;
+
+	@include transition(color $fast, opacity $fast);
+
+	&.a--underline,
+	.underline_links & {
+		border-bottom: 1px solid;
+	}
+
+	&.a--huge_underline {
+		border-bottom: 3px solid;
+	}
+
+
+	&:focus,
+	&:hover {
+		color: $highlight;
+		opacity: 1 !important;
+	}
+
+	&:active {
+		top: 1px;
+	}
+
+	&.a--alternate {
+		font-family: $alternate_font;
+	}
+}
+
+
+
+// #LISTS 
+ol,
+ul {
+	margin: 0 0 $vertical_rythm;
+	padding-left: $gutter;
+}
+
+
+// #HR
+
+hr {
+	border: none;
+	border-top: 1px solid $primary;
+
+	width: 100%;
+	margin: $vertical_rythm*2 auto;
+
+	.black_back & {
+		border-color: $white;
+	}
+}
+
+
+// #BLOCKQUOTE
+blockquote {
+	font-style: italic;
+
+	position: relative;
+	margin: 0 0 $vertical_rythm;
+	padding: 0 $vertical_rythm;
+	
+
+	&:before,
+	&:after {
+		position: absolute;
+		font-size: $medium_size*1.5;
+	}
+
+	&:before {
+		content: "“";
+		top: 0;
+		left: 0;
+	}
+}
+
+// #SUP & #SUB
+
+sup,
+sub {
+	font-size: 0.5em;
+}
+
+
+// #COLORS
+.white { color: $white; }
+
+
+// #MISC
+
+i.material-icons {
+	font-size: 1em;
+	vertical-align: middle;
+}
+
+iframe {
+	display: block;
+}
+
+small,
+.small {
+	font-size: 0.75em;
+}
+
+b,
+strong,
+.strong {
+	font-weight: bold;
+	font-family: $alternate_font;
+	font-style: normal;
+}
+
+em,
+.em {
+	font-style: italic;
+	font-weight: normal;
+}
+
+.capitalize {
+	text-transform: capitalize;
+}
+
+.alternate_first_line {
+
+	&:first-line {
+		font-style: italic;
+	}
+}
+
+.spaced {
+	margin: 0 1em;
+}
+
+

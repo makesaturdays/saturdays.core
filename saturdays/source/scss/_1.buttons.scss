@@ -1,0 +1,60 @@
+
+// #BUTTONS
+
+button,
+.button {
+	cursor: pointer;
+	
+	font-family: $headings_font;
+	font-size: 1rem;
+	line-height: 1;
+	text-align: center;
+	text-decoration: none;
+	color: $white;
+	background: $black;
+	
+	position: relative;
+	padding: $vertical_rythm/2 $vertical_rythm;
+	border: 1px solid transparent;
+
+	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
+
+
+	&:hover,
+	&:focus {
+		background: $highlight;
+	}
+
+	&:active {
+		background: fade-out($highlight, 0.5);
+	}
+
+
+	&.button--icon {
+		color: $primary;
+		background: transparent;
+
+		padding: $vertical_rythm;
+
+		&:hover,
+		&:focus {
+			color: $highlight;
+		}
+
+		&:active {
+			color: fade-out($highlight, 0.5);
+		}
+
+		i {
+			font-size: $big_size;
+
+			@media #{$small} {
+				font-size: $big_size*0.75;
+			}
+		}
+	}
+}
+
+
+
+

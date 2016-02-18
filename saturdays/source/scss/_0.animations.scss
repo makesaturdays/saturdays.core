@@ -1,0 +1,56 @@
+
+// #ANIMATIONS
+
+@mixin transform($transform...) {
+	-ms-transform: $transform;
+	-webkit-transform: $transform;
+	transform: $transform;
+}
+
+@mixin translate($x, $y) {
+	@include transform(translate($x, $y));
+}
+
+@mixin transition($transition...) {
+	-ms-transition: $transition;
+	-webkit-transition: $transition;
+	transition: $transition;
+}
+
+@mixin transformer($duration: $fast) {
+	transition: transform $duration;
+	-ms-transition: -ms-transform $duration;
+	-webkit-transition: -webkit-transform $duration;
+}
+
+@mixin shadow($shadow) {
+	-webkit-box-shadow: $shadow;
+	box-shadow: $shadow;
+}
+
+@mixin filter($filter) {
+	-webkit-filter: $filter;
+	filter: $filter;
+}
+
+@mixin linear_gradient_background($color1, $color2, $angle: 0deg) {
+	background: -webkit-linear-gradient($angle, $color1, $color2);
+	background: -o-linear-gradient($angle, $color1, $color2);
+	background: -moz-linear-gradient($angle, $color1, $color2);
+	background: linear-gradient($angle, $color1, $color2);
+}
+
+.fades_out {
+	visibility: visible;
+	opacity: 1;
+
+	@include transition(opacity $slow, visibility 0s);
+		
+	
+	&.fade_out {
+		visibility: hidden;
+		opacity: 0;
+
+		@include transition(opacity $slow, visibility 0s linear $slow);	
+	}
+}

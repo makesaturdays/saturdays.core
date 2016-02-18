@@ -1,0 +1,11 @@
+
+<div class="grid grid--guttered">
+	{{#each answers}}
+	<div class="col" style="opacity: {{divide this ../highest_count}};">
+		<h2 class="inline_block flat_bottom strong">
+			{{@key}}
+		</h2>
+		<small class="strong">{{this}}</small>
+	</div>
+	{{/each}}
+</div>

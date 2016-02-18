@@ -1,0 +1,48 @@
+
+.twitter-typeahead {
+	width: 100%;
+}
+
+	.tt-hint {
+		color: $grey;
+	}
+
+	.tt-menu {
+		background: $white;
+
+		width: 100%;
+		margin-top: $vertical_rythm/2;
+	}
+
+		.tt-suggestion {
+			cursor: pointer;
+			font-size: $big_size/2;
+			font-family: $alternate_font;
+
+			width: 100%;
+			padding: $vertical_rythm/2 $vertical_rythm/4;
+
+			&:hover,
+			&:focus,
+			&.tt-cursor {
+				color: $white;
+				background: $black;
+			}
+		}
+
+			.suggestion__image {
+				display: inline-block;
+				width: $big_size;
+				vertical-align: middle;
+			}
+
+			.suggestion__name {
+				display: inline-block;
+				// vertical-align: middle;
+				// line-height: 1;
+
+				margin-left: $vertical_rythm;
+			}
+
+
+

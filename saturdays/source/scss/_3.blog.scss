@@ -1,0 +1,39 @@
+
+@mixin gradient_overlay($height: 66%) {
+
+	&:after {
+		content: "";
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 1;
+
+		height: $height;
+		width: 100%;
+
+		pointer-events: none;
+		@include linear_gradient_background(fade-out($white, 0.25), fade-out($white, 1), 0deg);
+	}
+}
+
+
+.blog {
+	@include gradient_overlay();
+}
+
+	.blog__post {
+		padding: $vertical_rythm*4 0;
+	}
+
+		.blog__post__content {
+			position: relative;
+			overflow: hidden;
+
+			max-height: 9999px;
+
+			@include transition(max-height $very_slow);
+
+			&.blog__post__content--minimized {
+				max-height: $vertical_rythm*20;
+			}
+		}

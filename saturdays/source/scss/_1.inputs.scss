@@ -1,0 +1,132 @@
+
+
+
+// #LABELS
+
+label,
+.label {
+	display: block;
+
+	font-family: $alternate_font;
+	font-weight: normal;
+
+	.input_box & {
+		position: absolute;
+		top: $vertical_rythm/2;
+		left: $vertical_rythm;
+		z-index: 1;
+	}
+}
+
+
+// #INPUTS
+
+.input_box {
+	position: relative;
+	margin-bottom: $vertical_rythm;
+
+	@include transition(opacity $fast);
+
+	&.input_box--faded {
+		opacity: 0.2;
+
+		.form__bottom_button {
+			opacity: 0;
+		}
+	}
+
+	&.input_box--hidden {
+		opacity: 0;
+	}
+}
+
+
+input[type="text"],
+input[type="password"],
+input[type="url"],
+input[type="email"],
+input[type="tel"],
+input[type="number"],
+input[type="search"],
+input[type="file"],
+input[type="date"],
+input[type="datetime-local"],
+optgroup,
+select,
+textarea,
+.input {
+	position: relative;
+	width: 100%;
+
+	font-family: $alternate_font;
+	font-size: $medium_size;
+	font-weight: bold;
+	line-height: 1;
+
+	background: $white;
+	padding: $vertical_rythm;
+	border: 1px solid transparent;
+	border-radius: 0;
+
+
+	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
+
+	&:active {
+		background: fade-out($white, 0.5);
+	}
+
+	&:disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+
+
+	.input_box & {
+		padding: $vertical_rythm*2.5 $vertical_rythm $vertical_rythm*1.5;
+	}
+
+}
+
+
+
+
+textarea {
+	height: $vertical_rythm*8;
+	padding: $vertical_rythm;
+	line-height: $line_height;
+
+	&.textarea--one_line {
+		padding: $vertical_rythm/2 $vertical_rythm;
+		height: auto;
+	}
+}
+
+
+select {
+	cursor: pointer;
+}
+
+input[type="search"] {
+	box-sizing: border-box;
+}
+
+input[type="file"] {
+	display: block;
+}
+
+
+
+
+
+
+:focus {
+	outline: none;
+	-moz-outline-style: none;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder,
+input:-moz-placeholder, textarea:-moz-placeholder {
+	color: $grey;
+}
+
+

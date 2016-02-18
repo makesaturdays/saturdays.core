@@ -1,0 +1,61 @@
+
+{% extends "layout.html" %}
+
+{% block header %}
+	<h1 class="h1--normal">{{pieces.metadata.title|safe}} <span class="spaced">&mdash;</span> {{pieces.metadata.sub_title}}</h1>
+{% endblock %}
+
+
+{% block main %}
+	<div class="js-survey">
+
+
+		<article class="main__center fades_out fade_out hide js-questions">
+			<p class="p--huge text_center">{{pieces.survey.form_label}}</p>
+
+			<form action="#" class="form--that_fades js-form">
+				<div class="input_box js-input">
+					<label for="q1">{{pieces.survey.question_1}}</label>
+					<input type="text" name="q1" id="q1" class="js-question js-typeahead">
+
+					<button type="submit" class="button--icon form__bottom_button">
+						<i class="material-icons">keyboard_return</i>
+					</button>
+				</div>
+
+				<div class="input_box input_box--hidden js-input">
+					<label for="q2">{{pieces.survey.question_2}}</label>
+					<input type="text" name="q2" id="q2" class="js-question js-typeahead">
+
+					<button type="submit" class="button--icon form__bottom_button">
+						<i class="material-icons">keyboard_return</i>
+					</button>
+				</div>
+
+			</form>
+		</article>
+
+
+		<article class="max_width fades_out fade_out hide js-results">
+			<p class="p--huge">
+				{{pieces.metadata.description|safe}} <a href="/lists/blog/posts/intro" class="a--huge_underline">{{pieces.survey.learn_more}}</a> {{pieces.survey.or}} <a href="/" class="a--huge_underline js-reset">{{pieces.survey.reset_survey}}</a>.
+			</p>
+
+			<p>{{pieces.survey.items_need}}</p>
+
+			<div class="big_bottom js-answers">
+				
+			</div>
+		</article>
+	</div>
+{% endblock %}
+
+
+{% block footer %}
+	<div class="padded">
+		<a href="/lists/blog/posts/intro" class="a--alternate">About</a>
+		<span class="spaced"></span>
+		<a href="/lists/blog" class="a--alternate">Blog</a>
+	</div>
+{% endblock %}
+

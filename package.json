@@ -1,0 +1,22 @@
+{
+  "name": "makesaturdays",
+  "version": "0.2.0",
+  "description": "",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-bg-shell": "^2.3.1",
+    "grunt-contrib-coffee": "^0.13.0",
+    "grunt-contrib-handlebars": "^0.11.0",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-open": "^0.2.3",
+    "grunt-sass": "^1.0.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Phillip Malboeuf <phillip.malboeuf@gmail.com>"
+}

@@ -1,0 +1,18 @@
+
+
+$video_ratio: 50%;
+
+.video_container {
+	position: relative;
+	padding-top: $video_ratio;
+
+	iframe,
+	video {
+		position: absolute;
+		left: 0;
+		top: 0;
+
+		height: 100%;
+		width: 100%;
+	}
+}
