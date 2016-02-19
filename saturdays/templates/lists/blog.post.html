@@ -8,10 +8,10 @@
 {% block body_classes %}blog{% endblock %}
 
 {% block main %}
-	<article class="blog__post js-post" data-post-id="{{post._id}}">
+	<article class="blog__post js-post" data-id="{{post._id}}">
 		<div class="grid grid--guttered">
 			<div class="col col--3of12 col--small--12of12">
-				<h3>{{post.title}}</h3>
+				<h3 data-title>{{post.title}}</h3>
 				{% for author in post.authors %}
 				<p class="p--medium hide_on_small">
 					{{pieces.blog.by}} <a href="/lists/blog/authors/{{author.handle}}">{{author.name}}</a><br>
@@ -28,15 +28,15 @@
 			</div>
 
 			<div class="col col--7of12 col--small--12of12">
-				<div class="medium alternate_first_line underline_links blog__post__content">
+				<div class="medium alternate_first_line underline_links blog__post__content" data-content-key="body">
 					{{post.body|safe}}
 				</div>
 			</div>
 
 			<div class="col col--2of12 col--small--12of12">
 				<p class="p--medium">
-					{{post.published_date|date}}<br>
-					{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}" class="em capitalize">{{tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+					<span data-published-date>{{post.published_date|date}}</span><br>
+					<span data-tags>{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}" class="em capitalize comma_seperated" data-tag>{{tag}}</a>{% endfor %}</span>
 				</p>
 			</div>
 		</div>

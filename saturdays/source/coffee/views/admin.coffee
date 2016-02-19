@@ -11,13 +11,10 @@ class Saturdays.Views.Admin extends Saturdays.View
 
 
 	initialize: ->
-
 		super()
 
 
-
 	render: ->
-
 		super()
 
 

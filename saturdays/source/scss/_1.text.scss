@@ -220,6 +220,24 @@ em,
 	text-transform: capitalize;
 }
 
+.slash_seperated,
+.comma_seperated {
+
+	&:after {
+		content: "/";
+	}
+
+	&:last-child:after {
+		content: none;
+	}
+}
+
+.comma_seperated {
+	&:after {
+		content: ", ";
+	}
+}
+
 .alternate_first_line {
 
 	&:first-line {

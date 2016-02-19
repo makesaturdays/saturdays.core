@@ -47,7 +47,6 @@ with app.app_context():
 		@classmethod
 		def define_routes(cls):
 			for route in cls.routes:
-				route['methods'].append('OPTIONS')
 				rule = Rule(cls.endpoint + route['route'], endpoint=cls.endpoint + '/' + route['view_function'], methods=route['methods'], strict_slashes=False)
 				rule.route = route
 

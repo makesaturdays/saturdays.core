@@ -1,5 +1,5 @@
 
-from flask import request, abort
+from flask import request, abort, make_response
 from saturdays import app
 
 from bson.objectid import ObjectId
@@ -9,7 +9,10 @@ import hashlib
 
 @app.before_request
 def verify_headers():
-	if request.method != 'OPTIONS' and hasattr(request.url_rule, 'route'):
+	if request.method == 'OPTIONS':
+		return make_response()
+
+	elif hasattr(request.url_rule, 'route'):
 		try:
 			request.requires_admin = request.url_rule.route['requires_admin']
 		except KeyError:

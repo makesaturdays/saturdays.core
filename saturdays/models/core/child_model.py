@@ -17,10 +17,10 @@ with app.app_context():
 
 
 		@classmethod
-		def list(cls, parent_id, document_filter={}, limit=0, skip=0, sort=None):
+		def list(cls, parent_id, limit=0, skip=0, sort=None):
 
 			try:
-				return [cls.postprocess(document) for document in request.parent[cls.list_name]]
+				return [cls.postprocess(document) for document in cls.parent.get(parent_id)[cls.list_name]]
 
 			except KeyError:
 				return []
@@ -29,7 +29,7 @@ with app.app_context():
 
 
 		@classmethod
-		def count(cls, parent_id, document_filter={}):
+		def count(cls, parent_id):
 
 			try:
 				return len(cls.parent.get(parent_id)[cls.list_name])
@@ -49,12 +49,16 @@ with app.app_context():
 				for child in parent[cls.list_name]:
 					if ObjectId.is_valid(_id):
 						if child['_id'] == ObjectId(_id):
-							child['parent'] = parent
+							child['parent'] = parent.copy()
+							del child['parent'][cls.list_name]
+							
 							return cls.postprocess(child)
 
 					else:
 						if child[cls.alternate_index] == _id:
-							child['parent'] = parent
+							child['parent'] = parent.copy()
+							del child['parent'][cls.list_name]
+							
 							return cls.postprocess(child)
 
 				abort(404)

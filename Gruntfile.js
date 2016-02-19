@@ -26,8 +26,8 @@ module.exports = function(grunt) {
             var name = "";
             filePath = filePath.split(".");
             filePath = filePath[0].split("/");
-            name += filePath[2];
-            for (var i = 3; i < filePath.length; i++) {
+            name += filePath[3];
+            for (var i = 4; i < filePath.length; i++) {
                 name += "/" + filePath[i];
             };
             return name;
@@ -80,6 +80,9 @@ module.exports = function(grunt) {
           host: 'localhost',
           port: 9000
         }
+      },
+      html: {
+        files: ['saturdays/templates/**/*.html']
       },
       handlebars: {
         files: ['saturdays/source/hbs/**/*.hbs'],

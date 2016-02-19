@@ -51,6 +51,7 @@ class Saturdays.Model extends Backbone.Model
 
 	set_secret_header: (options)->
 		options.headers = {} unless options.headers?
+		options.headers['Accept'] = 'application/json'
 		options.headers['X-Session-Secret'] = Saturdays.cookies.get("session_secret")
 
 		return options

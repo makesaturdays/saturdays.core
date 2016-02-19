@@ -7,7 +7,7 @@
     Views: {},
     Routers: {},
     settings: {
-      api: "https://dev.makesaturdays.com/"
+      api: "http://127.0.0.1:5000/"
     },
     init: function(settings) {
       if (settings != null) {
@@ -15,6 +15,7 @@
       }
       this.session = new Saturdays.Models.Session();
       this.user = new Saturdays.Models.User();
+      this.admin_view = new Saturdays.Views.Admin();
       this.router = new Saturdays.Routers.Router();
       return Backbone.history.start({
         pushState: true
@@ -202,6 +203,7 @@
       if (options.headers == null) {
         options.headers = {};
       }
+      options.headers['Accept'] = 'application/json';
       options.headers['X-Session-Secret'] = Saturdays.cookies.get("session_secret");
       return options;
     };
@@ -643,19 +645,29 @@
     }
 
     Editable.prototype.initialize = function() {
+      this.events["click .js-save_edit"] = "save_edit";
+      this.model.set({
+        _id: this.$el.attr("data-id")
+      });
+      this.model.fetch();
       return Editable.__super__.initialize.call(this);
     };
 
     Editable.prototype.render = function() {
       _.extend(this.data, {
-        is_editable: Saturdays.session.has("user_id")
+        is_editable: Saturdays.session.has("user_id"),
+        model: this.model.toJSON()
       });
       Editable.__super__.render.call(this);
       if (this.data.is_editable) {
+        this.$el.find("[data-title]").attr("contenteditable", "true");
+        this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
       }
       return this;
     };
+
+    Editable.prototype.save_edit = function(e) {};
 
     return Editable;
 
@@ -955,8 +967,12 @@
     Router.prototype.blog = function(route) {
       return $(".js-post").each((function(_this) {
         return function(index, post) {
+          var model;
+          model = new Saturdays.Models.ListPost();
+          model.urlRoot = Saturdays.settings.api + "lists/56bccdb3f5f9e91c18cc17c0/posts";
           return _this.views.push(new Saturdays.Views.Post({
-            el: post
+            el: post,
+            model: model
           }));
         };
       })(this));

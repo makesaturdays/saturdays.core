@@ -9,8 +9,8 @@ window.Saturdays =
 
 
 	settings:
-		# api: "http://127.0.0.1:5000/"
-		api: "https://dev.makesaturdays.com/"
+		api: "http://127.0.0.1:5000/"
+		# api: "https://dev.makesaturdays.com/"
 
 
 
@@ -20,7 +20,7 @@ window.Saturdays =
 		@session = new Saturdays.Models.Session()
 		@user = new Saturdays.Models.User()
 		
-		# @admin_view = new Saturdays.Views.Admin()
+		@admin_view = new Saturdays.Views.Admin()
 
 		@router = new Saturdays.Routers.Router()
 		Backbone.history.start

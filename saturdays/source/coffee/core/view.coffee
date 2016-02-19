@@ -21,11 +21,9 @@ class Saturdays.View extends Backbone.View
 
 
 	render: ->
-
 		_.extend @data, 
 			session: Saturdays.session.toJSON() if Saturdays.session?
 			user: Saturdays.user.toJSON() if Saturdays.user?
-
 
 		if @templates?
 			html = ""
@@ -43,3 +41,5 @@ class Saturdays.View extends Backbone.View
 		this.delegateEvents()
 
 		this
+
+
