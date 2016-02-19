@@ -61,10 +61,12 @@ with app.app_context():
 
 
 								response = {
-									template['response_key']: response.copy()
+									template['response_key']: response.copy(),
+									'pieces': Piece._values(),
+									'debugging': app.config['DEBUG']
 								}
-								response['pieces'] = Piece._values()
 								response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
+
 
 								try:
 									template['template'] = template['template'].replace('<route>', request.view_args['_id'])
