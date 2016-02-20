@@ -14,10 +14,10 @@
 
 
         <meta name="twitter:card" value="summary">
-        <meta property="og:title" content="{{pieces.metadata.title}} – {{pieces.metadata.sub_title}}">
+        <meta property="og:title" content="{% block title %}{{pieces.metadata.title|striptags}} – {{pieces.metadata.sub_title|striptags}}{% endblock %}">
         <meta property="og:type" content="website"/>
-        <meta property="og:description" content="{{pieces.metadata.description}}">
-        <meta property="og:site_name" content="{{pieces.metadata.title}}">
+        <meta property="og:description" content="{% block description %}{{pieces.metadata.description}}{% endblock %}">
+        <meta property="og:site_name" content="{{pieces.metadata.title|striptags}}">
         <meta name="google-site-verification" content="Hpbj_9sT1yAFbzMn89rc-tOP0JwUfyrFPi_2omZaEY8" />
 
         <link rel="icon" type="image/png" href="/build/images/favicon/favicon-32x32.png" sizes="32x32" />
