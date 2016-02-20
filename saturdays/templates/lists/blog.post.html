@@ -5,7 +5,7 @@
 	{{post.title|striptags}} - Blog - {{super()}}
 {% endblock %}
 
-{% block body_classes %}blog{% endblock %}
+{% block body_classes %}blog {{post.route}}{% endblock %}
 
 {% block main %}
 	<article class="blog__post js-post" data-id="{{post._id}}">
