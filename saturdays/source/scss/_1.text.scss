@@ -182,6 +182,18 @@ blockquote {
 	}
 }
 
+// #PRE & #CODE
+
+code {
+	font-family: monospace;
+	font-size: $base_size;
+
+	display: inline-block;
+	padding: $vertical_rythm/8;
+	background: $grey;
+}
+
+
 // #SUP & #SUB
 
 sup,
