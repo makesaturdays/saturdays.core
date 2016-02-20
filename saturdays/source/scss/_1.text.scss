@@ -132,17 +132,31 @@ a {
 // #LISTS 
 ol,
 ul {
+	font-family: $alternate_font;
 	margin: 0 0 $vertical_rythm;
-	padding-left: $gutter;
+	padding-left: $gutter*1.25;
 
 	.medium & {
 		font-size: $medium_size*0.8;
 	}
 }
 
+ol {
+	position: relative;
+	list-style: none;
+	counter-reset: numberedlist;
+
 	li {
-		font-family: $alternate_font;
+
+		&:before {
+			counter-increment: numberedlist;
+			content: counter(numberedlist) ". ";
+
+			position: absolute;
+			left: $gutter/2;
+		}
 	}
+}
 
 
 // #HR
