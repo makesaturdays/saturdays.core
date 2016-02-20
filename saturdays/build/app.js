@@ -644,8 +644,11 @@
       return Editable.__super__.constructor.apply(this, arguments);
     }
 
+    Editable.prototype.edit_admin_template = templates["admin/edit_admin"];
+
     Editable.prototype.initialize = function() {
       this.events["click .js-save_edit"] = "save_edit";
+      this.listenTo(this.model, "sync", this.render);
       this.model.set({
         _id: this.$el.attr("data-id")
       });
@@ -663,11 +666,25 @@
         this.$el.find("[data-title]").attr("contenteditable", "true");
         this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
+        this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
+        this.delegateEvents();
       }
       return this;
     };
 
-    Editable.prototype.save_edit = function(e) {};
+    Editable.prototype.save_edit = function(e) {
+      this.model.set({
+        is_online: this.$el.find("[name='is_online']")[0].checked,
+        title: this.$el.find("[data-title]").html(),
+        published_date: this.$el.find("[data-published-date]").html()
+      });
+      this.$el.find("[data-content-key]").each((function(_this) {
+        return function(index, content) {
+          return _this.model.attributes.content[content.getAttribute("data-content-key")].value = content.getAttribute("data-is-markdown") != null ? toMarkdown(content.innerHTML) : content.innerHTML;
+        };
+      })(this));
+      return this.model.save();
+    };
 
     return Editable;
 

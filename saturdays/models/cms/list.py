@@ -148,6 +148,13 @@ with app.app_context():
 					except KeyError:
 						pass
 
+					if hasattr(request, 'current_session') and request.current_session['is_admin']:
+						posts.append(post)
+
+					elif post['is_online']:
+						posts.append(post)
+						
+
 				for (key, value) in tag_counts.items():
 					document['tags'].append({'name':key, 'count':value})
 					if value > document['highest_tag_count']:

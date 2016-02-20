@@ -25,12 +25,16 @@
 				<p class="p--medium hide_on_small">&amp;</p>
 				{% endif %}
 				{% endfor %}
+
+				<div data-admin></div>
 			</div>
 
 			<div class="col col--7of12 col--small--12of12">
-				<div class="medium alternate_first_line underline_links blog__post__content" data-content-key="body">
+				<div class="medium alternate_first_line underline_links blog__post__content" data-content-key="body" data-is-markdown>
 					{{post.body|safe}}
 				</div>
+
+				
 			</div>
 
 			<div class="col col--2of12 col--small--12of12">

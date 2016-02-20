@@ -16,6 +16,11 @@ label,
 		left: $vertical_rythm;
 		z-index: 1;
 	}
+
+	input[type="checkbox"] + &,
+	input[type="radio"] + & {
+		display: inline-block;
+	}
 }
 
 

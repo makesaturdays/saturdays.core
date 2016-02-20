@@ -5,9 +5,14 @@ module.exports = function(grunt) {
 
 
     bgShell: {
-      python: {
+      install: {
+        cmd: 'pyvenv '+ __dirname +'/environment && source '+ __dirname +'/environment/bin/activate && pip install -r requirements.txt',
+        bg: false,
+        stdout: false
+      },
+      server: {
         cmd: 'source '+ __dirname +'/environment/bin/activate && python server.py',
-        bg: true,
+        bg: false,
         stdout: false
       }
     },
@@ -115,8 +120,10 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-open');
 
-  grunt.registerTask('start', ['bgShell', 'handlebars', 'sass', 'coffee', 'open', 'watch']);
-  grunt.registerTask('default', ['handlebars', 'sass', 'coffee', 'open', 'watch']);
+  grunt.registerTask('install', ['bgShell:install']);
+  grunt.registerTask('start', ['bgShell:server']);
+  grunt.registerTask('compilers', ['handlebars', 'sass', 'coffee', 'open', 'watch']);
+  grunt.registerTask('default', ['compilers']);
 
 };
 

@@ -3,7 +3,7 @@ from flask import Flask
 from flask.ext.mail import Mail
 from flask.ext.pymongo import PyMongo
 
-from celery import Celery
+# from celery import Celery
 
 
 
@@ -11,8 +11,8 @@ app = Flask(__name__, static_folder='build')
 
 
 app.config.from_object('config.environment_default')
-# app.config.from_object('config.environment_dev')
-app.config.from_object('config.schedule')
+app.config.from_object('config.environment_dev')
+# app.config.from_object('config.schedule')
 
 
 app.mail = Mail(app)
