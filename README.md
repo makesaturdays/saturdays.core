@@ -1,7 +1,7 @@
 An integral part of __Make__ Saturdays is transparency. Transparency with funding and pricing, with the design and research processes, and with code as well. Evidently, every software project out there makes use of open sourced code from different communities across the Internet. We'd like to contribute as well and every line of code we write will be available here on GitHub.
 
 ## saturdays.core
-The [saturdays.core](https://github.com/makesaturdays/saturdays.core) project is the code repository that powers our [makesaturdays.com](https://makesaturdays.com). Our intentions with this is to build a solid foundation for developping e-commerce businesses efficiently without the constraints of current cloud hosted platforms. We're open to all comments and [contributions](https://github.com/makesaturdays/saturdays.core/pulls), as well as [bug reports](https://github.com/makesaturdays/saturdays.core/issues) of course.
+The [saturdays.core](https://github.com/makesaturdays/saturdays.core) project is the code repository that powers [makesaturdays.com](https://makesaturdays.com). Our intentions with this is to build a solid foundation for developping e-commerce businesses efficiently without the constraints of current cloud hosted platforms. We're open to all comments and [contributions](https://github.com/makesaturdays/saturdays.core/pulls), as well as [bug reports](https://github.com/makesaturdays/saturdays.core/issues) of course.
 
 It's design and development will work towards these basic principles:
 
