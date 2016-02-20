@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
     bgShell: {
       install: {
-        cmd: 'pyvenv '+ __dirname +'/environment && source '+ __dirname +'/environment/bin/activate && pip install -r requirements.txt',
+        cmd: 'pyvenv-3.5 '+ __dirname +'/environment && source '+ __dirname +'/environment/bin/activate && pip install -r requirements.txt',
         bg: false,
         stdout: false
       },
