@@ -5,6 +5,10 @@
 	{{post.title|striptags}} - Blog - {{super()}}
 {% endblock %}
 
+{% block og_title %}
+	{{post.title|striptags}} - Blog - {{super()}}
+{% endblock %}
+
 {% block body_classes %}blog {{post.route}}{% endblock %}
 
 {% block main %}

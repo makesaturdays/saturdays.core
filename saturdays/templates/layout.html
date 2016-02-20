@@ -10,13 +10,13 @@
             {{pieces.metadata.title|striptags}} – {{pieces.metadata.sub_title|striptags}}
         {% endblock %}
         </title>
-        <meta name="description" content="{{pieces.metadata.description}}">
+        <meta name="description" content="{% block description %}{{pieces.metadata.description|striptags}}{% endblock %}">
 
 
         <meta name="twitter:card" value="summary">
-        <meta property="og:title" content="{% block title %}{{pieces.metadata.title|striptags}} – {{pieces.metadata.sub_title|striptags}}{% endblock %}">
+        <meta property="og:title" content="{% block og_title %}{{pieces.metadata.title|striptags}} – {{pieces.metadata.sub_title|striptags}}{% endblock %}">
         <meta property="og:type" content="website"/>
-        <meta property="og:description" content="{% block description %}{{pieces.metadata.description}}{% endblock %}">
+        <meta property="og:description" content="{% block og_description %}{{pieces.metadata.description}}{% endblock %}">
         <meta property="og:site_name" content="{{pieces.metadata.title|striptags}}">
         <meta name="google-site-verification" content="Hpbj_9sT1yAFbzMn89rc-tOP0JwUfyrFPi_2omZaEY8" />
 
