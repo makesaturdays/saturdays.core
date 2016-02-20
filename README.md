@@ -24,15 +24,22 @@ To run the saturdays.core source code locally on your own machines, you'll need 
 
 After [cloning this repository](https://github.com/makesaturdays/saturdays.core) run the following commandes in your terminal to install the required dependencies:
 
-1. cd /path/to/the/repository
-2. npm install
-3. grunt install
+1. `cd path/to/your/repository`
+2. `npm install`
+3. `grunt install`
 
 Once everything's successfully installed, run the following in seperate terminal windows to power a local server and livereloadable Sass, CoffeeScript and Handlebars compile tasks:
 
-1. grunt start
-2. grunt compilers
+1. `grunt start`
+2. `grunt compilers`
 
 A good place to start is at the [saturdays/templates](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/templates) layout files and look into the [saturdays/source/scss](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/source/scss) styles and [saturdays/source/coffee](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/source/coffee) scripts folders.
+
+### Setting up MongoDB
+
+By default, saturdays.core attempts to connect to local MongoDB database with the URI `mongodb://127.0.0.1:27017/database`. However we recommend setting up a secure MongoDB deployment with [compose.io](https://compose.io/mongodb/), and once you have a new URI, you may update your environment variable by running the commands:
+
+1. `source environment/bin/activate`
+2. `export MONGO_URI='mongodb://127.0.0.1:27017/database'`
 
 Don't hesitate to get in touch if there's anything we can help with: makesaturdays@gmail.com
