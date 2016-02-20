@@ -134,7 +134,15 @@ ol,
 ul {
 	margin: 0 0 $vertical_rythm;
 	padding-left: $gutter;
+
+	.medium & {
+		font-size: $medium_size*0.8;
+	}
 }
+
+	li {
+		font-family: $alternate_font;
+	}
 
 
 // #HR
