@@ -11,6 +11,8 @@ class Saturdays.Views.Admin extends Saturdays.View
 
 
 	initialize: ->
+		$(document).on("keyup", this.check_escape)
+
 		super()
 
 
@@ -33,5 +35,11 @@ class Saturdays.Views.Admin extends Saturdays.View
 		e.preventDefault()
 
 		Saturdays.session.logout()
+
+
+	check_escape: (e)=>
+		if e.keyCode == 27
+			this.$el.find(".js-login_box").toggleClass "hide"
+
 
 

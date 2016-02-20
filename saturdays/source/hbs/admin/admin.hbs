@@ -1,5 +1,5 @@
 
-<div class="padded white_back">
+<div class="padded white_back js-login_box {{#unless session.user_id}}hide{{/unless}}">
 	{{#if session.user_id}}
 	<button class="js-logout">{{pieces.admin.logout}}</button>
 	{{else}}
