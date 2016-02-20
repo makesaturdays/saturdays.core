@@ -744,8 +744,14 @@
     };
 
     Admin.prototype.check_escape = function(e) {
+      var login_box;
       if (e.keyCode === 27) {
-        return this.$el.find(".js-login_box").toggleClass("hide");
+        login_box = this.$el.find(".js-login_box");
+        if (login_box.hasClass("hide")) {
+          return login_box.removeClass("hide");
+        } else {
+          return Saturdays.session.logout();
+        }
       }
     };
 

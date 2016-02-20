@@ -32,14 +32,21 @@ class Saturdays.Views.Admin extends Saturdays.View
 
 
 	logout: (e)->
-		e.preventDefault()
+		e.preventDefault() 
 
 		Saturdays.session.logout()
 
 
 	check_escape: (e)=>
 		if e.keyCode == 27
-			this.$el.find(".js-login_box").toggleClass "hide"
+			login_box = this.$el.find(".js-login_box")
+			if login_box.hasClass "hide"
+				login_box.removeClass "hide"
+
+			else
+				Saturdays.session.logout()
+			
+			
 
 
 
