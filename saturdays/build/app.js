@@ -673,14 +673,21 @@
     };
 
     Editable.prototype.save_edit = function(e) {
+      var value;
       this.model.set({
         is_online: this.$el.find("[name='is_online']")[0].checked,
         title: this.$el.find("[data-title]").html(),
         published_date: this.$el.find("[data-published-date]").html()
       });
+      value = "";
       this.$el.find("[data-content-key]").each((function(_this) {
         return function(index, content) {
-          return _this.model.attributes.content[content.getAttribute("data-content-key")].value = content.getAttribute("data-is-markdown") != null ? toMarkdown(content.innerHTML) : content.innerHTML;
+          value = content.innerHTML;
+          if (content.getAttribute("data-is-markdown") != null) {
+            value = toMarkdown(content.innerHTML);
+            content.innerHTML = markdown.toHTML(value);
+          }
+          return _this.model.attributes.content[content.getAttribute("data-content-key")].value = value;
         };
       })(this));
       return this.model.save();
