@@ -7,7 +7,7 @@
     Views: {},
     Routers: {},
     settings: {
-      api: "http://127.0.0.1:5000/"
+      api: "https://makesaturdays.com/"
     },
     init: function(settings) {
       if (settings != null) {
