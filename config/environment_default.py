@@ -2,13 +2,15 @@ import os
 
 # DEBUG
 DEBUG = 					os.getenv('DEBUG', True)
-if DEBUG == "False":
+if DEBUG.lower() == "true":
+	DEBUG = True
+
+elif DEBUG.lower() == "false":
 	DEBUG = False
 
 
 # MONGODB				 
 MONGO_URI = 				os.getenv('MONGO_URI', 'mongodb://127.0.0.1:27017/database')
-MONGO_DBNAME =				os.getenv('MONGO_DBNAME', 'database')
 
 
 # STRIPE
