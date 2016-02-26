@@ -1,11 +1,11 @@
 import os
 
 # DEBUG
-DEBUG = 					os.getenv('DEBUG', True)
-if DEBUG.lower() == "true":
+DEBUG = os.getenv('DEBUG', 'True')
+if DEBUG.lower() == 'true':
 	DEBUG = True
 
-elif DEBUG.lower() == "false":
+elif DEBUG.lower() == 'false':
 	DEBUG = False
 
 

@@ -6,21 +6,34 @@ from saturdays.models.cms.piece import Piece
 from flask import request, abort
 from flask import render_template, json
 
+from werkzeug.contrib.cache import SimpleCache
+
 import os
 
 
 
 def page():
-	response = {}
-	response['pieces'] = Piece._values()
-	response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
+	cached_template = app.caches['/pages'].get(request.path)
+	if cached_template is None or app.config['DEBUG']:
+		response = {
+			'pieces': Piece._values(),
+			'debugging': app.config['DEBUG']
+		}
+		response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
 
 
-	if request.path == '/':
-		request.path = '/index' 
-	return render_template('pages' + request.path + '.html', **response)
+		if request.path == '/':
+			request.path = '/index' 
+
+		render = render_template('pages' + request.path + '.html', **response)
+		app.caches['/pages'].set(request.path, render, timeout=0)
+		return render
+
+	else:
+		return cached_template
 
 
+app.caches['/pages'] = SimpleCache()
 for file in os.listdir(os.getcwd()+'/saturdays/templates/pages'):
 	
 

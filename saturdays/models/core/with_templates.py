@@ -49,8 +49,8 @@ with app.app_context():
 					return to_json(response)
 
 				else:
-					cached_template = app.caches[cls.endpoint].get(request.path) if not app.config['DEBUG'] else None
-					if cached_template is None:
+					cached_template = app.caches[cls.endpoint].get(request.path)
+					if cached_template is None or app.config['DEBUG']:
 						for template in cls.templates:
 							if template['view_function'] == request.url_rule.route['view_function']:
 
