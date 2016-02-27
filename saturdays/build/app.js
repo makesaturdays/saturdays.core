@@ -646,8 +646,14 @@
 
     Editable.prototype.edit_admin_template = templates["admin/edit_admin"];
 
+    Editable.prototype.tag_input_template = templates["admin/tag_input"];
+
+    Editable.prototype.tag_template = templates["admin/tag"];
+
     Editable.prototype.initialize = function() {
       this.events["click .js-save_edit"] = "save_edit";
+      this.events["keypress [name='tag_input']"] = "input_tag";
+      this.events["blur [name='tag_input']"] = "blur_tag";
       this.listenTo(this.model, "sync", this.render);
       this.model.set({
         _id: this.$el.attr("data-id")
@@ -666,6 +672,8 @@
         this.$el.find("[data-title]").attr("contenteditable", "true");
         this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
+        this.$el.find("[data-tag]").attr("contenteditable", "true");
+        this.$el.find("[data-tag-input]").html(this.tag_input_template(this.data));
         this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
         this.delegateEvents();
       }
@@ -673,24 +681,65 @@
     };
 
     Editable.prototype.save_edit = function(e) {
-      var value;
+      var tags, value;
       this.model.set({
         is_online: this.$el.find("[name='is_online']")[0].checked,
         title: this.$el.find("[data-title]").html(),
         published_date: this.$el.find("[data-published-date]").html()
       });
+      tags = [];
+      this.$el.find("[data-tag]").each((function(_this) {
+        return function(index, tag) {
+          return tags.push(tag.innerHTML);
+        };
+      })(this));
+      this.model.attributes.tags = tags;
       value = "";
       this.$el.find("[data-content-key]").each((function(_this) {
         return function(index, content) {
           value = content.innerHTML;
           if (content.getAttribute("data-is-markdown") != null) {
             value = toMarkdown(content.innerHTML);
-            content.innerHTML = markdown.toHTML(value);
+            content.innerHTML = marked(value);
           }
           return _this.model.attributes.content[content.getAttribute("data-content-key")].value = value;
         };
       })(this));
       return this.model.save();
+    };
+
+    Editable.prototype.input_tag = function(e) {
+      if (e.keyCode === 13) {
+        e.preventDefault();
+        return this.insert_tag(e.currentTarget);
+      }
+    };
+
+    Editable.prototype.blur_tag = function(e) {
+      var value;
+      value = e.currentTarget.value.trim();
+      if (value !== "") {
+        e.preventDefault();
+        this.insert_tag(e.currentTarget);
+        return $(e.currentTarget).focus();
+      }
+    };
+
+    Editable.prototype.insert_tag = function(target) {
+      var fn, i, len, value, values;
+      values = target.value.trim().split(",");
+      fn = (function(_this) {
+        return function(value) {
+          return $(_this.tag_template({
+            tag: value.trim().toLowerCase()
+          })).insertBefore($(target).parent());
+        };
+      })(this);
+      for (i = 0, len = values.length; i < len; i++) {
+        value = values[i];
+        fn(value);
+      }
+      return target.value = "";
     };
 
     return Editable;

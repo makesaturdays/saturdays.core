@@ -261,7 +261,7 @@ em,
 		content: "/";
 	}
 
-	&:last-child:after {
+	&:last-of-type:after {
 		content: none;
 	}
 }

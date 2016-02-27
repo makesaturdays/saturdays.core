@@ -5,7 +5,7 @@ this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,d
 },"3":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<button class=\"js-logout\">"
+  return "<a href=\"/lists/blog/posts/new\" class=\"button\">New Post</a>\n<button class=\"js-logout\">"
     + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
     + "</button>\n";
 },"5":function(container,depth0,helpers,partials,data) {
@@ -37,9 +37,25 @@ this["templates"]["admin/edit_admin"] = Handlebars.template({"1":function(contai
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.is_online : stack1),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">\n<label for=\"is_online\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.online : stack1), depth0))
-    + "</label>\n\n<br>\n\n<button class=\"js-save_edit\">"
+    + "</label>\n\n<br>\n\n<p><button class=\"js-save_edit\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.save : stack1), depth0))
-    + "</button>\n";
+    + "</button></p>\n<p><button class=\"button--transparent js-delete\">"
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1["delete"] : stack1), depth0))
+    + "</button></p>\n";
+},"useData":true});
+
+this["templates"]["admin/tag"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<a href=\"/lists/blog/tags/"
+    + alias4(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tag","hash":{},"data":data}) : helper)))
+    + "\" data-tag contenteditable=\"true\">"
+    + alias4(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tag","hash":{},"data":data}) : helper)))
+    + "</a>\n";
+},"useData":true});
+
+this["templates"]["admin/tag_input"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<input class=\"em input--inline\" placeholder=\"Add a tag\" type=\"text\" name=\"tag_input\">\n";
 },"useData":true});
 
 this["templates"]["answer"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

@@ -37,14 +37,12 @@
 				<div class="medium alternate_first_line underline_links blog__post__content" data-content-key="body" data-is-markdown>
 					{{post.body|safe}}
 				</div>
-
-				
 			</div>
 
 			<div class="col col--2of12 col--small--12of12">
 				<p class="p--medium">
 					<span data-published-date>{{post.published_date|date}}</span><br>
-					<span data-tags>{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}" class="em capitalize comma_seperated" data-tag>{{tag}}</a>{% endfor %}</span>
+					<span data-tags class="tags">{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}" data-tag>{{tag}}</a>{% endfor %} <span data-tag-input></span></span>
 				</p>
 			</div>
 		</div>

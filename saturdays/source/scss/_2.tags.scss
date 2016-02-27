@@ -1,0 +1,12 @@
+
+
+// #TAGS
+
+.tags {
+	
+	a {
+		@extend .em;
+		@extend .capitalize;
+		@extend .comma_seperated;
+	}
+}

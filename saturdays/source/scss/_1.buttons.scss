@@ -4,6 +4,7 @@
 button,
 .button {
 	cursor: pointer;
+	display: inline-block;
 	
 	font-family: $headings_font;
 	font-size: 1rem;
@@ -22,6 +23,7 @@ button,
 
 	&:hover,
 	&:focus {
+		color: $white;
 		background: $highlight;
 	}
 
@@ -29,6 +31,21 @@ button,
 		background: fade-out($highlight, 0.5);
 	}
 
+
+	&.button--transparent {
+		color: $primary;
+		background: transparent;
+		padding: 0;
+
+		&:hover,
+		&:focus {
+			color: $highlight;
+		}
+
+		&:active {
+			color: fade-out($highlight, 0.5);
+		}
+	}
 
 	&.button--icon {
 		color: $primary;

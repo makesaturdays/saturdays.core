@@ -85,11 +85,19 @@ textarea,
 		pointer-events: none;
 	}
 
+	&.input--inline {
+		display: inline-block;
+		width: auto;
+
+		font-size: inherit;
+		font-weight: inherit;
+		font-family: inherit;
+		padding: 0;
+	}
 
 	.input_box & {
 		padding: $vertical_rythm*2.5 $vertical_rythm $vertical_rythm*1.5;
 	}
-
 }
 
 
