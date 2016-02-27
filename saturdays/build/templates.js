@@ -30,6 +30,26 @@ this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,d
     + "</div>\n";
 },"useData":true});
 
+this["templates"]["admin/author"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
+
+  return "<p class=\"p--medium hide_on_small\">\n"
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.blog : stack1)) != null ? stack1.by : stack1), depth0))
+    + " <a href=\"/lists/blog/authors/"
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.author : depth0)) != null ? stack1.handle : stack1), depth0))
+    + "\">"
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.author : depth0)) != null ? stack1.name : stack1), depth0))
+    + "</a><br>\n<a href=\"https://twitter.com/"
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.author : depth0)) != null ? stack1.handle : stack1), depth0))
+    + "\">@"
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.author : depth0)) != null ? stack1.handle : stack1), depth0))
+    + "</a>\n</p>\n";
+},"useData":true});
+
+this["templates"]["admin/author_input"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<input class=\"em input--inline\" placeholder=\"Add an author\" type=\"text\" name=\"author_input\">\n";
+},"useData":true});
+
 this["templates"]["admin/edit_admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "checked";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

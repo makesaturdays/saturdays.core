@@ -650,6 +650,10 @@
 
     Editable.prototype.tag_template = templates["admin/tag"];
 
+    Editable.prototype.author_input_template = templates["admin/author_input"];
+
+    Editable.prototype.author_template = templates["admin/author"];
+
     Editable.prototype.initialize = function() {
       this.events["click .js-save_edit"] = "save_edit";
       this.events["keypress [name='tag_input']"] = "input_tag";
