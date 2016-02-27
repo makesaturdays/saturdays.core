@@ -136,6 +136,14 @@ with app.app_context():
 
 			try:
 				posts = []
+				for post in document['posts']:
+					if request.current_session_is_admin:
+						posts.append(post)
+
+					elif post['is_online']:
+						posts.append(post)
+				document['posts'] = posts
+
 
 				for post in document['posts']:
 					try:
@@ -147,12 +155,6 @@ with app.app_context():
 
 					except KeyError:
 						pass
-
-					if hasattr(request, 'current_session') and request.current_session['is_admin']:
-						posts.append(post)
-
-					elif post['is_online']:
-						posts.append(post)
 						
 
 				for (key, value) in tag_counts.items():
@@ -260,7 +262,6 @@ with app.app_context():
 					except KeyError:
 						pass
 
-					del post_values['is_online']
 					posts.append(post_values)
 
 

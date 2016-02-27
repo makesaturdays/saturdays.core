@@ -6,6 +6,8 @@ class Saturdays.Views.Admin extends Saturdays.View
 
 	events: {
 		"submit .js-submit_login": "submit_login"
+		"click .js-show_new_post": "show_new_post"
+		"submit .js-new_post_form": "submit_new_post_form"
 		"click .js-logout": "logout"
 	}
 
@@ -35,6 +37,25 @@ class Saturdays.Views.Admin extends Saturdays.View
 		e.preventDefault() 
 
 		Saturdays.session.logout()
+
+
+	show_new_post: (e)->
+		this.$el.find(".js-show_new_post").addClass "hide"
+		this.$el.find(".js-new_post_form").removeClass "hide"
+
+	submit_new_post_form: (e)->
+		e.preventDefault()
+
+		model = new Saturdays.Models.ListPost()
+		model.urlRoot = Saturdays.settings.api + "lists/"+window.list_id+"/posts"
+		model.save {
+			title: e.currentTarget["title"].value.trim()
+			route: e.currentTarget["route"].value.trim().toLowerCase()
+		},
+			success: (model, response)->
+				window.location = "/lists/blog/posts/"+model.attributes.route
+
+
 
 
 	check_escape: (e)=>

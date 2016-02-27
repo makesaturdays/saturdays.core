@@ -3,17 +3,19 @@ this["templates"] = this["templates"] || {};
 this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "hide";
 },"3":function(container,depth0,helpers,partials,data) {
-    var stack1;
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
 
-  return "<a href=\"/lists/blog/posts/new\" class=\"button\">New Post</a>\n<button class=\"js-logout\">"
-    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
-    + "</button>\n";
+  return "<div class=\"grid grid--guttered\">\n<div class=\"col\">\n<button class=\"js-show_new_post\">New</button>\n\n<form action=\"#\" class=\"hide js-new_post_form\">\n<label for=\"title\">Title</label>\n<input type=\"text\" id=\"title\" name=\"title\">\n<label for=\"route\">Url Route</label>\n<input type=\"text\" id=\"route\" name=\"route\">\n<button type=\"submit\">"
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
+    + "</button>\n</form>\n</div>\n<div class=\"col\">\n<button class=\"js-logout\">"
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
+    + "</button>\n</div>\n</div>\n";
 },"5":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
 
   return "<form action=\"#\" class=\"js-submit_login\">\n<label for=\"email\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
-    + "</label>\n<input type=\"email\" id=\"email\" name=\"email\">\n<label for=\"email\">"
+    + "</label>\n<input type=\"email\" id=\"email\" name=\"email\">\n<label for=\"password\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
     + "</label>\n<input type=\"password\" id=\"password\" name=\"password\">\n<button type=\"submit\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
@@ -21,7 +23,7 @@ this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,d
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=depth0 != null ? depth0 : {};
 
-  return "<div class=\"padded white_back js-login_box "
+  return "<div class=\"padded grey_back js-login_box "
     + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1),{"name":"unless","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\">\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(5, data, 0),"data":data})) != null ? stack1 : "")

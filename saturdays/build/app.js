@@ -7,7 +7,7 @@
     Views: {},
     Routers: {},
     settings: {
-      api: "https://makesaturdays.com/"
+      api: "http://127.0.0.1:5000/"
     },
     init: function(settings) {
       if (settings != null) {
@@ -70,14 +70,14 @@
       d = new Date();
       d.setTime(d.getTime() + (expiry_days * 24 * 60 * 60 * 1000));
       expires = "expires=" + d.toGMTString();
-      return document.cookie = "saturdays_" + name + "=" + value + "; " + expires + "; path=/";
+      return document.cookie = "X-" + name + "=" + value + "; " + expires + "; path=/";
     },
     set_for_a_session: function(name, value) {
-      return document.cookie = "saturdays_" + name + "=" + value + "; path=/";
+      return document.cookie = "X-" + name + "=" + value + "; path=/";
     },
     get: function(name) {
       var cookie, cookies, fn, i, len, value;
-      name = "saturdays_" + name + "=";
+      name = "X-" + name + "=";
       value = false;
       cookies = document.cookie.split(';');
       fn = function(cookie) {
@@ -96,7 +96,7 @@
       return value;
     },
     "delete": function(name) {
-      return document.cookie = 'saturdays_' + name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
+      return document.cookie = 'X-' + name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/';
     }
   };
 
@@ -204,7 +204,7 @@
         options.headers = {};
       }
       options.headers['Accept'] = 'application/json';
-      options.headers['X-Session-Secret'] = Saturdays.cookies.get("session_secret");
+      options.headers['X-Session-Secret'] = Saturdays.cookies.get("Session-Secret");
       return options;
     };
 
@@ -565,8 +565,8 @@
         options = {};
       }
       return this.set({
-        secret: Saturdays.cookies.get("session_secret"),
-        user_id: Saturdays.cookies.get("user_id")
+        secret: Saturdays.cookies.get("Session-Secret"),
+        user_id: Saturdays.cookies.get("User-Id")
       });
     };
 
@@ -579,8 +579,8 @@
       }
       return Saturdays.session.save(data, {
         success: function(model, response) {
-          Saturdays.cookies.set("session_secret", response.secret);
-          Saturdays.cookies.set("user_id", response.user_id);
+          Saturdays.cookies.set("Session-Secret", response.secret);
+          Saturdays.cookies.set("User-Id", response.user_id);
           return Saturdays.user.initialize();
         }
       });
@@ -589,8 +589,8 @@
     Session.prototype.logout = function() {
       this.clear();
       Saturdays.user.clear();
-      Saturdays.cookies["delete"]("session_secret");
-      Saturdays.cookies["delete"]("user_id");
+      Saturdays.cookies["delete"]("Session-Secret");
+      Saturdays.cookies["delete"]("User-Id");
       return window.location = window.location;
     };
 
@@ -618,7 +618,7 @@
       if (options == null) {
         options = {};
       }
-      user_id = Saturdays.cookies.get("user_id");
+      user_id = Saturdays.cookies.get("User-Id");
       if (user_id != null) {
         this.set({
           _id: user_id
@@ -767,6 +767,8 @@
 
     Admin.prototype.events = {
       "submit .js-submit_login": "submit_login",
+      "click .js-show_new_post": "show_new_post",
+      "submit .js-new_post_form": "submit_new_post_form",
       "click .js-logout": "logout"
     };
 
@@ -790,6 +792,26 @@
     Admin.prototype.logout = function(e) {
       e.preventDefault();
       return Saturdays.session.logout();
+    };
+
+    Admin.prototype.show_new_post = function(e) {
+      this.$el.find(".js-show_new_post").addClass("hide");
+      return this.$el.find(".js-new_post_form").removeClass("hide");
+    };
+
+    Admin.prototype.submit_new_post_form = function(e) {
+      var model;
+      e.preventDefault();
+      model = new Saturdays.Models.ListPost();
+      model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
+      return model.save({
+        title: e.currentTarget["title"].value.trim(),
+        route: e.currentTarget["route"].value.trim().toLowerCase()
+      }, {
+        success: function(model, response) {
+          return window.location = "/lists/blog/posts/" + model.attributes.route;
+        }
+      });
     };
 
     Admin.prototype.check_escape = function(e) {
@@ -1024,7 +1046,7 @@
     }
 
     Router.prototype.routes = {
-      "lists/blog(/tags)(/authors)(/posts)(/:route)(/)": "blog",
+      "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
       "(/)": "home"
     };
 
@@ -1052,12 +1074,12 @@
       }
     };
 
-    Router.prototype.blog = function(route) {
+    Router.prototype.list = function(list_route, route) {
       return $(".js-post").each((function(_this) {
         return function(index, post) {
           var model;
           model = new Saturdays.Models.ListPost();
-          model.urlRoot = Saturdays.settings.api + "lists/56bccdb3f5f9e91c18cc17c0/posts";
+          model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
           return _this.views.push(new Saturdays.Views.Post({
             el: post,
             model: model

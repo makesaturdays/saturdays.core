@@ -4,7 +4,7 @@ class Saturdays.Models.User extends Saturdays.Model
 
 
 	initialize: (options={})->
-		user_id = Saturdays.cookies.get("user_id")
+		user_id = Saturdays.cookies.get("User-Id")
 
 		if user_id?
 			this.set 

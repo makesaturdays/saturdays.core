@@ -4,15 +4,15 @@ window.Saturdays.cookies =
 		d = new Date()
 		d.setTime d.getTime()+(expiry_days*24*60*60*1000)
 		expires = "expires="+d.toGMTString()
-		document.cookie = "saturdays_" + name + "=" + value + "; " + expires + "; path=/"
+		document.cookie = "X-" + name + "=" + value + "; " + expires + "; path=/"
 
 
 	set_for_a_session: (name, value)->
-		document.cookie = "saturdays_" + name + "=" + value + "; path=/"
+		document.cookie = "X-" + name + "=" + value + "; path=/"
 
 
 	get: (name)->
-		name = "saturdays_" + name + "="
+		name = "X-" + name + "="
 		value = false
 		cookies = document.cookie.split(';')
 
@@ -27,5 +27,5 @@ window.Saturdays.cookies =
 		return value
 
 	delete: (name)->
-		document.cookie = 'saturdays_' + name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
+		document.cookie = 'X-' + name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT; path=/'
 

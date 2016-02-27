@@ -9,6 +9,9 @@ import hashlib
 
 @app.before_request
 def verify_headers():
+	from saturdays.models.auth.session import Session
+
+
 	if request.method == 'OPTIONS':
 		return make_response()
 
@@ -34,10 +37,19 @@ def verify_headers():
 			request.requires_session = False
 
 
+		try:
+			request.current_session = Session.get_where({'secret_hash': hashlib.sha256(request.cookies['X-Session-Secret'].encode('utf-8')).hexdigest()})
+		except KeyError:
+			pass
+
+
 		if request.requires_admin or request.requires_vendor or request.requires_user or request.requires_session:
 			try:
-				from saturdays.models.auth.session import Session
-				request.current_session = Session.get_where({'secret_hash': hashlib.sha256(request.headers['X-Session-Secret'].encode('utf-8')).hexdigest()})
+				if hasattr(request, 'current_session'):
+					if request.headers['X-Session-Secret'] != request.cookies['X-Session-Secret']:
+						abort(403)
+				else:
+					request.current_session = Session.get_where({'secret_hash': hashlib.sha256(request.headers['X-Session-Secret'].encode('utf-8')).hexdigest()})
 
 				if request.requires_admin and not request.current_session['is_admin']:
 					abort(403)
@@ -52,5 +64,13 @@ def verify_headers():
 
 			except KeyError:
 				abort(403)
+
+
+		try: 
+			request.current_session_is_admin = request.current_session['is_admin']
+			request.current_session_is_vendor = request.current_session['is_vendor']
+		except AttributeError:
+			request.current_session_is_admin = False
+			request.current_session_is_vendor = False
 
 

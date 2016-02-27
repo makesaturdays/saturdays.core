@@ -5,16 +5,16 @@ class Saturdays.Models.Session extends Saturdays.Model
 
 	initialize: (options={})->
 		this.set 
-			secret: Saturdays.cookies.get("session_secret")
-			user_id: Saturdays.cookies.get("user_id")
+			secret: Saturdays.cookies.get("Session-Secret")
+			user_id: Saturdays.cookies.get("User-Id")
 
 
 
 	login: (data={}, options={})->
 		Saturdays.session.save data,
 			success: (model, response)->
-				Saturdays.cookies.set "session_secret", response.secret
-				Saturdays.cookies.set "user_id", response.user_id
+				Saturdays.cookies.set "Session-Secret", response.secret
+				Saturdays.cookies.set "User-Id", response.user_id
 
 				Saturdays.user.initialize()
 
@@ -25,8 +25,8 @@ class Saturdays.Models.Session extends Saturdays.Model
 
 		Saturdays.user.clear()
 
-		Saturdays.cookies.delete "session_secret"
-		Saturdays.cookies.delete "user_id"
+		Saturdays.cookies.delete "Session-Secret"
+		Saturdays.cookies.delete "User-Id"
 		
 		window.location = window.location
 		

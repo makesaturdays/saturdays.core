@@ -142,7 +142,7 @@ with app.app_context():
 		@classmethod
 		def preprocess(cls, document):
 
-			if not request.current_session['is_admin']:
+			if not request.current_session_is_admin:
 				try:
 					del document['is_admin']
 				except KeyError:

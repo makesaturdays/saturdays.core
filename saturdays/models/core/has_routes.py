@@ -125,7 +125,7 @@ with app.app_context():
 			merged_filters = super()._merge_filters(document_filter)
 
 			try:
-				if not request.current_session['is_admin']:
+				if not request.current_session_is_admin:
 					if request.requires_user:
 						merged_filters.update({'user_id': request.current_session['user_id']})				
 

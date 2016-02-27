@@ -12,6 +12,7 @@ from saturdays.models.cms.list import List
 from saturdays.models.cms.author import Author
 
 from bson.objectid import ObjectId
+from datetime import datetime
 import markdown
 
 
@@ -93,6 +94,7 @@ with app.app_context():
 			return super().preprocess(document)
 
 
+
 		@classmethod
 		def update(cls, parent_id, _id, document, projection={}):
 
@@ -126,6 +128,13 @@ with app.app_context():
 
 				except KeyError:
 					pass
+
+
+			if 'published_date' not in document:
+				document['published_date'] = datetime.utcnow()
+
+			if 'is_online' not in document:
+				document['is_online'] = False
 
 
 			return super().create(parent_id, document)
@@ -165,7 +174,6 @@ with app.app_context():
 			except KeyError:
 				pass
 
-			del response['is_online']
 				
 
 			return response
