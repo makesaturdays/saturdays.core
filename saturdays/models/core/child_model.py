@@ -118,7 +118,7 @@ with app.app_context():
 		@classmethod
 		def delete(cls, parent_id, _id):
 
-			# cls.parent.update(parent_id, {}, other_operators={'$pull': {cls.list_name: {'_id': ObjectId(_id)}}})
+			cls.parent.update(parent_id, {}, other_operators={'$pull': {cls.list_name: {'_id': ObjectId(_id)}}})
 
 
 			return {'_id': _id, 'parent_route': cls.parent.endpoint + '/' + parent_id}
