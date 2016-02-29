@@ -61,7 +61,7 @@ this["templates"]["admin/edit_admin"] = Handlebars.template({"1":function(contai
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.online : stack1), depth0))
     + "</label>\n\n<br>\n\n<p><button class=\"js-save_edit\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.save : stack1), depth0))
-    + "</button></p>\n<p><button class=\"button--transparent js-delete\">"
+    + "</button></p>\n<p><button class=\"button--transparent js-destroy\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1["delete"] : stack1), depth0))
     + "</button></p>\n";
 },"useData":true});

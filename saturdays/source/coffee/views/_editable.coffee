@@ -11,8 +11,10 @@ class Saturdays.Views.Editable extends Saturdays.View
 	
 	initialize: ->
 		this.events["click .js-save_edit"] = "save_edit"
+		this.events["click .js-destroy"] = "destroy"
 		this.events["keypress [name='tag_input']"] = "input_tag"
 		this.events["blur [name='tag_input']"] = "blur_tag"
+
 
 		this.listenTo @model, "sync", this.render
 
@@ -71,6 +73,15 @@ class Saturdays.Views.Editable extends Saturdays.View
 			@model.attributes.content[content.getAttribute("data-content-key")].value = value
 
 		@model.save()
+
+
+
+	destroy: ->
+		if confirm("Are you sure?")
+			@model.destroy
+				success: (model, response)->
+
+					window.location = "/lists/" + window.list_route
 
 
 

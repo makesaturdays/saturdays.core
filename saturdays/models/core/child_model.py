@@ -15,12 +15,19 @@ with app.app_context():
 		list_name = 'models'
 
 
+		@classmethod
+		def postprocess(cls, document, parent_id):
+			document['parent_route'] = cls.parent.endpoint + '/' + parent_id
+
+			return document
+
+
 
 		@classmethod
 		def list(cls, parent_id, limit=0, skip=0, sort=None):
 
 			try:
-				return [cls.postprocess(document) for document in cls.parent.get(parent_id)[cls.list_name]]
+				return [cls.postprocess(document, parent_id) for document in cls.parent.get(parent_id)[cls.list_name]]
 
 			except KeyError:
 				return []
@@ -52,14 +59,14 @@ with app.app_context():
 							child['parent'] = parent.copy()
 							del child['parent'][cls.list_name]
 							
-							return cls.postprocess(child)
+							return cls.postprocess(child, parent_id)
 
 					else:
 						if child[cls.alternate_index] == _id:
 							child['parent'] = parent.copy()
 							del child['parent'][cls.list_name]
 							
-							return cls.postprocess(child)
+							return cls.postprocess(child, parent_id)
 
 				abort(404)
 
@@ -95,7 +102,7 @@ with app.app_context():
 			try:
 				for child in cls.parent.update_where({'_id': ObjectId(parent_id), cls.list_name: {'$elemMatch': {'_id': ObjectId(_id)}}}, document, projection=projection)[cls.list_name]:
 					if child['_id'] == ObjectId(_id):
-						return cls.postprocess(child)
+						return cls.postprocess(child, parent_id)
 
 				abort(404)
 
@@ -111,10 +118,10 @@ with app.app_context():
 		@classmethod
 		def delete(cls, parent_id, _id):
 
-			cls.parent.update(parent_id, {}, other_operators={'$pull': {cls.list_name: {'_id': ObjectId(_id)}}})
+			# cls.parent.update(parent_id, {}, other_operators={'$pull': {cls.list_name: {'_id': ObjectId(_id)}}})
 
 
-			return {'_id': _id}
+			return {'_id': _id, 'parent_route': cls.parent.endpoint + '/' + parent_id}
 
 
 

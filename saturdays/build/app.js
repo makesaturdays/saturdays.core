@@ -656,6 +656,7 @@
 
     Editable.prototype.initialize = function() {
       this.events["click .js-save_edit"] = "save_edit";
+      this.events["click .js-destroy"] = "destroy";
       this.events["keypress [name='tag_input']"] = "input_tag";
       this.events["blur [name='tag_input']"] = "blur_tag";
       this.listenTo(this.model, "sync", this.render);
@@ -710,6 +711,16 @@
         };
       })(this));
       return this.model.save();
+    };
+
+    Editable.prototype.destroy = function() {
+      if (confirm("Are you sure?")) {
+        return this.model.destroy({
+          success: function(model, response) {
+            return window.location = "/lists/" + window.list_route;
+          }
+        });
+      }
     };
 
     Editable.prototype.input_tag = function(e) {
