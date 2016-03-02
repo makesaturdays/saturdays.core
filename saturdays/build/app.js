@@ -9,10 +9,7 @@
     settings: {
       api: "https://makesaturdays.com/"
     },
-    init: function(settings) {
-      if (settings != null) {
-        _.extend(this.settings, settings);
-      }
+    init: function() {
       this.session = new Saturdays.Models.Session();
       this.user = new Saturdays.Models.User();
       this.admin_view = new Saturdays.Views.Admin();
@@ -31,8 +28,12 @@
 
   jQuery = window.jQuery;
 
+  if (window.saturdays_settings != null) {
+    _.extend(Saturdays.settings, window.saturdays_settings);
+  }
+
   $(function() {
-    return Saturdays.init(window.saturdays_settings);
+    return Saturdays.init();
   });
 
 }).call(this);
@@ -686,7 +687,7 @@
     };
 
     Editable.prototype.save_edit = function(e) {
-      var tags, value;
+      var tags;
       this.model.set({
         is_online: this.$el.find("[name='is_online']")[0].checked,
         title: this.$el.find("[data-title]").html(),
@@ -699,17 +700,25 @@
         };
       })(this));
       this.model.attributes.tags = tags;
-      value = "";
+      if (this.model.attributes.content == null) {
+        this.model.attributes.content = {};
+      }
       this.$el.find("[data-content-key]").each((function(_this) {
         return function(index, content) {
+          var is_markdown, value;
           value = content.innerHTML;
-          if (content.getAttribute("data-is-markdown") != null) {
+          is_markdown = content.getAttribute("data-is-markdown") != null;
+          if (is_markdown) {
             value = toMarkdown(content.innerHTML);
             content.innerHTML = marked(value);
           }
-          return _this.model.attributes.content[content.getAttribute("data-content-key")].value = value;
+          return _this.model.attributes.content[content.getAttribute("data-content-key")] = {
+            value: value,
+            is_markdown: is_markdown
+          };
         };
       })(this));
+      console.log(this.model);
       return this.model.save();
     };
 
@@ -824,7 +833,7 @@
         route: e.currentTarget["route"].value.trim().toLowerCase()
       }, {
         success: function(model, response) {
-          return window.location = "/lists/blog/posts/" + model.attributes.route;
+          return window.location = "/lists/" + window.list_route + "/posts/" + model.attributes.route;
         }
       });
     };

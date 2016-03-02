@@ -1,0 +1,52 @@
+
+{% extends "layout.html" %}
+
+{% block title %}
+	{{post.title|striptags}} - Blog - {{super()}}
+{% endblock %}
+
+{% block og_title %}
+	{{post.title|striptags}} - Blog - {{super()}}
+{% endblock %}
+
+{% block body_classes %}blog {{post.route}}{% endblock %}
+
+{% block main %}
+	<div class="grid grid--guttered">
+		<article class="col col--6of12 js-post" data-id="{{post._id}}">
+			<div class="grid grid--guttered">
+				<div class="col col--4of12">
+					<img src="http://ecx.images-amazon.com/images/I/418eiOV-FSL._SX324_BO1,204,203,200_.jpg" alt="{{post.title}}" class="small_bottom">
+
+					<h3 class="flat_bottom"><a href="/lists/library/posts/{{post.route}}">{{post.title}}</a></h3>
+					<div class="medium medium_bottom" data-content-key="references" data-is-markdown>
+						{{post.references|safe}}
+					</div>
+
+					<div data-admin></div>
+				</div>
+
+				<div class="col col--8of12">
+					<div class="medium medium_bottom underline_links" data-content-key="quote" data-is-markdown>
+						{{post.quote|safe}}
+					</div>
+
+					<p class="p--medium">
+						<span data-published-date>{{post.published_date|date}}</span><br>
+						<span data-tags class="tags">{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}" data-tag>{{tag}}</a>{% endfor %} <span data-tag-input></span></span>
+					</p>
+				</div>
+			</div>
+		</article>
+	</div>
+{% endblock %}
+
+
+{% block footer %}
+	{{super()}}
+
+	<script>
+		window.list_id = "{{post.parent._id}}";
+		window.list_route = "{{post.parent.route}}";
+	</script>
+{% endblock %}

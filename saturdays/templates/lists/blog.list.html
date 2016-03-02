@@ -10,7 +10,7 @@
 
 {% block main %}
 	{% for post in list.posts %}
-	<article class="blog__post js-post" data-post-id="{{post._id}}">
+	<article class="blog__post js-post" data-id="{{post._id}}">
 		<div class="grid grid--guttered">
 			<div class="col col--3of12 col--small--12of12">
 				<h3><a href="/lists/blog/posts/{{post.route}}">{{post.title}}</a></h3>

@@ -68,17 +68,18 @@ with app.app_context():
 								response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
 
 
+								template_name = template['template']
 								try:
-									template['template'] = template['template'].replace('<route>', request.view_args['_id'])
+									template_name = template_name.replace('<route>', request.view_args['_id'])
 								except KeyError:
 									pass
 
 								try:
-									template['template'] = template['template'].replace('<parent_route>', request.view_args['parent_id'])
+									template_name = template_name.replace('<parent_route>', request.view_args['parent_id'])
 								except KeyError:
 									pass
 
-								render = render_template(template['template'], **response)
+								render = render_template(template_name, **response)
 								if not request.current_session_is_admin:
 									app.caches[cls.endpoint].set(request.path, render, timeout=0)
 								

@@ -8,15 +8,15 @@ window.Saturdays =
 	Routers:{}
 
 
-	settings:
+	settings: {
 		# api: "http://127.0.0.1:5000/"
 		api: "https://makesaturdays.com/"
+	}
+		
 
 
 
-	init: (settings)->
-		_.extend @settings, settings if settings?
-
+	init: ()->
 		@session = new Saturdays.Models.Session()
 		@user = new Saturdays.Models.User()
 		
@@ -37,10 +37,11 @@ Backbone = window.Backbone
 jQuery = window.jQuery
 
 
+_.extend Saturdays.settings, window.saturdays_settings if window.saturdays_settings?
 
 
 $ ->
-	Saturdays.init(window.saturdays_settings)
+	Saturdays.init()
 
 
 

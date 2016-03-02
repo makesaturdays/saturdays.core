@@ -53,7 +53,7 @@ class Saturdays.Views.Admin extends Saturdays.View
 			route: e.currentTarget["route"].value.trim().toLowerCase()
 		},
 			success: (model, response)->
-				window.location = "/lists/blog/posts/"+model.attributes.route
+				window.location = "/lists/"+window.list_route+"/posts/"+model.attributes.route
 
 
 

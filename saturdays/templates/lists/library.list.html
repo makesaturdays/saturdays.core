@@ -1,0 +1,50 @@
+
+{% extends "layout.html" %}
+
+
+{% block title %}
+    Blog - {{super()}}
+{% endblock %}
+
+{% block body_classes %}blog{% endblock %}
+
+{% block main %}
+	
+	<div class="grid grid--guttered">
+		{% for post in list.posts %}
+		<article class="col col--6of12 js-post" data-id="{{post._id}}">
+			<div class="grid grid--guttered">
+				<div class="col col--4of12">
+					<img src="http://ecx.images-amazon.com/images/I/418eiOV-FSL._SX324_BO1,204,203,200_.jpg" alt="{{post.title}}" class="small_bottom">
+
+					<h3 class="flat_bottom"><a href="/lists/library/posts/{{post.route}}">{{post.title}}</a></h3>
+					<div class="medium medium_bottom">
+						{{post.references|safe}}
+					</div>
+				</div>
+
+				<div class="col col--8of12">
+					<div class="medium medium_bottom underline_links">
+						{{post.quote|safe}}
+					</div>
+
+					<p class="p--medium">
+						<span>{{post.published_date|date}}</span><br>
+						<span class="tags">{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}">{{tag}}</a>{% endfor %} <span></span></span>
+					</p>
+				</div>
+			</div>
+		</article>
+		{% endfor %}
+	</div>
+{% endblock %}
+
+
+{% block footer %}
+	{{super()}}
+
+	<script>
+		window.list_id = "{{list._id}}";
+		window.list_route = "{{list.route}}";
+	</script>
+{% endblock %}

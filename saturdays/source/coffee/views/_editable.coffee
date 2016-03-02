@@ -62,16 +62,20 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 		@model.attributes.tags = tags
 			
-
-		value = ""
+		@model.attributes.content = {} unless @model.attributes.content?
 		this.$el.find("[data-content-key]").each (index, content)=>
 			value = content.innerHTML
-			if content.getAttribute("data-is-markdown")?
+			is_markdown = content.getAttribute("data-is-markdown")?
+			if is_markdown
 				value = toMarkdown(content.innerHTML)
 				content.innerHTML = marked(value)
-				
-			@model.attributes.content[content.getAttribute("data-content-key")].value = value
+			
+			@model.attributes.content[content.getAttribute("data-content-key")] = {
+				value: value
+				is_markdown: is_markdown
+			} 
 
+		console.log @model
 		@model.save()
 
 
