@@ -1,1 +1,31 @@
-{{product.name}}
+{% extends "layout.html" %}
+
+{% block title %}
+    {{product.name|striptags}} – Products - {{super()}}
+{% endblock %}
+
+{% block og_title %}
+	{{product.name|striptags}} – Products - {{super()}}
+{% endblock %}
+
+{% block body_classes %}products {{product.pretty_url}}{% endblock %}
+
+
+{% block main %}
+	<article class="grid grid--guttered product js-product" data-id="{{product._id}}">
+		<div class="col col--4of12">
+			<img src="https://placehold.it/500x500/f4f4f4/E5E5E5/&text=%E2%88%85" alt="Picture of {{product.name}}">
+
+			<div data-admin></div>
+		</div>
+		
+		<div class="col col--8of12">
+			<h3><span data-name>{{product.name}}</span> – <span data-price class="{% if product.discount is defined %}strike{% endif %}">{{product.price}}</span>{% if product.discount is defined %} {{product.discounted_price}}{% endif %} <sub>CAD</sub></h3>
+
+			<span data-tags class="tags">{% for tag in product.tags %}<em data-tag>{{tag}}</em>{% endfor %} <span data-tag-input></span></span>
+
+			<p class="p--medium" data-description>{{product.description}}</p>
+		</div>
+			
+	</article>
+{% endblock %}

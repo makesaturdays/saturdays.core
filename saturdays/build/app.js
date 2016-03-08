@@ -594,6 +594,10 @@
       return window.location = window.location;
     };
 
+    Session.prototype.is_authenticated = function() {
+      return Saturdays.cookies.get("User-Id") != null;
+    };
+
     return Session;
 
   })(Saturdays.Model);
@@ -836,7 +840,10 @@
         if (login_box.hasClass("hide")) {
           return login_box.removeClass("hide");
         } else {
-          return Saturdays.session.logout();
+          login_box.addClass("hide");
+          if (Saturdays.session.is_authenticated()) {
+            return Saturdays.session.logout();
+          }
         }
       }
     };

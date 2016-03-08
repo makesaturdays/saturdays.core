@@ -29,4 +29,8 @@ class Saturdays.Models.Session extends Saturdays.Model
 		Saturdays.cookies.delete "User-Id"
 		
 		window.location = window.location
+
+
+	is_authenticated: ->
+		Saturdays.cookies.get("User-Id")?
 		

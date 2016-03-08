@@ -48,7 +48,7 @@ with app.app_context():
 				'requires_vendor': True
 			},
 			{
-				'route': '/<ObjectId:_id>',
+				'route': '/<string:_id>',
 				'view_function': 'get_view',
 				'methods': ['GET']
 			},

@@ -65,7 +65,10 @@ class Saturdays.Views.Admin extends Saturdays.View
 				login_box.removeClass "hide"
 
 			else
-				Saturdays.session.logout()
+				login_box.addClass "hide"
+
+				if Saturdays.session.is_authenticated()
+					Saturdays.session.logout()
 			
 			
 
