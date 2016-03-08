@@ -63,6 +63,7 @@ class Saturdays.Views.Admin extends Saturdays.View
 			login_box = this.$el.find(".js-login_box")
 			if login_box.hasClass "hide"
 				login_box.removeClass "hide"
+				login_box.find("[name='email']").focus()
 
 			else
 				login_box.addClass "hide"

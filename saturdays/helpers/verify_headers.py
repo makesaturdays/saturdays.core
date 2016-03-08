@@ -54,7 +54,7 @@ def verify_headers():
 				if request.requires_admin and not request.current_session['is_admin']:
 					abort(403)
 
-				if request.requires_vendor and not request.current_session['is_vendor']:
+				if request.requires_vendor and not request.current_session['is_admin'] and not request.current_session['is_vendor']:
 					abort(403)
 
 				if request.requires_user:

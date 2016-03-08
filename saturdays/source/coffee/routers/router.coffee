@@ -3,6 +3,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 
 	routes: {
+		"products(/:pretty_url)(/)": "products"
 		"lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list"
 		"(/)": "home"
 	}
@@ -29,6 +30,15 @@ class Saturdays.Routers.Router extends Backbone.Router
 	home: ->
 		if $(".js-survey").length > 0
 			@survey_view = new Saturdays.Views.Survey()
+
+
+	products: (pretty_url)->
+		$(".js-product").each (index, product)=>
+			model = new Saturdays.Models.Product({"_id": product.getAttribute("data-id")})
+			@views.push new Saturdays.Views.Product({
+				el: product, 
+				model: model
+			})
 
 
 	list: (list_route, route)->

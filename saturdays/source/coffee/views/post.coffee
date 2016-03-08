@@ -12,20 +12,39 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 
 		super()
 
-		this.render()
 
 
 	render: ->
 
 		super()
 
-
-		$(document.links).filter(()->
-			this.hostname != window.location.hostname
-		).attr('target', '_blank')
-
+		if @data.is_editable
+			this.$el.find("[data-title]").attr "contenteditable", "true"
+			this.$el.find("[data-published-date]").attr "contenteditable", "true"
+			this.$el.find("[data-content-key]").attr "contenteditable", "true"
 
 		this
+
+
+
+	save_edit: (e)->
+		@model.set
+			title: this.$el.find("[data-title]").html()
+			published_date: this.$el.find("[data-published-date]").html()
+
+
+		value = ""
+		this.$el.find("[data-content-key]").each (index, content)=>
+			value = content.innerHTML
+			if content.getAttribute("data-is-markdown")?
+				value = toMarkdown(content.innerHTML)
+				content.innerHTML = marked(value)
+				
+			@model.attributes.content[content.getAttribute("data-content-key")].value = value
+
+
+		super()
+
 
 
 	maximize: (e)->

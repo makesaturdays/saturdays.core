@@ -38,6 +38,10 @@ class Saturdays.View extends Backbone.View
 
 		super()
 
+		$(document.links).filter(()->
+			this.hostname != window.location.hostname
+		).attr('target', '_blank')
+
 		this.delegateEvents()
 
 		this

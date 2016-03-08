@@ -7,7 +7,7 @@
     Views: {},
     Routers: {},
     settings: {
-      api: "https://makesaturdays.com/"
+      api: "http://127.0.0.1:5000/"
     },
     init: function(settings) {
       if (settings != null) {
@@ -446,6 +446,9 @@
         }
       }
       View.__super__.render.call(this);
+      $(document.links).filter(function() {
+        return this.hostname !== window.location.hostname;
+      }).attr('target', '_blank');
       this.delegateEvents();
       return this;
     };
@@ -542,6 +545,25 @@
     }
 
     return SurveyAnswer;
+
+  })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Models.Product = (function(superClass) {
+    extend(Product, superClass);
+
+    function Product() {
+      return Product.__super__.constructor.apply(this, arguments);
+    }
+
+    Product.prototype.urlRoot = Saturdays.settings.api + "products";
+
+    return Product;
 
   })(Saturdays.Model);
 
@@ -678,9 +700,6 @@
       });
       Editable.__super__.render.call(this);
       if (this.data.is_editable) {
-        this.$el.find("[data-title]").attr("contenteditable", "true");
-        this.$el.find("[data-published-date]").attr("contenteditable", "true");
-        this.$el.find("[data-content-key]").attr("contenteditable", "true");
         this.$el.find("[data-tag]").attr("contenteditable", "true");
         this.$el.find("[data-tag-input]").html(this.tag_input_template(this.data));
         this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
@@ -690,11 +709,9 @@
     };
 
     Editable.prototype.save_edit = function(e) {
-      var tags, value;
+      var tags;
       this.model.set({
-        is_online: this.$el.find("[name='is_online']")[0].checked,
-        title: this.$el.find("[data-title]").html(),
-        published_date: this.$el.find("[data-published-date]").html()
+        is_online: this.$el.find("[name='is_online']")[0].checked
       });
       tags = [];
       this.$el.find("[data-tag]").each((function(_this) {
@@ -703,17 +720,6 @@
         };
       })(this));
       this.model.attributes.tags = tags;
-      value = "";
-      this.$el.find("[data-content-key]").each((function(_this) {
-        return function(index, content) {
-          value = content.innerHTML;
-          if (content.getAttribute("data-is-markdown") != null) {
-            value = toMarkdown(content.innerHTML);
-            content.innerHTML = marked(value);
-          }
-          return _this.model.attributes.content[content.getAttribute("data-content-key")].value = value;
-        };
-      })(this));
       return this.model.save();
     };
 
@@ -838,7 +844,8 @@
       if (e.keyCode === 27) {
         login_box = this.$el.find(".js-login_box");
         if (login_box.hasClass("hide")) {
-          return login_box.removeClass("hide");
+          login_box.removeClass("hide");
+          return login_box.find("[name='email']").focus();
         } else {
           login_box.addClass("hide");
           if (Saturdays.session.is_authenticated()) {
@@ -871,16 +878,37 @@
     };
 
     Post.prototype.initialize = function() {
-      Post.__super__.initialize.call(this);
-      return this.render();
+      return Post.__super__.initialize.call(this);
     };
 
     Post.prototype.render = function() {
       Post.__super__.render.call(this);
-      $(document.links).filter(function() {
-        return this.hostname !== window.location.hostname;
-      }).attr('target', '_blank');
+      if (this.data.is_editable) {
+        this.$el.find("[data-title]").attr("contenteditable", "true");
+        this.$el.find("[data-published-date]").attr("contenteditable", "true");
+        this.$el.find("[data-content-key]").attr("contenteditable", "true");
+      }
       return this;
+    };
+
+    Post.prototype.save_edit = function(e) {
+      var value;
+      this.model.set({
+        title: this.$el.find("[data-title]").html(),
+        published_date: this.$el.find("[data-published-date]").html()
+      });
+      value = "";
+      this.$el.find("[data-content-key]").each((function(_this) {
+        return function(index, content) {
+          value = content.innerHTML;
+          if (content.getAttribute("data-is-markdown") != null) {
+            value = toMarkdown(content.innerHTML);
+            content.innerHTML = marked(value);
+          }
+          return _this.model.attributes.content[content.getAttribute("data-content-key")].value = value;
+        };
+      })(this));
+      return Post.__super__.save_edit.call(this);
     };
 
     Post.prototype.maximize = function(e) {
@@ -900,6 +928,48 @@
     };
 
     return Post;
+
+  })(Saturdays.Views.Editable);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Views.Product = (function(superClass) {
+    extend(Product, superClass);
+
+    function Product() {
+      return Product.__super__.constructor.apply(this, arguments);
+    }
+
+    Product.prototype.events = {};
+
+    Product.prototype.initialize = function() {
+      return Product.__super__.initialize.call(this);
+    };
+
+    Product.prototype.render = function() {
+      Product.__super__.render.call(this);
+      if (this.data.is_editable) {
+        this.$el.find("[data-name]").attr("contenteditable", "true");
+        this.$el.find("[data-price]").attr("contenteditable", "true");
+        this.$el.find("[data-description]").attr("contenteditable", "true");
+      }
+      return this;
+    };
+
+    Product.prototype.save_edit = function(e) {
+      this.model.set({
+        name: this.$el.find("[data-name]").html(),
+        price: parseFloat(this.$el.find("[data-price]").text()),
+        description: this.$el.find("[data-description]").html()
+      });
+      return Product.__super__.save_edit.call(this);
+    };
+
+    return Product;
 
   })(Saturdays.Views.Editable);
 
@@ -1068,6 +1138,7 @@
     }
 
     Router.prototype.routes = {
+      "products(/:pretty_url)(/)": "products",
       "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
       "(/)": "home"
     };
@@ -1094,6 +1165,21 @@
       if ($(".js-survey").length > 0) {
         return this.survey_view = new Saturdays.Views.Survey();
       }
+    };
+
+    Router.prototype.products = function(pretty_url) {
+      return $(".js-product").each((function(_this) {
+        return function(index, product) {
+          var model;
+          model = new Saturdays.Models.Product({
+            "_id": product.getAttribute("data-id")
+          });
+          return _this.views.push(new Saturdays.Views.Product({
+            el: product,
+            model: model
+          }));
+        };
+      })(this));
     };
 
     Router.prototype.list = function(list_route, route) {
