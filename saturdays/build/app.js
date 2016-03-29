@@ -902,7 +902,9 @@
     };
 
     Piece.prototype.prevent_click = function(e) {
-      return e.preventDefault();
+      if (this.data.is_authenticated) {
+        return e.preventDefault();
+      }
     };
 
     return Piece;
