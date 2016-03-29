@@ -42,8 +42,8 @@
 
         <header id="header">
             {% block header %}
-            <a href="/lists/blog">
-                <h1 class="h1--normal">{{pieces.metadata.title|safe}} <span class="spaced">&mdash;</span> {{pieces.metadata.sub_title}}</h1>
+            <a href="/lists/blog" class="js-piece" data-id="{{pieces.metadata._id}}">
+                <h1 class="h1--normal"><span data-key="title">{{pieces.metadata.title|safe}}</span> <span class="spaced">&mdash;</span> <span data-key="sub_title">{{pieces.metadata.sub_title}}</span> <span data-piece-admin></span></h1>
             </a>
             {% endblock %}
         </header>

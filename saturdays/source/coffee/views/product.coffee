@@ -17,7 +17,7 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 
 		super()
 
-		if @data.is_editable
+		if @data.is_authenticated
 			this.$el.find("[data-name]").attr "contenteditable", "true"
 			this.$el.find("[data-price]").attr "contenteditable", "true"
 			this.$el.find("[data-description]").attr "contenteditable", "true"

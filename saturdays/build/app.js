@@ -431,6 +431,8 @@
         session: Saturdays.session.toJSON()
       } : void 0, Saturdays.user != null ? {
         user: Saturdays.user.toJSON()
+      } : void 0, Saturdays.session != null ? {
+        is_authenticated: Saturdays.session.has("user_id")
       } : void 0);
       if (this.templates != null) {
         html = "";
@@ -691,11 +693,10 @@
 
     Editable.prototype.render = function() {
       _.extend(this.data, {
-        is_editable: Saturdays.session.has("user_id"),
         model: this.model.toJSON()
       });
       Editable.__super__.render.call(this);
-      if (this.data.is_editable) {
+      if (this.data.is_authenticated) {
         this.$el.find("[data-tag]").attr("contenteditable", "true");
         this.$el.find("[data-tag-input]").html(this.tag_input_template(this.data));
         this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
@@ -861,6 +862,59 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Piece = (function(superClass) {
+    extend(Piece, superClass);
+
+    function Piece() {
+      return Piece.__super__.constructor.apply(this, arguments);
+    }
+
+    Piece.prototype.piece_admin_template = templates["admin/piece_admin"];
+
+    Piece.prototype.events = {
+      "click .js-save_piece": "save_piece",
+      "click [data-key]": "prevent_click"
+    };
+
+    Piece.prototype.initialize = function() {
+      this.listenTo(this.model, "sync", this.render);
+      this.model.fetch();
+      return Piece.__super__.initialize.call(this);
+    };
+
+    Piece.prototype.render = function() {
+      Piece.__super__.render.call(this);
+      if (this.data.is_authenticated) {
+        this.$el.find("[data-key]").attr("contenteditable", "true");
+        this.$el.find("[data-piece-admin]").html(this.piece_admin_template(this.data));
+      }
+      return this;
+    };
+
+    Piece.prototype.save_piece = function(e) {
+      e.preventDefault();
+      this.$el.find("[data-key]").each((function(_this) {
+        return function(index, key) {
+          return _this.model.attributes.content[key.getAttribute("data-key")].value = key.innerHTML;
+        };
+      })(this));
+      return this.model.save();
+    };
+
+    Piece.prototype.prevent_click = function(e) {
+      return e.preventDefault();
+    };
+
+    return Piece;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Views.Post = (function(superClass) {
     extend(Post, superClass);
 
@@ -883,7 +937,7 @@
 
     Post.prototype.render = function() {
       Post.__super__.render.call(this);
-      if (this.data.is_editable) {
+      if (this.data.is_authenticated) {
         this.$el.find("[data-title]").attr("contenteditable", "true");
         this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
@@ -955,7 +1009,7 @@
 
     Product.prototype.render = function() {
       Product.__super__.render.call(this);
-      if (this.data.is_editable) {
+      if (this.data.is_authenticated) {
         this.$el.find("[data-name]").attr("contenteditable", "true");
         this.$el.find("[data-price]").attr("contenteditable", "true");
         this.$el.find("[data-description]").attr("contenteditable", "true");
@@ -1162,8 +1216,20 @@
       delete this.views;
       this.views = [];
       if (callback != null) {
-        return callback.apply(this, args);
+        callback.apply(this, args);
       }
+      return $(".js-piece").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.Piece({
+            "_id": element.getAttribute("data-id")
+          });
+          return _this.views.push(new Saturdays.Views.Piece({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
     };
 
     Router.prototype.home = function() {
@@ -1174,13 +1240,13 @@
 
     Router.prototype.products = function(pretty_url) {
       return $(".js-product").each((function(_this) {
-        return function(index, product) {
+        return function(index, element) {
           var model;
           model = new Saturdays.Models.Product({
-            "_id": product.getAttribute("data-id")
+            "_id": element.getAttribute("data-id")
           });
           return _this.views.push(new Saturdays.Views.Product({
-            el: product,
+            el: element,
             model: model
           }));
         };
@@ -1189,12 +1255,12 @@
 
     Router.prototype.list = function(list_route, route) {
       return $(".js-post").each((function(_this) {
-        return function(index, post) {
+        return function(index, element) {
           var model;
           model = new Saturdays.Models.ListPost();
           model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
           return _this.views.push(new Saturdays.Views.Post({
-            el: post,
+            el: element,
             model: model
           }));
         };

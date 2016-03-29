@@ -32,6 +32,11 @@ button,
 	}
 
 
+	&.button--tight {
+		padding: $vertical_rythm/4 $vertical_rythm/2;
+	}
+
+
 	&.button--transparent {
 		color: $primary;
 		background: transparent;

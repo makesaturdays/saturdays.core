@@ -27,12 +27,11 @@ class Saturdays.Views.Editable extends Saturdays.View
 	render: ->
 
 		_.extend @data,
-			is_editable: Saturdays.session.has("user_id")
 			model: @model.toJSON()
 
 		super()
 
-		if @data.is_editable
+		if @data.is_authenticated
 			this.$el.find("[data-tag]").attr "contenteditable", "true"
 			this.$el.find("[data-tag-input]").html this.tag_input_template(@data)
 

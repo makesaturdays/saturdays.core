@@ -26,6 +26,15 @@ class Saturdays.Routers.Router extends Backbone.Router
 		callback.apply(this, args) if callback?
 
 
+		$(".js-piece").each (index, element)=>
+			model = new Saturdays.Models.Piece({"_id": element.getAttribute("data-id")})
+			@views.push new Saturdays.Views.Piece({
+				el: element
+				model: model
+			})
+
+
+
 
 	home: ->
 		if $(".js-survey").length > 0
@@ -33,21 +42,20 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 
 	products: (pretty_url)->
-		$(".js-product").each (index, product)=>
-			model = new Saturdays.Models.Product({"_id": product.getAttribute("data-id")})
+		$(".js-product").each (index, element)=>
+			model = new Saturdays.Models.Product({"_id": element.getAttribute("data-id")})
 			@views.push new Saturdays.Views.Product({
-				el: product, 
+				el: element, 
 				model: model
 			})
 
 
 	list: (list_route, route)->
-		
-		$(".js-post").each (index, post)=>
+		$(".js-post").each (index, element)=>
 			model = new Saturdays.Models.ListPost()
 			model.urlRoot = Saturdays.settings.api + "lists/"+window.list_id+"/posts"
 			@views.push new Saturdays.Views.Post({
-				el: post, 
+				el: element, 
 				model: model
 			})
 

@@ -66,6 +66,14 @@ this["templates"]["admin/edit_admin"] = Handlebars.template({"1":function(contai
     + "</button></p>\n";
 },"useData":true});
 
+this["templates"]["admin/piece_admin"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<button class=\"button--tight js-save_piece\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.save : stack1), depth0))
+    + "</button>\n";
+},"useData":true});
+
 this["templates"]["admin/product_edit_admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "checked";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {

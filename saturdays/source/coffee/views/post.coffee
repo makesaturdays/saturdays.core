@@ -21,7 +21,7 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 
 		super()
 
-		if @data.is_editable
+		if @data.is_authenticated
 			this.$el.find("[data-title]").attr "contenteditable", "true"
 			this.$el.find("[data-published-date]").attr "contenteditable", "true"
 			this.$el.find("[data-content-key]").attr "contenteditable", "true"

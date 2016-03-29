@@ -10,8 +10,8 @@
 	<div class="js-survey">
 
 
-		<article class="main__center fades_out fade_out hide js-questions">
-			<p class="p--huge text_center">{{pieces.survey.form_label}}</p>
+		<article class="main__center fades_out fade_out hide js-questions js-piece" data-id="{{pieces.survey._id}}">
+			<p class="p--huge text_center"><span data-key="form_label">{{pieces.survey.form_label}}</span> <span data-piece-admin></span></p>
 
 			<form action="#" class="form--that_fades js-form">
 				<div class="input_box js-input">

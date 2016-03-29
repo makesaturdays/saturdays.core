@@ -29,7 +29,7 @@ validation_rules = {
 			'type': 'dict',
 			'schema': {
 				'label': { 'type': 'string', 'nullable': True },
-				'value': { 'type': 'string', 'nullable': True, 'maxlength': 1000000 },
+				'value': { 'nullable': True },
 				'is_markdown': { 'type': 'boolean', 'nullable': True }
 			}
 		}
