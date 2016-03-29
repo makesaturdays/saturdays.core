@@ -676,10 +676,6 @@
 
     Editable.prototype.tag_template = templates["admin/tag"];
 
-    Editable.prototype.author_input_template = templates["admin/author_input"];
-
-    Editable.prototype.author_template = templates["admin/author"];
-
     Editable.prototype.initialize = function() {
       this.events["click .js-save_edit"] = "save_edit";
       this.events["click .js-destroy"] = "destroy";
@@ -872,6 +868,10 @@
       return Post.__super__.constructor.apply(this, arguments);
     }
 
+    Post.prototype.author_input_template = templates["admin/author_input"];
+
+    Post.prototype.author_template = templates["admin/author"];
+
     Post.prototype.events = {
       "click .js-maximize": "maximize",
       "click .js-minimize": "minimize"
@@ -887,6 +887,7 @@
         this.$el.find("[data-title]").attr("contenteditable", "true");
         this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
+        this.delegateEvents();
       }
       return this;
     };
@@ -944,6 +945,8 @@
       return Product.__super__.constructor.apply(this, arguments);
     }
 
+    Product.prototype.product_edit_admin_template = templates["admin/product_edit_admin"];
+
     Product.prototype.events = {};
 
     Product.prototype.initialize = function() {
@@ -956,6 +959,8 @@
         this.$el.find("[data-name]").attr("contenteditable", "true");
         this.$el.find("[data-price]").attr("contenteditable", "true");
         this.$el.find("[data-description]").attr("contenteditable", "true");
+        this.$el.find("[data-product-admin]").html(this.product_edit_admin_template(this.data));
+        this.delegateEvents();
       }
       return this;
     };

@@ -5,6 +5,7 @@
 
 label,
 .label {
+	cursor: pointer;
 	display: block;
 
 	font-family: $alternate_font;
@@ -84,6 +85,11 @@ textarea,
 		pointer-events: none;
 	}
 
+	&.input--underline {
+		padding: $vertical_rythm/2 0;
+		border-bottom: 1px dashed;
+	}
+
 	&.input--inline {
 		display: inline-block;
 		width: auto;
@@ -126,6 +132,10 @@ input[type="file"] {
 	display: block;
 }
 
+input[type="checkbox"],
+input[type="radio"] {
+	cursor: pointer;
+}
 
 
 

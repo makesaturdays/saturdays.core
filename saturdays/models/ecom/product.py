@@ -83,6 +83,9 @@ with app.app_context():
 		@classmethod
 		def create(cls, document):
 
+			if 'price' not in document:
+				document['price'] = 0.0
+
 			document = cls._update_discount(document)
 			return super().create(document)
 

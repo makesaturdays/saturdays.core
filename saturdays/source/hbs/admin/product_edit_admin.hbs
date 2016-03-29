@@ -1,0 +1,13 @@
+
+<label for="sku">SKU</label>
+<input class="input--underline" type="text" id="sku" name="sku" value="{{model.sku}}">
+<label for="inventory">Inventory</label>
+<input class="input--underline" type="number" id="inventory" name="inventory" value="{{model.inventory}}">
+
+<input type="checkbox" id="is_taxable" name="is_taxable" {{#if model.is_taxable}}checked{{/if}}>
+<label for="is_taxable">Is taxable?</label>
+<br>
+
+<input type="checkbox" id="is_salable" name="is_salable" {{#if model.is_salable}}checked{{/if}}>
+<label for="is_salable">Is salable?</label>
+<br>

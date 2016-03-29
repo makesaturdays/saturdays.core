@@ -1,6 +1,9 @@
 
 class Saturdays.Views.Post extends Saturdays.Views.Editable
 
+	author_input_template: templates["admin/author_input"]
+	author_template: templates["admin/author"]
+
 
 	events: {
 		"click .js-maximize": "maximize"
@@ -22,6 +25,8 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 			this.$el.find("[data-title]").attr "contenteditable", "true"
 			this.$el.find("[data-published-date]").attr "contenteditable", "true"
 			this.$el.find("[data-content-key]").attr "contenteditable", "true"
+
+			this.delegateEvents()
 
 		this
 

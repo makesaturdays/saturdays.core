@@ -1,6 +1,7 @@
 
 class Saturdays.Views.Product extends Saturdays.Views.Editable
 
+	product_edit_admin_template: templates["admin/product_edit_admin"]
 
 	events: {
 	}
@@ -20,6 +21,10 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 			this.$el.find("[data-name]").attr "contenteditable", "true"
 			this.$el.find("[data-price]").attr "contenteditable", "true"
 			this.$el.find("[data-description]").attr "contenteditable", "true"
+
+			this.$el.find("[data-product-admin]").html this.product_edit_admin_template(@data)
+
+			this.delegateEvents()
 
 		this
 
