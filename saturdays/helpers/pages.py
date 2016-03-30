@@ -21,7 +21,6 @@ def page():
 		}
 		response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
 
-
 		if request.path == '/':
 			request.path = '/index' 
 

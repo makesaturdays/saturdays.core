@@ -11,6 +11,9 @@ from flask import request, abort
 import os
 
 
+from saturdays.models.core.upload import Upload
+Upload.define_routes()
+
 
 from saturdays.models.auth.token import Token
 from saturdays.models.auth.session import Session

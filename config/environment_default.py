@@ -18,6 +18,11 @@ STRIPE_API_KEY = 			os.getenv('STRIPE_API_KEY', 'sk_test_RaELUxUxG1GEL6UzKzoT8Xt
 STRIPE_CLIENT_ID = 			os.getenv('STRIPE_CLIENT_ID', 'ca_7g3yiDWNt1sCNsEkc8hhm9mzpK4BhVVH')
 
 
+# S3
+# S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY', '')
+# S3_SECRET_KEY = os.getenv('S3_SECRET_KEY', '')
+# S3_BUCKET = os.getenv('S3_BUCKET', '')
+MAX_CONTENT_LENGTH = 16 * 1024 * 1024
 
 # CELERY
 # CELERY_BROKER_URL =			os.getenv('CELERY_BROKER_URL', 		'redis://')
@@ -36,10 +41,7 @@ STRIPE_CLIENT_ID = 			os.getenv('STRIPE_CLIENT_ID', 'ca_7g3yiDWNt1sCNsEkc8hhm9mz
 
 
 
-# S3
-# S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY', '')
-# S3_SECRET_KEY = os.getenv('S3_SECRET_KEY', '')
-# S3_BUCKET = os.getenv('S3_BUCKET', '')
+
 
 
 
