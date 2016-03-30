@@ -1,2 +1,7 @@
 
-<input class="em input--inline" placeholder="Add an author" type="text" name="author_input">
+<label for="authors">Authors</label>
+<select name="authors" id="authors" multiple>
+{{#each authors}}
+	<option value="{{_id}}" {{#if_in_array ../model.authors _id}}selected{{/if_in_array}} >{{handle}}</option>
+{{/each}}
+</select>

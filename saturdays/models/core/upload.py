@@ -29,11 +29,7 @@ with app.app_context():
 
 		@classmethod
 		def upload_view(cls):
-			print(request.files)
-
 			uploaded_file = request.files['file']
-
-			print(uploaded_file)
 
 			filename = secure_filename(uploaded_file.filename)
 			_id = str(ObjectId())

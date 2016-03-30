@@ -5,9 +5,6 @@ class Saturdays.Model extends Backbone.Model
 
 
 
-
-
-
 	save: (data, options={}, local_only=false)->
 		if this.local_storage?
 			this.set data

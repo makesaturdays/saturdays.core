@@ -465,6 +465,25 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Models.Author = (function(superClass) {
+    extend(Author, superClass);
+
+    function Author() {
+      return Author.__super__.constructor.apply(this, arguments);
+    }
+
+    Author.prototype.urlRoot = Saturdays.settings.api + "authors";
+
+    return Author;
+
+  })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Models.List = (function(superClass) {
     extend(List, superClass);
 
@@ -658,6 +677,27 @@
     return User;
 
   })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Collections.Authors = (function(superClass) {
+    extend(Authors, superClass);
+
+    function Authors() {
+      return Authors.__super__.constructor.apply(this, arguments);
+    }
+
+    Authors.prototype.url = Saturdays.settings.api + "authors";
+
+    Authors.prototype.model = Saturdays.Models.Author;
+
+    return Authors;
+
+  })(Backbone.Collection);
 
 }).call(this);
 
@@ -934,15 +974,24 @@
     };
 
     Post.prototype.initialize = function() {
+      if (Saturdays.authors == null) {
+        Saturdays.authors = new Saturdays.Collections.Authors();
+      }
+      this.listenTo(Saturdays.authors, "sync", this.render);
+      Saturdays.authors.fetch();
       return Post.__super__.initialize.call(this);
     };
 
     Post.prototype.render = function() {
+      _.extend(this.data, {
+        authors: Saturdays.authors.toJSON()
+      });
       Post.__super__.render.call(this);
       if (this.data.is_authenticated) {
         this.$el.find("[data-title]").attr("contenteditable", "true");
         this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
+        this.$el.find("[data-author-input]").html(this.author_input_template(this.data));
         this.delegateEvents();
       }
       return this;
@@ -952,7 +1001,8 @@
       var value;
       this.model.set({
         title: this.$el.find("[data-title]").html(),
-        published_date: this.$el.find("[data-published-date]").html()
+        published_date: this.$el.find("[data-published-date]").html(),
+        authors: this.$el.find("[name='authors']").val()
       });
       value = "";
       this.$el.find("[data-content-key]").each((function(_this) {

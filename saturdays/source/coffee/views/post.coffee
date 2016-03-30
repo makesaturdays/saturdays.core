@@ -12,12 +12,18 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 
 
 	initialize: ->
+		Saturdays.authors = new Saturdays.Collections.Authors() unless Saturdays.authors?
+		
+		this.listenTo Saturdays.authors, "sync", this.render
+		Saturdays.authors.fetch()
 
 		super()
 
 
 
 	render: ->
+		_.extend @data,
+			authors: Saturdays.authors.toJSON()
 
 		super()
 
@@ -25,6 +31,8 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 			this.$el.find("[data-title]").attr "contenteditable", "true"
 			this.$el.find("[data-published-date]").attr "contenteditable", "true"
 			this.$el.find("[data-content-key]").attr "contenteditable", "true"
+
+			this.$el.find("[data-author-input]").html this.author_input_template(@data)
 
 			this.delegateEvents()
 
@@ -36,7 +44,7 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 		@model.set
 			title: this.$el.find("[data-title]").html()
 			published_date: this.$el.find("[data-published-date]").html()
-
+			authors: this.$el.find("[name='authors']").val()
 
 		value = ""
 		this.$el.find("[data-content-key]").each (index, content)=>

@@ -45,7 +45,7 @@ with app.app_context():
 		@classmethod
 		def _format_response(cls, response):
 			try:
-				if request.headers['Accept'] == 'application/json':
+				if 'application/json' in request.headers['Accept']:
 					return to_json(response)
 
 				else:

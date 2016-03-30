@@ -4,7 +4,6 @@ class Saturdays.Collection extends Backbone.Collection
 		
 
 
-
 	fetch: (options={})->
 		super Saturdays.Model.prototype.set_secret_header(options)
 
