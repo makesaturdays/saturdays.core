@@ -27,14 +27,14 @@ window.Saturdays =
 			pushState: true
 	
 
-_.extend Saturdays.settings, window.saturdays_settings if window.saturdays_settings?
-		
 
 Saturdays = window.Saturdays
 _ = window._
 Backbone = window.Backbone
 jQuery = window.jQuery
 
+
+_.extend Saturdays.settings, window.saturdays_settings if window.saturdays_settings?
 
 
 

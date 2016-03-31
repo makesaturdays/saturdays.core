@@ -21,10 +21,6 @@
     }
   };
 
-  if (window.saturdays_settings != null) {
-    _.extend(Saturdays.settings, window.saturdays_settings);
-  }
-
   Saturdays = window.Saturdays;
 
   _ = window._;
@@ -32,6 +28,10 @@
   Backbone = window.Backbone;
 
   jQuery = window.jQuery;
+
+  if (window.saturdays_settings != null) {
+    _.extend(Saturdays.settings, window.saturdays_settings);
+  }
 
   $(function() {
     return Saturdays.init();
