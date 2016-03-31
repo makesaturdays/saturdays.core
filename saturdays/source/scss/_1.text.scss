@@ -104,7 +104,9 @@ a {
 
 	&.a--underline,
 	.underline_links & {
+		display: inline-block;
 		border-bottom: 1px dotted;
+		line-height: 0.9;
 	}
 
 	&.a--huge_underline {
