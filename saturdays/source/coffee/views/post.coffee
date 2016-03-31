@@ -8,6 +8,7 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 	events: {
 		"click .js-maximize": "maximize"
 		"click .js-minimize": "minimize"
+		"drop [data-is-markdown]": "drop_image"
 	}
 
 
@@ -78,5 +79,22 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 		this.$el.find(".blog__post__content").addClass "blog__post__content--minimized"
 
 		Saturdays.router.navigate "/lists/blog"
+
+
+
+	drop_image: (e)->
+		e.preventDefault()
+		e.stopPropagation()
+
+		file = e.originalEvent.dataTransfer.files[0]
+
+		if file.type.match('image.*')
+			Saturdays.helpers.upload file,
+				success: (response)->
+					$(e.target).before "<p>!["+response.file_name+"]("+Saturdays.settings.cdn+response.url+")</p>"
+
+
+
+
 
 

@@ -7,6 +7,7 @@
     Views: {},
     Routers: {},
     settings: {
+      cdn: "https://d3hy1swj29dtr7.cloudfront.net/",
       api: "http://127.0.0.1:5000/"
     },
     init: function(settings) {
@@ -104,6 +105,30 @@
 
 (function() {
   Saturdays.helpers = {
+    upload: function(file, options) {
+      var data;
+      if (options == null) {
+        options = {};
+      }
+      data = new FormData();
+      data.append("file", file);
+      return $.ajax({
+        type: "POST",
+        url: Saturdays.settings.api + "_upload",
+        data: data,
+        cache: false,
+        processData: false,
+        contentType: false,
+        headers: {
+          "X-Session-Secret": Saturdays.cookies.get("Session-Secret")
+        },
+        success: function(response) {
+          if (options.success != null) {
+            return options.success(response);
+          }
+        }
+      });
+    },
     get_query_string: function() {
       var m, query_string, regex, result;
       result = {};
@@ -203,8 +228,8 @@
       if (options.headers == null) {
         options.headers = {};
       }
-      options.headers['Accept'] = 'application/json';
-      options.headers['X-Session-Secret'] = Saturdays.cookies.get("Session-Secret");
+      options.headers["Accept"] = "application/json";
+      options.headers["X-Session-Secret"] = Saturdays.cookies.get("Session-Secret");
       return options;
     };
 
@@ -970,7 +995,8 @@
 
     Post.prototype.events = {
       "click .js-maximize": "maximize",
-      "click .js-minimize": "minimize"
+      "click .js-minimize": "minimize",
+      "drop [data-is-markdown]": "drop_image"
     };
 
     Post.prototype.initialize = function() {
@@ -1032,6 +1058,20 @@
       this.$el.find(".js-maximize").removeClass("hide");
       this.$el.find(".blog__post__content").addClass("blog__post__content--minimized");
       return Saturdays.router.navigate("/lists/blog");
+    };
+
+    Post.prototype.drop_image = function(e) {
+      var file;
+      e.preventDefault();
+      e.stopPropagation();
+      file = e.originalEvent.dataTransfer.files[0];
+      if (file.type.match('image.*')) {
+        return Saturdays.helpers.upload(file, {
+          success: function(response) {
+            return $(e.target).before("<p>![" + response.file_name + "](" + Saturdays.settings.cdn + response.url + ")</p>");
+          }
+        });
+      }
     };
 
     return Post;

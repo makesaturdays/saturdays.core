@@ -9,6 +9,7 @@ window.Saturdays =
 
 
 	settings:
+		cdn: "https://d3hy1swj29dtr7.cloudfront.net/"
 		api: "http://127.0.0.1:5000/"
 		# api: "https://makesaturdays.com/"
 
