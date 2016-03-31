@@ -10,10 +10,7 @@
       cdn: "https://d3hy1swj29dtr7.cloudfront.net/",
       api: "http://127.0.0.1:5000/"
     },
-    init: function(settings) {
-      if (settings != null) {
-        _.extend(this.settings, settings);
-      }
+    init: function() {
       this.session = new Saturdays.Models.Session();
       this.user = new Saturdays.Models.User();
       this.admin_view = new Saturdays.Views.Admin();
@@ -24,6 +21,10 @@
     }
   };
 
+  if (window.saturdays_settings != null) {
+    _.extend(Saturdays.settings, window.saturdays_settings);
+  }
+
   Saturdays = window.Saturdays;
 
   _ = window._;
@@ -33,7 +34,7 @@
   jQuery = window.jQuery;
 
   $(function() {
-    return Saturdays.init(window.saturdays_settings);
+    return Saturdays.init();
   });
 
 }).call(this);

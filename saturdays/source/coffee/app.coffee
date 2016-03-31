@@ -15,8 +15,7 @@ window.Saturdays =
 
 
 
-	init: (settings)->
-		_.extend @settings, settings if settings?
+	init: ->
 
 		@session = new Saturdays.Models.Session()
 		@user = new Saturdays.Models.User()
@@ -28,8 +27,7 @@ window.Saturdays =
 			pushState: true
 	
 
-
-		
+_.extend Saturdays.settings, window.saturdays_settings if window.saturdays_settings?
 		
 
 Saturdays = window.Saturdays
@@ -41,7 +39,7 @@ jQuery = window.jQuery
 
 
 $ ->
-	Saturdays.init(window.saturdays_settings)
+	Saturdays.init()
 
 
 
