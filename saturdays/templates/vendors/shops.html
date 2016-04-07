@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Shops - {{super()}}
+{% endblock %}
+
+
+{% block body_classes %}shops{% endblock %}
+
+{% block main %}
+<div class="grid grid--guttered">
+{% for shop in shops %}
+
+	<article class="col col--4of12 shop js-shop" data-id="{{shop._id}}">
+		<a href="/vendor_shops/{% if shop.pretty_url is defined %}{{shop.pretty_url}}{% else %}{{shop._id}}{% endif %}">
+			<img src="https://placehold.it/500x500/f4f4f4/E5E5E5/&text=%E2%88%85" alt="Picture of {{shop.name}}">
+			<h3>{{shop.name}}</h3>
+		</a>
+	</article>
+
+{% endfor %}
+</div>
+{% endblock %}
+
+{% block footer %}
+	{{super()}}
+{% endblock %}

@@ -3,6 +3,7 @@ class Saturdays.Views.Piece extends Saturdays.View
 
 
 	piece_admin_template: templates["admin/piece_admin"]
+	piece_link_template: templates["admin/piece_link"]
 
 
 	events: {
@@ -26,6 +27,13 @@ class Saturdays.Views.Piece extends Saturdays.View
 
 		if @data.is_authenticated
 			this.$el.find("[data-key]").attr "contenteditable", "true"
+			this.$el.find("[data-link-key]").each (index, link)=>
+				$(link).before this.piece_link_template({
+					key: link.getAttribute("data-link-key")
+					link: link.getAttribute("href")
+				})
+
+				link.removeAttribute("data-link-key")
 
 			this.$el.find("[data-piece-admin]").html this.piece_admin_template(@data)
 

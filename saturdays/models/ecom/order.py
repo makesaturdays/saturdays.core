@@ -12,7 +12,7 @@ from saturdays.models.ecom.cart import Cart
 from saturdays.models.ecom.cart_item import UserCartItem
 from saturdays.models.ecom.product import Product
 from saturdays.models.ecom.product_option import ProductOption
-from saturdays.models.ecom.vendor_location import VendorLocation
+from saturdays.models.ecom.vendor_shop import VendorShop
 from saturdays.models.ecom.credit_update import CreditUpdate
 
 from bson.objectid import ObjectId
@@ -32,7 +32,6 @@ with app.app_context():
 				'type': 'dict',
 				'schema': Cart.schema
 			},
-			'vendor_location_id': validation_rules['object_id'],
 			'metadata': validation_rules['metadata']
 		}
 
@@ -76,10 +75,8 @@ with app.app_context():
 		def create(cls, document):
 
 
-
 			if 'user_id' in document:
 				user = User.get(document['user_id'])
-				document['user_id'] = ObjectId(document['user_id'])
 
 				if 'cart' not in document:
 					document['cart'] = user['cart']
@@ -90,11 +87,6 @@ with app.app_context():
 
 				else:
 					document['cart'] = Cart.postprocess(Cart.preprocess(document['cart']))
-
-
-			if 'vendor_id' in document:
-				vendor = Vendor.get(document['vendor_id'])
-				document['vendor_id'] = ObjectId(document['vendor_id'])
 
 
 			try:
@@ -114,23 +106,38 @@ with app.app_context():
 
 			document['_id'] = ObjectId()
 
-
 			if document['total'] != 0:
 				stripe.api_key = app.config['STRIPE_API_KEY']
 
 				stripe_customer = stripe.Customer.retrieve(user['provider_data']['id'])
 				stripe_card = stripe_customer.sources.retrieve(document['credit_card']['provider_data']['id'])
 
+				document['charges'] = []
+				total_left = document['total']
 
-				document['charge'] = stripe.Charge.create(
-					amount=int(document['total']*100),
-					currency='cad',
-					customer=stripe_customer,
-					source=stripe_card,
-					destination=vendor['provider_data']['id'] if 'vendor_id' in document else None,
-					application_fee=int(document['total']*10) if 'vendor_id' in document else None,
-					metadata={'_id': document['_id']}
-				)
+				for vendor_shop in document['vendor_shops']:
+					document['charges'].append(stripe.Charge.create(
+						amount=int(vendor_shop['total']*100),
+						currency='cad',
+						customer=stripe_customer,
+						source=stripe_card,
+						destination=vendor_shop['provider_id'],
+						application_fee=int(vendor_shop['total']*10),
+						metadata={'order_id': document['_id']}
+					))
+
+					total_left -= vendor_shop['total']
+
+				if total_left > 0:
+					document['charges'].append(stripe.Charge.create(
+						amount=int(total_left*100),
+						currency='cad',
+						customer=stripe_customer,
+						source=stripe_card,
+						metadata={'order_id': document['_id']}
+					))
+
+				print(document['charges'])
 
 
 
@@ -153,11 +160,15 @@ with app.app_context():
 					'$unset': {UserCartItem.list_name: None}
 				})
 
-				if document['store_credit_total'] > 0:
-					CreditUpdate.create(user['_id'], {
-						'value': -document['store_credit_total'],
-						'description': 'order_id: ' + str(document['_id'])
-					})
+				try:
+					if document['store_credit_total'] > 0:
+						CreditUpdate.create(user['_id'], {
+							'value': -document['store_credit_total'],
+							'description': 'order_id: ' + str(document['_id'])
+						})
+
+				except KeyError:
+					pass
 
 
 			return super().create(document)

@@ -86,19 +86,19 @@ with app.app_context():
 				'view_function': 'get_view',
 				'template': 'lists/<route>.list.html',
 				'response_key': 'list',
-				'prerender_process': '_response_values'
+				'prerender_process': '_post_values'
 			},
 			{
 				'view_function': 'tags_get_view',
 				'template': 'lists/<route>.list.html',
 				'response_key': 'list',
-				'prerender_process': '_response_values'
+				'prerender_process': '_post_values'
 			},
 			{
 				'view_function': 'authors_get_view',
 				'template': 'lists/<route>.list.html',
 				'response_key': 'list',
-				'prerender_process': '_response_values'
+				'prerender_process': '_post_values'
 			}
 		]
 
@@ -222,7 +222,7 @@ with app.app_context():
 
 		# HELPERS
 		@classmethod
-		def _response_values(cls, response):
+		def _post_values(cls, response):
 			
 			authors = Author.list()
 			response['authors'] = authors

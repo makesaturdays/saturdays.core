@@ -59,8 +59,8 @@ from saturdays.models.ecom.credit_update import CreditUpdate
 # from saturdays.models.cms.comment import PlanComment
 # from saturdays.models.ecom.subscription import Subscription
 # from saturdays.models.ecom.cart_item import SubscriptionItem
-from saturdays.models.ecom.vendor_location import VendorLocation
-from saturdays.models.cms.comment import VendorLocationComment
+from saturdays.models.ecom.vendor_shop import VendorShop
+from saturdays.models.cms.comment import VendorShopComment
 from saturdays.models.ecom.taxe_rule import TaxeRule
 from saturdays.models.ecom.shipping_option import ShippingOption
 
@@ -80,8 +80,8 @@ CreditUpdate.define_routes()
 # PlanComment.define_routes()
 # Subscription.define_routes()
 # SubscriptionItem.define_routes()
-VendorLocation.define_routes()
-VendorLocationComment.define_routes()
+VendorShop.define_routes()
+VendorShopComment.define_routes()
 TaxeRule.define_routes()
 ShippingOption.define_routes()
 

@@ -20,7 +20,6 @@ with app.app_context():
 			'code': validation_rules['text'],
 			'products_tag': validation_rules['text'],
 			'discount_value': validation_rules['number'],
-			'has_fixed_discount_value': validation_rules['bool'],
 			'does_free_shipping': validation_rules['bool'],
 			'min_cart_sub_total': validation_rules['number'],
 			'is_online': validation_rules['bool'],

@@ -620,6 +620,25 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Models.VendorShop = (function(superClass) {
+    extend(VendorShop, superClass);
+
+    function VendorShop() {
+      return VendorShop.__super__.constructor.apply(this, arguments);
+    }
+
+    VendorShop.prototype.urlRoot = Saturdays.settings.api + "vendor_shops";
+
+    return VendorShop;
+
+  })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Models.Session = (function(superClass) {
     extend(Session, superClass);
 
@@ -722,6 +741,27 @@
     Authors.prototype.model = Saturdays.Models.Author;
 
     return Authors;
+
+  })(Backbone.Collection);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Collections.VendorShops = (function(superClass) {
+    extend(VendorShops, superClass);
+
+    function VendorShops() {
+      return VendorShops.__super__.constructor.apply(this, arguments);
+    }
+
+    VendorShops.prototype.url = Saturdays.settings.api + "vendor_shops";
+
+    VendorShops.prototype.model = Saturdays.Models.VendorShop;
+
+    return VendorShops;
 
   })(Backbone.Collection);
 
@@ -937,6 +977,8 @@
 
     Piece.prototype.piece_admin_template = templates["admin/piece_admin"];
 
+    Piece.prototype.piece_link_template = templates["admin/piece_link"];
+
     Piece.prototype.events = {
       "click .js-save_piece": "save_piece",
       "click [data-key]": "prevent_click"
@@ -952,6 +994,15 @@
       Piece.__super__.render.call(this);
       if (this.data.is_authenticated) {
         this.$el.find("[data-key]").attr("contenteditable", "true");
+        this.$el.find("[data-link-key]").each((function(_this) {
+          return function(index, link) {
+            $(link).before(_this.piece_link_template({
+              key: link.getAttribute("data-link-key"),
+              link: link.getAttribute("href")
+            }));
+            return link.removeAttribute("data-link-key");
+          };
+        })(this));
         this.$el.find("[data-piece-admin]").html(this.piece_admin_template(this.data));
       }
       return this;
@@ -1076,52 +1127,6 @@
     };
 
     return Post;
-
-  })(Saturdays.Views.Editable);
-
-}).call(this);
-
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  Saturdays.Views.Product = (function(superClass) {
-    extend(Product, superClass);
-
-    function Product() {
-      return Product.__super__.constructor.apply(this, arguments);
-    }
-
-    Product.prototype.product_edit_admin_template = templates["admin/product_edit_admin"];
-
-    Product.prototype.events = {};
-
-    Product.prototype.initialize = function() {
-      return Product.__super__.initialize.call(this);
-    };
-
-    Product.prototype.render = function() {
-      Product.__super__.render.call(this);
-      if (this.data.is_authenticated) {
-        this.$el.find("[data-name]").attr("contenteditable", "true");
-        this.$el.find("[data-price]").attr("contenteditable", "true");
-        this.$el.find("[data-description]").attr("contenteditable", "true");
-        this.$el.find("[data-product-admin]").html(this.product_edit_admin_template(this.data));
-        this.delegateEvents();
-      }
-      return this;
-    };
-
-    Product.prototype.save_edit = function(e) {
-      this.model.set({
-        name: this.$el.find("[data-name]").html(),
-        price: parseFloat(this.$el.find("[data-price]").text()),
-        description: this.$el.find("[data-description]").html()
-      });
-      return Product.__super__.save_edit.call(this);
-    };
-
-    return Product;
 
   })(Saturdays.Views.Editable);
 
@@ -1282,6 +1287,109 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Product = (function(superClass) {
+    extend(Product, superClass);
+
+    function Product() {
+      return Product.__super__.constructor.apply(this, arguments);
+    }
+
+    Product.prototype.product_edit_admin_template = templates["admin/product_edit_admin"];
+
+    Product.prototype.events = {};
+
+    Product.prototype.initialize = function() {
+      if (Saturdays.vendor_shops == null) {
+        Saturdays.vendor_shops = new Saturdays.Collections.VendorShops();
+      }
+      this.listenTo(Saturdays.vendor_shops, "sync", this.render);
+      Saturdays.vendor_shops.fetch();
+      return Product.__super__.initialize.call(this);
+    };
+
+    Product.prototype.render = function() {
+      _.extend(this.data, {
+        shops: Saturdays.vendor_shops.toJSON()
+      });
+      Product.__super__.render.call(this);
+      if (this.data.is_authenticated) {
+        this.$el.find("[data-name]").attr("contenteditable", "true");
+        this.$el.find("[data-price]").attr("contenteditable", "true");
+        this.$el.find("[data-description]").attr("contenteditable", "true");
+        this.$el.find("[data-product-admin]").html(this.product_edit_admin_template(this.data));
+        this.delegateEvents();
+      }
+      return this;
+    };
+
+    Product.prototype.save_edit = function(e) {
+      this.model.set({
+        name: this.$el.find("[data-name]").html(),
+        price: parseFloat(this.$el.find("[data-price]").text()),
+        description: this.$el.find("[data-description]").html(),
+        sku: this.$el.find("[name='sku']").val(),
+        inventory: parseInt(this.$el.find("[name='inventory']").val()),
+        vendor_shop_id: this.$el.find("[name='vendor_shop_id']").val() || null,
+        is_taxable: this.$el.find("[name='is_taxable']")[0].checked,
+        is_salable: this.$el.find("[name='is_salable']")[0].checked
+      });
+      return Product.__super__.save_edit.call(this);
+    };
+
+    return Product;
+
+  })(Saturdays.Views.Editable);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Views.VendorShop = (function(superClass) {
+    extend(VendorShop, superClass);
+
+    function VendorShop() {
+      return VendorShop.__super__.constructor.apply(this, arguments);
+    }
+
+    VendorShop.prototype.shop_edit_admin_template = templates["admin/shop_edit_admin"];
+
+    VendorShop.prototype.events = {};
+
+    VendorShop.prototype.initialize = function() {
+      return VendorShop.__super__.initialize.call(this);
+    };
+
+    VendorShop.prototype.render = function() {
+      VendorShop.__super__.render.call(this);
+      if (this.data.is_authenticated) {
+        this.$el.find("[data-name]").attr("contenteditable", "true");
+        this.$el.find("[data-description]").attr("contenteditable", "true");
+        this.$el.find("[data-shop-admin]").html(this.shop_edit_admin_template(this.data));
+        this.delegateEvents();
+      }
+      return this;
+    };
+
+    VendorShop.prototype.save_edit = function(e) {
+      this.model.set({
+        name: this.$el.find("[data-name]").html(),
+        description: this.$el.find("[data-description]").html()
+      });
+      return VendorShop.__super__.save_edit.call(this);
+    };
+
+    return VendorShop;
+
+  })(Saturdays.Views.Editable);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Routers.Router = (function(superClass) {
     extend(Router, superClass);
 
@@ -1291,6 +1399,7 @@
 
     Router.prototype.routes = {
       "products(/:pretty_url)(/)": "products",
+      "vendor_shops(/:pretty_url)(/)": "vendor_shops",
       "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
       "(/)": "home"
     };
@@ -1339,6 +1448,21 @@
             "_id": element.getAttribute("data-id")
           });
           return _this.views.push(new Saturdays.Views.Product({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
+    };
+
+    Router.prototype.vendor_shops = function(pretty_url) {
+      return $(".js-shop").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.VendorShop({
+            "_id": element.getAttribute("data-id")
+          });
+          return _this.views.push(new Saturdays.Views.VendorShop({
             el: element,
             model: model
           }));

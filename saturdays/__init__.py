@@ -11,7 +11,11 @@ app = Flask(__name__, static_folder='build')
 
 
 app.config.from_object('config.environment_default')
-# app.config.from_object('config.environment_dev')
+try:
+	app.config.from_object('config.environment_dev')
+except ImportError:
+	pass
+	
 # app.config.from_object('config.schedule')
 
 

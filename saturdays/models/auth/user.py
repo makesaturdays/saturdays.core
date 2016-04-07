@@ -164,20 +164,19 @@ with app.app_context():
 
 		@classmethod
 		def postprocess(cls, document):
+
+			try:
+				document['cart']['available_store_credit'] = document['store_credit']
+			except KeyError:
+				pass
 			
 			try:
 				document['cart']['items'] = document['cart_items']
 				del document['cart_items']
-
 			except KeyError:
 				pass
 
-			try:
-				document['cart']['available_store_credit'] = document['store_credit']
-				document['cart'] = Cart.postprocess(document['cart'])
-
-			except KeyError:
-				pass
+			document['cart'] = Cart.postprocess(document['cart'])
 
 
 			try:
@@ -197,7 +196,7 @@ with app.app_context():
 			document = cls.get(_id)
 
 			try:
-				return to_json(Cart.postprocess(document['cart']))
+				return to_json(document['cart'])
 
 			except KeyError:
 				return to_json({})

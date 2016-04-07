@@ -62,7 +62,7 @@ with app.app_context():
 
 
 		@classmethod
-		def postprocess(cls, document):
+		def postprocess(cls, document, parent_id):
 
 			if 'discount' in document:
 				if document['discount']['has_fixed_value']:

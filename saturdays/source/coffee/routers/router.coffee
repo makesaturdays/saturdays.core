@@ -4,6 +4,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 	routes: {
 		"products(/:pretty_url)(/)": "products"
+		"vendor_shops(/:pretty_url)(/)": "vendor_shops"
 		"lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list"
 		"(/)": "home"
 	}
@@ -45,6 +46,14 @@ class Saturdays.Routers.Router extends Backbone.Router
 		$(".js-product").each (index, element)=>
 			model = new Saturdays.Models.Product({"_id": element.getAttribute("data-id")})
 			@views.push new Saturdays.Views.Product({
+				el: element, 
+				model: model
+			})
+
+	vendor_shops: (pretty_url)->
+		$(".js-shop").each (index, element)=>
+			model = new Saturdays.Models.VendorShop({"_id": element.getAttribute("data-id")})
+			@views.push new Saturdays.Views.VendorShop({
 				el: element, 
 				model: model
 			})

@@ -76,7 +76,7 @@ with app.app_context():
 				'view_function': 'get_view',
 				'template': 'lists/<parent_route>.post.html',
 				'response_key': 'post',
-				'prerender_process': '_response_values'
+				'prerender_process': '_post_values'
 			}
 		]
 
@@ -142,7 +142,7 @@ with app.app_context():
 
 
 		@classmethod
-		def _response_values(cls, response):
+		def _post_values(cls, response):
 						
 			authors = Author.list()
 

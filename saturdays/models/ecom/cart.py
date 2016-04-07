@@ -120,15 +120,12 @@ with app.app_context():
 			if 'coupon' in document:
 				document['coupon_total'] = 0
 
-				if 'has_fixed_discount_value' in document['coupon'] and document['coupon']['has_fixed_discount_value']:
-					document['coupon']['discount_value_left'] = document['coupon']['discount_value']
-
-
-			document['requires_shipping'] = False
 			
+			document['requires_shipping'] = False
 
 			try:
 				document['items_total_quantity'] = 0
+				vendor_shops = {}
 
 				for item in document['items']:
 					item = CartItem.postprocess(item)
@@ -138,23 +135,24 @@ with app.app_context():
 
 					item['total'] = item['sub_total']
 					if 'coupon' in document:
-						if document['coupon']['has_fixed_discount_value']:
-							if item['total'] < document['coupon']['discount_value_left']:
-								document['coupon_total'] += item['total']
-								document['coupon']['discount_value_left'] -= item['total']
-								item['total'] = 0
-
-							else:
-								document['coupon_total'] += document['coupon']['discount_value_left']
-								item['total'] -= document['coupon']['discount_value_left']
-								document['coupon']['discount_value_left'] = 0
-
-						else:
-							item['coupon_total'] = round((item['sub_total'] * document['coupon']['discount_value']), 2)
-							document['coupon_total'] += item['coupon_total']
-							item['total'] -= item['coupon_total']
+						item['coupon_total'] = round((item['sub_total'] * document['coupon']['discount_value']), 2)
+						document['coupon_total'] += item['coupon_total']
+						item['total'] -= item['coupon_total']
 
 					document['total'] += item['total']
+
+
+					try:
+						vendor_shop_id = str(item['vendor_shop']['_id'])
+						if vendor_shop_id not in vendor_shops.keys():
+							vendor_shops[vendor_shop_id] = item['vendor_shop']
+							vendor_shops[vendor_shop_id]['total'] = item['total']
+
+						else:
+							vendor_shops[vendor_shop_id]['total'] += item['total']
+
+					except KeyError:
+						pass
 
 
 					try:
@@ -165,10 +163,13 @@ with app.app_context():
 						pass
 
 
-
 			except KeyError:
 				pass
 
+
+			document['vendor_shops'] = []
+			for (_id, vendor_shop) in vendor_shops.items():
+				document['vendor_shops'].append(vendor_shop)
 
 
 			try:

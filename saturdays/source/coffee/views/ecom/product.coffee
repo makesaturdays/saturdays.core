@@ -8,12 +8,18 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 
 
 	initialize: ->
+		Saturdays.vendor_shops = new Saturdays.Collections.VendorShops() unless Saturdays.vendor_shops?
+		
+		this.listenTo Saturdays.vendor_shops, "sync", this.render
+		Saturdays.vendor_shops.fetch()
 
 		super()
 
 
 
 	render: ->
+		_.extend @data,
+			shops: Saturdays.vendor_shops.toJSON()
 
 		super()
 
@@ -35,6 +41,11 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 			name: this.$el.find("[data-name]").html()
 			price: parseFloat(this.$el.find("[data-price]").text())
 			description: this.$el.find("[data-description]").html()
+			sku: this.$el.find("[name='sku']").val()
+			inventory: parseInt(this.$el.find("[name='inventory']").val())
+			vendor_shop_id: this.$el.find("[name='vendor_shop_id']").val() or null
+			is_taxable: this.$el.find("[name='is_taxable']")[0].checked
+			is_salable: this.$el.find("[name='is_salable']")[0].checked
 
 
 		super()

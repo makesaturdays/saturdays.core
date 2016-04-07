@@ -8,7 +8,7 @@ from saturdays.models.cms.list_post import ListPost
 from saturdays.models.cms.survey import Survey
 from saturdays.models.ecom.product import Product
 from saturdays.models.ecom.plan import Plan
-from saturdays.models.ecom.vendor_location import VendorLocation
+from saturdays.models.ecom.vendor_shop import VendorShop
 
 from saturdays.helpers.validation_rules import validation_rules
 
@@ -80,9 +80,9 @@ with app.app_context():
 		parent = Plan
 
 
-	class VendorLocationComment(Comment):
+	class VendorShopComment(Comment):
 
-		parent = VendorLocation
+		parent = VendorShop
 
 
 

@@ -12,6 +12,7 @@ validation_rules = {
 	'interval': { 'type': 'string', 'allowed': ['day', 'week', 'month', 'year']},
 	'day': { 'type': 'integer', 'min': 0, 'max': 6 },
 	'datetime': { 'type': 'datetime' },
+	'currency': { 'type': 'string', 'allowed': ['cad', 'usd']},
 
 	'metadata': {
 		'type': 'dict',

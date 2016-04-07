@@ -12,6 +12,7 @@ from saturdays.helpers.validation_rules import validation_rules
 from saturdays.models.auth.user import User
 from saturdays.models.ecom.cart import Cart
 from saturdays.models.ecom.product import Product
+from saturdays.models.ecom.vendor_shop import VendorShop
 from saturdays.models.ecom.subscription import Subscription
 
 
@@ -76,6 +77,17 @@ with app.app_context():
 					document['thumbnail'] = document['product']['thumbnail']
 				except KeyError:
 					pass
+
+
+
+			try:
+				if document['product']['vendor_shop_id'] is not None:
+					document['vendor_shop'] = VendorShop.get(document['product']['vendor_shop_id'])
+					document['vendor_shop']['provider_id'] = document['vendor_shop']['provider_data']['id']
+					del document['vendor_shop']['provider_data']
+					
+			except KeyError:
+				pass
 
 
 			if 'quantity' not in document:

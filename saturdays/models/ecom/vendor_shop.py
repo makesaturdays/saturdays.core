@@ -2,37 +2,47 @@ from saturdays import app
 from flask import request, abort
 
 from saturdays.models.core.model import Model
+from saturdays.models.core.with_templates import WithTemplates
 from saturdays.models.core.has_routes import HasRoutes
 
 from saturdays.helpers.validation_rules import validation_rules
 
-from bson.objectid import ObjectId
+from saturdays.models.ecom.product import Product
 
+
+from bson.objectid import ObjectId
 
 import stripe
 
 
 
 with app.app_context():
-	class VendorLocation(HasRoutes, Model):
+	class VendorShop(WithTemplates, HasRoutes, Model):
 
-		collection_name = 'vendor_locations'
+		collection_name = 'vendor_shops'
+		alternate_index = 'pretty_url'
 
 		schema = {
-			'user_id': validation_rules['object_id'],
+			'vendor_ids': {
+				'type': 'list',
+				'schema': validation_rules['object_id']
+			},
 			'name': validation_rules['text'],
 			'email': validation_rules['email'],
+			'currency': validation_rules['currency'],
 			'url': validation_rules['text'],
+			'description': validation_rules['text'],
 			'address': validation_rules['address'],
 			'thumbnail': validation_rules['image'],
 			'image': validation_rules['image'],
 			'support_email': validation_rules['email'],
 			'support_phone': validation_rules['text'],
 			'support_url': validation_rules['text'],
+			'pretty_url': validation_rules['text'],
 			'metadata': validation_rules['metadata']
 		}
 
-		endpoint = '/vendor_locations'
+		endpoint = '/vendor_shops'
 		routes = [
 			{
 				'route': '',
@@ -46,7 +56,7 @@ with app.app_context():
 				'requires_admin': True
 			},
 			{
-				'route': '/<ObjectId:_id>',
+				'route': '/<string:_id>',
 				'view_function': 'get_view',
 				'methods': ['GET']
 			},
@@ -61,6 +71,20 @@ with app.app_context():
 				'view_function': 'delete_view',
 				'methods': ['DELETE'],
 				'requires_admin': True
+			}
+		]
+
+		templates = [
+			{
+				'view_function': 'list_view',
+				'template': 'vendors/shops.html',
+				'response_key': 'shops'
+			},
+			{
+				'view_function': 'get_view',
+				'template': 'vendors/shop.html',
+				'response_key': 'shop',
+				'prerender_process': '_shop_products'
 			}
 		]
 
@@ -88,6 +112,17 @@ with app.app_context():
 
 
 			return super().create(document)
+
+
+
+		# HELPERS
+		@classmethod
+		def _shop_products(cls, response):
+			print(response['_id'])
+			response['products'] = Product.list({'vendor_shop_id': response['_id']})
+			print(response['products'])
+
+			return response
 
 
 

@@ -28,11 +28,14 @@ with app.app_context():
 			'is_taxable': validation_rules['bool'],
 			'is_salable': validation_rules['bool'],
 			'is_online': validation_rules['bool'],
+			'vendor_shop_id': validation_rules['object_id'].copy(),
 			'requires_shipping': validation_rules['bool'],
 			'order': validation_rules['int'],
 			'tags': validation_rules['text_list'],
 			'metadata': validation_rules['metadata']
 		}
+
+		schema['vendor_shop_id']['nullable'] = True
 
 		endpoint = '/products'
 		routes = [
@@ -114,7 +117,7 @@ with app.app_context():
 				for option in document['options']:
 					if 'discount' in document:
 						option['discount'] = document['discount']
-					option = ProductOption.postprocess(option)
+					option = ProductOption.postprocess(option, document['_id'])
 
 			except KeyError:
 				pass

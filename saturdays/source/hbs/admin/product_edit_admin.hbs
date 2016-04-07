@@ -1,8 +1,19 @@
 
+
+
 <label for="sku">SKU</label>
 <input class="input--underline" type="text" id="sku" name="sku" value="{{model.sku}}">
+
 <label for="inventory">Inventory</label>
 <input class="input--underline" type="number" id="inventory" name="inventory" value="{{model.inventory}}">
+
+<label for="vendor_shop_id">Vendor Shop</label>
+<select name="vendor_shop_id" id="vendor_shop_id">
+	<option value="">(none)</option>
+{{#each shops}}
+	<option value="{{_id}}" {{#if_equal ../model.vendor_shop_id _id}}selected{{/if_equal}} >{{name}}</option>
+{{/each}}
+</select>
 
 <input type="checkbox" id="is_taxable" name="is_taxable" {{#if model.is_taxable}}checked{{/if}}>
 <label for="is_taxable">Is taxable?</label>

@@ -43,7 +43,7 @@
 
         <header id="header">
             {% block header %}
-            <a href="/lists/blog" class="js-piece" data-id="{{pieces.metadata._id}}">
+            <a href="/" class="js-piece" data-id="{{pieces.metadata._id}}">
                 <h1 class="h1--normal"><span data-key="title">{{pieces.metadata.title|safe}}</span> <span class="spaced">&mdash;</span> <span data-key="sub_title">{{pieces.metadata.sub_title}}</span> <span data-piece-admin></span></h1>
             </a>
             {% endblock %}
@@ -70,7 +70,7 @@
                     <span class="spaced"></span>
                     <a href="https://twitter.com/makesaturdays" class="a--alternate" target="_blank">{{pieces.navigation.twitter}}</a>
                     <span class="spaced"></span>
-                    <a href="https://www.facebook.com/Make-Saturdays-253322651665474/" class="a--alternate" target="_blank">{{pieces.navigation.facebook}}</a>
+                    <a href="https://www.facebook.com/makesaturdays" class="a--alternate" target="_blank">{{pieces.navigation.facebook}}</a>
                     <span class="spaced"></span>
                     <a href="https://github.com/makesaturdays" class="a--alternate" target="_blank">{{pieces.navigation.github}}</a>
                 </div>
