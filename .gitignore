@@ -9,3 +9,4 @@ config/environment_dev.py
 /Design
 *.map
 npm-debug.log
+*.db

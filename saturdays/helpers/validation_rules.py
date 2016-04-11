@@ -11,8 +11,11 @@ validation_rules = {
 	'image': { 'type': 'string', 'regex': '/(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/i' },
 	'interval': { 'type': 'string', 'allowed': ['day', 'week', 'month', 'year']},
 	'day': { 'type': 'integer', 'min': 0, 'max': 6 },
+	'hour': { 'type': 'integer', 'min': 0, 'max': 23 },
+	'minute': { 'type': 'integer', 'min': 0, 'max': 59 },
 	'datetime': { 'type': 'datetime' },
 	'currency': { 'type': 'string', 'allowed': ['cad', 'usd']},
+	'method': { 'type': 'string', 'allowed': ['POST', 'GET', 'PUT', 'PATCH', 'DELETE']},
 
 	'metadata': {
 		'type': 'dict',

@@ -286,4 +286,8 @@ em,
 	margin: 0 1em;
 }
 
+[contenteditable] {
+	background: fade-out($black, 0.95);
+}
+
 

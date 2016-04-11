@@ -4,6 +4,7 @@ from flask import request
 from bson.objectid import ObjectId
 from datetime import datetime
 
+from pytz import timezone
 
 
 with app.app_context():
@@ -65,7 +66,7 @@ with app.app_context():
 		@classmethod
 		def create(cls, document):
 			document = cls.preprocess(document)
-			document['created_at'] = datetime.utcnow()
+			document['created_at'] = datetime.now(timezone(app.config['TIMEZONE']))
 
 			document['_id'] = app.mongo.db[cls.collection_name].insert(document)
 
@@ -87,7 +88,7 @@ with app.app_context():
 		def update_where(cls, document_filter, document, projection={}, multiple=False, other_operators={}):
 
 			document = cls.preprocess(document)
-			document['updated_at'] = datetime.utcnow()
+			document['updated_at'] = datetime.now(timezone(app.config['TIMEZONE']))
 
 			document_set = other_operators
 			document_set['$set'] = document

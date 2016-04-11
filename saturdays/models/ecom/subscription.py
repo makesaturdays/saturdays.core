@@ -5,6 +5,7 @@ from saturdays.models.core.model import Model
 from saturdays.models.core.has_routes import HasRoutes
 
 from saturdays.helpers.validation_rules import validation_rules
+from saturdays.tasks.trigger import trigger_tasks
 
 from saturdays.models.ecom.cart import Cart
 from saturdays.models.ecom.plan import Plan
@@ -17,6 +18,7 @@ with app.app_context():
 		collection_name = 'subscriptions'
 
 		schema = {
+			'user_id': validation_rules['object_id'],
 			'plan_id': validation_rules['object_id'],
 			'is_online': validation_rules['bool'],
 			'is_skipped': validation_rules['bool'],
@@ -73,6 +75,32 @@ with app.app_context():
 				pass
 
 			return super().preprocess(document)
+
+
+
+		@classmethod
+		def create(cls, document):
+
+			trigger_tasks.apply_async(('subscription_created', {
+				'subscription': document
+			}))
+
+			return super().create(document)
+
+
+
+		@classmethod
+		def update(cls, _id, document, other_operators={}, projection={}):
+
+			document = super().update(_id, document, other_operators, projection)
+
+
+			trigger_tasks.apply_async(('subscription_updated', {
+				'subscription': document
+			}))
+
+
+			return document
 
 
 

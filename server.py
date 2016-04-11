@@ -86,6 +86,12 @@ TaxeRule.define_routes()
 ShippingOption.define_routes()
 
 
+from saturdays.models.tasks.scheduled import ScheduledTask
+from saturdays.models.tasks.triggered import TriggeredTask
+
+ScheduledTask.define_routes()
+TriggeredTask.define_routes()
+
 
 
 

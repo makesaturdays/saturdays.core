@@ -15,6 +15,8 @@ from bson.objectid import ObjectId
 from datetime import datetime
 import markdown
 
+from pytz import timezone
+
 
 with app.app_context():
 	class ListPost(WithTemplates, HasChildRoutes, ChildModel):
@@ -131,7 +133,7 @@ with app.app_context():
 
 
 			if 'published_date' not in document:
-				document['published_date'] = datetime.utcnow()
+				document['published_date'] = datetime.now(timezone(app.config['TIMEZONE']))
 
 			if 'is_online' not in document:
 				document['is_online'] = False

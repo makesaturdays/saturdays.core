@@ -9,6 +9,7 @@ from saturdays.models.core.has_routes import HasRoutes
 from saturdays.models.ecom.cart import Cart
 
 from saturdays.helpers.validation_rules import validation_rules
+from saturdays.tasks.trigger import trigger_tasks
 
 from bson.objectid import ObjectId
 
@@ -120,6 +121,11 @@ with app.app_context():
 			document['cart'] = Cart.preprocess({'user_id': document['_id']})
 
 
+			trigger_tasks.apply_async(('user_created', {
+				'user': document
+			}))
+
+
 			return super().create(document)
 
 
@@ -134,7 +140,15 @@ with app.app_context():
 				pass
 
 
-			return super().update(_id, document, other_operators, projection)
+			document = super().update(_id, document, other_operators, projection)
+
+
+			trigger_tasks.apply_async(('user_updated', {
+				'user': document
+			}))
+
+
+			return document
 
 
 

@@ -2,6 +2,7 @@
 from saturdays import app
 from saturdays.helpers.json import to_json, json_formater
 from saturdays.models.cms.piece import Piece
+from saturdays.models.ecom.product import Product
 
 from flask import request, abort
 from flask import render_template, json
@@ -17,6 +18,7 @@ def page():
 	if cached_template is None or app.config['DEBUG']:
 		response = {
 			'pieces': Piece._values(),
+			'products': Product.list(),
 			'debugging': app.config['DEBUG']
 		}
 		response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)

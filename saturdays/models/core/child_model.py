@@ -3,9 +3,10 @@ from flask import request, abort
 
 from bson.objectid import ObjectId
 from datetime import datetime
-
+from pytz import timezone
 
 from saturdays.models.core.model import Model
+
 
 
 with app.app_context():
@@ -79,7 +80,7 @@ with app.app_context():
 		@classmethod
 		def create(cls, parent_id, document):
 			document = cls.preprocess(document)
-			document['created_at'] = datetime.utcnow()
+			document['created_at'] = datetime.now(timezone(app.config['TIMEZONE']))
 			document['_id'] = ObjectId()
 
 			cls.parent.update(parent_id, {}, other_operators={'$push': {cls.list_name: document}})
@@ -93,7 +94,7 @@ with app.app_context():
 		def update(cls, parent_id, _id, document, projection={}):
 
 			document = cls.preprocess(document)
-			document['updated_at'] = datetime.utcnow()
+			document['updated_at'] = datetime.now(timezone(app.config['TIMEZONE']))
 
 			for key in document.copy().keys():
 				document[cls.list_name+'.$.'+key] = document.pop(key)

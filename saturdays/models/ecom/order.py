@@ -5,7 +5,7 @@ from saturdays.models.core.model import Model
 from saturdays.models.core.has_routes import HasRoutes
 
 from saturdays.helpers.validation_rules import validation_rules
-
+from saturdays.tasks.trigger import trigger_tasks
 
 from saturdays.models.auth.user import User
 from saturdays.models.ecom.cart import Cart
@@ -137,8 +137,6 @@ with app.app_context():
 						metadata={'order_id': document['_id']}
 					))
 
-				print(document['charges'])
-
 
 
 			for item in document['items']:
@@ -169,6 +167,13 @@ with app.app_context():
 
 				except KeyError:
 					pass
+
+
+
+			trigger_tasks.apply_async(('order_created', {
+				'user': user
+				'order': document
+			}))
 
 
 			return super().create(document)
