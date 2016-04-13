@@ -38,7 +38,7 @@ celery.config_from_object(app.config)
 from saturdays.tasks.execute import execute_task
 from saturdays.tasks.trigger import trigger_tasks
 from saturdays.tasks.scheduled import scheduled_tasks
-from saturdays.tasks.search_index import search_index, search_delete
+from saturdays.tasks.search import search_index, search_delete
 
 
 from saturdays.helpers.verify_headers import *

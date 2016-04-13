@@ -1,7 +1,7 @@
 from saturdays import app
 from flask import request
 
-from saturdays.tasks.search_index import search_index, search_delete
+from saturdays.tasks.search import search_index, search_delete
 
 from bson.objectid import ObjectId
 from datetime import datetime
