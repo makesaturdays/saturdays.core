@@ -11,8 +11,11 @@ from flask import request, abort
 import os
 
 
-from saturdays.models.core.upload import Upload
+from saturdays.models.utilities.upload import Upload
+from saturdays.models.utilities.search import Search
+
 Upload.define_routes()
+Search.define_routes()
 
 
 from saturdays.models.auth.token import Token

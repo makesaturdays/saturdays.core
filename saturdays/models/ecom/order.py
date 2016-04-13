@@ -171,7 +171,7 @@ with app.app_context():
 
 
 			trigger_tasks.apply_async(('order_created', {
-				'user': user
+				'user': user,
 				'order': document
 			}))
 

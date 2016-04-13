@@ -1,6 +1,8 @@
 from saturdays import app
 from flask import request
 
+from saturdays.tasks.search_index import search_index, search_delete
+
 from bson.objectid import ObjectId
 from datetime import datetime
 
@@ -71,6 +73,9 @@ with app.app_context():
 			document['_id'] = app.mongo.db[cls.collection_name].insert(document)
 
 
+			search_index.apply_async((cls.collection_name, document['_id'], document))
+
+
 			return {'_id': document['_id']}
 
 
@@ -97,6 +102,9 @@ with app.app_context():
 				document = app.mongo.db[cls.collection_name].find_one_and_update(cls._merge_filters(document_filter), update=document_set, projection=cls._merge_projections(projection), new=True)
 				if document is None:
 					document = {}
+				else:
+					search_index.apply_async((cls.collection_name, document['_id'], document))
+
 				return cls.postprocess(document)
 
 			else:
@@ -111,6 +119,7 @@ with app.app_context():
 		def delete(cls, _id):
 
 			cls.update_where({'_id': ObjectId(_id)}, {'deleted': True})
+			search_delete.apply_async((cls.collection_name, _id))
 
 
 			return {'_id': _id}
