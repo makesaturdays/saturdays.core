@@ -32,6 +32,11 @@ h1, h2, h3, h4, h5, h6 {
 	&:last-child {
 		margin-bottom: 0;
 	}
+
+	p + &,
+	blockquote + & {
+		margin-top: $vertical_rythm*2;
+	}
 }
 
 	h1 {
@@ -178,23 +183,31 @@ hr {
 
 // #BLOCKQUOTE
 blockquote {
-	font-style: italic;
-
 	position: relative;
+
 	margin: 0 0 $vertical_rythm;
-	padding: 0 $vertical_rythm;
-	
+	padding: 0 $vertical_rythm*2;
+
+	.medium & {
+		font-size: $medium_size;
+	}
 
 	&:before,
 	&:after {
 		position: absolute;
-		font-size: $medium_size*1.5;
+		font-size: 1.75em;
 	}
 
 	&:before {
 		content: "“";
 		top: 0;
-		left: 0;
+		left: 0.25em;
+	}
+
+	&:after {
+		content: "”";
+		top: 0;
+		right: 0.25em;
 	}
 }
 

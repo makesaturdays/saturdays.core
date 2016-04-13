@@ -16,6 +16,8 @@ body {
 	position: relative;
 
 	min-height: 100vh;
+	padding-bottom: $gutter*2;
+
 	background-color: $grey;
 
 	@include transition(background-color $fast);
@@ -37,6 +39,7 @@ header {
 	@extend .padded--thick;
 
 	max-width: 1600px;
+	margin: 0 auto;
 }
 
 	.main__center {

@@ -23,10 +23,7 @@ def page():
 		}
 		response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
 
-		if request.path == '/':
-			request.path = '/index' 
-
-		render = render_template('pages' + request.path + '.html', **response)
+		render = render_template('pages/' + request.endpoint + '.html', **response)
 		app.caches['/pages'].set(request.path, render, timeout=0)
 		return render
 
