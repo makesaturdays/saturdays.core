@@ -66,6 +66,12 @@ with app.app_context():
 				'view_function': 'delete_view',
 				'methods': ['DELETE'],
 				'requires_vendor': True
+			},
+			{
+				'route': '/stats',
+				'view_function': 'stats_view',
+				'methods': ['GET'],
+				'requires_vendor': True
 			}
 		]
 
@@ -177,6 +183,56 @@ with app.app_context():
 
 
 			return super().create(document)
+
+
+
+
+		# HELPERS
+		@classmethod
+		def _process_stats(cls, stats, documents):
+
+			items = {}
+
+			stats['total'] = 0
+			for document in documents:
+				stats['total'] += document['total']
+
+				try:
+					for item in document['items']:
+						if item['sku'] not in items:
+							items[item['sku']] = item.copy()
+							items[item['sku']]['ordered_sub_total'] = item['sub_total']
+							items[item['sku']]['ordered_total'] = item['total']
+							items[item['sku']]['ordered_quantity'] = item['quantity']
+							
+							del items[item['sku']]['quantity']
+							del items[item['sku']]['sub_total']
+							del items[item['sku']]['total']
+							del items[item['sku']]['product']
+							try:
+								del items[item['sku']]['option']
+							except KeyError:
+								pass
+
+						else:
+							items[item['sku']]['ordered_sub_total'] += item['sub_total']
+							items[item['sku']]['ordered_total'] += item['total']
+							items[item['sku']]['ordered_quantity'] += item['quantity']
+
+				except KeyError:
+					pass
+
+
+			stats['items'] = []
+			for sku in items:
+				stats['items'].append(items[sku])
+
+			stats['items'] = sorted(stats['items'], key=lambda k: k['ordered_total'], reverse=True)
+
+
+			return stats
+
+
 
 
 

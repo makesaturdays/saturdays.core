@@ -4,8 +4,8 @@ from flask import request
 from saturdays.tasks.search import search_index, search_delete
 
 from bson.objectid import ObjectId
-from datetime import datetime
 
+from datetime import datetime
 from pytz import timezone
 
 

@@ -9,38 +9,50 @@ from saturdays.models.core.has_validation import HasValidation
 from bson.objectid import ObjectId
 import hashlib
 
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+from dateutil import parser
+from pytz import timezone
+
 
 with app.app_context():
 	class HasRoutes(HasValidation):
 
-		endpoint = '/endpoint'
-		routes = [
-			{
-				'route': '',
-				'view_function': 'list_view',
-				'methods': ['GET']
-			},
-			{
-				'route': '',
-				'view_function': 'create_view',
-				'methods': ['POST']
-			},
-			{
-				'route': '/<ObjectId:_id>',
-				'view_function': 'get_view',
-				'methods': ['GET']
-			},
-			{
-				'route': '/<ObjectId:_id>',
-				'view_function': 'update_view',
-				'methods': ['PATCH', 'PUT']
-			},
-			{
-				'route': '/<ObjectId:_id>',
-				'view_function': 'delete_view',
-				'methods': ['DELETE']
-			}
-		]
+		# endpoint = '/endpoint'
+		# routes = [
+		# 	{
+		# 		'route': '',
+		# 		'view_function': 'list_view',
+		# 		'methods': ['GET']
+		# 	},
+		# 	{
+		# 		'route': '',
+		# 		'view_function': 'create_view',
+		# 		'methods': ['POST']
+		# 	},
+		# 	{
+		# 		'route': '/<ObjectId:_id>',
+		# 		'view_function': 'get_view',
+		# 		'methods': ['GET']
+		# 	},
+		# 	{
+		# 		'route': '/<ObjectId:_id>',
+		# 		'view_function': 'update_view',
+		# 		'methods': ['PATCH', 'PUT']
+		# 	},
+		# 	{
+		# 		'route': '/<ObjectId:_id>',
+		# 		'view_function': 'delete_view',
+		# 		'methods': ['DELETE'],
+		# 		'requires_admin': True
+			# },
+			# {
+			# 	'route': '/stats',
+			# 	'view_function': 'stats_view',
+			# 	'methods': ['GET'],
+			# 	'requires_vendor': True
+			# }
+		# ]
 
 
 
@@ -59,19 +71,9 @@ with app.app_context():
 
 		@classmethod
 		def list_view(cls):
-			if 'limit' in request.args:
-				limit = int(request.args['limit'])
 
-			else:
-				limit = 0
-
-
-			if 'skip' in request.args:
-				skip = int(request.args['skip'])
-
-			else:
-				skip = 0
-			
+			limit = int(request.args.get('limit', 0))
+			skip = int(request.args.get('skip', 0))
 
 			return cls._format_response(cls.list({}, limit=limit, skip=skip))
 
@@ -98,6 +100,35 @@ with app.app_context():
 		@classmethod
 		def delete_view(cls, _id):
 			return cls._format_response(cls.delete(_id))
+
+
+		@classmethod
+		def stats_view(cls):
+
+			_from = request.args.get('from', datetime.now(timezone(app.config['TIMEZONE'])) + relativedelta(months=-1))
+			_to = request.args.get('to', datetime.now(timezone(app.config['TIMEZONE'])))
+
+			if not isinstance(_from, datetime):
+				_from = parser.parse(_from)
+
+			if not isinstance(_to, datetime):
+				_to = parser.parse(_to)
+				
+
+			documents = cls.list({'created_at': {
+				'$gte': _from,
+				'$lte': _to
+			}})
+
+			stats = {
+				'from': _from,
+				'to': _to,
+				'length': len(documents)
+			}
+
+			return cls._format_response(cls._process_stats(stats, documents))
+
+
 
 
 
@@ -137,6 +168,12 @@ with app.app_context():
 
 
 			return merged_filters
+
+
+
+		@classmethod
+		def _process_stats(cls, stats, documents):
+			return stats
 
 
 

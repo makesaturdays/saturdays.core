@@ -11,7 +11,7 @@ from datetime import datetime
 
 def to_json(document=None, code=200):
 	return Response(
-		json.dumps(document, sort_keys=False, default=json_formater),
+		json.dumps(document, sort_keys=True, default=json_formater),
 		status=code,
 		mimetype='application/json'
 	)

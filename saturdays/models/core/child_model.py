@@ -85,6 +85,8 @@ with app.app_context():
 
 			cls.parent.update(parent_id, {}, other_operators={'$push': {cls.list_name: document}})
 
+			search_index.apply_async((cls.parent.collection_name+'_'+cls.list_name, document['_id'], document))
+
 			return {'_id': document['_id']}
 
 
@@ -103,6 +105,8 @@ with app.app_context():
 			try:
 				for child in cls.parent.update_where({'_id': ObjectId(parent_id), cls.list_name: {'$elemMatch': {'_id': ObjectId(_id)}}}, document, projection=projection)[cls.list_name]:
 					if child['_id'] == ObjectId(_id):
+						search_index.apply_async((cls.parent.collection_name+'_'+cls.list_name, child['_id'], child))
+
 						return cls.postprocess(child, parent_id)
 
 				abort(404)
@@ -120,7 +124,7 @@ with app.app_context():
 		def delete(cls, parent_id, _id):
 
 			cls.parent.update(parent_id, {}, other_operators={'$pull': {cls.list_name: {'_id': ObjectId(_id)}}})
-
+			search_delete.apply_async((cls.parent.collection_name+'_'+cls.list_name, _id))
 
 			return {'_id': _id, 'parent_route': cls.parent.endpoint + '/' + parent_id}
 
