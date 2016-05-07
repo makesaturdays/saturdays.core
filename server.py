@@ -57,6 +57,7 @@ from saturdays.models.ecom.cart_item import UserCartItem
 from saturdays.models.ecom.promotion import Promotion
 from saturdays.models.ecom.address import Address
 from saturdays.models.ecom.credit_card import CreditCard
+from saturdays.models.ecom.id_card import IdCard
 from saturdays.models.ecom.credit_update import CreditUpdate
 # from saturdays.models.ecom.plan import Plan
 # from saturdays.models.cms.comment import PlanComment
