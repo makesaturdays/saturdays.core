@@ -679,7 +679,7 @@
       Saturdays.user.clear();
       Saturdays.cookies["delete"]("Session-Secret");
       Saturdays.cookies["delete"]("User-Id");
-      return window.location = window.location;
+      return window.location = window.location.pathname;
     };
 
     Session.prototype.is_authenticated = function() {

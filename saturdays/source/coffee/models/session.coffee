@@ -28,7 +28,7 @@ class Saturdays.Models.Session extends Saturdays.Model
 		Saturdays.cookies.delete "Session-Secret"
 		Saturdays.cookies.delete "User-Id"
 		
-		window.location = window.location
+		window.location = window.location.pathname
 
 
 	is_authenticated: ->
