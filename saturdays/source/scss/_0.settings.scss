@@ -5,17 +5,21 @@ $white: #fff;
 $black: #020202;
 $red: #ED143D;
 $blue: #2656A7;
-$grey: #FAFAFA;
+$grey: #EAEBEF;
+$grey--light: #FAFAFA;
+$green: #49D6AC;
 
 $primary: $black;
-$highlight: $red;
+$highlight: $green;
 
 
 // #FONTS
 
 $body_font: "Cardo", serif;
-$headings_font: "Karla", sans-serif;
-$alternate_font: "Karla", sans-serif;
+$headings_font: "Work Sans", sans-serif;
+$alternate_font: "Work Sans", sans-serif;
+
+$bold: 600;
 
 
 // #LAYOUT
@@ -25,8 +29,8 @@ $huge_size: 48px;
 $big_size: 36px;
 $bigish_size: 28px;
 $medium_size: 20px;
-$line_height: 1.5;
-$vertical_rythm: $medium_size;
+$vertical_rythm: $bigish_size;
+$line_height: 1.666;
 $letter_spacing: 0;
 $border_radius: 0;
 

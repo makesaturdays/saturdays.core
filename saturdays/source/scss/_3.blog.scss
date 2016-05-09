@@ -18,11 +18,13 @@
 
 
 .blog {
+	background-color: $white;
+
 	@include gradient_overlay();
 }
 
 	.blog__post {
-		padding: $vertical_rythm*4 0;
+		padding: $vertical_rythm*2 0;
 	}
 
 		.blog__post__content {

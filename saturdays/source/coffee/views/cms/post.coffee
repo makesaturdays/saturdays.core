@@ -42,6 +42,8 @@ class Saturdays.Views.Post extends Saturdays.Views.Editable
 
 
 	save_edit: (e)->
+		console.log @model
+
 		@model.set
 			title: this.$el.find("[data-title]").html()
 			published_date: this.$el.find("[data-published-date]").html()

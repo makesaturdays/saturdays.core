@@ -28,7 +28,12 @@ button,
 	}
 
 	&:active {
-		background: fade-out($highlight, 0.5);
+		top: 1px;
+	}
+
+	&:disabled {
+		pointer-events: none;
+		opacity: 0.2;
 	}
 
 

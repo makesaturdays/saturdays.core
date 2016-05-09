@@ -12,9 +12,11 @@
 
 {% block body_classes %}blog{% endblock %}
 
+{% block title_link %}/{% endblock %}
+
 {% block main %}
 	{% for post in list.posts %}
-	<article class="blog__post js-post" data-id="{{post._id}}">
+	<article class="blog__post" data-post-id="{{post._id}}">
 		<div class="grid grid--guttered">
 			<div class="col col--3of12 col--small--12of12">
 				<h3><a href="/lists/blog/posts/{{post.route}}">{{post.title}}</a></h3>
@@ -40,8 +42,8 @@
 
 				{% if not post.source %}
 				<p class="p--medium medium_top">
-					<a href="/lists/blog/posts/{{post.route}}" class="js-maximize">{{pieces.blog.read_more}} <i class="material-icons">expand_more</i></a>
-					<a href="/lists/blog/posts/{{post.route}}" class="hide js-minimize">{{pieces.blog.read_less}} <i class="material-icons">expand_less</i></a>
+					<a href="/lists/blog/posts/{{post.route}}" class="js-maximize">{{pieces.blog.read_more}} <svg class="icon-down"><use xlink:href="/build/images/icons.svg#icon-down"></use></svg></a>
+					<a href="/lists/blog/posts/{{post.route}}" class="hide js-minimize">{{pieces.blog.read_less}} <svg class="icon-up"><use xlink:href="/build/images/icons.svg#icon-up"></use></svg></a>
 				</p>
 				{% endif %}
 			</div>
@@ -59,9 +61,8 @@
 
 
 {% block footer %}
-	{{super()}}
-
-	<div class="padded padded--thick grey_back">
+	
+	<div class="padded padded--thick light_grey_back">
 		<p>{{pieces.blog.categories}}</p>
 
 		<div class="grid grid--guttered">
@@ -75,6 +76,9 @@
 			{% endfor %}
 		</div>
 	</div>
+
+
+	{{super()}}
 
 	<script>
 		window.list_id = "{{list._id}}";

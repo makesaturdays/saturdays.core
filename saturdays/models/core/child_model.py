@@ -6,7 +6,7 @@ from datetime import datetime
 from pytz import timezone
 
 from saturdays.models.core.model import Model
-
+from saturdays.tasks.search import search_index, search_delete
 
 
 with app.app_context():

@@ -16,8 +16,6 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 		this.listenTo @model, "sync", this.render
 
-		@model.set
-			_id: this.$el.attr("data-id")
 		@model.fetch()
 
 		super()

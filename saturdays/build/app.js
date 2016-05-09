@@ -790,9 +790,6 @@
       this.events["keypress [name='tag_input']"] = "input_tag";
       this.events["blur [name='tag_input']"] = "blur_tag";
       this.listenTo(this.model, "sync", this.render);
-      this.model.set({
-        _id: this.$el.attr("data-id")
-      });
       this.model.fetch();
       return Editable.__super__.initialize.call(this);
     };
@@ -981,7 +978,10 @@
 
     Piece.prototype.events = {
       "click .js-save_piece": "save_piece",
-      "click [data-key]": "prevent_click"
+      "input [data-key]": "key_input",
+      "click [data-key]": "prevent_click",
+      "click [data-image-key]": "trigger_upload",
+      "change .js-image_input": "upload_image"
     };
 
     Piece.prototype.initialize = function() {
@@ -1003,7 +1003,13 @@
             return link.removeAttribute("data-link-key");
           };
         })(this));
+        this.$el.find("[data-image-key]").each((function(_this) {
+          return function(index, image) {
+            return $(image).addClass("img--clickable");
+          };
+        })(this));
         this.$el.find("[data-piece-admin]").html(this.piece_admin_template(this.data));
+        this.button = this.$el.find(".js-save_piece")[0];
       }
       return this;
     };
@@ -1015,7 +1021,40 @@
           return _this.model.attributes.content[key.getAttribute("data-key")].value = key.innerHTML;
         };
       })(this));
+      this.$el.find("[data-image-key]").each((function(_this) {
+        return function(index, key) {
+          return _this.model.attributes.content[key.getAttribute("data-image-key")].value = key.getAttribute("src");
+        };
+      })(this));
       return this.model.save();
+    };
+
+    Piece.prototype.key_input = function(e) {
+      if (this.button.hasAttribute("disabled")) {
+        return this.button.removeAttribute("disabled");
+      }
+    };
+
+    Piece.prototype.trigger_upload = function(e) {
+      var input;
+      input = this.$el.find(".js-image_input");
+      this.image_key = e.currentTarget.getAttribute("data-image-key");
+      return input.click();
+    };
+
+    Piece.prototype.upload_image = function(e) {
+      var file;
+      file = e.currentTarget.files[0];
+      if (file.type.match('image.*')) {
+        return Dialogue.helpers.upload(file, {
+          success: (function(_this) {
+            return function(response) {
+              _this.$el.find("[data-image-key='" + _this.image_key + "']").attr("src", Dialogue.settings.cdn + response.url);
+              return _this.key_input();
+            };
+          })(this)
+        });
+      }
     };
 
     Piece.prototype.prevent_click = function(e) {
@@ -1077,6 +1116,7 @@
 
     Post.prototype.save_edit = function(e) {
       var value;
+      console.log(this.model);
       this.model.set({
         title: this.$el.find("[data-title]").html(),
         published_date: this.$el.find("[data-published-date]").html(),
@@ -1420,11 +1460,11 @@
       if (callback != null) {
         callback.apply(this, args);
       }
-      return $(".js-piece").each((function(_this) {
+      $("[data-piece-id]").each((function(_this) {
         return function(index, element) {
           var model;
           model = new Saturdays.Models.Piece({
-            "_id": element.getAttribute("data-id")
+            "_id": element.getAttribute("data-piece-id")
           });
           return _this.views.push(new Saturdays.Views.Piece({
             el: element,
@@ -1432,13 +1472,15 @@
           }));
         };
       })(this));
+      this.today = new Date();
+      return $('[data-day]').each((function(_this) {
+        return function(index, element) {
+          return element.innerHTML = pieces.navigation.weekdays[_this.today.getDay()];
+        };
+      })(this));
     };
 
-    Router.prototype.home = function() {
-      if ($(".js-survey").length > 0) {
-        return this.survey_view = new Saturdays.Views.Survey();
-      }
-    };
+    Router.prototype.home = function() {};
 
     Router.prototype.products = function(pretty_url) {
       return $(".js-product").each((function(_this) {
@@ -1471,10 +1513,12 @@
     };
 
     Router.prototype.list = function(list_route, route) {
-      return $(".js-post").each((function(_this) {
+      return $("[data-post-id]").each((function(_this) {
         return function(index, element) {
           var model;
-          model = new Saturdays.Models.ListPost();
+          model = new Saturdays.Models.ListPost({
+            "_id": element.getAttribute("data-post-id")
+          });
           model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
           return _this.views.push(new Saturdays.Views.Post({
             el: element,

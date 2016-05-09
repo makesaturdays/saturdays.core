@@ -11,8 +11,10 @@
 
 {% block body_classes %}blog {{post.route}}{% endblock %}
 
+{% block title_link %}/lists/blog{% endblock %}
+
 {% block main %}
-	<article class="blog__post js-post" data-id="{{post._id}}">
+	<article class="blog__post" data-post-id="{{post._id}}">
 		<div class="grid grid--guttered">
 			<div class="col col--3of12 col--small--12of12">
 				<h3 data-title>{{post.title}}</h3>
@@ -52,9 +54,7 @@
 
 
 {% block footer %}
-	{{super()}}
-
-	<div class="padded padded--thick grey_back">
+	<div class="padded padded--thick light_grey_back">
 		<p>{{pieces.blog.categories}}</p>
 
 		<div class="grid grid--guttered">
@@ -68,6 +68,8 @@
 			{% endfor %}
 		</div>
 	</div>
+
+	{{super()}}
 
 	<script>
 		window.list_id = "{{post.parent._id}}";

@@ -8,7 +8,10 @@ class Saturdays.Views.Piece extends Saturdays.View
 
 	events: {
 		"click .js-save_piece": "save_piece"
+		"input [data-key]": "key_input"
 		"click [data-key]": "prevent_click"
+		"click [data-image-key]": "trigger_upload"
+		"change .js-image_input": "upload_image"
 	}
 
 
@@ -35,7 +38,11 @@ class Saturdays.Views.Piece extends Saturdays.View
 
 				link.removeAttribute("data-link-key")
 
+			this.$el.find("[data-image-key]").each (index, image)=>
+				$(image).addClass "img--clickable"
+
 			this.$el.find("[data-piece-admin]").html this.piece_admin_template(@data)
+			@button = this.$el.find(".js-save_piece")[0]
 
 		this
 
@@ -47,7 +54,33 @@ class Saturdays.Views.Piece extends Saturdays.View
 		this.$el.find("[data-key]").each (index, key)=>
 			@model.attributes.content[key.getAttribute("data-key")].value = key.innerHTML
 
+		this.$el.find("[data-image-key]").each (index, key)=>
+			@model.attributes.content[key.getAttribute("data-image-key")].value = key.getAttribute("src")
+
+
 		@model.save()
+
+
+	key_input: (e)->
+		if @button.hasAttribute "disabled"
+			@button.removeAttribute "disabled"
+
+
+	trigger_upload: (e)->
+		input = this.$el.find(".js-image_input")
+		@image_key = e.currentTarget.getAttribute("data-image-key")
+		input.click()
+
+
+	upload_image: (e)->
+
+		file = e.currentTarget.files[0]
+		if file.type.match('image.*')
+			Dialogue.helpers.upload file,
+				success: (response)=>
+					
+					this.$el.find("[data-image-key='"+@image_key+"']").attr "src", Dialogue.settings.cdn+response.url
+					this.key_input()
 
 
 

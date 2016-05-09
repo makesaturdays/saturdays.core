@@ -29,7 +29,6 @@ label,
 
 .input_box {
 	position: relative;
-	margin-bottom: $vertical_rythm;
 
 	@include transition(opacity $fast);
 
@@ -66,12 +65,13 @@ textarea,
 
 	font-family: $alternate_font;
 	font-size: $medium_size;
-	font-weight: bold;
+	font-weight: $bold;
 
 	background: $white;
 	padding: $vertical_rythm;
 	border: 1px solid transparent;
 	border-radius: 0;
+	margin-bottom: $vertical_rythm;
 
 
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);

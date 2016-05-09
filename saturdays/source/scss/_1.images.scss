@@ -12,4 +12,30 @@ img {
 		width: 100%;
 		margin: 0 auto $vertical_rythm;
 	}
+
+	&.img--clickable {
+		cursor: pointer;
+		position: relative;
+
+		border: 1px solid fade-out($black, 0.95);
+
+		@include transition(border-color $fast);
+
+		&:hover {
+			border-color: $highlight;
+		}
+
+		&:active {
+			top: 1px;
+		}
+	}
+
+	&.img--bottom_right {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+
+		z-index: -1;
+		width: 66%
+	}
 }

@@ -29,7 +29,7 @@
         <link rel="icon" type="image/png" href="/build/images/favicon/favicon-32x32.png" sizes="32x32" />
         <link rel="icon" type="image/png" href="/build/images/favicon/favicon-16x16.png" sizes="16x16" />
 
-        <link href='//fonts.googleapis.com/css?family=Karla:700,400|Cardo:400,400italic|Material+Icons' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Work+Sans:400,600|Cardo:400,400italic' rel='stylesheet' type='text/css'>
 
 
 
@@ -37,15 +37,27 @@
     </head>
 
 
-    <body class="white_back {% block body_classes %}{% endblock %}">
+    <body class="{% block body_classes %}{% endblock %}">
 
 
 
         <header id="header">
             {% block header %}
-            <a href="/" class="js-piece" data-id="{{pieces.metadata._id}}">
-                <h1 class="h1--normal"><span data-key="title">{{pieces.metadata.title|safe}}</span> <span class="spaced">&mdash;</span> <span data-key="sub_title">{{pieces.metadata.sub_title}}</span> <span data-piece-admin></span></h1>
-            </a>
+            <nav class="grid">
+                <div class="col col--6of12" data-piece-id="{{pieces.metadata._id}}">
+                    <a href="{% block title_link %}/{% endblock %}">
+                        <h1 class="h1--normal"><span data-key="title">{{pieces.metadata.title|safe}}</span> <span class="spaced hide_on_small">&mdash;</span> <span data-key="sub_title" class="hide_on_small">{{pieces.metadata.sub_title}}</span></h1>
+                    </a>
+                    <span data-piece-admin></span>
+                </div>
+                <div class="col col--6of12 text_right" data-piece-id="{{pieces.navigation._id}}">
+                    <a href="/lists/blog/posts/intro" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
+                    <span class="spaced hide_on_small"></span>
+                    <a href="/request_access" class="a--highlight"><span data-key="request_access">{{pieces.navigation.request_access}}</span></a>
+                    <span data-piece-admin></span>
+                </div>
+            </nav>
+            
             {% endblock %}
         </header>
 
@@ -64,16 +76,45 @@
 
         <footer id="footer">
             {% block footer %}
-            <div class="grid padded padded--thick">
-                <div class="col col--12of12">
-                    <a href="/" class="a--alternate">{{pieces.navigation.homepage}}</a>
-                    <span class="spaced"></span>
-                    <a href="https://twitter.com/makesaturdays" class="a--alternate" target="_blank">{{pieces.navigation.twitter}}</a>
-                    <span class="spaced"></span>
-                    <a href="https://www.facebook.com/makesaturdays" class="a--alternate" target="_blank">{{pieces.navigation.facebook}}</a>
-                    <span class="spaced"></span>
-                    <a href="https://github.com/makesaturdays" class="a--alternate" target="_blank">{{pieces.navigation.github}}</a>
-                </div>
+            <div class="padded padded--vertically_thick" data-piece-id="{{pieces.navigation._id}}">
+                <h3>It's <strong data-day></strong></h3>
+
+                <nav class="grid grid--guttered">
+                    <div class="col col--2of12 col--medium--3of12 col--small--6of12">
+                        <a href="/" class="a--alternate"><span data-key="homepage">{{pieces.navigation.homepage}}</span></a><br>
+                        <a href="/lists/blog" class="a--alternate"><span data-key="blog">{{pieces.navigation.blog}}</span></a><br>
+                        <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" class="a--alternate" target="_blank"><span data-key="github">{{pieces.navigation.github}}</span></a>
+                    </div>
+
+                    <div class="col col--2of12 col--medium--3of12 col--small--6of12">
+                        <a class="a--alternate" disabled><span data-key="products">{{pieces.navigation.products}}</span></a><br>
+                        <a class="a--alternate" disabled><span data-key="shops">{{pieces.navigation.shops}}</span></a>
+                    </div>
+
+                    <div class="col col--1of12 hide_on_medium"></div>
+
+                    <div class="col col--2of12 col--medium--6of12 col--small--12of12">
+                        <a class="a--alternate" disabled><span data-key="terms">{{pieces.navigation.terms}}</span></a><br>
+                        <a class="a--alternate" disabled><span data-key="privacy">{{pieces.navigation.privacy}}</span></a><br>
+                        <a class="a--alternate" disabled><span data-key="login">{{pieces.navigation.login}}</span></a>
+                    </div>
+
+                    <div class="col col--2of12 col--medium--4of12">
+                        <a class="a--alternate" disabled><span data-key="faqs">{{pieces.navigation.faqs}}</span></a><br>
+                        <a href="{{pieces.navigation.contact_link}}" data-link-key="contact_link" class="a--alternate" target="_blank"><span data-key="contact">{{pieces.navigation.contact}}</span></a>
+                    </div>
+
+                    <div class="col col--3of12 col--medium--8of12 text_right">
+                        <a href="{{pieces.navigation.facebook_link}}" data-link-key="facebook_link" target="_blank"><svg class="icon-facebook icon--big"><use xlink:href="/build/images/icons.svg#icon-facebook"></use></svg></a>
+                        <a href="{{pieces.navigation.instagram_link}}" data-link-key="instagram_link" target="_blank"><svg class="icon-instagram icon--big"><use xlink:href="/build/images/icons.svg#icon-instagram"></use></svg></a>
+                        <a href="{{pieces.navigation.twitter_link}}" data-link-key="twitter_link" target="_blank"><svg class="icon-twitter icon--big"><use xlink:href="/build/images/icons.svg#icon-twitter"></use></svg></a>
+                        <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" target="_blank"><svg class="icon-github icon--big"><use xlink:href="/build/images/icons.svg#icon-github"></use></svg></a>
+                        <a href="{{pieces.navigation.pinterest_link}}" data-link-key="pinterest_link" target="_blank"><svg class="icon-pinterest icon--big"><use xlink:href="/build/images/icons.svg#icon-pinterest"></use></svg></a>
+                    </div>
+                </nav>
+
+
+                <p class="medium_top"><span data-key="copyright">{{pieces.navigation.copyright}}</span> <span data-piece-admin></span></p>
             </div>
             {% endblock %}
         </footer>

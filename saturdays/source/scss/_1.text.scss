@@ -1,21 +1,39 @@
 
 
+::selection {
+	color: $white;
+	background: $highlight;
+}
+
+
+// #BODY
+
 html {
 	font: #{$base_size}/#{$line_height} $body_font;
 }
 
 body {
 	color: $primary;
-	background: $white;
+	background-color: $grey;
 
 	width: 100%;
 	overflow-x: hidden;
+
+	@include transition(background-color $fast);
 }
 
-::selection {
-	color: $white;
-	background: $highlight;
+
+// #FOOTER
+
+footer {
+	background-color: $white;
+
+	.blog & {
+		background-color: $grey;
+	}
 }
+
+
 
 
 
@@ -41,6 +59,7 @@ h1, h2, h3, h4, h5, h6 {
 
 	h1 {
 		font-size: $huge_size;
+		line-height: $line_height/1.25;
 
 		&.h1--normal {
 			font-size: $base_size;
@@ -53,8 +72,13 @@ h1, h2, h3, h4, h5, h6 {
 	}
 
 	h3 {
-		font-size: $medium_size;
-		font-weight: bold;
+		font-size: $bigish_size;
+		font-weight: $bold;
+
+		strong {
+			font-family: $body_font;
+			font-weight: normal;
+		}
 	}
 
 	h4 {
@@ -74,7 +98,7 @@ p {
 
 	&.p--huge {
 		font-size: $huge_size;
-		@extend .medium_bottom;
+		line-height: $line_height/1.25;
 
 		@media #{$small} {
 			font-size: $huge_size*0.75;
@@ -109,15 +133,8 @@ a {
 
 	&.a--underline,
 	.underline_links & {
-		display: inline-block;
-		border-bottom: 1px dotted;
-		line-height: 0.9;
+		text-decoration: underline;
 	}
-
-	&.a--huge_underline {
-		border-bottom: 3px solid;
-	}
-
 
 	&:focus,
 	&:hover {
@@ -131,6 +148,17 @@ a {
 
 	&.a--alternate {
 		font-family: $alternate_font;
+	}
+
+	&.a--highlight {
+		font-family: $alternate_font;
+		font-weight: $bold;
+		text-decoration: underline;
+	}
+
+	&[disabled] {
+		pointer-events: none;
+		text-decoration: line-through;
 	}
 }
 
@@ -238,9 +266,19 @@ sub {
 
 // #MISC
 
-i.material-icons {
-	font-size: 1em;
-	vertical-align: middle;
+[class^="icon-"], [class*=" icon-"] {
+    height: $medium_size;
+    width: $medium_size;
+    display: inline-block;
+    fill: currentColor;
+    vertical-align: middle;
+
+    margin: 0 $medium_size/4;
+
+	&.icon--big {
+		height: $bigish_size;
+		width: $bigish_size;
+	}
 }
 
 iframe {
@@ -255,7 +293,7 @@ small,
 b,
 strong,
 .strong {
-	font-weight: bold;
+	font-weight: $bold;
 	font-family: $alternate_font;
 	font-style: normal;
 }
