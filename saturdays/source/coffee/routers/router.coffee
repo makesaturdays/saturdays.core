@@ -6,6 +6,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 		"products(/:pretty_url)(/)": "products"
 		"vendor_shops(/:pretty_url)(/)": "vendor_shops"
 		"lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list"
+		"request_access(/)": "request_access"
 		"(/)": "home"
 	}
 
@@ -43,6 +44,13 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 
 	home: ->
+
+
+	request_access: ->
+		$("[data-survey-id]").each (index, element)=>
+			@views.push new Saturdays.Views.Survey({
+				el: element
+			})
 		
 
 

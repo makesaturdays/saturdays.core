@@ -9,18 +9,13 @@ label,
 	display: block;
 
 	font-family: $alternate_font;
-	font-weight: normal;
+	font-weight: bold;
 
 	.input_box & {
 		position: absolute;
 		top: $vertical_rythm/2;
 		left: $vertical_rythm;
 		z-index: 1;
-	}
-
-	input[type="checkbox"] + &,
-	input[type="radio"] + & {
-		display: inline-block;
 	}
 }
 
@@ -64,20 +59,22 @@ textarea,
 	width: 100%;
 
 	font-family: $alternate_font;
-	font-size: $medium_size;
+	font-size: $base_size;
 	font-weight: $bold;
 
+	color: $primary;
 	background: $white;
-	padding: $vertical_rythm;
+	padding: $vertical_rythm/2 $vertical_rythm;
 	border: 1px solid transparent;
-	border-radius: 0;
+	border-radius: $border_radius;
+
 	margin-bottom: $vertical_rythm;
 
 
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
 
 	&:active {
-		background: fade-out($white, 0.5);
+		background: fade-out($white, 0.2);
 	}
 
 	&:disabled {
@@ -109,8 +106,8 @@ textarea,
 
 
 textarea {
-	height: $vertical_rythm*8;
-	padding: $vertical_rythm;
+	height: $vertical_rythm*6;
+	padding: $vertical_rythm/1.5 $vertical_rythm;
 	line-height: $line_height;
 
 	&.textarea--one_line {
@@ -135,7 +132,54 @@ input[type="file"] {
 input[type="checkbox"],
 input[type="radio"] {
 	cursor: pointer;
+
+	-webkit-appearance: none;
+	appearance: none;
+
+	display: inline-block;
+	width: 1.5em;
+	height: 1.5em;
+	vertical-align: middle;
+	margin: $vertical_rythm/4 $vertical_rythm/2 $vertical_rythm/2 0;
+
+	border: 2px solid;
+	border-radius: $border_radius;
+	opacity: 0.4;
+
+	@include transition(background-color $fast, color $fast, opacity $fast);
+
+
+	& + label {
+		display: inline-block;
+		opacity: 0.4;
+
+		@include transition(background-color $fast, border-color $fast, color $fast, opacity $fast);
+	}
+
+	&:hover,
+	&:focus {
+		opacity: 1;
+
+		& + label {
+			opacity: 1;
+		}
+	}
+
+	&:checked {
+		opacity: 1;
+		color: $highlight;
+		background-color: $highlight;
+
+		& + label {
+			opacity: 1;
+			color: $highlight;
+		}
+	}
 }
+
+	input[type="radio"] {
+		border-radius: 50%;
+	}
 
 
 
@@ -146,9 +190,9 @@ input[type="radio"] {
 	-moz-outline-style: none;
 }
 
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder,
-input:-moz-placeholder, textarea:-moz-placeholder {
-	color: $grey;
+::-webkit-input-placeholder, ::-webkit-input-placeholder,
+:-moz-placeholder, :-moz-placeholder {
+	color: $primary;
 }
 
 

@@ -152,32 +152,6 @@ this["templates"]["admin/tag_input"] = Handlebars.template({"compiler":[7,">= 4.
     return "<input class=\"em input--inline\" placeholder=\"Add a tag\" type=\"text\" name=\"tag_input\">\n";
 },"useData":true});
 
-this["templates"]["answer"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "<div class=\"suggestion\">\n<!-- <img src=\""
-    + alias4(((helper = (helper = helpers.image || (depth0 != null ? depth0.image : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"image","hash":{},"data":data}) : helper)))
-    + "\" alt=\""
-    + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
-    + "\" class=\"suggestion__image\"> -->\n<span class=\"suggestion__name\">"
-    + alias4(container.lambda(depth0, depth0))
-    + "</span>\n</div>\n";
+this["templates"]["answers"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<p class=\"p--big text_center highlight\">\n<strong>Thanks, we'll keep in touch!</strong>\n</p>\n";
 },"useData":true});
-
-this["templates"]["answers"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3=container.escapeExpression;
-
-  return "<div class=\"col\" style=\"opacity: "
-    + alias3((helpers.divide || (depth0 && depth0.divide) || alias2).call(alias1,depth0,(depths[1] != null ? depths[1].highest_count : depths[1]),{"name":"divide","hash":{},"data":data}))
-    + ";\">\n<h2 class=\"inline_block flat_bottom strong\">\n"
-    + alias3(((helper = (helper = helpers.key || (data && data.key)) != null ? helper : alias2),(typeof helper === "function" ? helper.call(alias1,{"name":"key","hash":{},"data":data}) : helper)))
-    + "\n</h2>\n<small class=\"strong\">"
-    + alias3(container.lambda(depth0, depth0))
-    + "</small>\n</div>\n";
-},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data,blockParams,depths) {
-    var stack1;
-
-  return "<div class=\"grid grid--guttered\">\n"
-    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.answers : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0, blockParams, depths),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\n";
-},"useData":true,"useDepths":true});

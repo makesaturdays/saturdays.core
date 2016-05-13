@@ -56,6 +56,11 @@
 		margin-left: -$gutter;
 		margin-bottom: -$gutter;
 	}
+
+	&.grid--tight_guttered {
+		margin-left: -$gutter/2;
+		margin-bottom: -$gutter/2;
+	}
 }
 	
 	.col {
@@ -63,6 +68,11 @@
 		.grid--guttered > & {
 			padding-left: $gutter;
 			padding-bottom: $gutter;
+		}
+
+		.grid--tight_guttered > & {
+			padding-left: $gutter/2;
+			padding-bottom: $gutter/2;
 		}
 
 

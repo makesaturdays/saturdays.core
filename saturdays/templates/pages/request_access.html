@@ -1,0 +1,49 @@
+
+{% extends "layout.html" %}
+
+
+{% block body_classes %}body--dark{% endblock %}
+
+{% block main %}
+
+<section data-piece-id="{{pieces.signup._id}}">
+	<div class="main__center">
+		<p class="p--big medium_bottom text_center">
+			<span data-key="introduction">{{pieces.signup.introduction|safe}}</span>
+		</p>
+
+		<form data-survey-id="5736025bdaaf27001bea4f52">
+			{# <p class="p--medium">
+				<input type="checkbox" id="build" name="build" data-metadata>
+				<label for="build">I want to build everyday things</label>
+				<br>
+				<input type="checkbox" id="design" name="design" data-metadata>
+				<label for="design">I want to design everyday things</label>
+			</p> #}
+
+			<div class="grid grid--tight_guttered">
+				<div class="col col--12of12">
+					<textarea placeholder="{{pieces.signup.something_label}}" class="flat_bottom" name="something"></textarea>
+				</div>
+				<div class="col col--9of12">
+					<input type="email" name="email" placeholder="{{pieces.signup.email_label}}">	
+				</div>
+				<div class="col col--3of12">
+					<button type="submit"><span data-key={{pieces.signup.send}}>{{pieces.signup.send}}</span></button>
+				</div>
+			</div>
+
+			<p class="p--medium text_center">
+				<span data-key="or">{{pieces.signup.or|safe}}</span> <a href="{{pieces.signup.facebook_link}}" class="a--underline" data-link-key="facebook_link"><span data-key="facebook_cta">{{pieces.signup.facebook_cta}}</span></a>.
+			</p>
+		</form>
+
+		
+		<span data-piece-admin></span>
+	</div>
+</section>
+
+{% endblock %}
+
+
+

@@ -1183,88 +1183,26 @@
       return Survey.__super__.constructor.apply(this, arguments);
     }
 
-    Survey.prototype.el = $(".js-survey");
+    Survey.prototype.answers_template = templates["answers"];
 
     Survey.prototype.events = {
-      "focus .js-input": "focus_input",
-      "submit .js-form": "submit_form",
-      "click .js-reset": "reset"
+      "submit": "submit_form"
     };
 
     Survey.prototype.initialize = function() {
-      this.answers = new Bloodhound({
-        datumTokenizer: Bloodhound.tokenizers.whitespace,
-        queryTokenizer: Bloodhound.tokenizers.whitespace,
-        local: pieces.survey.answers
-      });
       this.survey = new Saturdays.Models.Survey({
-        "_id": "56b60e72f5f9e96ffb235c64"
+        "_id": this.$el.attr("data-survey-id")
       });
       this.survey.fetch();
-      return this.listenTo(this.survey, "sync", this.render);
+      this.listenTo(this.survey, "sync", this.render);
+      return this.render();
     };
 
     Survey.prototype.render = function() {
-      var answers, count, highest_count, key, second_answers;
-      if (localStorage.getItem("survey_answer") != null) {
-        answers = this.survey.get("questions")[0]["answers"];
-        second_answers = this.survey.get("questions")[1]["answers"];
-        highest_count = 0;
-        for (key in answers) {
-          count = answers[key];
-          if (second_answers[key] != null) {
-            answers[key] = answers[key] + second_answers[key];
-            delete second_answers[key];
-          }
-        }
-        for (key in second_answers) {
-          count = second_answers[key];
-          answers[key] = second_answers[key];
-        }
-        for (key in answers) {
-          count = answers[key];
-          if (answers[key] > highest_count) {
-            highest_count = answers[key];
-          }
-        }
-        this.$el.find(".js-answers").html(templates["answers"]({
-          answers: answers,
-          highest_count: highest_count
-        }));
-        this.$el.find(".js-results").removeClass("hide");
-        setTimeout((function(_this) {
-          return function() {
-            return _this.$el.find(".js-results").removeClass("fade_out");
-          };
-        })(this), 1);
-      } else {
-        $("body").removeClass("white_back");
-        this.$el.find(".js-questions").removeClass("hide");
-        this.$el.find(".js-typeahead").typeahead({
-          hint: true,
-          highlight: true,
-          minLength: 1
-        }, {
-          source: this.answers,
-          name: "answers",
-          templates: {
-            suggestion: templates["answer"]
-          }
-        });
-        setTimeout((function(_this) {
-          return function() {
-            _this.$el.find(".js-questions").removeClass("fade_out");
-            return _this.$el.find(".js-question")[1].focus();
-          };
-        })(this), 1);
+      if (localStorage.getItem("survey_" + this.survey.id + "_answers") != null) {
+        this.$el.html(this.answers_template(JSON.parse(localStorage.getItem("survey_" + this.survey.id + "_answers"))));
       }
       return this;
-    };
-
-    Survey.prototype.focus_input = function(e) {
-      this.$el.find(".js-input").addClass("input_box--faded");
-      $(e.currentTarget).removeClass("input_box--faded");
-      return $(e.currentTarget).removeClass("input_box--hidden");
     };
 
     Survey.prototype.submit_form = function(e) {
@@ -1272,6 +1210,7 @@
       e.preventDefault();
       form = e.currentTarget;
       answers = [];
+      form.setAttribute("disabled", "disabled");
       ref = this.survey.get("questions");
       for (i = 0, len = ref.length; i < len; i++) {
         question = ref[i];
@@ -1294,27 +1233,12 @@
       }, {
         success: (function(_this) {
           return function(model, response) {
-            _this.$el.find(".js-questions").addClass("fade_out");
-            return setTimeout(function() {
-              _this.$el.find(".js-questions").addClass("hide");
-              return _this.survey.fetch();
-            }, 666);
+            localStorage.setItem("survey_" + _this.survey.id + "_answers", JSON.stringify(answers));
+            _this.render();
+            return form.removeAttribute("disabled");
           };
         })(this)
       });
-    };
-
-    Survey.prototype.reset = function(e) {
-      e.preventDefault();
-      this.$el.find(".js-results").addClass("fade_out");
-      this.$el.find(".js-form")[0].reset();
-      this.$el.find(".js-typeahead").typeahead("destroy");
-      localStorage.removeItem("survey_answer");
-      return setTimeout((function(_this) {
-        return function() {
-          return _this.render();
-        };
-      })(this), 666);
     };
 
     return Survey;
@@ -1441,6 +1365,7 @@
       "products(/:pretty_url)(/)": "products",
       "vendor_shops(/:pretty_url)(/)": "vendor_shops",
       "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
+      "request_access(/)": "request_access",
       "(/)": "home"
     };
 
@@ -1481,6 +1406,16 @@
     };
 
     Router.prototype.home = function() {};
+
+    Router.prototype.request_access = function() {
+      return $("[data-survey-id]").each((function(_this) {
+        return function(index, element) {
+          return _this.views.push(new Saturdays.Views.Survey({
+            el: element
+          }));
+        };
+      })(this));
+    };
 
     Router.prototype.products = function(pretty_url) {
       return $(".js-product").each((function(_this) {

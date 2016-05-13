@@ -3,11 +3,11 @@
 // #FORMS
 
 form {
-	position: relative;
-}
+	margin: 0 auto;
+	max-width: 540px;
 
-	.form__bottom_button {
-		position: absolute;
-		bottom: 0;
-		right: 0;
+	&[disabled] {
+		opacity: 0.2;
+		pointer-events: none;
 	}
+}

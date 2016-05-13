@@ -1,103 +1,35 @@
 
 class Saturdays.Views.Survey extends Backbone.View
 
-	el: $(".js-survey")
+	answers_template: templates["answers"]
 
 	events: {
-		"focus .js-input": "focus_input"
-		"submit .js-form": "submit_form"
-		"click .js-reset": "reset"
+		"submit": "submit_form"
 	}
 
 
 
 	initialize: ->
 
-		@answers = new Bloodhound({
-			datumTokenizer: Bloodhound.tokenizers.whitespace,
-			queryTokenizer: Bloodhound.tokenizers.whitespace,
-			local: pieces.survey.answers
-		})
-
-
-		@survey = new Saturdays.Models.Survey({"_id": "56b60e72f5f9e96ffb235c64"})
+		@survey = new Saturdays.Models.Survey({"_id": this.$el.attr("data-survey-id")})
 		@survey.fetch()
 
 		this.listenTo @survey, "sync", this.render
 
+		this.render()
 
-		# this.render()
 
 
 
 	render: ->
 
-		if localStorage.getItem("survey_answer")?
-			answers = @survey.get("questions")[0]["answers"]
-			second_answers = @survey.get("questions")[1]["answers"]
-			highest_count = 0
-
-			for key,count of answers
-				if second_answers[key]?
-					answers[key] = answers[key] + second_answers[key]
-					delete second_answers[key]
-
-
-			for key,count of second_answers
-				answers[key] = second_answers[key]
-				
-
-			for key,count of answers
-				if answers[key] > highest_count
-					highest_count = answers[key]
-
-
-			this.$el.find(".js-answers").html templates["answers"]({
-				answers: answers
-				highest_count: highest_count
-			})
-
-			this.$el.find(".js-results").removeClass "hide"
-			setTimeout =>
-				this.$el.find(".js-results").removeClass "fade_out"
-			, 1
-
-
-
-
-		else
-			$("body").removeClass "white_back"
-			
-			this.$el.find(".js-questions").removeClass "hide"
-			this.$el.find(".js-typeahead").typeahead({
-				hint: true,
-				highlight: true,
-				minLength: 1
-			},
-			{
-				source: @answers,
-				name: "answers",
-				templates: 
-					suggestion: templates["answer"]
-			})
-
-
-
-			setTimeout =>
-				this.$el.find(".js-questions").removeClass "fade_out"
-				this.$el.find(".js-question")[1].focus()
-			, 1
+		if localStorage.getItem("survey_"+@survey.id+"_answers")?
+			this.$el.html @answers_template(JSON.parse(localStorage.getItem("survey_"+@survey.id+"_answers")))
 
 
 		this
 
 
-
-	focus_input: (e)->
-
-		this.$el.find(".js-input").addClass "input_box--faded"
-		$(e.currentTarget).removeClass "input_box--faded"
-		$(e.currentTarget).removeClass "input_box--hidden"
 
 
 
@@ -106,6 +38,8 @@ class Saturdays.Views.Survey extends Backbone.View
 
 		form = e.currentTarget
 		answers = []
+
+		form.setAttribute("disabled", "disabled")
 
 		for question in @survey.get("questions")
 			if form[question["key"]]?
@@ -126,29 +60,15 @@ class Saturdays.Views.Survey extends Backbone.View
 			answers: answers
 		},
 			success: (model, response)=>
-				this.$el.find(".js-questions").addClass "fade_out"
+				localStorage.setItem("survey_"+@survey.id+"_answers", JSON.stringify(answers))
 
-				setTimeout =>
-					this.$el.find(".js-questions").addClass "hide"
-					@survey.fetch()
-				, 666
+				this.render()
+				form.removeAttribute("disabled")
 
 
 
 
 
-	reset: (e)->
-		e.preventDefault()
-
-		this.$el.find(".js-results").addClass "fade_out"
-		this.$el.find(".js-form")[0].reset()
-		this.$el.find(".js-typeahead").typeahead("destroy")
-		localStorage.removeItem("survey_answer")
-
-		setTimeout =>
-			this.render()
-
-		, 666
 		
 
 		

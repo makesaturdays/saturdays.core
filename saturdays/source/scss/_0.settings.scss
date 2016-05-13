@@ -2,14 +2,16 @@
 // #COLORS
 
 $white: #fff;
-$black: #020202;
+$black: #292E31;
+$black--dark: #1F2224;
 $red: #ED143D;
 $blue: #2656A7;
+$blue--dark: #27283C;
 $grey: #EAEBEF;
 $grey--light: #FAFAFA;
 $green: #49D6AC;
 
-$primary: $black;
+$primary: $blue--dark;
 $highlight: $green;
 
 
@@ -32,7 +34,7 @@ $medium_size: 20px;
 $vertical_rythm: $bigish_size;
 $line_height: 1.666;
 $letter_spacing: 0;
-$border_radius: 0;
+$border_radius: 3px;
 
 $number_of_columns: 12;
 $gutter: 2.5rem;

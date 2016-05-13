@@ -10,6 +10,10 @@
 
 html {
 	font: #{$base_size}/#{$line_height} $body_font;
+
+	-webkit-font-smoothing: antialiased;
+	-webkit-tap-highlight-color: fade-out($primary, 0.8);
+	-moz-osx-font-smoothing: grayscale;
 }
 
 body {
@@ -20,6 +24,11 @@ body {
 	overflow-x: hidden;
 
 	@include transition(background-color $fast);
+
+	&.body--dark {
+		color: $white;
+		background-color: $black;
+	}
 }
 
 
@@ -30,6 +39,10 @@ footer {
 
 	.blog & {
 		background-color: $grey;
+	}
+
+	.body--dark & {
+		background-color: $black--dark;
 	}
 }
 
@@ -103,6 +116,11 @@ p {
 		@media #{$small} {
 			font-size: $huge_size*0.75;
 		}
+	}
+
+	&.p--big,
+	.big & {
+		font-size: $bigish_size;
 	}
 
 	&.p--medium,
@@ -262,6 +280,7 @@ sub {
 
 // #COLORS
 .white { color: $white; }
+.highlight { color: $highlight; }
 
 
 // #MISC
