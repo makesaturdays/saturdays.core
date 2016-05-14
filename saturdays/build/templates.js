@@ -3,14 +3,20 @@ this["templates"] = this["templates"] || {};
 this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "hide";
 },"3":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
+    var stack1;
 
-  return "<div class=\"grid grid--guttered\">\n<div class=\"col\">\n<button class=\"js-show_new_post\">New</button>\n\n<form action=\"#\" class=\"hide js-new_post_form\">\n<label for=\"title\">Title</label>\n<input type=\"text\" id=\"title\" name=\"title\">\n<label for=\"route\">Url Route</label>\n<input type=\"text\" id=\"route\" name=\"route\">\n<button type=\"submit\">"
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
-    + "</button>\n</form>\n</div>\n<div class=\"col\">\n<button class=\"js-logout\">"
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
+  return "<div class=\"grid grid--guttered grid--bottom\">\n"
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.list_id : depth0),{"name":"if","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "<div class=\"col\">\n<button class=\"js-logout\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
     + "</button>\n</div>\n</div>\n";
-},"5":function(container,depth0,helpers,partials,data) {
+},"4":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<div class=\"col\">\n<button class=\"js-show_new_post\">New</button>\n\n<form action=\"#\" class=\"hide js-new_post_form\">\n<label for=\"title\">Title</label>\n<input type=\"text\" id=\"title\" name=\"title\">\n<label for=\"route\">Url Route</label>\n<input type=\"text\" id=\"route\" name=\"route\">\n<button type=\"submit\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
+    + "</button>\n</form>\n</div>\n";
+},"6":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
 
   return "<form action=\"#\" class=\"js-submit_login\">\n<label for=\"email\">"
@@ -26,11 +32,15 @@ this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,d
   return "<div class=\"padded white_back js-login_box "
     + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1),{"name":"unless","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\">\n"
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(5, data, 0),"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1),{"name":"if","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(6, data, 0),"data":data})) != null ? stack1 : "")
     + "</div>\n";
 },"useData":true});
 
-this["templates"]["admin/author"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+this["templates"]["answers"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<p class=\"p--big text_center highlight\">\n<strong>Thanks, we'll keep in touch!</strong>\n</p>\n";
+},"useData":true});
+
+this["templates"]["cms/author"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
 
   return "<p class=\"p--medium hide_on_small\">\n"
@@ -46,7 +56,7 @@ this["templates"]["admin/author"] = Handlebars.template({"compiler":[7,">= 4.0.0
     + "</a>\n</p>\n";
 },"useData":true});
 
-this["templates"]["admin/author_input"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
+this["templates"]["cms/author_input"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<option value=\""
@@ -66,7 +76,7 @@ this["templates"]["admin/author_input"] = Handlebars.template({"1":function(cont
     + "</select>\n";
 },"useData":true,"useDepths":true});
 
-this["templates"]["admin/edit_admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+this["templates"]["cms/edit"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "checked";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
@@ -82,7 +92,7 @@ this["templates"]["admin/edit_admin"] = Handlebars.template({"1":function(contai
     + "</button></p>\n";
 },"useData":true});
 
-this["templates"]["admin/piece_admin"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+this["templates"]["cms/piece_edit"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "<input type=\"file\" class=\"hide js-image_input\">\n\n<button class=\"button--tight js-save_piece\" disabled>"
@@ -90,7 +100,7 @@ this["templates"]["admin/piece_admin"] = Handlebars.template({"compiler":[7,">= 
     + "</button>\n";
 },"useData":true});
 
-this["templates"]["admin/piece_link"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+this["templates"]["cms/piece_link"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<small>[<span contenteditable data-key=\""
@@ -100,7 +110,21 @@ this["templates"]["admin/piece_link"] = Handlebars.template({"compiler":[7,">= 4
     + "</span>]</small>\n";
 },"useData":true});
 
-this["templates"]["admin/product_edit_admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
+this["templates"]["cms/tag"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<a href=\"/lists/blog/tags/"
+    + alias4(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tag","hash":{},"data":data}) : helper)))
+    + "\" data-tag contenteditable=\"true\">"
+    + alias4(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tag","hash":{},"data":data}) : helper)))
+    + "</a>\n";
+},"useData":true});
+
+this["templates"]["cms/tag_input"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    return "<input class=\"em input--inline\" placeholder=\"Add a tag\" type=\"text\" name=\"tag_input\">\n";
+},"useData":true});
+
+this["templates"]["ecom/product_edit"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data,blockParams,depths) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<option value=\""
@@ -130,28 +154,10 @@ this["templates"]["admin/product_edit_admin"] = Handlebars.template({"1":functio
     + ">\n<label for=\"is_salable\">Is salable?</label>\n<br>\n";
 },"useData":true,"useDepths":true});
 
-this["templates"]["admin/shop_edit_admin"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+this["templates"]["ecom/shop_edit"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "<label for=\"email\">Email Address</label>\n<input class=\"input--underline\" type=\"text\" id=\"email\" name=\"email\" value=\""
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.email : stack1), depth0))
     + "\" disabled>\n";
-},"useData":true});
-
-this["templates"]["admin/tag"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
-
-  return "<a href=\"/lists/blog/tags/"
-    + alias4(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tag","hash":{},"data":data}) : helper)))
-    + "\" data-tag contenteditable=\"true\">"
-    + alias4(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"tag","hash":{},"data":data}) : helper)))
-    + "</a>\n";
-},"useData":true});
-
-this["templates"]["admin/tag_input"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<input class=\"em input--inline\" placeholder=\"Add a tag\" type=\"text\" name=\"tag_input\">\n";
-},"useData":true});
-
-this["templates"]["answers"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    return "<p class=\"p--big text_center highlight\">\n<strong>Thanks, we'll keep in touch!</strong>\n</p>\n";
 },"useData":true});

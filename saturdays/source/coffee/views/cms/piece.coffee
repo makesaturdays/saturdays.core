@@ -2,8 +2,8 @@
 class Saturdays.Views.Piece extends Saturdays.View
 
 
-	piece_admin_template: templates["admin/piece_admin"]
-	piece_link_template: templates["admin/piece_link"]
+	piece_admin_template: templates["cms/piece_edit"]
+	piece_link_template: templates["cms/piece_link"]
 
 
 	events: {

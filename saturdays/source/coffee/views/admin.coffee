@@ -19,6 +19,10 @@ class Saturdays.Views.Admin extends Saturdays.View
 
 
 	render: ->
+
+		_.extend @data,
+			list_id: window.list_id
+
 		super()
 
 

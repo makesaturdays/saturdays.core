@@ -2,9 +2,9 @@
 class Saturdays.Views.Editable extends Saturdays.View
 
 
-	edit_admin_template: templates["admin/edit_admin"]
-	tag_input_template: templates["admin/tag_input"]
-	tag_template: templates["admin/tag"]
+	edit_admin_template: templates["cms/edit"]
+	tag_input_template: templates["cms/tag_input"]
+	tag_template: templates["cms/tag"]
 
 	
 	initialize: ->

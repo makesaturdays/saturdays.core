@@ -1,8 +1,8 @@
 
 class Saturdays.Views.Post extends Saturdays.Views.Editable
 
-	author_input_template: templates["admin/author_input"]
-	author_template: templates["admin/author"]
+	author_input_template: templates["cms/author_input"]
+	author_template: templates["cms/author"]
 
 
 	events: {

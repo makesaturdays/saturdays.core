@@ -778,11 +778,11 @@
       return Editable.__super__.constructor.apply(this, arguments);
     }
 
-    Editable.prototype.edit_admin_template = templates["admin/edit_admin"];
+    Editable.prototype.edit_admin_template = templates["cms/edit"];
 
-    Editable.prototype.tag_input_template = templates["admin/tag_input"];
+    Editable.prototype.tag_input_template = templates["cms/tag_input"];
 
-    Editable.prototype.tag_template = templates["admin/tag"];
+    Editable.prototype.tag_template = templates["cms/tag"];
 
     Editable.prototype.initialize = function() {
       this.events["click .js-save_edit"] = "save_edit";
@@ -903,6 +903,9 @@
     };
 
     Admin.prototype.render = function() {
+      _.extend(this.data, {
+        list_id: window.list_id
+      });
       return Admin.__super__.render.call(this);
     };
 
@@ -972,9 +975,9 @@
       return Piece.__super__.constructor.apply(this, arguments);
     }
 
-    Piece.prototype.piece_admin_template = templates["admin/piece_admin"];
+    Piece.prototype.piece_admin_template = templates["cms/piece_edit"];
 
-    Piece.prototype.piece_link_template = templates["admin/piece_link"];
+    Piece.prototype.piece_link_template = templates["cms/piece_link"];
 
     Piece.prototype.events = {
       "click .js-save_piece": "save_piece",
@@ -1080,9 +1083,9 @@
       return Post.__super__.constructor.apply(this, arguments);
     }
 
-    Post.prototype.author_input_template = templates["admin/author_input"];
+    Post.prototype.author_input_template = templates["cms/author_input"];
 
-    Post.prototype.author_template = templates["admin/author"];
+    Post.prototype.author_template = templates["cms/author"];
 
     Post.prototype.events = {
       "click .js-maximize": "maximize",
@@ -1258,7 +1261,7 @@
       return Product.__super__.constructor.apply(this, arguments);
     }
 
-    Product.prototype.product_edit_admin_template = templates["admin/product_edit_admin"];
+    Product.prototype.product_edit_admin_template = templates["ecom/product_edit"];
 
     Product.prototype.events = {};
 
@@ -1317,7 +1320,7 @@
       return VendorShop.__super__.constructor.apply(this, arguments);
     }
 
-    VendorShop.prototype.shop_edit_admin_template = templates["admin/shop_edit_admin"];
+    VendorShop.prototype.shop_edit_admin_template = templates["ecom/shop_edit"];
 
     VendorShop.prototype.events = {};
 

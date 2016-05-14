@@ -1,7 +1,8 @@
 
 <div class="padded white_back js-login_box {{#unless session.user_id}}hide{{/unless}}">
 	{{#if session.user_id}}
-	<div class="grid grid--guttered">
+	<div class="grid grid--guttered grid--bottom">
+		{{#if list_id}}
 		<div class="col">
 			<button class="js-show_new_post">New</button>
 
@@ -13,6 +14,7 @@
 				<button type="submit">{{pieces.admin.submit}}</button>
 			</form>
 		</div>
+		{{/if}}
 		<div class="col">
 			<button class="js-logout">{{pieces.admin.logout}}</button>
 		</div>

@@ -1,7 +1,7 @@
 
 class Saturdays.Views.Product extends Saturdays.Views.Editable
 
-	product_edit_admin_template: templates["admin/product_edit_admin"]
+	product_edit_admin_template: templates["ecom/product_edit"]
 
 	events: {
 	}

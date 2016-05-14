@@ -1,7 +1,7 @@
 
 class Saturdays.Views.VendorShop extends Saturdays.Views.Editable
 
-	shop_edit_admin_template: templates["admin/shop_edit_admin"]
+	shop_edit_admin_template: templates["ecom/shop_edit"]
 
 	events: {
 	}
