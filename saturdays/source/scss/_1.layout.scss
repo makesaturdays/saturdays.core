@@ -29,6 +29,7 @@ header {
 	top: 0;
 	left: 0;
 	width: 100%;
+	z-index: 1;
 }
 
 
@@ -37,6 +38,8 @@ header {
 .main {
 	@extend .padded;
 	@extend .padded--vertically_thick;
+
+	position: relative;
 
 	max-width: 1600px;
 	min-height: 600px;
