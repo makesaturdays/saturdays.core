@@ -9,7 +9,7 @@ validation_rules = {
 
 	'email': { 'type': 'string', 'regex': '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$' },
 	'image': { 'type': 'string', 'regex': '/(https?:\/\/.*\.(?:png|jpg|jpeg|gif|webp))/i' },
-	'interval': { 'type': 'string', 'allowed': ['day', 'week', 'month', 'year']},
+	'frequency': { 'type': 'string', 'allowed': ['day', 'week', 'month', 'year']},
 	'day': { 'type': 'integer', 'min': 0, 'max': 6 },
 	'hour': { 'type': 'integer', 'min': 0, 'max': 23 },
 	'minute': { 'type': 'integer', 'min': 0, 'max': 59 },

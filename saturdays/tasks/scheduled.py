@@ -24,21 +24,21 @@ def scheduled_tasks():
 	tasks = ScheduledTask.list({'is_online': True})
 	for task in tasks:
 		
-		if task['interval'] == 'day':
-			if task['interval_hour'] == now.hour and task['interval_minute'] == now.minute:
+		if task['frequency'] == 'day':
+			if task['frequency_hour'] == now.hour and task['frequency_minute'] == now.minute:
 				execute_task.apply_async((task,), countdown=0)
 
 		else:
 			created_at = task['created_at'].replace(second=0, microsecond=0, tzinfo=now.tzinfo)
 
-			if task['interval'] == 'week':
-				rule = rrule(WEEKLY, interval=task['interval_count'], byminute=task['interval_minute'], byhour=task['interval_hour'], byweekday=task['interval_day'], dtstart=created_at, until=now)
+			if task['frequency'] == 'week':
+				rule = rrule(WEEKLY, interval=task['frequency_count'], byminute=task['frequency_minute'], byhour=task['frequency_hour'], byweekday=task['frequency_day'], dtstart=created_at, until=now)
 
-			elif task['interval'] == 'month':
-				rule = rrule(MONTHLY, interval=task['interval_count'], byminute=task['interval_minute'], byhour=task['interval_hour'], bymonthday=task['interval_day'], dtstart=created_at, until=now)
+			elif task['frequency'] == 'month':
+				rule = rrule(MONTHLY, interval=task['frequency_count'], byminute=task['frequency_minute'], byhour=task['frequency_hour'], bymonthday=task['frequency_day'], dtstart=created_at, until=now)
 
-			elif task['interval'] == 'year':
-				rule = rrule(YEARLY, interval=task['interval_count'], byminute=task['interval_minute'], byhour=task['interval_hour'], byyearday=task['interval_day'], dtstart=created_at, until=now)
+			elif task['frequency'] == 'year':
+				rule = rrule(YEARLY, interval=task['frequency_count'], byminute=task['frequency_minute'], byhour=task['frequency_hour'], byyearday=task['frequency_day'], dtstart=created_at, until=now)
 
 
 			if now in rule:

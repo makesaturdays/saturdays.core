@@ -17,11 +17,11 @@ with app.app_context():
 		schema = {
 			'name': validation_rules['text'],
 			'description': validation_rules['text'],
-			'interval': validation_rules['interval'],
-			'interval_count': validation_rules['int'],
-			'interval_day': validation_rules['day'],
-			'interval_hour': validation_rules['hour'],
-			'interval_minute': validation_rules['minute'],
+			'frequency': validation_rules['frequency'],
+			'frequency_interval': validation_rules['int'],
+			'frequency_day': validation_rules['day'],
+			'frequency_hour': validation_rules['hour'],
+			'frequency_minute': validation_rules['minute'],
 			'is_online': validation_rules['bool'],
 			'has_email': validation_rules['bool'],
 			'email_to': validation_rules['email'],
@@ -39,6 +39,8 @@ with app.app_context():
 			'needs_subscriptions': validation_rules['bool'],
 			'metadata': validation_rules['metadata']
 		}
+
+		schema['frequency_interval']['min'] = 1
 
 
 		endpoint = '/scheduled_tasks'
