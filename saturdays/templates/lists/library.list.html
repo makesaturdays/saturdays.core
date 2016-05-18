@@ -29,7 +29,7 @@
 
 <div class="grid grid--guttered">
 	{% for post in list.posts %}
-	<article class="col col--4of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
+	<article class="col col--6of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
 		<div class="grid grid--tight_guttered">
 			<div class="col col--5of12">
 				<a href="{{post.url}}" target="_blank"><img src="{{post.front_image}}" alt="{{post.title}}"></a>
@@ -50,7 +50,7 @@
 	{% endfor %}
 
 	{% for post in list.posts %}
-	<article class="col col--4of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
+	<article class="col col--6of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
 		<div class="grid grid--tight_guttered">
 			<div class="col col--5of12">
 				<a href="{{post.url}}" target="_blank"><img src="{{post.front_image}}" alt="{{post.title}}"></a>
@@ -71,7 +71,7 @@
 	{% endfor %}
 
 	{% for post in list.posts %}
-	<article class="col col--4of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
+	<article class="col col--6of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
 		<div class="grid grid--tight_guttered">
 			<div class="col col--5of12">
 				<a href="{{post.url}}" target="_blank"><img src="{{post.front_image}}" alt="{{post.title}}"></a>
@@ -91,26 +91,7 @@
 	</article>
 	{% endfor %}
 
-	{% for post in list.posts %}
-	<article class="col col--4of12 col--medium--6of12 col--small--12of12 library__post" data-post-id="{{post._id}}">
-		<div class="grid grid--tight_guttered">
-			<div class="col col--5of12">
-				<a href="{{post.url}}" target="_blank"><img src="{{post.front_image}}" alt="{{post.title}}"></a>
-
-				<div data-admin></div>
-			</div>
-
-			<div class="col col--7of12">
-				<h4><a href="{{post.url}}" target="_blank"><span data-title>{{post.title}}</span></a></h4>
-
-				<blockquote data-content-key="quote" data-is-markdown>{{post.quote|safe}}</blockquote>
-				<div data-content-key="references">{{post.references|safe}}</div>
-
-				<span data-tags class="tags">{% for tag in post.tags %}<a href="/lists/library/tags/{{tag}}" data-tag>{{tag}}</a>{% endfor %} <span data-tag-input></span></span>
-			</div>
-		</div>
-	</article>
-	{% endfor %}
+	
 </div>
 {% endblock %}
 
