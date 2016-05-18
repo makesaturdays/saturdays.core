@@ -10,6 +10,14 @@
 	Library - {{super()}}
 {% endblock %}
 
+{% block description %}
+	{{pieces.library.introduction|striptags}}
+{% endblock %}
+
+{% block og_description %}
+	{{pieces.library.introduction|striptags}}
+{% endblock %}
+
 {% block body_classes %}library blog{% endblock %}
 
 {% block title_link %}/{% endblock %}
