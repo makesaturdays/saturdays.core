@@ -24,10 +24,12 @@ body {
 	overflow-x: hidden;
 
 	@include transition(background-color $fast);
+	@include gradient_overlay();
 
 	&.body--dark {
 		color: $white;
 		background-color: $black;
+		@include gradient_overlay($color: $black--light);
 	}
 }
 
@@ -232,7 +234,7 @@ blockquote {
 	position: relative;
 
 	margin: 0 0 $vertical_rythm;
-	padding: 0 $vertical_rythm*2;
+	padding-left: $vertical_rythm;
 
 	.medium & {
 		font-size: $medium_size;
@@ -250,11 +252,11 @@ blockquote {
 		left: 0.25em;
 	}
 
-	&:after {
-		content: "”";
-		top: 0;
-		right: 0.25em;
-	}
+	// &:after {
+	// 	content: "”";
+	// 	top: 0;
+	// 	right: 0.25em;
+	// }
 }
 
 // #PRE & #CODE

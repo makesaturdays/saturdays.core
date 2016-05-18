@@ -81,11 +81,15 @@ this["templates"]["cms/edit"] = Handlebars.template({"1":function(container,dept
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
 
-  return "<input type=\"checkbox\" id=\"is_online\" name=\"is_online\" "
+  return "<input type=\"checkbox\" id=\"is_online_"
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1._id : stack1), depth0))
+    + "\" name=\"is_online\" "
     + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.is_online : stack1),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + ">\n<label for=\"is_online\">"
+    + ">\n<label for=\"is_online_"
+    + alias2(alias1(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1._id : stack1), depth0))
+    + "\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.online : stack1), depth0))
-    + "</label>\n\n<br>\n\n<p><button class=\"js-save_edit\">"
+    + "</label>\n\n<br>\n\n<p><button class=\"js-save_edit\" disabled>"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.save : stack1), depth0))
     + "</button></p>\n<p><button class=\"button--transparent js-destroy\">"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1["delete"] : stack1), depth0))

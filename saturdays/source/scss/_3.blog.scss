@@ -1,26 +1,9 @@
 
-@mixin gradient_overlay($height: 66%) {
 
-	&:after {
-		content: "";
-		position: fixed;
-		bottom: 0;
-		left: 0;
-		z-index: 1;
-
-		height: $height;
-		width: 100%;
-
-		pointer-events: none;
-		@include linear_gradient_background(fade-out($white, 0.25), fade-out($white, 1), 0deg);
-	}
-}
 
 
 .blog {
 	background-color: $white;
-
-	@include gradient_overlay();
 }
 
 	.blog__post {

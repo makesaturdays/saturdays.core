@@ -8,6 +8,9 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 	
 	initialize: ->
+		this.events["input input"] = "key_input"
+		this.events["change input"] = "key_input"
+		this.events["input [contenteditable]"] = "key_input"
 		this.events["click .js-save_edit"] = "save_edit"
 		this.events["click .js-destroy"] = "destroy"
 		this.events["keypress [name='tag_input']"] = "input_tag"
@@ -34,6 +37,8 @@ class Saturdays.Views.Editable extends Saturdays.View
 			this.$el.find("[data-tag-input]").html this.tag_input_template(@data)
 
 			this.$el.find("[data-admin]").html this.edit_admin_template(@data)
+
+			@button = this.$el.find(".js-save_edit")[0]
 
 			this.delegateEvents()
 
@@ -62,6 +67,10 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 					window.location = "/lists/" + window.list_route
 
+
+	key_input: (e)->
+		if @button.hasAttribute "disabled"
+			@button.removeAttribute "disabled"
 
 
 

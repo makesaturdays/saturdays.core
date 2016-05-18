@@ -40,6 +40,23 @@
 	background: linear-gradient($angle, $color1, $color2);
 }
 
+@mixin gradient_overlay($height: 66%, $color: $white) {
+
+	&:after {
+		content: "";
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		z-index: 1;
+
+		height: $height;
+		width: 100%;
+
+		pointer-events: none;
+		@include linear_gradient_background(fade-out($color, 0.25), fade-out($color, 1), 0deg);
+	}
+}
+
 .fades_out {
 	visibility: visible;
 	opacity: 1;

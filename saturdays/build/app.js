@@ -785,6 +785,9 @@
     Editable.prototype.tag_template = templates["cms/tag"];
 
     Editable.prototype.initialize = function() {
+      this.events["input input"] = "key_input";
+      this.events["change input"] = "key_input";
+      this.events["input [contenteditable]"] = "key_input";
       this.events["click .js-save_edit"] = "save_edit";
       this.events["click .js-destroy"] = "destroy";
       this.events["keypress [name='tag_input']"] = "input_tag";
@@ -803,6 +806,7 @@
         this.$el.find("[data-tag]").attr("contenteditable", "true");
         this.$el.find("[data-tag-input]").html(this.tag_input_template(this.data));
         this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
+        this.button = this.$el.find(".js-save_edit")[0];
         this.delegateEvents();
       }
       return this;
@@ -830,6 +834,12 @@
             return window.location = "/lists/" + window.list_route;
           }
         });
+      }
+    };
+
+    Editable.prototype.key_input = function(e) {
+      if (this.button.hasAttribute("disabled")) {
+        return this.button.removeAttribute("disabled");
       }
     };
 
