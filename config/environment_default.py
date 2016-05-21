@@ -35,12 +35,9 @@ MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '')
 
 
 # S3
-# S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY', '')
-# S3_SECRET_KEY = os.getenv('S3_SECRET_KEY', '')
-# S3_BUCKET = os.getenv('S3_BUCKET', '')
-
-
-
+S3_ACCESS_KEY = os.getenv('S3_ACCESS_KEY', '')
+S3_SECRET_KEY = os.getenv('S3_SECRET_KEY', '')
+S3_BUCKET = os.getenv('S3_BUCKET', '')
 
 
 # CELERY
@@ -75,8 +72,6 @@ ELASTICSEARCH_PASSWORD = os.getenv('ELASTICSEARCH_PASSWORD', '')
 # XERO_KEY = os.getenv('XERO_KEY', '')
 # XERO_SECRET = os.getenv('XERO_SECRET', '')
 # XERO_PRIVATE_KEY_PATH = os.getenv('XERO_PRIVATE_KEY_PATH', os.path.abspath(os.path.dirname(__file__))+'/keys/xero.pem)
-
-
 
 
 

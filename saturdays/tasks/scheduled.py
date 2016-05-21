@@ -47,5 +47,3 @@ def scheduled_tasks():
 
 		
 
-
-
