@@ -10,6 +10,7 @@ class Saturdays.Views.Cart extends Saturdays.View
 
 
 	initialize: ->
+		this.listenTo Saturdays.cart, "sync", this.render if Saturdays.cart?
 
 		super()
 
@@ -18,5 +19,6 @@ class Saturdays.Views.Cart extends Saturdays.View
 
 		_.extend @data,
 			cart: Saturdays.cart.toJSON()
+			
 
 		super()

@@ -15,6 +15,7 @@
       this.user = new Saturdays.Models.User();
       this.cart = new Saturdays.Models.Cart();
       this.admin_view = new Saturdays.Views.Admin();
+      this.cart_view = new Saturdays.Views.Cart();
       this.router = new Saturdays.Routers.Router();
       return Backbone.history.start({
         pushState: true
@@ -949,7 +950,7 @@
         model: this.model.toJSON()
       });
       Editable.__super__.render.call(this);
-      if (this.data.is_authenticated) {
+      if (this.data.is_admin) {
         this.$el.find("[data-tag]").attr("contenteditable", "true");
         this.$el.find("[data-tag-input]").html(this.tag_input_template(this.data));
         this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
@@ -1226,7 +1227,7 @@
     };
 
     Piece.prototype.prevent_click = function(e) {
-      if (this.data.is_authenticated) {
+      if (this.data.is_admin) {
         return e.preventDefault();
       }
     };
@@ -1272,7 +1273,7 @@
         authors: Saturdays.authors.toJSON()
       });
       Post.__super__.render.call(this);
-      if (this.data.is_authenticated) {
+      if (this.data.is_admin) {
         this.$el.find("[data-title]").attr("contenteditable", "true");
         this.$el.find("[data-published-date]").attr("contenteditable", "true");
         this.$el.find("[data-content-key]").attr("contenteditable", "true");
@@ -1433,6 +1434,9 @@
     Cart.prototype.events = {};
 
     Cart.prototype.initialize = function() {
+      if (Saturdays.cart != null) {
+        this.listenTo(Saturdays.cart, "sync", this.render);
+      }
       return Cart.__super__.initialize.call(this);
     };
 
@@ -1480,7 +1484,7 @@
         shops: Saturdays.vendor_shops.toJSON()
       });
       Product.__super__.render.call(this);
-      if (this.data.is_authenticated) {
+      if (this.data.is_admin) {
         this.$el.find("[data-name]").attr("contenteditable", "true");
         this.$el.find("[data-price]").attr("contenteditable", "true");
         this.$el.find("[data-description]").attr("contenteditable", "true");
@@ -1543,7 +1547,7 @@
 
     VendorShop.prototype.render = function() {
       VendorShop.__super__.render.call(this);
-      if (this.data.is_authenticated) {
+      if (this.data.is_admin) {
         this.$el.find("[data-name]").attr("contenteditable", "true");
         this.$el.find("[data-description]").attr("contenteditable", "true");
         this.$el.find("[data-shop-admin]").html(this.shop_edit_admin_template(this.data));

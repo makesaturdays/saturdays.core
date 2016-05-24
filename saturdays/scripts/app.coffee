@@ -22,6 +22,7 @@ window.Saturdays =
 		@cart = new Saturdays.Models.Cart()
 		
 		@admin_view = new Saturdays.Views.Admin()
+		@cart_view = new Saturdays.Views.Cart()
 
 		@router = new Saturdays.Routers.Router()
 		Backbone.history.start

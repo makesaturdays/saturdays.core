@@ -91,7 +91,7 @@ class Saturdays.Views.Piece extends Saturdays.View
 
 	prevent_click: (e)->
 		
-		if @data.is_authenticated
+		if @data.is_admin
 			e.preventDefault()
 
 

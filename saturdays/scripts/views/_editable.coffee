@@ -32,7 +32,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 		super()
 
-		if @data.is_authenticated
+		if @data.is_admin
 			this.$el.find("[data-tag]").attr "contenteditable", "true"
 			this.$el.find("[data-tag-input]").html this.tag_input_template(@data)
 
