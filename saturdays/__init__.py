@@ -8,7 +8,7 @@ from elasticsearch import Elasticsearch, Urllib3HttpConnection
 import certifi
 
 
-app = Flask(__name__, static_folder='build')
+app = Flask(__name__, static_folder='../build')
 
 
 app.config.from_object('config.environment_default')

@@ -33,7 +33,7 @@ Once everything's successfully installed, run the following in seperate terminal
 1. `grunt start`
 2. `grunt compilers`
 
-A good place to start is at the [saturdays/templates](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/templates) layout files and look into the [saturdays/source/scss](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/source/scss) styles and [saturdays/source/coffee](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/source/coffee) scripts folders.
+A good place to start is at the [saturdays/templates](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/templates) layout files and look into the [saturdays/source/styles](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/source/scss) Sass files folder and [saturdays/scripts](https://github.com/makesaturdays/saturdays.core/tree/master/saturdays/source/coffee) CoffeeScript files folders.
 
 ### Setting up MongoDB
 

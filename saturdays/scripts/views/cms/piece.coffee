@@ -18,7 +18,11 @@ class Saturdays.Views.Piece extends Saturdays.View
 	initialize: ->
 
 		this.listenTo @model, "sync", this.render
-		@model.fetch()
+
+		if Saturdays.user?
+			this.listenToOnce Saturdays.user, "sync", =>
+				if Saturdays.user.get("is_admin")
+					@model.fetch()
 
 		super()
 
@@ -28,7 +32,7 @@ class Saturdays.Views.Piece extends Saturdays.View
 		super()
 
 
-		if @data.is_authenticated
+		if @data.is_admin
 			this.$el.find("[data-key]").attr "contenteditable", "true"
 			this.$el.find("[data-link-key]").each (index, link)=>
 				$(link).before this.piece_link_template({

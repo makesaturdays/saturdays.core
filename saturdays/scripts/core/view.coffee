@@ -25,7 +25,7 @@ class Saturdays.View extends Backbone.View
 			session: Saturdays.session.toJSON() if Saturdays.session?
 			user: Saturdays.user.toJSON() if Saturdays.user?
 			is_authenticated: Saturdays.session.has("user_id") if Saturdays.session?
-			is_admin: Saturdays.session.get("is_admin") if Saturdays.session?
+			is_admin: Saturdays.user.get("is_admin") if Saturdays.user?
 
 		if @templates?
 			html = ""

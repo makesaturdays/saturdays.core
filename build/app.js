@@ -491,8 +491,8 @@
         user: Saturdays.user.toJSON()
       } : void 0, Saturdays.session != null ? {
         is_authenticated: Saturdays.session.has("user_id")
-      } : void 0, Saturdays.session != null ? {
-        is_admin: Saturdays.session.get("is_admin")
+      } : void 0, Saturdays.user != null ? {
+        is_admin: Saturdays.user.get("is_admin")
       } : void 0);
       if (this.templates != null) {
         html = "";
@@ -825,6 +825,7 @@
       Saturdays.user.clear();
       Saturdays.cookies["delete"]("Session-Secret");
       Saturdays.cookies["delete"]("User-Id");
+      Saturdays.cookies["delete"]("Cart-Id");
       return window.location = window.location.pathname;
     };
 
@@ -1145,13 +1146,21 @@
 
     Piece.prototype.initialize = function() {
       this.listenTo(this.model, "sync", this.render);
-      this.model.fetch();
+      if (Saturdays.user != null) {
+        this.listenToOnce(Saturdays.user, "sync", (function(_this) {
+          return function() {
+            if (Saturdays.user.get("is_admin")) {
+              return _this.model.fetch();
+            }
+          };
+        })(this));
+      }
       return Piece.__super__.initialize.call(this);
     };
 
     Piece.prototype.render = function() {
       Piece.__super__.render.call(this);
-      if (this.data.is_authenticated) {
+      if (this.data.is_admin) {
         this.$el.find("[data-key]").attr("contenteditable", "true");
         this.$el.find("[data-link-key]").each((function(_this) {
           return function(index, link) {
@@ -1410,6 +1419,40 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Cart = (function(superClass) {
+    extend(Cart, superClass);
+
+    function Cart() {
+      return Cart.__super__.constructor.apply(this, arguments);
+    }
+
+    Cart.prototype.el = $("#cart");
+
+    Cart.prototype.template = templates["ecom/cart"];
+
+    Cart.prototype.events = {};
+
+    Cart.prototype.initialize = function() {
+      return Cart.__super__.initialize.call(this);
+    };
+
+    Cart.prototype.render = function() {
+      _.extend(this.data, {
+        cart: Saturdays.cart.toJSON()
+      });
+      return Cart.__super__.render.call(this);
+    };
+
+    return Cart;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Views.Product = (function(superClass) {
     extend(Product, superClass);
 
@@ -1558,20 +1601,18 @@
       if (callback != null) {
         callback.apply(this, args);
       }
-      if ((Saturdays.session != null) && Saturdays.session.get("is_admin")) {
-        $("[data-piece-id]").each((function(_this) {
-          return function(index, element) {
-            var model;
-            model = new Saturdays.Models.Piece({
-              "_id": element.getAttribute("data-piece-id")
-            });
-            return _this.views.push(new Saturdays.Views.Piece({
-              el: element,
-              model: model
-            }));
-          };
-        })(this));
-      }
+      $("[data-piece-id]").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.Piece({
+            "_id": element.getAttribute("data-piece-id")
+          });
+          return _this.views.push(new Saturdays.Views.Piece({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
       this.today = new Date();
       $('[data-day]').each((function(_this) {
         return function(index, element) {
@@ -1579,7 +1620,7 @@
         };
       })(this));
       this.query = Saturdays.helpers.get_query_string();
-      if (this.query.checkout != null) {
+      if (this.query.cart != null) {
         return console.log("CHECKOUT");
       }
     };

@@ -39,7 +39,7 @@ module.exports = function(grunt) {
           }
         },
         files: {
-          "saturdays/build/templates.js": ["saturdays/source/hbs/**/*.hbs"]
+          "build/templates.js": ["saturdays/templates/_compile/**/*.hbs"]
         }
       }
     },
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
           outputStyle: 'compressed'
         },
         files: {
-            'saturdays/build/all.css': 'saturdays/source/scss/all.scss',
+            'build/all.css': 'saturdays/styles/all.scss',
         }
       }
     },
@@ -61,13 +61,13 @@ module.exports = function(grunt) {
     coffee: {
       compile: {
         files: {
-          'saturdays/build/app.js': [
-            'saturdays/source/coffee/app.coffee',
-            'saturdays/source/coffee/core/**/*.coffee',
-            'saturdays/source/coffee/models/**/*.coffee',
-            'saturdays/source/coffee/collections/**/*.coffee',
-            'saturdays/source/coffee/views/**/*.coffee',
-            'saturdays/source/coffee/routers/router.coffee']
+          'build/app.js': [
+            'saturdays/scripts/app.coffee',
+            'saturdays/scripts/core/**/*.coffee',
+            'saturdays/scripts/models/**/*.coffee',
+            'saturdays/scripts/collections/**/*.coffee',
+            'saturdays/scripts/views/**/*.coffee',
+            'saturdays/scripts/routers/router.coffee']
         }
       }
     },
@@ -97,14 +97,14 @@ module.exports = function(grunt) {
         options: {
           livereload: false
         },
-        files: ['saturdays/source/scss/**/*.scss'],
+        files: ['saturdays/styles/**/*.scss'],
         tasks: ['sass']
       },
       css: {
-        files: 'saturdays/build/all.css'
+        files: 'build/all.css'
       },
       coffee: {
-        files: ['saturdays/source/coffee/**/*.coffee'],
+        files: ['saturdays/scripts/**/*.coffee'],
         tasks: ['coffee']
       }
     }

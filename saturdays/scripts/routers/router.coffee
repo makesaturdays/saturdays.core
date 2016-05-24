@@ -27,13 +27,12 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 		callback.apply(this, args) if callback?
 
-		if Saturdays.session? and Saturdays.session.get("is_admin")
-			$("[data-piece-id]").each (index, element)=>
-				model = new Saturdays.Models.Piece({"_id": element.getAttribute("data-piece-id")})
-				@views.push new Saturdays.Views.Piece({
-					el: element
-					model: model
-				})
+		$("[data-piece-id]").each (index, element)=>
+			model = new Saturdays.Models.Piece({"_id": element.getAttribute("data-piece-id")})
+			@views.push new Saturdays.Views.Piece({
+				el: element
+				model: model
+			})
 
 
 		@today = new Date()
@@ -42,7 +41,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 
 		@query = Saturdays.helpers.get_query_string()
-		if @query.checkout?
+		if @query.cart?
 			console.log "CHECKOUT"
 
 

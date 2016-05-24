@@ -53,7 +53,7 @@
 		width: 100%;
 
 		pointer-events: none;
-		@include linear_gradient_background(fade-out($color, 0.25), fade-out($color, 1), 0deg);
+		@include linear_gradient_background(fade-out($color, 0.5), fade-out($color, 1), 0deg);
 	}
 }
 
