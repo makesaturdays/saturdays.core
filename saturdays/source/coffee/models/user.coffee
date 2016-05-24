@@ -11,3 +11,5 @@ class Saturdays.Models.User extends Saturdays.Model
 				_id: user_id
 
 			this.fetch()
+
+

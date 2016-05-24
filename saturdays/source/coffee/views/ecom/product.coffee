@@ -4,6 +4,7 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 	product_edit_admin_template: templates["ecom/product_edit"]
 
 	events: {
+		"click [data-add-to-cart]": "add_to_cart"
 	}
 
 
@@ -34,6 +35,18 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 
 		this
 
+
+	add_to_cart: (e)->
+		e.currentTarget.setAttribute "disabled", "disabled"
+
+		Saturdays.cart.add_to_cart @model.id, this.$el.find("[name='option_id']").val(), 1,
+			success: (model, response)->
+				e.currentTarget.removeAttribute "disabled"
+
+			error: (model, response)->
+				e.currentTarget.removeAttribute "disabled"
+
+		
 
 
 	save_edit: (e)->

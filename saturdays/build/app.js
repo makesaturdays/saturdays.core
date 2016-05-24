@@ -13,6 +13,7 @@
     init: function() {
       this.session = new Saturdays.Models.Session();
       this.user = new Saturdays.Models.User();
+      this.cart = new Saturdays.Models.Cart();
       this.admin_view = new Saturdays.Views.Admin();
       this.router = new Saturdays.Routers.Router();
       return Backbone.history.start({
@@ -36,6 +37,122 @@
   $(function() {
     return Saturdays.init();
   });
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Model = (function(superClass) {
+    extend(Model, superClass);
+
+    function Model() {
+      return Model.__super__.constructor.apply(this, arguments);
+    }
+
+    Model.prototype.urlRoot = Saturdays.settings.api + "models";
+
+    Model.prototype.idAttribute = "_id";
+
+    Model.prototype.save = function(data, options, local_only) {
+      var e;
+      if (options == null) {
+        options = {};
+      }
+      if (local_only == null) {
+        local_only = false;
+      }
+      if (this.local_storage != null) {
+        this.set(data);
+        try {
+          localStorage.setItem(this.local_storage, JSON.stringify(this.toJSON()));
+        } catch (_error) {
+          e = _error;
+          console.log("Warning: localStorage is disabled");
+        }
+      }
+      if (local_only) {
+        if (options.success != null) {
+          return options.success(this, this.toJSON());
+        }
+      } else {
+        return Model.__super__.save.call(this, data, this.set_secret_header(options));
+      }
+    };
+
+    Model.prototype.fetch = function(options, local_only) {
+      if (options == null) {
+        options = {};
+      }
+      if (local_only == null) {
+        local_only = false;
+      }
+      if ((this.local_storage != null) && (localStorage.getItem(this.local_storage) != null)) {
+        this.set(this.parse(JSON.parse(localStorage.getItem(this.local_storage))));
+      }
+      if (local_only) {
+        if (options.success != null) {
+          return options.success(this, this.toJSON());
+        }
+      } else {
+        return Model.__super__.fetch.call(this, this.set_secret_header(options));
+      }
+    };
+
+    Model.prototype.destroy = function(options) {
+      if (options == null) {
+        options = {};
+      }
+      if (this.local_storage != null) {
+        localStorage.removeItem(this.local_storage);
+      }
+      return Model.__super__.destroy.call(this, this.set_secret_header(options));
+    };
+
+    Model.prototype.clear = function() {
+      if (this.local_storage != null) {
+        localStorage.removeItem(this.local_storage);
+      }
+      return Model.__super__.clear.call(this);
+    };
+
+    Model.prototype.set_secret_header = function(options) {
+      if (options.headers == null) {
+        options.headers = {};
+      }
+      options.headers["Accept"] = "application/json";
+      options.headers["X-Session-Secret"] = Saturdays.cookies.get("Session-Secret");
+      return options;
+    };
+
+    return Model;
+
+  })(Backbone.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.ChildModel = (function(superClass) {
+    extend(ChildModel, superClass);
+
+    function ChildModel() {
+      return ChildModel.__super__.constructor.apply(this, arguments);
+    }
+
+    ChildModel.prototype.endpoint = "child";
+
+    ChildModel.prototype.initialize = function() {
+      this.urlRoot = this.get("parent").url() + "/" + this.endpoint;
+      return ChildModel.__super__.initialize.call(this);
+    };
+
+    return ChildModel;
+
+  })(Saturdays.Model);
 
 }).call(this);
 
@@ -152,91 +269,6 @@
     });
     return string.trim();
   };
-
-}).call(this);
-
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  Saturdays.Model = (function(superClass) {
-    extend(Model, superClass);
-
-    function Model() {
-      return Model.__super__.constructor.apply(this, arguments);
-    }
-
-    Model.prototype.urlRoot = Saturdays.settings.api + "models";
-
-    Model.prototype.idAttribute = "_id";
-
-    Model.prototype.save = function(data, options, local_only) {
-      var e;
-      if (options == null) {
-        options = {};
-      }
-      if (local_only == null) {
-        local_only = false;
-      }
-      if (this.local_storage != null) {
-        this.set(data);
-        try {
-          localStorage.setItem(this.local_storage, JSON.stringify(this.toJSON()));
-        } catch (_error) {
-          e = _error;
-          console.log("Warning: localStorage is disabled");
-        }
-      }
-      if (local_only) {
-        if (options.success != null) {
-          return options.success(this, this.toJSON());
-        }
-      } else {
-        return Model.__super__.save.call(this, data, this.set_secret_header(options));
-      }
-    };
-
-    Model.prototype.fetch = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      if ((this.local_storage != null) && (localStorage.getItem(this.local_storage) != null)) {
-        this.set(this.parse(JSON.parse(localStorage.getItem(this.local_storage))));
-      }
-      if (this.id != null) {
-        return Model.__super__.fetch.call(this, this.set_secret_header(options));
-      }
-    };
-
-    Model.prototype.destroy = function(options) {
-      if (options == null) {
-        options = {};
-      }
-      if (this.local_storage != null) {
-        localStorage.removeItem(this.local_storage);
-      }
-      return Model.__super__.destroy.call(this, this.set_secret_header(options));
-    };
-
-    Model.prototype.clear = function() {
-      if (this.local_storage != null) {
-        localStorage.removeItem(this.local_storage);
-      }
-      return Model.__super__.clear.call(this);
-    };
-
-    Model.prototype.set_secret_header = function(options) {
-      if (options.headers == null) {
-        options.headers = {};
-      }
-      options.headers["Accept"] = "application/json";
-      options.headers["X-Session-Secret"] = Saturdays.cookies.get("Session-Secret");
-      return options;
-    };
-
-    return Model;
-
-  })(Backbone.Model);
 
 }).call(this);
 
@@ -459,6 +491,8 @@
         user: Saturdays.user.toJSON()
       } : void 0, Saturdays.session != null ? {
         is_authenticated: Saturdays.session.has("user_id")
+      } : void 0, Saturdays.session != null ? {
+        is_admin: Saturdays.session.get("is_admin")
       } : void 0);
       if (this.templates != null) {
         html = "";
@@ -601,6 +635,117 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Models.Cart = (function(superClass) {
+    extend(Cart, superClass);
+
+    function Cart() {
+      return Cart.__super__.constructor.apply(this, arguments);
+    }
+
+    Cart.prototype.urlRoot = Saturdays.settings.api + "guest_carts";
+
+    Cart.prototype.initialize = function() {
+      var cart_id, user_id;
+      user_id = Saturdays.cookies.get("User-Id");
+      cart_id = Saturdays.cookies.get("Cart-Id");
+      if (user_id != null) {
+        this.url = function() {
+          return Saturdays.settings.api + "users/" + user_id + "/cart";
+        };
+        this.isNew = function() {
+          return false;
+        };
+        this.fetch();
+      } else if (cart_id != null) {
+        this.set({
+          _id: cart_id
+        });
+        this.fetch();
+      }
+      if (this.isNew()) {
+        this.save({}, {
+          success: (function(_this) {
+            return function(model, response) {
+              Saturdays.cookies.set("Cart-Id", response._id);
+              Saturdays.cookies.set("Session-Secret", response.session.secret);
+              return _this.fetch();
+            };
+          })(this)
+        });
+      }
+      return Cart.__super__.initialize.call(this);
+    };
+
+    Cart.prototype.add_to_cart = function(product_id, option_id, quantity, options) {
+      var item;
+      if (option_id == null) {
+        option_id = null;
+      }
+      if (quantity == null) {
+        quantity = 1;
+      }
+      if (options == null) {
+        options = {};
+      }
+      item = new Saturdays.Models.CartItem({
+        parent: this
+      });
+      return item.save({
+        product_id: product_id,
+        quantity: quantity,
+        option_id: option_id
+      }, {
+        success: (function(_this) {
+          return function(model, response) {
+            if (options.success != null) {
+              options.success(model, response);
+            }
+            return _this.fetch();
+          };
+        })(this),
+        error: (function(_this) {
+          return function(model, response) {
+            if (options.error != null) {
+              return options.error(model, response);
+            }
+          };
+        })(this)
+      });
+    };
+
+    return Cart;
+
+  })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Models.CartItem = (function(superClass) {
+    extend(CartItem, superClass);
+
+    function CartItem() {
+      return CartItem.__super__.constructor.apply(this, arguments);
+    }
+
+    CartItem.prototype.endpoint = "items";
+
+    CartItem.prototype.initialize = function() {
+      return CartItem.__super__.initialize.call(this);
+    };
+
+    return CartItem;
+
+  })(Saturdays.ChildModel);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Models.Product = (function(superClass) {
     extend(Product, superClass);
 
@@ -669,7 +814,8 @@
         success: function(model, response) {
           Saturdays.cookies.set("Session-Secret", response.secret);
           Saturdays.cookies.set("User-Id", response.user_id);
-          return Saturdays.user.initialize();
+          Saturdays.user.initialize();
+          return Saturdays.cart.initialize();
         }
       });
     };
@@ -1273,7 +1419,9 @@
 
     Product.prototype.product_edit_admin_template = templates["ecom/product_edit"];
 
-    Product.prototype.events = {};
+    Product.prototype.events = {
+      "click [data-add-to-cart]": "add_to_cart"
+    };
 
     Product.prototype.initialize = function() {
       if (Saturdays.vendor_shops == null) {
@@ -1297,6 +1445,18 @@
         this.delegateEvents();
       }
       return this;
+    };
+
+    Product.prototype.add_to_cart = function(e) {
+      e.currentTarget.setAttribute("disabled", "disabled");
+      return Saturdays.cart.add_to_cart(this.model.id, this.$el.find("[name='option_id']").val(), 1, {
+        success: function(model, response) {
+          return e.currentTarget.removeAttribute("disabled");
+        },
+        error: function(model, response) {
+          return e.currentTarget.removeAttribute("disabled");
+        }
+      });
     };
 
     Product.prototype.save_edit = function(e) {
@@ -1398,24 +1558,30 @@
       if (callback != null) {
         callback.apply(this, args);
       }
-      $("[data-piece-id]").each((function(_this) {
-        return function(index, element) {
-          var model;
-          model = new Saturdays.Models.Piece({
-            "_id": element.getAttribute("data-piece-id")
-          });
-          return _this.views.push(new Saturdays.Views.Piece({
-            el: element,
-            model: model
-          }));
-        };
-      })(this));
+      if ((Saturdays.session != null) && Saturdays.session.get("is_admin")) {
+        $("[data-piece-id]").each((function(_this) {
+          return function(index, element) {
+            var model;
+            model = new Saturdays.Models.Piece({
+              "_id": element.getAttribute("data-piece-id")
+            });
+            return _this.views.push(new Saturdays.Views.Piece({
+              el: element,
+              model: model
+            }));
+          };
+        })(this));
+      }
       this.today = new Date();
-      return $('[data-day]').each((function(_this) {
+      $('[data-day]').each((function(_this) {
         return function(index, element) {
           return element.innerHTML = pieces.navigation.weekdays[_this.today.getDay()];
         };
       })(this));
+      this.query = Saturdays.helpers.get_query_string();
+      if (this.query.checkout != null) {
+        return console.log("CHECKOUT");
+      }
     };
 
     Router.prototype.home = function() {};
@@ -1431,11 +1597,11 @@
     };
 
     Router.prototype.products = function(pretty_url) {
-      return $(".js-product").each((function(_this) {
+      return $("[data-product-id]").each((function(_this) {
         return function(index, element) {
           var model;
           model = new Saturdays.Models.Product({
-            "_id": element.getAttribute("data-id")
+            "_id": element.getAttribute("data-product-id")
           });
           return _this.views.push(new Saturdays.Views.Product({
             el: element,
@@ -1446,11 +1612,11 @@
     };
 
     Router.prototype.vendor_shops = function(pretty_url) {
-      return $(".js-shop").each((function(_this) {
+      return $("[data-shop-id]").each((function(_this) {
         return function(index, element) {
           var model;
           model = new Saturdays.Models.VendorShop({
-            "_id": element.getAttribute("data-id")
+            "_id": element.getAttribute("data-shop-id")
           });
           return _this.views.push(new Saturdays.Views.VendorShop({
             el: element,

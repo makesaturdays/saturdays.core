@@ -41,7 +41,7 @@ with app.app_context():
 				abort(400)
 
 
-			if 'option_id' in document:
+			if 'option_id' in document and document['option_id'] is not None:
 				document['option_id'] = ObjectId(document['option_id'])
 
 				for option in document['product']['options']:

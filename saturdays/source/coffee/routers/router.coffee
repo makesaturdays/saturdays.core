@@ -27,18 +27,23 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 		callback.apply(this, args) if callback?
 
-
-		$("[data-piece-id]").each (index, element)=>
-			model = new Saturdays.Models.Piece({"_id": element.getAttribute("data-piece-id")})
-			@views.push new Saturdays.Views.Piece({
-				el: element
-				model: model
-			})
+		if Saturdays.session? and Saturdays.session.get("is_admin")
+			$("[data-piece-id]").each (index, element)=>
+				model = new Saturdays.Models.Piece({"_id": element.getAttribute("data-piece-id")})
+				@views.push new Saturdays.Views.Piece({
+					el: element
+					model: model
+				})
 
 
 		@today = new Date()
 		$('[data-day]').each (index, element)=>
 			element.innerHTML = pieces.navigation.weekdays[@today.getDay()]
+
+
+		@query = Saturdays.helpers.get_query_string()
+		if @query.checkout?
+			console.log "CHECKOUT"
 
 
 
@@ -55,16 +60,16 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 
 	products: (pretty_url)->
-		$(".js-product").each (index, element)=>
-			model = new Saturdays.Models.Product({"_id": element.getAttribute("data-id")})
+		$("[data-product-id]").each (index, element)=>
+			model = new Saturdays.Models.Product({"_id": element.getAttribute("data-product-id")})
 			@views.push new Saturdays.Views.Product({
 				el: element, 
 				model: model
 			})
 
 	vendor_shops: (pretty_url)->
-		$(".js-shop").each (index, element)=>
-			model = new Saturdays.Models.VendorShop({"_id": element.getAttribute("data-id")})
+		$("[data-shop-id]").each (index, element)=>
+			model = new Saturdays.Models.VendorShop({"_id": element.getAttribute("data-shop-id")})
 			@views.push new Saturdays.Views.VendorShop({
 				el: element, 
 				model: model

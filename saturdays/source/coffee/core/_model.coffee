@@ -24,11 +24,14 @@ class Saturdays.Model extends Backbone.Model
 
 
 
-	fetch: (options={})->
+	fetch: (options={}, local_only=false)->
 		if this.local_storage? and localStorage.getItem(this.local_storage)?
 			this.set this.parse(JSON.parse(localStorage.getItem(this.local_storage)))
 
-		if this.id?
+		if local_only
+			options.success(this, this.toJSON()) if options.success?
+
+		else
 			super this.set_secret_header(options)
 
 

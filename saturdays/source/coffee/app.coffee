@@ -19,6 +19,7 @@ window.Saturdays =
 
 		@session = new Saturdays.Models.Session()
 		@user = new Saturdays.Models.User()
+		@cart = new Saturdays.Models.Cart()
 		
 		@admin_view = new Saturdays.Views.Admin()
 

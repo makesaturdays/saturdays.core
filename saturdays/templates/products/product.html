@@ -12,7 +12,7 @@
 
 
 {% block main %}
-	<article class="grid grid--guttered product js-product" data-id="{{product._id}}">
+	<article class="grid grid--guttered product" data-product-id="{{product._id}}">
 		<div class="col col--4of12">
 			<img src="https://placehold.it/500x500/f4f4f4/E5E5E5/&text=%E2%88%85" alt="Picture of {{product.name}}">
 			
@@ -26,6 +26,15 @@
 			<span data-tags class="tags">{% for tag in product.tags %}<em data-tag>{{tag}}</em>{% endfor %} <span data-tag-input></span></span>
 
 			<p class="p--medium" data-description>{{product.description}}</p>
+
+			{% for option in product.options %}
+			<div data-option-id="{{option._id}}">
+				<input type="radio" id="option_{{product._id}}_{{option._id}}" name="option_id" value="{{option._id}}" {% if loop.index == 1 %}checked{% endif %}>
+				<label for="option_{{product._id}}_{{option._id}}">{{option.name}}</label>
+			</div>
+			{% endfor %}
+
+			<button data-add-to-cart>{{pieces.products.add_to_cart}}</button>
 		</div>
 			
 	</article>

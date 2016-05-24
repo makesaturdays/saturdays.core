@@ -41,8 +41,7 @@ with app.app_context():
 			{
 				'route': '',
 				'view_function': 'create_view',
-				'methods': ['POST'],
-				'requires_session': True
+				'methods': ['POST']
 			},
 			{
 				'route': '/<ObjectId:_id>',
@@ -234,7 +233,19 @@ with app.app_context():
 				document['with_store_credit'] = False
 
 
+			return document
 
+
+
+
+		@classmethod
+		def create(cls, document):
+			from saturdays.models.auth.session import Session
+			session = Session.create({})
+
+			document['session_id'] = session['_id']
+			document = super().create(document)
+			document['session'] = session
 
 			return document
 

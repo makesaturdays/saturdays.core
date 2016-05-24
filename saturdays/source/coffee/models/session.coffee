@@ -17,6 +17,7 @@ class Saturdays.Models.Session extends Saturdays.Model
 				Saturdays.cookies.set "User-Id", response.user_id
 
 				Saturdays.user.initialize()
+				Saturdays.cart.initialize()
 
 
 

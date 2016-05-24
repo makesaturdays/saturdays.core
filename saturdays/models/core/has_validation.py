@@ -17,7 +17,7 @@ with app.app_context():
 		def validate(cls, document):
 
 			for key in list(document.keys()):
-				if key not in cls.schema:
+				if key not in cls.schema or document[key] is None:
 					del document[key]
 
 				try:
