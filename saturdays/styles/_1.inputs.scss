@@ -83,6 +83,10 @@ textarea,
 		pointer-events: none;
 	}
 
+	&:focus {
+		border: 1px solid $highlight;
+	}
+
 	&.input--underline {
 		padding: $vertical_rythm/2 0;
 		border-bottom: 1px dashed;

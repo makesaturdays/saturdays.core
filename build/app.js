@@ -714,6 +714,43 @@
       });
     };
 
+    Cart.prototype.update_quantity = function(item_id, quantity, options) {
+      var item;
+      if (options == null) {
+        options = {};
+      }
+      item = new Saturdays.Models.CartItem({
+        _id: item_id,
+        parent: this
+      });
+      return item.save({
+        quantity: parseInt(quantity)
+      }, {
+        success: (function(_this) {
+          return function(model, response) {
+            if (options.success != null) {
+              options.success(model, response);
+            }
+            return _this.fetch();
+          };
+        })(this),
+        error: (function(_this) {
+          return function(model, response) {
+            if (options.error != null) {
+              return options.error(model, response);
+            }
+          };
+        })(this)
+      });
+    };
+
+    Cart.prototype.remove_from_cart = function(item_id, options) {
+      if (options == null) {
+        options = {};
+      }
+      return this.update_quantity(item_id, 0, options);
+    };
+
     return Cart;
 
   })(Saturdays.Model);
@@ -1431,7 +1468,10 @@
 
     Cart.prototype.template = templates["ecom/cart"];
 
-    Cart.prototype.events = {};
+    Cart.prototype.events = {
+      "input [name='quantity']": "input_quantity",
+      "click [data-remove-from-cart]": "remove_from_cart"
+    };
 
     Cart.prototype.initialize = function() {
       if (Saturdays.cart != null) {
@@ -1445,6 +1485,30 @@
         cart: Saturdays.cart.toJSON()
       });
       return Cart.__super__.render.call(this);
+    };
+
+    Cart.prototype.input_quantity = function(e) {
+      if (e.currentTarget.value) {
+        e.currentTarget.setAttribute("disabled", "disabled");
+        return Saturdays.cart.update_quantity(e.currentTarget.getAttribute("data-item-id"), e.currentTarget.value, {
+          success: function(model, response) {
+            return e.currentTarget.removeAttribute("disabled");
+          },
+          error: function(model, response) {
+            return e.currentTarget.removeAttribute("disabled");
+          }
+        });
+      }
+    };
+
+    Cart.prototype.remove_from_cart = function(e) {
+      e.currentTarget.setAttribute("disabled", "disabled");
+      return Saturdays.cart.remove_from_cart(e.currentTarget.getAttribute("data-item-id"), {
+        success: function(model, response) {},
+        error: function(model, response) {
+          return e.currentTarget.removeAttribute("disabled");
+        }
+      });
     };
 
     return Cart;

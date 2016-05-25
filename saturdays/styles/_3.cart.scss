@@ -1,0 +1,26 @@
+
+
+// #CART
+
+.cart {
+	@extend .grid;
+	@extend .grid--middle;
+	@extend .grid--right;
+
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 4;
+
+	width: 100%;
+	height: 100%;
+}
+
+	.cart__container {
+		@extend .padded;
+		@extend .grey_back;
+
+		max-width: 555px;
+
+		border-radius: $border_radius;
+	}

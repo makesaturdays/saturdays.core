@@ -127,7 +127,7 @@ with app.app_context():
 				vendor_shops = {}
 
 				for item in document['items']:
-					item = CartItem.postprocess(item)
+					item = CartItem.postprocess(item, document['_id'])
 
 					document['items_total_quantity'] += item['quantity']
 					document['sub_total'] += item['sub_total']

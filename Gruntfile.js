@@ -90,7 +90,7 @@ module.exports = function(grunt) {
         files: ['saturdays/templates/**/*.html']
       },
       handlebars: {
-        files: ['saturdays/source/hbs/**/*.hbs'],
+        files: ['saturdays/templates/_compile/**/*.hbs'],
         tasks: ['handlebars']
       },
       sass: {

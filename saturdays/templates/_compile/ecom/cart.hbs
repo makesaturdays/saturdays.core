@@ -1,1 +1,10 @@
-{{#each cart.items}}{{name}}{{/each}}
+
+<div class="cart__container">
+	<div class="grid grid--tight_guttered grid--middle">
+	{{#each cart.items}}
+		<div class="col col--7of12">{{name}}</div>
+		<div class="col col--3of12"><input type="number" name="quantity" data-item-id="{{_id}}" value="{{quantity}}" class="flat_bottom"></div>
+		<div class="col col--2of12"><button class="button--tight button--transparent" data-remove-from-cart data-item-id="{{_id}}">Remove</button></div>
+	{{/each}}
+	</div>
+</div>

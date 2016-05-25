@@ -8,3 +8,10 @@
 	right: 0;
 	z-index: 3;
 }
+
+	.admin__container {
+		@extend .padded;
+		@extend .white_back;
+
+		border-radius: $border_radius;
+	}

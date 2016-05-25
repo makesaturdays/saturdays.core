@@ -3,6 +3,7 @@ class Saturdays.Models.Cart extends Saturdays.Model
 	urlRoot: Saturdays.settings.api + "guest_carts"
 
 
+
 	initialize: ->
 		user_id = Saturdays.cookies.get("User-Id")
 		cart_id = Saturdays.cookies.get("Cart-Id")
@@ -51,6 +52,28 @@ class Saturdays.Models.Cart extends Saturdays.Model
 
 			error: (model, response)=>
 				options.error(model, response) if options.error?
+
+
+	update_quantity: (item_id, quantity, options={})->
+
+		item = new Saturdays.Models.CartItem
+			_id: item_id
+			parent: this
+		
+		item.save 
+			quantity: parseInt(quantity)
+		, 
+			success: (model, response)=>
+				options.success(model, response) if options.success?
+				this.fetch()
+
+			error: (model, response)=>
+				options.error(model, response) if options.error?
+
+
+
+	remove_from_cart: (item_id, options={})->
+		this.update_quantity(item_id, 0, options)
 
 
 

@@ -25,9 +25,11 @@ with app.app_context():
 		schema = {
 			'product_id': validation_rules['object_id'],
 			'option_id': validation_rules['object_id'],
-			'quantity': validation_rules['int'],
+			'quantity': validation_rules['int'].copy(),
 			'metadata': validation_rules['metadata']
 		}
+
+		schema['quantity']['min'] = 0
 
 		endpoint = '/items'
 
@@ -110,12 +112,11 @@ with app.app_context():
 			except KeyError:
 				pass
 
-
 			document = super().update(parent_id, _id, document, projection)
-
+			print(document)
 
 			if document['quantity'] <= 0:
-				cls.delete(document['_id'])
+				cls.delete(parent_id, document['_id'])
 
 
 			return document
@@ -124,10 +125,10 @@ with app.app_context():
 
 
 		@classmethod
-		def postprocess(cls, document):
+		def postprocess(cls, document, parent_id):
 			document['sub_total'] = round(document['price'] * float(document['quantity']), 2)
 
-			return document
+			return super().postprocess(document, parent_id)
 
 
 

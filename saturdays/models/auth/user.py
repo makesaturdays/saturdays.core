@@ -186,7 +186,7 @@ with app.app_context():
 			
 			try:
 				document['cart']['items'] = document['cart_items']
-				del document['cart_items']
+				# del document['cart_items']
 			except KeyError:
 				pass
 
@@ -195,7 +195,6 @@ with app.app_context():
 
 			try:
 				del document['password']
-
 			except KeyError:
 				pass
 
