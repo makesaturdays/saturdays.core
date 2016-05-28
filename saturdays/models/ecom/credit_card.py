@@ -68,23 +68,10 @@ with app.app_context():
 
 			stripe.api_key = app.config['STRIPE_API_KEY']
 			customer = stripe.Customer.retrieve(user['provider_data']['id'])
-			# document['provider_data'] = customer.sources.create(
-			# 	source=document['card_token'],
-			# 	metadata={'_id': document['_id']}
-			# )
-
 			document['provider_data'] = customer.sources.create(
-				source={
-					'object': 'card',
-					'number': '4242424242424242',
-					'exp_month': 4,
-					'exp_year': 19,
-					'cvc': 100
-				},
+				source=document['card_token'],
 				metadata={'_id': document['_id']}
 			)
-
-
 
 
 			return super().create(parent_id, document)

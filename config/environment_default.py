@@ -24,6 +24,7 @@ MONGO_URI = os.getenv('MONGO_URI', 'mongodb://127.0.0.1:27017/database')
 # STRIPE
 STRIPE_API_KEY = os.getenv('STRIPE_API_KEY', 'sk_test_RaELUxUxG1GEL6UzKzoT8Xty')
 STRIPE_CLIENT_ID = os.getenv('STRIPE_CLIENT_ID', 'ca_7g3yiDWNt1sCNsEkc8hhm9mzpK4BhVVH')
+STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', 'pk_test_2HjgvpC2f4FSLj90x9E6bOG9')
 
 
 # Email

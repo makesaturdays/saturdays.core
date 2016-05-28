@@ -118,7 +118,7 @@ with app.app_context():
 		@classmethod
 		def delete(cls, _id):
 
-			cls.update_where({'_id': ObjectId(_id)}, {'deleted': True})
+			app.mongo.db[cls.collection_name].delete_one({'_id': ObjectId(_id)})
 			search_delete.apply_async((cls.collection_name, _id))
 
 
@@ -134,7 +134,6 @@ with app.app_context():
 
 			merged_filters = cls.collection_filter.copy()
 			merged_filters.update(document_filter)
-			merged_filters.update({'deleted': {'$ne': True}})
 
 			return merged_filters
 

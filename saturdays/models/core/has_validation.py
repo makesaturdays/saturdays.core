@@ -36,7 +36,29 @@ with app.app_context():
 			)
 
 			if not validator.validate(document):
-				print(validator.errors)
-				abort(400)
+				(document, errors) = cls._remove_unknown(document, validator.errors)
+				if len(errors):
+					print(errors)
+					abort(400)
 
 			return document
+
+
+		@classmethod
+		def _remove_unknown(cls, document, errors):
+
+			for (key, value) in errors.copy().items():
+				if isinstance(value, dict):
+					(document[key], errors[key]) = cls._remove_unknown(document[key], errors[key])
+
+					if len(errors[key]) == 0:
+						del errors[key]
+
+				else:
+					if value == 'unknown field':
+						del(document[key])
+						del(errors[key])
+
+			return (document, errors)
+
+

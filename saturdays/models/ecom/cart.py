@@ -21,6 +21,7 @@ with app.app_context():
 		collection_name = 'carts'
 
 		schema = {
+			'email': validation_rules['email'],
 			'credit_card': validation_rules['credit_card'],
 			'shipping_address': validation_rules['address'],
 			'shipping_option_id': validation_rules['object_id'],
@@ -114,11 +115,11 @@ with app.app_context():
 			from saturdays.models.ecom.cart_item import CartItem
 
 			document['sub_total'] = 0
+			document['taxes_total'] = 0
 			document['total'] = 0
 
 			if 'coupon' in document:
 				document['coupon_total'] = 0
-
 			
 			document['requires_shipping'] = False
 
@@ -127,10 +128,11 @@ with app.app_context():
 				vendor_shops = {}
 
 				for item in document['items']:
-					item = CartItem.postprocess(item, document['_id'])
+					item = CartItem.postprocess(item)
 
 					document['items_total_quantity'] += item['quantity']
 					document['sub_total'] += item['sub_total']
+					document['sub_total']
 
 					item['total'] = item['sub_total']
 					if 'coupon' in document:
@@ -174,8 +176,6 @@ with app.app_context():
 			try:
 				for taxe in document['taxes']:
 					taxe['total'] = 0
-
-				document['taxes_total'] = 0
 
 
 				for item in document['items']:

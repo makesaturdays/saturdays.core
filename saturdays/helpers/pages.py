@@ -19,7 +19,8 @@ def page():
 		response = {
 			'pieces': Piece._values(),
 			'products': Product.list(),
-			'debugging': app.config['DEBUG']
+			'debugging': app.config['DEBUG'],
+			'stripe_key': app.config['STRIPE_PUBLISHABLE_KEY']
 		}
 		response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
 

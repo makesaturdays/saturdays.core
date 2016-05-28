@@ -24,34 +24,36 @@ class Saturdays.Models.Cart extends Saturdays.Model
 			this.fetch()
 
 
-		if this.isNew()
-			this.save {},
-				success: (model, response)=>
-					Saturdays.cookies.set "Cart-Id", response._id
-					Saturdays.cookies.set "Session-Secret", response.session.secret
-
-					this.fetch()
-
 		super()
 
 
 
 	add_to_cart: (product_id, option_id=null, quantity=1, options={})->
 
-		item = new Saturdays.Models.CartItem
-			parent: this
-		
-		item.save 
-			product_id: product_id
-			quantity: quantity
-			option_id: option_id
-		, 
-			success: (model, response)=>
-				options.success(model, response) if options.success?
-				this.fetch()
+		if this.isNew()
+			this.save {},
+				success: (model, response)=>
+					Saturdays.cookies.set "Cart-Id", response._id
+					Saturdays.cookies.set "Session-Secret", response.session.secret
 
-			error: (model, response)=>
-				options.error(model, response) if options.error?
+					this.add_to_cart(product_id, option_id, quantity, options)
+
+		else
+			item = new Saturdays.Models.CartItem
+				parent: this
+			
+			item.save 
+				product_id: product_id
+				quantity: quantity
+				option_id: option_id
+			, 
+				success: (model, response)=>
+					options.success(model, response) if options.success?
+					this.fetch()
+
+				error: (model, response)=>
+					options.error(model, response) if options.error?
+
 
 
 	update_quantity: (item_id, quantity, options={})->
@@ -74,6 +76,7 @@ class Saturdays.Models.Cart extends Saturdays.Model
 
 	remove_from_cart: (item_id, options={})->
 		this.update_quantity(item_id, 0, options)
+
 
 
 

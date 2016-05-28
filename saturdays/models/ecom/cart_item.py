@@ -113,7 +113,6 @@ with app.app_context():
 				pass
 
 			document = super().update(parent_id, _id, document, projection)
-			print(document)
 
 			if document['quantity'] <= 0:
 				cls.delete(parent_id, document['_id'])
@@ -125,10 +124,10 @@ with app.app_context():
 
 
 		@classmethod
-		def postprocess(cls, document, parent_id):
+		def postprocess(cls, document, parent_id=None):
 			document['sub_total'] = round(document['price'] * float(document['quantity']), 2)
 
-			return super().postprocess(document, parent_id)
+			return document
 
 
 

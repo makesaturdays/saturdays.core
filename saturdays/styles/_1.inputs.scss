@@ -10,36 +10,10 @@ label,
 
 	font-family: $alternate_font;
 	font-weight: bold;
-
-	.input_box & {
-		position: absolute;
-		top: $vertical_rythm/2;
-		left: $vertical_rythm;
-		z-index: 1;
-	}
 }
 
 
 // #INPUTS
-
-.input_box {
-	position: relative;
-
-	@include transition(opacity $fast);
-
-	&.input_box--faded {
-		opacity: 0.2;
-
-		.form__bottom_button {
-			opacity: 0;
-		}
-	}
-
-	&.input_box--hidden {
-		opacity: 0;
-	}
-}
-
 
 input[type="text"],
 input[type="password"],
@@ -87,6 +61,10 @@ textarea,
 		border: 1px solid $highlight;
 	}
 
+	&.input--tight {
+		padding: $vertical_rythm/4 $vertical_rythm/2;
+	}
+
 	&.input--underline {
 		padding: $vertical_rythm/2 0;
 		border-bottom: 1px dashed;
@@ -102,11 +80,10 @@ textarea,
 		padding: 0;
 	}
 
-	.input_box & {
-		padding: $vertical_rythm*2.5 $vertical_rythm $vertical_rythm*1.5;
+	.input_group & {
+		margin-bottom: 0;
 	}
 }
-
 
 
 

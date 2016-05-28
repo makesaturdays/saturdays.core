@@ -147,7 +147,9 @@
     ChildModel.prototype.endpoint = "child";
 
     ChildModel.prototype.initialize = function() {
-      this.urlRoot = this.get("parent").url() + "/" + this.endpoint;
+      if (this.has("parent")) {
+        this.urlRoot = this.get("parent").url() + "/" + this.endpoint;
+      }
       return ChildModel.__super__.initialize.call(this);
     };
 
@@ -663,17 +665,6 @@
         });
         this.fetch();
       }
-      if (this.isNew()) {
-        this.save({}, {
-          success: (function(_this) {
-            return function(model, response) {
-              Saturdays.cookies.set("Cart-Id", response._id);
-              Saturdays.cookies.set("Session-Secret", response.session.secret);
-              return _this.fetch();
-            };
-          })(this)
-        });
-      }
       return Cart.__super__.initialize.call(this);
     };
 
@@ -688,30 +679,42 @@
       if (options == null) {
         options = {};
       }
-      item = new Saturdays.Models.CartItem({
-        parent: this
-      });
-      return item.save({
-        product_id: product_id,
-        quantity: quantity,
-        option_id: option_id
-      }, {
-        success: (function(_this) {
-          return function(model, response) {
-            if (options.success != null) {
-              options.success(model, response);
-            }
-            return _this.fetch();
-          };
-        })(this),
-        error: (function(_this) {
-          return function(model, response) {
-            if (options.error != null) {
-              return options.error(model, response);
-            }
-          };
-        })(this)
-      });
+      if (this.isNew()) {
+        return this.save({}, {
+          success: (function(_this) {
+            return function(model, response) {
+              Saturdays.cookies.set("Cart-Id", response._id);
+              Saturdays.cookies.set("Session-Secret", response.session.secret);
+              return _this.add_to_cart(product_id, option_id, quantity, options);
+            };
+          })(this)
+        });
+      } else {
+        item = new Saturdays.Models.CartItem({
+          parent: this
+        });
+        return item.save({
+          product_id: product_id,
+          quantity: quantity,
+          option_id: option_id
+        }, {
+          success: (function(_this) {
+            return function(model, response) {
+              if (options.success != null) {
+                options.success(model, response);
+              }
+              return _this.fetch();
+            };
+          })(this),
+          error: (function(_this) {
+            return function(model, response) {
+              if (options.error != null) {
+                return options.error(model, response);
+              }
+            };
+          })(this)
+        });
+      }
     };
 
     Cart.prototype.update_quantity = function(item_id, quantity, options) {
@@ -777,6 +780,102 @@
     return CartItem;
 
   })(Saturdays.ChildModel);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Models.CreditCard = (function(superClass) {
+    extend(CreditCard, superClass);
+
+    function CreditCard() {
+      return CreditCard.__super__.constructor.apply(this, arguments);
+    }
+
+    CreditCard.prototype.endpoint = "credit_cards";
+
+    CreditCard.prototype.parse = function(response) {
+      if (response.exp_month != null) {
+        response.expiry = response.exp_month + " / " + response.exp_year;
+      }
+      return response;
+    };
+
+    CreditCard.prototype.save = function(data, options, token_only) {
+      var exp;
+      if (data == null) {
+        data = {};
+      }
+      if (options == null) {
+        options = {};
+      }
+      if (token_only == null) {
+        token_only = false;
+      }
+      if (data["expiry"] != null) {
+        exp = data["expiry"].split(" / ");
+        data["exp_month"] = exp[0];
+        data["exp_year"] = exp[1];
+      }
+      this.set(data);
+      return Stripe.card.createToken({
+        number: this.get('number'),
+        exp_month: parseInt(this.get('exp_month')),
+        exp_year: parseInt(this.get('exp_year')),
+        cvc: parseInt(this.get('cvc')),
+        address_line1: this.get('billing_street'),
+        address_zip: this.get('billing_zip')
+      }, (function(_this) {
+        return function(status, response) {
+          if (status === 200) {
+            _this.set({
+              provider_date: response.card
+            });
+            if (token_only) {
+              _this.set({
+                card_token: response.id
+              });
+              if (options.success != null) {
+                return options.success(_this, response);
+              }
+            } else {
+              return CreditCard.__super__.save.call(_this, {
+                card_token: response.id
+              }, options);
+            }
+          } else {
+            if (options.error != null) {
+              return options.error(_this, response);
+            }
+          }
+        };
+      })(this));
+    };
+
+    return CreditCard;
+
+  })(Saturdays.ChildModel);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Models.Order = (function(superClass) {
+    extend(Order, superClass);
+
+    function Order() {
+      return Order.__super__.constructor.apply(this, arguments);
+    }
+
+    Order.prototype.urlRoot = Saturdays.settings.api + "orders";
+
+    return Order;
+
+  })(Saturdays.Model);
 
 }).call(this);
 
@@ -970,13 +1069,15 @@
     Editable.prototype.tag_template = templates["cms/tag"];
 
     Editable.prototype.initialize = function() {
-      this.events["input input"] = "key_input";
-      this.events["change input"] = "key_input";
-      this.events["input [contenteditable]"] = "key_input";
-      this.events["click .js-save_edit"] = "save_edit";
-      this.events["click .js-destroy"] = "destroy";
-      this.events["keypress [name='tag_input']"] = "input_tag";
-      this.events["blur [name='tag_input']"] = "blur_tag";
+      if ((Saturdays.user != null) && Saturdays.user.get("is_admin")) {
+        this.events["input input"] = "key_input";
+        this.events["change input"] = "key_input";
+        this.events["input [contenteditable]"] = "key_input";
+        this.events["click .js-save_edit"] = "save_edit";
+        this.events["click .js-destroy"] = "destroy";
+        this.events["keypress [name='tag_input']"] = "input_tag";
+        this.events["blur [name='tag_input']"] = "blur_tag";
+      }
       this.listenTo(this.model, "sync", this.render);
       this.model.fetch();
       return Editable.__super__.initialize.call(this);
@@ -1023,7 +1124,7 @@
     };
 
     Editable.prototype.key_input = function(e) {
-      if (this.button.hasAttribute("disabled")) {
+      if ((this.button != null) && this.button.hasAttribute("disabled")) {
         return this.button.removeAttribute("disabled");
       }
     };
@@ -1470,12 +1571,16 @@
 
     Cart.prototype.events = {
       "input [name='quantity']": "input_quantity",
-      "click [data-remove-from-cart]": "remove_from_cart"
+      "click [data-remove-from-cart]": "remove_from_cart",
+      "change [name='with_store_credit']": "change_store_credit",
+      "input [name='email']": "input_email",
+      "submit [data-credit-card-form]": "submit_credit_card_form"
     };
 
     Cart.prototype.initialize = function() {
+      Stripe.setPublishableKey(Saturdays.settings["stripe_key"]);
       if (Saturdays.cart != null) {
-        this.listenTo(Saturdays.cart, "sync", this.render);
+        this.listenTo(Saturdays.cart, "change", this.render);
       }
       return Cart.__super__.initialize.call(this);
     };
@@ -1484,7 +1589,11 @@
       _.extend(this.data, {
         cart: Saturdays.cart.toJSON()
       });
-      return Cart.__super__.render.call(this);
+      Cart.__super__.render.call(this);
+      $("[name='number']").payment('formatCardNumber');
+      $("[name='expiry']").payment('formatCardExpiry');
+      $("[name='cvc']").payment('formatCardCVC');
+      return this;
     };
 
     Cart.prototype.input_quantity = function(e) {
@@ -1509,6 +1618,73 @@
           return e.currentTarget.removeAttribute("disabled");
         }
       });
+    };
+
+    Cart.prototype.change_store_credit = function(e) {
+      e.currentTarget.setAttribute("disabled", "disabled");
+      return Saturdays.cart.save({
+        with_store_credit: e.currentTarget.checked
+      }, {
+        patch: true,
+        success: function(model, response) {},
+        error: function(model, response) {
+          return e.currentTarget.removeAttribute("disabled");
+        }
+      });
+    };
+
+    Cart.prototype.input_email = function(e) {
+      var regex;
+      regex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$", "g");
+      if (regex.test(e.currentTarget.value)) {
+        window.clearTimeout(this.email_timeout);
+        return this.email_timeout = window.setTimeout(function() {
+          return Saturdays.cart.save({
+            email: e.currentTarget.value
+          }, {
+            patch: true,
+            silent: true
+          });
+        }, 1000);
+      }
+    };
+
+    Cart.prototype.submit_credit_card_form = function(e) {
+      var credit_card, form;
+      e.preventDefault();
+      form = e.currentTarget;
+      $(form).find("[type='submit']").attr("disabled", "disabled");
+      credit_card = new Saturdays.Models.CreditCard(Saturdays.user.id != null ? {
+        parent: Saturdays.user
+      } : void 0);
+      return credit_card.save({
+        number: form["number"].value,
+        expiry: form["expiry"].value,
+        cvc: parseInt(form["cvc"].value),
+        billing_street: form["billing_street"].value,
+        billing_zip: form["billing_zip"].value
+      }, {
+        success: function(model, response) {
+          return Saturdays.cart.save({
+            credit_card: model.toJSON()
+          }, {
+            success: function(model, response) {
+              var order;
+              order = new Saturdays.Models.Order();
+              console.log(order);
+              return order.save({
+                cart_id: Saturdays.user.id == null ? Saturdays.cart.id : void 0,
+                user_id: Saturdays.user.id != null ? Saturdays.user.id : void 0
+              }, {
+                success: function(model, response) {
+                  Saturdays.cookies["delete"]("Cart-Id");
+                  return Saturdays.cart.clear();
+                }
+              });
+            }
+          });
+        }
+      }, Saturdays.user.id == null);
     };
 
     return Cart;

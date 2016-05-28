@@ -5,7 +5,7 @@ class Saturdays.ChildModel extends Saturdays.Model
 
 	initialize: ->
 
-		@urlRoot = this.get("parent").url() + "/" + @endpoint
+		@urlRoot = this.get("parent").url() + "/" + @endpoint if this.has("parent")
 
 		super()
 

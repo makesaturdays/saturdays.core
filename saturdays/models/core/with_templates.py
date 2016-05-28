@@ -63,7 +63,8 @@ with app.app_context():
 								response = {
 									template['response_key']: response.copy(),
 									'pieces': Piece._values(),
-									'debugging': app.config['DEBUG']
+									'debugging': app.config['DEBUG'],
+									'stripe_key': app.config['STRIPE_PUBLISHABLE_KEY']
 								}
 								response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
 

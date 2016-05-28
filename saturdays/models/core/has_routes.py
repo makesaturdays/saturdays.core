@@ -150,24 +150,26 @@ with app.app_context():
 			return to_json(data)
 
 
-		@classmethod
-		def _merge_filters(cls, document_filter):
+		# @classmethod
+		# def _merge_filters(cls, document_filter):
 
-			merged_filters = super()._merge_filters(document_filter)
+		# 	merged_filters = super()._merge_filters(document_filter)
 
-			try:
-				if not request.current_session_is_admin:
-					if request.requires_user:
-						merged_filters.update({'user_id': request.current_session['user_id']})				
+		# 	try:
+		# 		if not request.current_session_is_admin:
+		# 			if request.requires_user:
+		# 				merged_filters.update({'user_id': request.current_session['user_id']})				
 
-					elif request.requires_session:
-						merged_filters.update({'session_id': request.current_session['_id']})
+		# 			elif request.requires_session:
+		# 				merged_filters.update({'session_id': request.current_session['_id']})
 
-			except AttributeError:
-				pass
+		# 	except AttributeError:
+		# 		pass
 
 
-			return merged_filters
+		# 	print(merged_filters)
+
+		# 	return merged_filters
 
 
 

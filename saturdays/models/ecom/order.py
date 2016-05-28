@@ -28,10 +28,7 @@ with app.app_context():
 
 		schema = {
 			'user_id': validation_rules['object_id'],
-			'cart': {
-				'type': 'dict',
-				'schema': Cart.schema
-			},
+			'cart_id': validation_rules['object_id'],
 			'metadata': validation_rules['metadata']
 		}
 
@@ -83,16 +80,15 @@ with app.app_context():
 
 			if 'user_id' in document:
 				user = User.get(document['user_id'])
-
-				if 'cart' not in document:
-					document['cart'] = user['cart']
+				document['cart'] = user['cart']
 
 			else:
-				if 'cart' not in document:
+				if 'cart_id' not in document:
 					abort(400)
 
 				else:
-					document['cart'] = Cart.postprocess(Cart.preprocess(document['cart']))
+					user = None
+					document['cart'] = Cart.get(document['cart_id'])
 
 
 			try:
@@ -109,14 +105,17 @@ with app.app_context():
 			del document['cart']
 
 
-
 			document['_id'] = ObjectId()
 
 			if document['total'] != 0:
 				stripe.api_key = app.config['STRIPE_API_KEY']
 
-				stripe_customer = stripe.Customer.retrieve(user['provider_data']['id'])
-				stripe_card = stripe_customer.sources.retrieve(document['credit_card']['provider_data']['id'])
+				if user is None:
+					stripe_customer = None
+					stripe_card = document['credit_card']['card_token']
+				else:
+					stripe_customer = stripe.Customer.retrieve(user['provider_data']['id'])
+					stripe_card = stripe_customer.sources.retrieve(document['credit_card']['provider_data']['id'])
 
 				document['charges'] = []
 				total_left = document['total']
