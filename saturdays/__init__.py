@@ -40,10 +40,11 @@ from saturdays.tasks.trigger import trigger_tasks
 from saturdays.tasks.scheduled import scheduled_tasks
 from saturdays.tasks.search import search_index, search_delete
 
+from saturdays.pages.pages import *
+from saturdays.pages.docs import *
 
 from saturdays.helpers.verify_headers import *
 from saturdays.helpers.access_control_origin import *
-from saturdays.helpers.pages import *
 from saturdays.helpers.filters import *
 
 
