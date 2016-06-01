@@ -38,12 +38,13 @@ with app.app_context():
 			if not validator.validate(document):
 				(document, errors) = cls._remove_unknown(document, validator.errors)
 				if len(errors):
-					print(errors)
-					abort(400)
+					from dialogue.helpers.raise_error import raise_error
+					raise_error('validation', 'fields_invalid', code=400, fields=errors)
 
 			return document
 
 
+		# HELPERS
 		@classmethod
 		def _remove_unknown(cls, document, errors):
 

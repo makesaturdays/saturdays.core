@@ -84,7 +84,7 @@ with app.app_context():
 
 			else:
 				if 'cart_id' not in document:
-					abort(400)
+					raise_error('ecom', 'cart_id_required', 400)
 
 				else:
 					user = None

@@ -40,7 +40,7 @@ with app.app_context():
 			document['product_id'] = ObjectId(document['product_id'])
 
 			if document['product']['is_salable'] == False:
-				abort(400)
+				raise_error('ecom', 'product_not_salable', 400)
 
 
 			if 'option_id' in document and document['option_id'] is not None:
@@ -65,7 +65,7 @@ with app.app_context():
 			else:
 				try:
 					if len(document['product']['options']) > 0:
-						abort(400)
+						raise_error('ecom', 'option_id_required', 400)
 
 				except KeyError:
 					pass

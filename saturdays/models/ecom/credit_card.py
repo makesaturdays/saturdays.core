@@ -77,10 +77,3 @@ with app.app_context():
 			return super().create(parent_id, document)
 
 
-
-
-
-
-
-
-

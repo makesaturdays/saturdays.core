@@ -63,11 +63,8 @@ with app.app_context():
 				try:
 					document['token_id'] = Token.get_where({'_id': document['token_id']})['_id']
 
-				except KeyError:
-					abort(403)
-
 				except NotFound:
-					abort(400)
+					raise_error('auth', 'token_not_found', 404)
 
 
 			secret = uuid.uuid4().hex
