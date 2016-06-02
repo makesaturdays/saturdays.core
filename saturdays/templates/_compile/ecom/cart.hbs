@@ -1,6 +1,11 @@
 
 {{#if cart}}
+
+<a href="{{current_path}}" class="cart__back" data-hide-cart></a>
+
 <div class="cart__container">
+	<p class="text_right"><a href="{{current_path}}" class="a--underline" data-hide-cart>Close</a></p>
+
 	<div class="grid grid--tight_guttered grid--middle">
 	{{#each cart.items}}
 		<div class="col col--6of12">{{#if vendor_shop}}<strong>{{vendor_shop.name}}:</strong> {{/if}}{{name}}</div>

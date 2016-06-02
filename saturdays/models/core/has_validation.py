@@ -38,7 +38,7 @@ with app.app_context():
 			if not validator.validate(document):
 				(document, errors) = cls._remove_unknown(document, validator.errors)
 				if len(errors):
-					from dialogue.helpers.raise_error import raise_error
+					from saturdays.helpers.raise_error import raise_error
 					raise_error('validation', 'fields_invalid', code=400, fields=errors)
 
 			return document

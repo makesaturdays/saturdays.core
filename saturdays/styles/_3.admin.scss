@@ -4,8 +4,8 @@
 
 .admin {
 	position: fixed;
-	bottom: 0;
-	right: 0;
+	bottom: $gutter;
+	right: $gutter;
 	z-index: 5;
 }
 
@@ -14,4 +14,5 @@
 		@extend .white_back;
 
 		border-radius: $border_radius;
+		@include shadow(0 0.25rem 1rem fade-out($black, 0.8))
 	}

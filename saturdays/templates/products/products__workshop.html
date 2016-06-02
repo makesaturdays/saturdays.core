@@ -1,0 +1,15 @@
+
+<article class="col col--12of12 padded {% if _loop.index is divisibleby 2 %}grey_back{% endif %}" data-product-id="{{product._id}}">
+	<div class="grid grid--middle grid--guttered">
+		<div class="col col--1of12 text_center"><h2>{{product.metadata.date|date('%b %d')}}</h2></div>
+		<div class="col col--2of12"></div>
+		<div class="col col--2of12 text_center">
+			<h2>{{product.name}}</h2>
+		</div>
+		<div class="col col--1of12"></div>
+		<div class="col col--6of12">
+			<p class="p--medium">{{product.description}}</p>
+			<p class="p--medium"><a href="/products/{% if product.pretty_url is defined %}{{product.pretty_url}}{% else %}{{product._id}}{% endif %}" class="a--underline">Reserve your spot</a></p>
+		</div>
+	</div>
+</article>

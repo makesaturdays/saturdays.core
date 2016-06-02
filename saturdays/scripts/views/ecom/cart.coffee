@@ -10,6 +10,7 @@ class Saturdays.Views.Cart extends Saturdays.View
 		"change [name='with_store_credit']": "change_store_credit"
 		"input [name='email']": "input_email"
 		"submit [data-credit-card-form]": "submit_credit_card_form"
+		"click [data-hide-cart]": "hide"
 	}
 
 
@@ -126,6 +127,21 @@ class Saturdays.Views.Cart extends Saturdays.View
 
 		, not Saturdays.user.id?
 
+
+	show: (e)->
+		if e?
+			e.preventDefault()
+			Saturdays.router.navigate window.location.pathname+"?cart=true"
+
+		this.$el.removeClass "fade_out"
+
+
+	hide: (e)->
+		if e?
+			e.preventDefault()
+			Saturdays.router.navigate e.currentTarget.getAttribute("href")
+
+		this.$el.addClass "fade_out"
 			
 
 

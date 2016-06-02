@@ -42,6 +42,7 @@ from saturdays.tasks.search import search_index, search_delete
 
 from saturdays.pages.pages import *
 from saturdays.pages.docs import *
+from saturdays.pages.errors import *
 
 from saturdays.helpers.verify_headers import *
 from saturdays.helpers.access_control_origin import *

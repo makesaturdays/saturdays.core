@@ -61,13 +61,13 @@
 	visibility: visible;
 	opacity: 1;
 
-	@include transition(opacity $slow, visibility 0s);
+	@include transition(opacity $fast, visibility 0s);
 		
 	
 	&.fade_out {
 		visibility: hidden;
 		opacity: 0;
 
-		@include transition(opacity $slow, visibility 0s linear $slow);	
+		@include transition(opacity $fast, visibility 0s linear $fast);	
 	}
 }

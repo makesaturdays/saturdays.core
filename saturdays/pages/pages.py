@@ -19,6 +19,7 @@ def page():
 		response = {
 			'pieces': Piece._values(),
 			'products': Product.list(),
+			'current_path': request.path,
 			'debugging': app.config['DEBUG'],
 			'stripe_key': app.config['STRIPE_PUBLISHABLE_KEY']
 		}

@@ -1,14 +1,14 @@
 
 
-from dialogue import app
+from saturdays import app
 from flask import request, abort
 
-from dialogue.models.core.model import Model
-from dialogue.models.core.has_routes import HasRoutes
+from saturdays.models.core.model import Model
+from saturdays.models.core.has_routes import HasRoutes
 from copy import deepcopy
 
-from dialogue.helpers.validation_rules import validation_rules
-from dialogue.helpers.json import to_json
+from saturdays.helpers.validation_rules import validation_rules
+from saturdays.helpers.json import to_json
 
 
 
@@ -23,11 +23,6 @@ with app.app_context():
 			'errors': validation_rules['content'],
 			'metadata': validation_rules['metadata']
 		}
-
-		schema['errors']['valueschema']['schema']['translations'] = { 'type': 'dict', 'schema': {} }
-		for lang in app.config['LANGS']:
-			schema['errors']['valueschema']['schema']['translations']['schema'][lang] = { 'nullable': True }
-
 
 		endpoint = '/errors'
 		routes = [

@@ -20,7 +20,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 	execute: (callback, args)->
 
 		for view in @views
-			view.destroy()
+			view.undelegateEvents()
 
 		delete @views
 		@views = []
@@ -35,15 +35,22 @@ class Saturdays.Routers.Router extends Backbone.Router
 			})
 
 
-		@today = new Date()
+		$("[data-navigation]").each (index, element)=>
+			@views.push new Saturdays.Views.Navigation({
+				el: element
+			})
+
+		today = new Date()
 		$('[data-day]').each (index, element)=>
-			element.innerHTML = pieces.navigation.weekdays[@today.getDay()]
+			element.innerHTML = pieces.navigation.weekdays[today.getDay()]
 
 
 		@query = Saturdays.helpers.get_query_string()
 		if @query.cart?
-			console.log "CHECKOUT"
+			Saturdays.cart_view.show()
 
+		else
+			Saturdays.cart_view.hide()
 
 
 

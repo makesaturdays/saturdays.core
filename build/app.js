@@ -481,7 +481,8 @@
         this.listenTo(Saturdays.user, "sync", this.render);
       }
       _.extend(this.data, {
-        pieces: window.pieces
+        pieces: window.pieces,
+        current_path: window.current_path
       });
       return this.render();
     };
@@ -1202,7 +1203,11 @@
       _.extend(this.data, {
         list_id: window.list_id
       });
-      return Admin.__super__.render.call(this);
+      Admin.__super__.render.call(this);
+      if (Saturdays.user.get("is_admin")) {
+        this.$el.removeClass("fade_out");
+      }
+      return this;
     };
 
     Admin.prototype.submit_login = function(e) {
@@ -1239,14 +1244,12 @@
     };
 
     Admin.prototype.check_escape = function(e) {
-      var login_box;
       if (e.keyCode === 27) {
-        login_box = this.$el.find(".js-login_box");
-        if (login_box.hasClass("hide")) {
-          login_box.removeClass("hide");
-          return login_box.find("[name='email']").focus();
+        if (this.$el.hasClass("fade_out")) {
+          this.$el.removeClass("fade_out");
+          return this.$el.find("[name='email']").focus();
         } else {
-          login_box.addClass("hide");
+          this.$el.addClass("fade_out");
           if (Saturdays.session.is_authenticated()) {
             return Saturdays.session.logout();
           }
@@ -1574,7 +1577,8 @@
       "click [data-remove-from-cart]": "remove_from_cart",
       "change [name='with_store_credit']": "change_store_credit",
       "input [name='email']": "input_email",
-      "submit [data-credit-card-form]": "submit_credit_card_form"
+      "submit [data-credit-card-form]": "submit_credit_card_form",
+      "click [data-hide-cart]": "hide"
     };
 
     Cart.prototype.initialize = function() {
@@ -1685,6 +1689,22 @@
           });
         }
       }, Saturdays.user.id == null);
+    };
+
+    Cart.prototype.show = function(e) {
+      if (e != null) {
+        e.preventDefault();
+        Saturdays.router.navigate(window.location.pathname + "?cart=true");
+      }
+      return this.$el.removeClass("fade_out");
+    };
+
+    Cart.prototype.hide = function(e) {
+      if (e != null) {
+        e.preventDefault();
+        Saturdays.router.navigate(e.currentTarget.getAttribute("href"));
+      }
+      return this.$el.addClass("fade_out");
     };
 
     return Cart;
@@ -1814,6 +1834,39 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Navigation = (function(superClass) {
+    extend(Navigation, superClass);
+
+    function Navigation() {
+      return Navigation.__super__.constructor.apply(this, arguments);
+    }
+
+    Navigation.prototype.events = {
+      "click [data-show-cart]": "show_cart"
+    };
+
+    Navigation.prototype.initialize = function() {
+      return Navigation.__super__.initialize.call(this);
+    };
+
+    Navigation.prototype.render = function() {
+      return Navigation.__super__.render.call(this);
+    };
+
+    Navigation.prototype.show_cart = function(e) {
+      return Saturdays.cart_view.show(e);
+    };
+
+    return Navigation;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Routers.Router = (function(superClass) {
     extend(Router, superClass);
 
@@ -1834,11 +1887,11 @@
     Router.prototype.initialize = function() {};
 
     Router.prototype.execute = function(callback, args) {
-      var i, len, ref, view;
+      var i, len, ref, today, view;
       ref = this.views;
       for (i = 0, len = ref.length; i < len; i++) {
         view = ref[i];
-        view.destroy();
+        view.undelegateEvents();
       }
       delete this.views;
       this.views = [];
@@ -1857,15 +1910,24 @@
           }));
         };
       })(this));
-      this.today = new Date();
+      $("[data-navigation]").each((function(_this) {
+        return function(index, element) {
+          return _this.views.push(new Saturdays.Views.Navigation({
+            el: element
+          }));
+        };
+      })(this));
+      today = new Date();
       $('[data-day]').each((function(_this) {
         return function(index, element) {
-          return element.innerHTML = pieces.navigation.weekdays[_this.today.getDay()];
+          return element.innerHTML = pieces.navigation.weekdays[today.getDay()];
         };
       })(this));
       this.query = Saturdays.helpers.get_query_string();
       if (this.query.cart != null) {
-        return console.log("CHECKOUT");
+        return Saturdays.cart_view.show();
+      } else {
+        return Saturdays.cart_view.hide();
       }
     };
 

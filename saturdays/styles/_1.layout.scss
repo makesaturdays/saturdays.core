@@ -89,7 +89,12 @@ footer {
 
 .max_width {
 	width: 100%;
-	max-width: 1000px;
+	max-width: 64rem;
+
+	&.max_width--center {
+		margin-right: auto;
+		margin-left: auto; 
+	} 
 }
 
 .padded {

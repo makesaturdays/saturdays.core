@@ -32,6 +32,7 @@ from saturdays.models.cms.author import Author
 from saturdays.models.cms.list import List
 from saturdays.models.cms.list_post import ListPost
 from saturdays.models.cms.comment import ListPostComment
+from saturdays.models.cms.error import Error
 from saturdays.models.cms.survey import Survey
 from saturdays.models.cms.survey_answer import SurveyAnswer
 from saturdays.models.cms.comment import SurveyComment
@@ -41,6 +42,7 @@ Author.define_routes()
 List.define_routes()
 ListPost.define_routes()
 ListPostComment.define_routes()
+Error.define_routes()
 Survey.define_routes()
 SurveyAnswer.define_routes()
 SurveyComment.define_routes()

@@ -74,16 +74,21 @@ h1, h2, h3, h4, h5, h6 {
 
 	h1 {
 		font-size: $huge_size;
-		line-height: $line_height/1.25;
+		line-height: 1.2;
 
 		&.h1--normal {
 			font-size: $base_size;
 			font-family: $body_font;
 		}
+
+		&.h1--massive {
+			font-size: $massive_size;
+		}
 	}
 
 	h2 {
 		font-size: $big_size;
+		line-height: 1.2;
 	}
 
 	h3 {

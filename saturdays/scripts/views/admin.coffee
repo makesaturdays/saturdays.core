@@ -26,6 +26,13 @@ class Saturdays.Views.Admin extends Saturdays.View
 		super()
 
 
+		if Saturdays.user.get("is_admin")
+			this.$el.removeClass "fade_out"
+
+
+		this
+
+
 
 
 	submit_login: (e)->
@@ -64,13 +71,12 @@ class Saturdays.Views.Admin extends Saturdays.View
 
 	check_escape: (e)=>
 		if e.keyCode == 27
-			login_box = this.$el.find(".js-login_box")
-			if login_box.hasClass "hide"
-				login_box.removeClass "hide"
-				login_box.find("[name='email']").focus()
+			if this.$el.hasClass "fade_out"
+				this.$el.removeClass "fade_out"
+				this.$el.find("[name='email']").focus()
 
 			else
-				login_box.addClass "hide"
+				this.$el.addClass "fade_out"
 
 				if Saturdays.session.is_authenticated()
 					Saturdays.session.logout()

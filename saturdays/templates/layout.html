@@ -43,7 +43,7 @@
 
         <header id="header">
             {% block header %}
-            <nav class="grid">
+            <nav class="grid" data-navigation>
                 <div class="col col--6of12" data-piece-id="{{pieces.metadata._id}}">
                     <a href="{% block title_link %}/{% endblock %}">
                         <h1 class="h1--normal"><span data-key="title">{{pieces.metadata.title|safe}}</span> <span class="spaced hide_on_small">&mdash;</span> <span data-key="sub_title" class="hide_on_small">{{pieces.metadata.sub_title}}</span></h1>
@@ -69,8 +69,8 @@
 
 
 
-        <div class="cart" id="cart"></div>
-        <div class="admin" id="admin"></div>
+        <div class="cart fades_out fade_out" id="cart"></div>
+        <div class="admin fades_out fade_out" id="admin"></div>
 
         <footer id="footer">
             {% block footer %}
@@ -128,6 +128,7 @@
 
         <script>
             var pieces = {{pieces_json|safe}};
+            var current_path = "{{current_path}}";
             var saturdays_settings = {
                 api: window.location.origin+"/",
                 stripe_key: "{{stripe_key}}"

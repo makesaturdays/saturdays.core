@@ -8,11 +8,19 @@
 	{{product.name|striptags}} – Products - {{super()}}
 {% endblock %}
 
-{% block body_classes %}products {{product.pretty_url}}{% endblock %}
+{% block body_classes %}products {{product.pretty_url}} {% if 'workshop' in product.tags %}body--dark{% endif %}{% endblock %}
+
+{% block title_link %}/products{% endblock %}
 
 
 {% block main %}
-	<article class="grid grid--guttered product" data-product-id="{{product._id}}">
+	
+	{% if 'workshop' in product.tags %}
+	
+		{% include 'products/product__workshop.html' %}
+
+	{% else %}
+	{# <article class="grid grid--guttered product" data-product-id="{{product._id}}">
 		<div class="col col--4of12">
 			<img src="https://placehold.it/500x500/f4f4f4/E5E5E5/&text=%E2%88%85" alt="Picture of {{product.name}}">
 			
@@ -37,7 +45,8 @@
 			<button data-add-to-cart>{{pieces.products.add_to_cart}}</button>
 		</div>
 			
-	</article>
+	</article> #}
+	{% endif %}
 {% endblock %}
 
 

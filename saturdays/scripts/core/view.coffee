@@ -13,6 +13,7 @@ class Saturdays.View extends Backbone.View
 
 		_.extend @data, 
 			pieces: window.pieces
+			current_path: window.current_path
 
 
 		this.render()
