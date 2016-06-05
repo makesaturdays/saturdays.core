@@ -1842,6 +1842,7 @@
     }
 
     Navigation.prototype.events = {
+      "click [data-show-admin]": "show_admin",
       "click [data-show-cart]": "show_cart"
     };
 
@@ -1852,6 +1853,8 @@
     Navigation.prototype.render = function() {
       return Navigation.__super__.render.call(this);
     };
+
+    Navigation.prototype.show_admin = function(e) {};
 
     Navigation.prototype.show_cart = function(e) {
       return Saturdays.cart_view.show(e);

@@ -1,7 +1,30 @@
-<div class="padded padded--vertically_thick">
-	<h1 class="h1--massive max_width max_width--center text_center">{{product.name}}</h1>
-</div>
+<article class="product">
+	<div class="padded padded--vertically_thick">
+		<h1 class="h1--massive max_width max_width--center text_center">{{product.name}}</h1>
+	</div>
 
-<div class="padded">
-	<p class="p--medium max_width max_width--center text_center">{{product.metadata.designer|safe}}</p>
-</div>
+	<div class="product__cta_box">
+		<div class="product__cta_box__container">
+			<strong>{{product.name}}</strong><br>
+			<a href="{{product.metadata.location_link}}">{{product.metadata.location}}</a> – {{product.metadata.date|date('%B %d, %Y')}}<br>
+
+			<h3 class="small_bottom">{{product.price}}CAD</h3>
+
+			{% for option in product.options %}
+			<div data-option-id="{{option._id}}">
+				<input type="radio" id="option_{{product._id}}_{{option._id}}" name="option_id" value="{{option._id}}" {% if loop.index == 1 %}checked{% endif %}>
+				<label for="option_{{product._id}}_{{option._id}}">{{option.name}}</label>
+			</div>
+			{% endfor %}
+
+			<button class="button--black button--full" data-add-to-cart>Reserve your spot</button>
+			<button class="button--facebook button--full">View Fb Event</button>
+
+			<em>{{product.metadata.hint}}</em>
+		</div>
+	</div>
+
+	<div class="padded">
+		<p class="p--medium max_width max_width--center text_center">{{product.metadata.designer|safe}}</p>
+	</div>
+</article>

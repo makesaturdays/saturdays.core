@@ -286,8 +286,31 @@ sub {
 
 
 // #COLORS
+
 .white { color: $white; }
 .highlight { color: $highlight; }
+
+
+// #BACKGROUNDS
+
+.black_back {
+	color: $white;
+	background-color: $black;
+}
+
+.grey_back {
+	color: $primary;
+	background-color: $grey;
+}
+
+.light_grey_back {
+	background-color: $grey--light;
+}
+
+.white_back {
+	color: $primary;
+	background-color: $white;
+}
 
 
 // #MISC

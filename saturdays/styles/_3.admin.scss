@@ -3,16 +3,10 @@
 // #ADMIN
 
 .admin {
-	position: fixed;
-	bottom: $gutter;
-	right: $gutter;
-	z-index: 5;
+	@extend .overlay;
+	@extend .overlay--bottom_right;
 }
 
 	.admin__container {
-		@extend .padded;
-		@extend .white_back;
-
-		border-radius: $border_radius;
-		@include shadow(0 0.25rem 1rem fade-out($black, 0.8))
+		@extend .overlay__container;
 	}

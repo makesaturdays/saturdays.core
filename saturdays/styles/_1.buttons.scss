@@ -51,6 +51,37 @@ button,
 		padding: $vertical_rythm/4 $vertical_rythm/2;
 	}
 
+	&.button--full {
+		padding-right: 0;
+		padding-left: 0;
+		width: 100%;
+
+		margin-bottom: $vertical_rythm/4;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	&.button--black {
+		color: $white;
+		background: $black--dark;
+
+		&:hover,
+		&:focus {
+			background: $highlight;
+		}
+	}
+
+	&.button--facebook {
+		color: $white;
+		background: $facebook_blue;
+
+		&:hover,
+		&:focus {
+			background: $highlight;
+		}
+	}
 
 	&.button--transparent {
 		color: $primary;

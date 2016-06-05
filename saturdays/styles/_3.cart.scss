@@ -3,40 +3,18 @@
 // #CART
 
 .cart {
-	@extend .grid;
-	@extend .grid--middle;
-	@extend .grid--center;
-
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 4;
-
-	width: 100%;
-	height: 100%;
-	overflow-y: auto;
+	@extend .overlay;
+	@extend .overlay--full;
 }
 
 	.cart__back {
-		position: absolute;
-		top: 0;
-		left: 0;
-
-		width: 100%;
-		height: 100%;
-		z-index: -1;
-
-		background: fade-out($black, 0.5);
+		@extend .overlay__back;
 	}
 
 
 	.cart__container {
-		@extend .padded;
+		@extend .overlay__container;
 		@extend .grey_back;
 
 		max-width: 555px;
-
-		border-radius: $border_radius;
-
-		@include shadow(0 0.25rem 1rem fade-out($black, 0.8))
 	}

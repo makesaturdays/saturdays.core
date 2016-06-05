@@ -4,6 +4,7 @@ class Saturdays.Views.Navigation extends Saturdays.View
 
 
 	events: {
+		"click [data-show-admin]": "show_admin"
 		"click [data-show-cart]": "show_cart"
 	}
 
@@ -18,6 +19,9 @@ class Saturdays.Views.Navigation extends Saturdays.View
 		super()
 
 
+
+	show_admin: (e)->
+		# Saturdays.admin_view.show(e)
 
 	show_cart: (e)->
 		Saturdays.cart_view.show(e)

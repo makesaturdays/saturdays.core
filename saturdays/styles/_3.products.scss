@@ -1,0 +1,18 @@
+
+
+// #PRODUCT
+
+.product {
+	
+}
+
+	.product__cta_box {
+		@extend .overlay;
+		@extend .overlay--top_right;
+	}
+
+		.product__cta_box__container {
+			@extend .overlay__container;
+
+			max-width: 20rem;
+		}

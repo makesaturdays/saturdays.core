@@ -51,6 +51,8 @@
                     <span data-piece-admin></span>
                 </div>
                 <div class="col col--6of12 text_right" data-piece-id="{{pieces.navigation._id}}">
+                    <a href="{{current_path}}?cart=true" class="a--alternate hide_on_small" data-show-cart><span data-key="about">Cart</span></a>
+                    <span class="spaced hide_on_small"></span>
                     <a href="/lists/blog/posts/intro" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
                     <span class="spaced hide_on_small"></span>
                     <a href="/request_access" class="a--highlight"><span data-key="request_access">{{pieces.navigation.request_access}}</span></a>
@@ -71,6 +73,7 @@
 
         <div class="cart fades_out fade_out" id="cart"></div>
         <div class="admin fades_out fade_out" id="admin"></div>
+
 
         <footer id="footer">
             {% block footer %}

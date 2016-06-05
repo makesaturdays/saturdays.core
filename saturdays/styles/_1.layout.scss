@@ -64,27 +64,6 @@ footer {
 }
 
 
-// #BACKGROUNDS
-
-.black_back {
-	color: $white;
-	background-color: $black;
-}
-
-.grey_back {
-	background-color: $grey;
-}
-
-.light_grey_back {
-	background-color: $grey--light;
-}
-
-.white_back {
-	color: $primary;
-	background-color: $white;
-}
-
-
 // #MIXINS
 
 .max_width {
@@ -101,6 +80,10 @@ footer {
 	padding: $gutter;
 
 	@media #{$small} {
+		padding: $gutter/2;
+	}
+
+	&.padded--tight {
 		padding: $gutter/2;
 	}
 
