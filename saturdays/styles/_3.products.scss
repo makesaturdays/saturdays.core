@@ -36,7 +36,7 @@
 
 		&:hover,
 		&:focus {
-			top: -0.2rem;
+			top: -2px;
 			@include shadow(0 0.3rem 0.5rem fade-out($black, 0.85));
 		}
 
