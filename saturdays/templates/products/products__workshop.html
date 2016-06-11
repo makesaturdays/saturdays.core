@@ -10,5 +10,8 @@
 			{% if product.metadata.is_tbd %}{{pieces.workshops.tbd}}{% else %}{{product.metadata.date|date('%b %d')}}{% endif %}
 		</h3>
 
+		{% if product.is_out_of_stock %}<h2 class="product__sold_out" style="color: {{product.metadata.color}};">{{pieces.workshops.sold_out}}</h2>{% endif %}
 	</a>
+
+
 </article>

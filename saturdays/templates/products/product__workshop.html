@@ -18,7 +18,7 @@
 			</div>
 			{% endfor %}
 
-			<button class="button--black button--full" data-add-to-cart {% if product.is_salable %}>Reserve your spot{% else %}disabled>Not yet available{% endif %}</button>
+			<button class="button--black button--full" data-add-to-cart {% if product.is_salable %}>Reserve your spot{% else %}disabled>{% if product.is_out_of_stock %}Sold Out{% else %}Not yet available{% endif %}{% endif %}</button>
 			<button class="button--facebook button--full">View Fb Event</button>
 
 			<small class="strong">{{product.metadata.hint}}</small>

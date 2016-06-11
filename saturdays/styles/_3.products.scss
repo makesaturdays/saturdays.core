@@ -21,16 +21,10 @@
 			border-color: transparent;
 
 			@include shadow(0 0.1rem 0.25rem fade-out($black, 0.75));
-
-			&:hover,
-			&:focus {
-				
-				// @include shadow(0 0.3rem 0.5rem fade-out($black, 0.85));
-			}
 		}
 
 		&.product--workshop_box--out_of_stock {
-			opacity: 0.2;
+			color: fade-out($primary, 0.8) !important;
 			text-decoration: line-through;
 		}
 
@@ -57,3 +51,13 @@
 
 			max-width: 20rem;
 		}
+
+
+	.product__sold_out {
+		position: absolute;
+		bottom: $vertical_rythm/2;
+		right: $vertical_rythm;
+
+		color: $primary !important;
+		opacity: 1;
+	}

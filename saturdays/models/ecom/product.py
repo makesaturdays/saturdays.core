@@ -14,6 +14,7 @@ with app.app_context():
 
 		collection_name = 'products'
 		alternate_index = 'pretty_url'
+		collection_sort = [('order', 1), ('updated_at', -1), ('created_at', -1)]
 
 		schema = {
 			'name': validation_rules['text'],
