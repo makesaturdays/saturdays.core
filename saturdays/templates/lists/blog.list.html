@@ -21,7 +21,7 @@
 			<div class="col col--3of12 col--small--12of12">
 				<h3><a href="/lists/blog/posts/{{post.route}}">{{post.title}}</a></h3>
 				{% for author in post.authors %}
-				<p class="p--medium hide_on_small">
+				<p class="p--alternate hide_on_small">
 					{{pieces.blog.by}} <a href="/lists/blog/authors/{{author.handle}}">{{author.name}}</a><br>
 					{% if post.source %}
 					<a href="{{post.source}}">Source</a>
@@ -30,7 +30,7 @@
 					{% endif %}
 				</p>
 				{% if not loop.last %}
-				<p class="p--medium hide_on_small">&amp;</p>
+				<p class="p--alternate hide_on_small">&amp;</p>
 				{% endif %}
 				{% endfor %}
 			</div>

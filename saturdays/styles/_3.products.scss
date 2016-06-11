@@ -4,6 +4,47 @@
 
 .product {
 	
+
+	&.product--workshop_box {
+		@extend .padded;
+		@extend .grid;
+		@extend .grid--vertically_centered;
+
+		background: $white;
+		border: 2px solid;
+		border-radius: $border_radius;
+		min-height: $vertical_rythm*18;
+
+		&.product--workshop_box--active {
+			color: $white;
+			background-color: $highlight;
+			border-color: transparent;
+
+			@include shadow(0 0.1rem 0.25rem fade-out($black, 0.75));
+
+			&:hover,
+			&:focus {
+				
+				// @include shadow(0 0.3rem 0.5rem fade-out($black, 0.85));
+			}
+		}
+
+		&.product--workshop_box--out_of_stock {
+			opacity: 0.2;
+			text-decoration: line-through;
+		}
+
+		&:hover,
+		&:focus {
+			top: -0.2rem;
+			@include shadow(0 0.3rem 0.5rem fade-out($black, 0.85));
+		}
+
+		&:active {
+			top: 1px;
+			@include shadow(none);
+		}
+	}
 }
 
 	.product__cta_box {

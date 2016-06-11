@@ -1,4 +1,5 @@
-<article class="product">
+
+<article class="product" data-product-id="{{product._id}}">
 	<div class="padded padded--vertically_thick">
 		<h1 class="h1--massive max_width max_width--center text_center">{{product.name}}</h1>
 	</div>
@@ -17,14 +18,14 @@
 			</div>
 			{% endfor %}
 
-			<button class="button--black button--full" data-add-to-cart>Reserve your spot</button>
+			<button class="button--black button--full" data-add-to-cart {% if product.is_salable %}>Reserve your spot{% else %}disabled>Not yet available{% endif %}</button>
 			<button class="button--facebook button--full">View Fb Event</button>
 
-			<em>{{product.metadata.hint}}</em>
+			<small class="strong">{{product.metadata.hint}}</small>
 		</div>
 	</div>
 
 	<div class="padded">
-		<p class="p--medium max_width max_width--center text_center">{{product.metadata.designer|safe}}</p>
+		<p class="p--medium max_width max_width--center text_center">{{product.metadata.designer_intro|safe}}</p>
 	</div>
 </article>

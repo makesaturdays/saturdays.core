@@ -46,20 +46,21 @@
             <nav class="grid" data-navigation>
                 <div class="col col--6of12" data-piece-id="{{pieces.metadata._id}}">
                     <a href="{% block title_link %}/{% endblock %}">
-                        <h1 class="h1--normal"><span data-key="title">{{pieces.metadata.title|safe}}</span> <span class="spaced hide_on_small">&mdash;</span> <span data-key="sub_title" class="hide_on_small">{{pieces.metadata.sub_title}}</span></h1>
+                        <h1 class="h1--base"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
                     </a>
                     <span data-piece-admin></span>
                 </div>
                 <div class="col col--6of12 text_right" data-piece-id="{{pieces.navigation._id}}">
-                    <a href="{{current_path}}?cart=true" class="a--alternate hide_on_small" data-show-cart><span data-key="about">Cart</span></a>
-                    <span class="spaced hide_on_small"></span>
+                    {# <a href="{{current_path}}?cart=true" class="a--alternate hide_on_small" data-show-cart><span data-key="about">Cart</span></a>
+                    <span class="spaced hide_on_small"></span> #}
                     <a href="/lists/blog/posts/intro" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
                     <span class="spaced hide_on_small"></span>
-                    <a href="/request_access" class="a--highlight"><span data-key="request_access">{{pieces.navigation.request_access}}</span></a>
+                    <a href="/products" class="button button--bordered">Upcoming Workshop</a>
                     <span data-piece-admin></span>
+                    {# <a href="/request_access" class="a--highlight"><span data-key="request_access">{{pieces.navigation.request_access}}</span></a>
+                    <span data-piece-admin></span> #}
                 </div>
             </nav>
-            
             {% endblock %}
         </header>
 
@@ -77,47 +78,17 @@
 
         <footer id="footer">
             {% block footer %}
-            <div class="padded padded--vertically_thick" data-piece-id="{{pieces.navigation._id}}">
-                <h3>It's <strong data-day></strong></h3>
+            <nav class="padded max_width max_width--center text_center">
+                It's <strong data-day></strong>.
+                Make Saturdays has events on <a href="{{pieces.navigation.facebook_link}}" data-link-key="facebook_link" class="a--underline" target="_blank">{{pieces.navigation.facebook}}</a>.
+                Our code is <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" class="a--underline" target="_blank"><span data-key="github">{{pieces.navigation.github}}</span></a>.
+                We're also <a href="{{pieces.navigation.twitter_link}}" data-link-key="twitter_link" class="a--underline" target="_blank">{{pieces.navigation.twitter}}</a>.
+                Our pics are on <a href="{{pieces.navigation.instagram_link}}" data-link-key="instagram_link" class="a--underline" target="_blank">{{pieces.navigation.instagram}}</a>.
+                Read the books from our <a href="/lists/library" class="a--underline"><span data-key="library">{{pieces.navigation.library}}</span></a>.
+                And get to know our process on the <a href="/lists/blog" class="a--underline"><span data-key="blog">{{pieces.navigation.blog}}</span></a>.
 
-                <nav class="grid grid--guttered">
-                    <div class="col col--2of12 col--medium--3of12 col--small--6of12">
-                        <a href="/" class="a--alternate"><span data-key="homepage">{{pieces.navigation.homepage}}</span></a><br>
-                        <a href="/lists/blog" class="a--alternate"><span data-key="blog">{{pieces.navigation.blog}}</span></a><br>
-                        {# <a href="/lists/library" class="a--alternate"><span data-key="library">{{pieces.navigation.library}}</span></a><br> #}
-                        <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" class="a--alternate" target="_blank"><span data-key="github">{{pieces.navigation.github}}</span></a>
-                    </div>
-
-                    <div class="col col--2of12 col--medium--3of12 col--small--6of12">
-                        <a class="a--alternate" disabled><span data-key="products">{{pieces.navigation.products}}</span></a><br>
-                        <a class="a--alternate" disabled><span data-key="shops">{{pieces.navigation.shops}}</span></a>
-                    </div>
-
-                    <div class="col col--1of12 hide_on_medium"></div>
-
-                    <div class="col col--2of12 col--medium--6of12 col--small--12of12">
-                        <a class="a--alternate" disabled><span data-key="terms">{{pieces.navigation.terms}}</span></a><br>
-                        <a class="a--alternate" disabled><span data-key="privacy">{{pieces.navigation.privacy}}</span></a><br>
-                        <a class="a--alternate" disabled><span data-key="login">{{pieces.navigation.login}}</span></a>
-                    </div>
-
-                    <div class="col col--2of12 col--medium--4of12">
-                        <a class="a--alternate" disabled><span data-key="faqs">{{pieces.navigation.faqs}}</span></a><br>
-                        <a href="{{pieces.navigation.contact_link}}" data-link-key="contact_link" class="a--alternate" target="_blank"><span data-key="contact">{{pieces.navigation.contact}}</span></a>
-                    </div>
-
-                    <div class="col col--3of12 col--medium--8of12 text_right">
-                        <a href="{{pieces.navigation.facebook_link}}" data-link-key="facebook_link" target="_blank"><svg class="icon-facebook icon--big"><use xlink:href="/build/images/icons.svg#icon-facebook"></use></svg></a>
-                        <a href="{{pieces.navigation.instagram_link}}" data-link-key="instagram_link" target="_blank"><svg class="icon-instagram icon--big"><use xlink:href="/build/images/icons.svg#icon-instagram"></use></svg></a>
-                        <a href="{{pieces.navigation.twitter_link}}" data-link-key="twitter_link" target="_blank"><svg class="icon-twitter icon--big"><use xlink:href="/build/images/icons.svg#icon-twitter"></use></svg></a>
-                        <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" target="_blank"><svg class="icon-github icon--big"><use xlink:href="/build/images/icons.svg#icon-github"></use></svg></a>
-                        <a href="{{pieces.navigation.pinterest_link}}" data-link-key="pinterest_link" target="_blank"><svg class="icon-pinterest icon--big"><use xlink:href="/build/images/icons.svg#icon-pinterest"></use></svg></a>
-                    </div>
-                </nav>
-
-
-                <p class="medium_top"><span data-key="copyright">{{pieces.navigation.copyright}}</span> <span data-piece-admin></span></p>
-            </div>
+                <span data-piece-admin></span></p>
+            </nav>
             {% endblock %}
         </footer>
 

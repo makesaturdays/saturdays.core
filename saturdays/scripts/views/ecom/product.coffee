@@ -43,6 +43,8 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 			success: (model, response)->
 				e.currentTarget.removeAttribute "disabled"
 
+				Saturdays.cart_view.show()
+
 			error: (model, response)->
 				e.currentTarget.removeAttribute "disabled"
 

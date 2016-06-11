@@ -133,6 +133,12 @@ with app.app_context():
 				document['discounted_price'] = round(document['discounted_price'], 2)
 
 
+			if document['inventory'] == 0:
+				document['is_out_of_stock'] = True
+				document['is_salable'] = False
+
+			del document['inventory']
+
 			document['price'] = round(document['price'], 2)
 			return document
 

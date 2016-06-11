@@ -27,7 +27,7 @@ Handlebars.registerHelper 'if_get', (model, key, options)->
 	if model[key]? and model[key]
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 Handlebars.registerHelper 'unless_get', (model, key, options)->
 	if model[key]? and model[key]
@@ -40,26 +40,26 @@ Handlebars.registerHelper 'if_equal', (left, right, options)->
 	if left is right
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 Handlebars.registerHelper 'if_lower', (left, right, options)->
 	if left < right
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 Handlebars.registerHelper 'if_higher', (left, right, options)->
 	if left > right
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 
 Handlebars.registerHelper 'if_get_equal', (model, key, right, options)->
 	if model[key]? and model[key] is right
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 
 Handlebars.registerHelper 'unless_equal', (left, right, options)->
@@ -73,13 +73,17 @@ Handlebars.registerHelper 'if_in_array', (array, right, options)->
 	if array? and _.contains(array, right)
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 
 
 Handlebars.registerHelper 'date', (date)->
 	date = new Date(date)
 	return date.toLocaleDateString()
+
+Handlebars.registerHelper 'datetime', (date)->
+	date = new Date(date)
+	return date.toLocaleString()
 
 
 Handlebars.registerHelper 'if_dates_equal', (left, right, options)->
@@ -88,7 +92,7 @@ Handlebars.registerHelper 'if_dates_equal', (left, right, options)->
 	if left.toLocaleDateString() is right.toLocaleDateString()
 		options.fn this
 	else
-		return null
+		options.inverse this
 
 
 
@@ -109,6 +113,9 @@ Handlebars.registerHelper 'address', (address)->
 
 	return address_text
 
+
+Handlebars.registerHelper 'money', (value)->
+	if value? then "$"+(parseFloat(value)).toFixed(2) else null
 
 
 Handlebars.registerHelper 'percentage', (value)->

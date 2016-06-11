@@ -8,7 +8,7 @@
 	{{product.name|striptags}} – Products - {{super()}}
 {% endblock %}
 
-{% block body_classes %}products {{product.pretty_url}} {% if 'workshop' in product.tags %}body--dark{% endif %}{% endblock %}
+{% block body_classes %}products {{product.pretty_url}}{% endblock %}
 
 {% block title_link %}/products{% endblock %}
 

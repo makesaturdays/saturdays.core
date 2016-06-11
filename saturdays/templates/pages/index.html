@@ -5,24 +5,32 @@
 
 {% block main %}
 
-<section data-piece-id="{{pieces.index._id}}">
-	<div class="max_width">
-		<img src="{{pieces.index.image}}" class="img--bottom_right hide_on_medium" data-image-key="image">
-
-		<p class="p--huge">
+<section class="max_width max_width--center huge_bottom" data-piece-id="{{pieces.index._id}}">
+	<div class="grid huge_bottom">
+		<h1 class="col col--12of12">
 			<span data-key="introduction">{{pieces.index.introduction|safe}}</span>
-		</p>
-		<p class="p--medium huge_bottom">
+		</h1>
+		<p class="col col--8of12 col--medium--10of12 col--small--12of12 p--medium">
 			<span data-key="concept">{{pieces.index.concept|safe}}</span>
 		</p>
+	</div>
 
-		<p class="p--medium">
-			<span data-key="coming_soon">{{pieces.index.coming_soon|safe}}</span>
-			<a href="/request_access" class="a--highlight"><span data-key="request_access">{{pieces.index.request_access}}</span></a>
-		</p>
+	<div class="grid grid--guttered">
+		<div class="col col--4of12 col--medium--5of12 col--small--6of12">
+			<h4><span data-key="who_1_title">{{pieces.index.who_1_title}}</span></h4>
+			<p><span data-key="who_1">{{pieces.index.who_1|safe}}</span></p>
+		</div>
+
+		<div class="col col--4of12 col--medium--5of12 col--small--6of12">
+			<h4><span data-key="who_2_title">{{pieces.index.who_2_title}}</span></h4>
+			<p><span data-key="who_2">{{pieces.index.who_2|safe}}</span></p>
+		</div>
+		
 		<span data-piece-admin></span>
 	</div>
 </section>
+
+{% include 'products/workshops.html' %}
 
 {% endblock %}
 

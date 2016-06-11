@@ -3,78 +3,153 @@
 
 <a href="{{current_path}}" class="cart__back" data-hide-cart></a>
 
-<div class="cart__container">
-	<p class="text_right"><a href="{{current_path}}" class="a--underline" data-hide-cart>Close</a></p>
+<div class="cart__container slider">
+	<a href="{{current_path}}" class="cart__close" data-hide-cart><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
 
-	<div class="grid grid--tight_guttered grid--middle">
-	{{#each cart.items}}
-		<div class="col col--6of12">{{#if vendor_shop}}<strong>{{vendor_shop.name}}:</strong> {{/if}}{{name}}</div>
-		<div class="col col--2of12"><input type="number" name="quantity" data-item-id="{{_id}}" value="{{quantity}}" class="input--tight flat_bottom"></div>
-		<div class="col col--3of12">{{quantity}} x {{price}} = {{sub_total}}</div>
-		<div class="col col--1of12"><button class="button--tight button--transparent" data-remove-from-cart data-item-id="{{_id}}">Remove</button></div>
-	{{/each}}
-
-		{{#if cart.available_store_credit}}
-		<div class="col col--12of12">
-			<input type="checkbox" id="with_store_credit" name="with_store_credit" {{#if cart.with_store_credit}}checked{{/if}}>
-			<label for="with_store_credit">With store credit ({{cart.available_store_credit}})</label>
-		</div>
-		{{/if}}
-
-		<div class="col col--12of12">
-			Subtotal: {{cart.sub_total}}<br>
-			Taxes: {{cart.taxes_total}}<br>
-			{{#if cart.with_store_credit}}Store credit: -{{cart.store_credit_total}}<br>{{/if}}
-			<strong>Total: {{cart.total}}</strong>
-		</div>
+	<div class="slider__markers">
+		<button class="slider__marker" data-slide-marker=0>0</button>
+		<button class="slider__marker" data-slide-marker=1>1</button>
 	</div>
 
-	<div class="grid grid--tight_guttered input_group">
-		<div class="col col--12of12">
-			<label for="email">{{pieces.admin.email_label}}</label>
-			<input type="email" id="email" name="email" value="{{#if cart.email}}{{cart.email}}{{else}}{{user.email}}{{/if}}" required autocomplete="email">
-		</div>
+	<div class="slider__container slider__container--2" data-slider-container>
+		<div class="slide" data-slide=0>
+			<div class="grid grid--tight_guttered grid--middle grid--center" data-slide-content>
+			{{#each cart.items}}
+				{{#if_in_array product.tags "workshop"}}
 
-		{{#if user.credit_cards}}
-		<form class="col col--12of12" data-credit-card-form>
-			<label for="email">Credit Card</label>
-			{{#each user.credit_cards}}
-			{{#if is_default}}
-			<div data-credit-card-id="{{_id}}">
-				<input type="radio" id="card_{{_id}}" name="credit_card_id" value="{{_id}}" checked>
-				<label for="card_{{_id}}">
-					{{provider_data.brand}} **** **** **** {{provider_data.last4}} {{provider_data.exp_month}} / {{provider_data.exp_year}}<br>
-					{{billing_street}} {{billing_zip}}
-				</label>
+				<h4 class="col col--12of12 text_center">{{name}}<br>With {{product.metadata.designer}}</h4>
+				<div class="col col--4of12 text_right">Amount:</div>
+				<div class="col col--8of12">{{money price}} per ticket</div>
+				<div class="col col--4of12 text_right">When:</div>
+				<div class="col col--8of12">{{datetime product.metadata.date}}</div>
+				<div class="col col--4of12 text_right">Where:</div>
+				<div class="col col--8of12"><a href="{{product.metadata.location_link}}" target="_blank">{{product.metadata.location}}</a></div>
 
-				<input type="hidden" id="card_token" name="card_token" value="{{card_token}}">
-				<input type="hidden" id="billing_street" name="billing_street" value="{{billing_street}}">
-				<input type="hidden" id="billing_zip" name="billing_zip" value="{{billing_zip}}">
-			</div>
-			{{/if}}
+				<div class="col col--12of12">
+					<div class="padded padded--tight light_grey_back medium_bottom">
+						<div class="grid grid--tight_guttered grid--middle grid--center">
+							<div class="col col--7of12 col--small--8of12 text_right">
+								How many tickets do you need?
+							</div>
+							<div class="col col--3of12">
+								<input type="tel" name="quantity" data-item-id="{{_id}}" value="{{quantity}}" class="input--tight flat_bottom">
+							</div>
+							<div class="col col--1of12">
+								<button class="button--transparent" data-remove-from-cart data-item-id="{{_id}}"><svg class="icon-x"><use xlink:href="/build/images/icons.svg#icon-x"></use></svg></button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				{{else}}
+
+				<div class="col col--4of12">{{#if vendor_shop}}<strong>{{vendor_shop.name}}:</strong> {{/if}}{{name}}</div>
+				<div class="col col--2of12"><input type="tel" name="quantity" data-item-id="{{_id}}" value="{{quantity}}" class="input--tight flat_bottom"></div>
+				<div class="col col--4of12">{{quantity}} x {{money price}} = {{money sub_total}}</div>
+				<div class="col col--1of12"><button class="button--transparent" data-remove-from-cart data-item-id="{{_id}}"><svg class="icon-x"><use xlink:href="/build/images/icons.svg#icon-x"></use></svg></button></div>
+
+				{{/if_in_array}}
 			{{/each}}
 
-			<button type="submit">Review Order</button>
-		</form>
-		{{else}}
-		<form class="col col--12of12" data-credit-card-form>
-			<label for="number">Credit Card</label>
-			<div class="grid">
-				<div class="col col--12of12"><input type="tel" id="number" name="number" placeholder="Card number" required autocomplete="cc-number" value="4242 4242 4242 4242"></div>
-				<div class="col col--6of12"><input type="tel" id="expiry" name="expiry" placeholder="MM / YY" required autocomplete="cc-exp" value="04 / 19"></div>
-				<div class="col col--6of12"><input type="tel" id="cvc" name="cvc" placeholder="CVC" required value="830"></div>
+				{{#if cart.available_store_credit}}
+				<div class="col col--12of12">
+					<input type="checkbox" id="with_store_credit" name="with_store_credit" {{#if cart.with_store_credit}}checked{{/if}}>
+					<label for="with_store_credit">With store credit ({{cart.available_store_credit}})</label>
+				</div>
+				{{/if}}
+
+				<div class="col col--7of12 col--small--10of12 small_bottom">
+					Subtotal: {{money cart.sub_total}} <span class="spaced"></span>
+					Taxes: {{money cart.taxes_total}}<br>
+					{{#if cart.with_store_credit}}Store credit: -{{money cart.store_credit_total}}<br>{{/if}}
+					<strong>Total: {{money cart.total}}</strong>
+				</div>
 			</div>
 
-			<label for="billing_street">Billing Address</label>
-			<div class="grid" data-billing-address-form>
-				<div class="col col--8of12"><input type="text" id="billing_street" name="billing_street" placeholder="Street address" required autocomplete="street-address" value="5310 Rue de Mentana, 205"></div>
-				<div class="col col--4of12"><input type="tel" id="billing_zip" name="billing_zip" placeholder="Zip" required autocomplete="postal-code" value="H2J 3C5"></div>
+			<button class="overlay__button" data-next-slide-button>Next</button>
+		</div>
+
+		<div class="slide slide--moved_right" data-slide=1>
+			<div class="grid grid--tight_guttered grid--middle grid--center" data-slide-content>
+				<div class="col col--12of12 text_center">
+					
+					{{#each cart.items}}
+					<h4>
+					{{name}}<br>With {{product.metadata.designer}} <small>X {{quantity}}</small><br>
+					</h4>
+					{{/each}}
+
+					<p>All fields are required</p>
+				</div>
+
+
+				<div class="col col--12of12">
+					<div class="padded padded--tight light_grey_back">
+						<div class="grid grid--tight_guttered grid--middle grid--center">
+							<div class="col col--2of12">
+								<label for="email">{{pieces.admin.email_label}}</label>
+							</div>
+							<div class="col col--10of12">
+								<input type="email" id="email" name="email" value="{{#if cart.email}}{{cart.email}}{{else}}{{user.email}}{{/if}}" required autocomplete="email" placeholder="email.address@gmail.com">
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<form class="col col--12of12" data-credit-card-form>
+					<div class="padded padded--tight">
+						<div class="grid grid--tight_guttered grid--middle">
+							<div class="col col--2of12">
+								<label for="number">Credit Card No.</label>
+							</div>
+							<div class="col col--10of12">
+								<input type="tel" id="number" name="number" placeholder="4242 4242 4242 4242" required autocomplete="cc-number" value="">
+							</div>
+
+							<div class="col col--2of12">
+								<label for="expiry">Exp. Date</label>
+							</div>
+							<div class="col col--4of12">
+								<input type="tel" id="expiry" name="expiry" placeholder="MM / YY" required autocomplete="cc-exp" value="">
+							</div>
+
+							<div class="col col--2of12">
+								<label for="cvc">CCV</label>
+							</div>
+							<div class="col col--4of12">
+								<input type="tel" id="cvc" name="cvc" placeholder="123" required value="">
+							</div>
+
+							<div class="col col--12of12"></div>
+
+							<div class="col col--2of12">
+								<label for="billing_street">Billing Street</label>
+							</div>
+							<div class="col col--10of12">
+							<input type="text" id="billing_street" name="billing_street" placeholder="1234 Your billing address ave." required autocomplete="street-address" value="">
+							</div>
+
+							<div class="col col--2of12">
+								<label for="billing_zip">Billing Zip</label>
+							</div>
+							<div class="col col--4of12">
+								<input type="tel" id="billing_zip" name="billing_zip" placeholder="X0X 0X0" required autocomplete="postal-code" value="">
+							</div>
+						</div>
+					</div>
+				</form>
+				
+
+				<div class="col col--7of12 col--small--10of12 small_bottom">
+					Subtotal: {{money cart.sub_total}} <span class="spaced"></span>
+					Taxes: {{money cart.taxes_total}}<br>
+					{{#if cart.with_store_credit}}Store credit: -{{money cart.store_credit_total}}<br>{{/if}}
+					<strong>Total: {{money cart.total}}</strong>
+				</div>
 			</div>
 
-			<button type="submit">Review Order</button>
-			<!-- <button>Pay {{cart.total}}$</button> -->
-		</form>
-		{{/if}}
+			<button class="overlay__button" data-previous-slide-button>Pay {{money cart.total}}</button>
+		</div>
 	</div>
 </div>
 {{/if}}

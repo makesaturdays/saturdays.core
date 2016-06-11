@@ -52,6 +52,12 @@
 		-webkit-align-items: flex-end;
 	}
 
+	&.grid--nowrap {
+		-webkit-flex-wrap: nowrap;
+		-ms-flex-wrap: nowrap;
+		flex-wrap: nowrap;
+	}
+
 	&.grid--guttered {
 		margin-left: -$gutter;
 		margin-bottom: -$gutter;
@@ -63,7 +69,7 @@
 
 	&.grid--tight_guttered {
 		margin-left: -$gutter/2;
-		margin-bottom: -$gutter/2;
+		margin-bottom: -$gutter/4;
 	}
 }
 	
@@ -80,7 +86,7 @@
 
 		.grid--tight_guttered > & {
 			padding-left: $gutter/2;
-			padding-bottom: $gutter/2;
+			padding-bottom: $gutter/4;
 		}
 
 

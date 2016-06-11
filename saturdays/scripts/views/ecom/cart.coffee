@@ -1,5 +1,5 @@
 
-class Saturdays.Views.Cart extends Saturdays.View
+class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 	el: $("#cart")
 	template: templates["ecom/cart"]
@@ -131,8 +131,8 @@ class Saturdays.Views.Cart extends Saturdays.View
 	show: (e)->
 		if e?
 			e.preventDefault()
-			Saturdays.router.navigate window.location.pathname+"?cart=true"
-
+		
+		Saturdays.router.navigate window.location.pathname+"?cart=true"
 		this.$el.removeClass "fade_out"
 
 

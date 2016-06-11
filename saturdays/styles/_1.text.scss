@@ -2,7 +2,7 @@
 
 ::selection {
 	color: $white;
-	background: $highlight;
+	background: $secondary;
 }
 
 
@@ -14,22 +14,26 @@ html {
 	-webkit-font-smoothing: antialiased;
 	-webkit-tap-highlight-color: fade-out($primary, 0.8);
 	-moz-osx-font-smoothing: grayscale;
+
+	@media #{$medium} {
+		font-size: 12px;
+	}
 }
 
 body {
 	color: $primary;
-	background-color: $grey--light;
+	background-color: $white;
 
 	width: 100%;
 	overflow-x: hidden;
 
 	@include transition(background-color $fast);
-	@include gradient_overlay();
+	// @include gradient_overlay();
 
 	&.body--dark {
 		color: $white;
 		background-color: $black;
-		@include gradient_overlay($color: $black--light);
+		// @include gradient_overlay($color: $black--light);
 	}
 }
 
@@ -37,14 +41,15 @@ body {
 // #FOOTER
 
 footer {
-	background-color: $white;
-
-	.blog & {
-		background-color: $grey;
-	}
+	font-family: $headings_font;
+	background-color: $grey--light;
 
 	.body--dark & {
 		background-color: $black--dark;
+	}
+
+	.blog & {
+		background-color: $grey;
 	}
 }
 
@@ -56,6 +61,7 @@ footer {
 h1, h2, h3, h4, h5, h6 {
 	font-family: $headings_font;
 	font-weight: normal;
+	line-height: 1.2;
 
 	color: inherit;
 	
@@ -74,11 +80,9 @@ h1, h2, h3, h4, h5, h6 {
 
 	h1 {
 		font-size: $huge_size;
-		line-height: 1.2;
 
-		&.h1--normal {
+		&.h1--base {
 			font-size: $base_size;
-			font-family: $body_font;
 		}
 
 		&.h1--massive {
@@ -88,7 +92,6 @@ h1, h2, h3, h4, h5, h6 {
 
 	h2 {
 		font-size: $big_size;
-		line-height: 1.2;
 	}
 
 	h3 {
@@ -96,8 +99,7 @@ h1, h2, h3, h4, h5, h6 {
 		font-weight: $bold;
 
 		strong {
-			font-family: $body_font;
-			font-weight: normal;
+			text-decoration: underline;
 		}
 	}
 
@@ -115,6 +117,11 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
 	margin: 0 0 $vertical_rythm;
+
+	&.p--alternate,
+	.alternate & {
+		font-family: $alternate_font;
+	}
 
 	&.p--huge {
 		font-size: $huge_size;
@@ -239,7 +246,8 @@ blockquote {
 	position: relative;
 
 	margin: 0 0 $vertical_rythm;
-	padding-left: $vertical_rythm;
+	padding-left: $vertical_rythm*2;
+	padding-right: $vertical_rythm*2;
 
 	.medium & {
 		font-size: $medium_size;
@@ -248,7 +256,7 @@ blockquote {
 	&:before,
 	&:after {
 		position: absolute;
-		font-size: 1.75em;
+		font-size: 1.5em;
 	}
 
 	&:before {
@@ -257,11 +265,11 @@ blockquote {
 		left: 0.25em;
 	}
 
-	// &:after {
-	// 	content: "”";
-	// 	top: 0;
-	// 	right: 0.25em;
-	// }
+	&:after {
+		content: "”";
+		top: 0;
+		right: 0.25em;
+	}
 }
 
 // #PRE & #CODE
@@ -328,6 +336,11 @@ sub {
 		height: $bigish_size;
 		width: $bigish_size;
 	}
+
+	&.icon--small {
+		height: $base_size;
+		width: $base_size;
+	}
 }
 
 iframe {
@@ -336,7 +349,7 @@ iframe {
 
 small,
 .small {
-	font-size: 0.75em;
+	font-size: $small_size;
 }
 
 b,

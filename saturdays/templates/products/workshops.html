@@ -1,0 +1,27 @@
+
+<section data-piece-id="{{pieces.workshops._id}}">
+	<div class="big_bottom max_width max_width--center text_center">
+		<h2><span data-key="title">{{pieces.workshops.title|safe}}</span></h2>
+		<p class="p--medium"><span data-key="introduction">{{pieces.workshops.introduction|safe}}</span></p>
+	</div>
+
+	<div class="grid grid--guttered">
+		{% for product in products %}
+
+			{% if 'workshop' in product.tags %}
+				{% include 'products/products__workshop.html' %}
+			{% endif %}
+
+		{% endfor %}
+
+
+		<article class="col col--4of12 col--medium--6of12 col--small--12of12">
+			<div class="product product--workshop_box">
+				<h3>{{pieces.workshops.stay_tuned}}</h3>
+				<h3><a href="{{pieces.workshops.contact_link}}" class="a--underline">{{pieces.workshops.contact}}</a></h3>
+			</div>
+		</article>
+	</div>
+
+	<span data-piece-admin></span>
+</section>

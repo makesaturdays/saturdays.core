@@ -9,7 +9,8 @@ label,
 	display: block;
 
 	font-family: $alternate_font;
-	font-weight: bold;
+	font-weight: $bold;
+	line-height: 1;
 }
 
 
@@ -40,12 +41,10 @@ textarea,
 	color: $primary;
 	background: $white;
 	padding: $vertical_rythm/2 $vertical_rythm;
-	border: 1px solid transparent;
+	border: 1px solid $grey;
 	border-radius: $border_radius;
 
-	margin-bottom: $vertical_rythm;
-
-
+	@include shadow(0 0.1rem 0.1rem fade-out($black, 0.9));
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
 
 	&:active {
@@ -58,7 +57,7 @@ textarea,
 	}
 
 	&:focus {
-		border: 1px solid $highlight;
+		border: 1px solid $secondary;
 	}
 
 	&.input--tight {

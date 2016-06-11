@@ -5,6 +5,8 @@
 .cart {
 	@extend .overlay;
 	@extend .overlay--full;
+	
+	font-family: $alternate_font;
 }
 
 	.cart__back {
@@ -14,7 +16,14 @@
 
 	.cart__container {
 		@extend .overlay__container;
-		@extend .grey_back;
+		@extend .overlay__container--with_button;
 
-		max-width: 555px;
+		padding: $gutter 0 0;
+
+		max-width: 34rem;
+		background-color: $white;
 	}
+
+		.cart__close {
+			@extend .overlay__close;
+		}

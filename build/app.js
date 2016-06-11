@@ -304,7 +304,7 @@
     if ((model[key] != null) && model[key]) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -320,7 +320,7 @@
     if (left === right) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -328,7 +328,7 @@
     if (left < right) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -336,7 +336,7 @@
     if (left > right) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -344,7 +344,7 @@
     if ((model[key] != null) && model[key] === right) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -360,7 +360,7 @@
     if ((array != null) && _.contains(array, right)) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -369,13 +369,18 @@
     return date.toLocaleDateString();
   });
 
+  Handlebars.registerHelper('datetime', function(date) {
+    date = new Date(date);
+    return date.toLocaleString();
+  });
+
   Handlebars.registerHelper('if_dates_equal', function(left, right, options) {
     left = new Date(left);
     right = new Date(right);
     if (left.toLocaleDateString() === right.toLocaleDateString()) {
       return options.fn(this);
     } else {
-      return null;
+      return options.inverse(this);
     }
   });
 
@@ -398,6 +403,14 @@
       address_text += " " + address.city + ", " + address.region + ", " + address.country + " " + address.zip;
     }
     return address_text;
+  });
+
+  Handlebars.registerHelper('money', function(value) {
+    if (value != null) {
+      return "$" + (parseFloat(value)).toFixed(2);
+    } else {
+      return null;
+    }
   });
 
   Handlebars.registerHelper('percentage', function(value) {
@@ -1070,15 +1083,13 @@
     Editable.prototype.tag_template = templates["cms/tag"];
 
     Editable.prototype.initialize = function() {
-      if ((Saturdays.user != null) && Saturdays.user.get("is_admin")) {
-        this.events["input input"] = "key_input";
-        this.events["change input"] = "key_input";
-        this.events["input [contenteditable]"] = "key_input";
-        this.events["click .js-save_edit"] = "save_edit";
-        this.events["click .js-destroy"] = "destroy";
-        this.events["keypress [name='tag_input']"] = "input_tag";
-        this.events["blur [name='tag_input']"] = "blur_tag";
-      }
+      this.events["input input"] = "key_input";
+      this.events["change input"] = "key_input";
+      this.events["input [contenteditable]"] = "key_input";
+      this.events["click .js-save_edit"] = "save_edit";
+      this.events["click .js-destroy"] = "destroy";
+      this.events["keypress [name='tag_input']"] = "input_tag";
+      this.events["blur [name='tag_input']"] = "blur_tag";
       this.listenTo(this.model, "sync", this.render);
       this.model.fetch();
       return Editable.__super__.initialize.call(this);
@@ -1126,6 +1137,7 @@
 
     Editable.prototype.key_input = function(e) {
       if ((this.button != null) && this.button.hasAttribute("disabled")) {
+        console.log(this.button);
         return this.button.removeAttribute("disabled");
       }
     };
@@ -1165,6 +1177,63 @@
     };
 
     return Editable;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Views.Slider = (function(superClass) {
+    extend(Slider, superClass);
+
+    function Slider() {
+      return Slider.__super__.constructor.apply(this, arguments);
+    }
+
+    Slider.prototype.current_slide = 0;
+
+    Slider.prototype.initialize = function() {
+      this.events["click [data-next-slide-button]"] = "next_slide";
+      this.events["click [data-previous-slide-button]"] = "previous_slide";
+      this.events["click [data-slide-marker]"] = "slide_to";
+      return Slider.__super__.initialize.call(this);
+    };
+
+    Slider.prototype.render = function() {
+      Slider.__super__.render.call(this);
+      this.previous_slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
+      this.$el.find("[data-slider-container]").css("height", "-=" + (this.$el.find("[data-slide=" + this.current_slide + "]").height() - this.previous_slide_height) + "px");
+      this.$el.find("[data-slide-marker=" + this.current_slide + "]").addClass("slider__marker--active");
+      return this;
+    };
+
+    Slider.prototype.next_slide = function(e) {
+      return this.slide_to(null, this.current_slide + 1);
+    };
+
+    Slider.prototype.previous_slide = function(e) {
+      return this.slide_to(null, this.current_slide - 1);
+    };
+
+    Slider.prototype.slide_to = function(e, index) {
+      var slide_height;
+      if (e != null) {
+        index = e.currentTarget.getAttribute("data-slide-marker");
+        e.currentTarget.blur();
+      }
+      this.current_slide = index;
+      this.$el.find("[data-slide-marker]").removeClass("slider__marker--active");
+      this.$el.find("[data-slide-marker=" + this.current_slide + "]").addClass("slider__marker--active");
+      slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
+      this.$el.find("[data-slider-container]").css("height", "-=" + (this.previous_slide_height - slide_height) + "px");
+      this.previous_slide_height = slide_height;
+      return this.$el.find("[data-slide]").css("transform", "translateX(-" + index + "00%)");
+    };
+
+    return Slider;
 
   })(Saturdays.View);
 
@@ -1694,8 +1763,8 @@
     Cart.prototype.show = function(e) {
       if (e != null) {
         e.preventDefault();
-        Saturdays.router.navigate(window.location.pathname + "?cart=true");
       }
+      Saturdays.router.navigate(window.location.pathname + "?cart=true");
       return this.$el.removeClass("fade_out");
     };
 
@@ -1709,7 +1778,7 @@
 
     return Cart;
 
-  })(Saturdays.View);
+  })(Saturdays.Views.Slider);
 
 }).call(this);
 
@@ -1758,7 +1827,8 @@
       e.currentTarget.setAttribute("disabled", "disabled");
       return Saturdays.cart.add_to_cart(this.model.id, this.$el.find("[name='option_id']").val(), 1, {
         success: function(model, response) {
-          return e.currentTarget.removeAttribute("disabled");
+          e.currentTarget.removeAttribute("disabled");
+          return Saturdays.cart_view.show();
         },
         error: function(model, response) {
           return e.currentTarget.removeAttribute("disabled");

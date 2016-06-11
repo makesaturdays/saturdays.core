@@ -8,15 +8,13 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 	
 	initialize: ->
-		if Saturdays.user? and Saturdays.user.get("is_admin")
-			this.events["input input"] = "key_input"
-			this.events["change input"] = "key_input"
-			this.events["input [contenteditable]"] = "key_input"
-			this.events["click .js-save_edit"] = "save_edit"
-			this.events["click .js-destroy"] = "destroy"
-			this.events["keypress [name='tag_input']"] = "input_tag"
-			this.events["blur [name='tag_input']"] = "blur_tag"
-
+		this.events["input input"] = "key_input"
+		this.events["change input"] = "key_input"
+		this.events["input [contenteditable]"] = "key_input"
+		this.events["click .js-save_edit"] = "save_edit"
+		this.events["click .js-destroy"] = "destroy"
+		this.events["keypress [name='tag_input']"] = "input_tag"
+		this.events["blur [name='tag_input']"] = "blur_tag"
 
 		this.listenTo @model, "sync", this.render
 
@@ -71,6 +69,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 	key_input: (e)->
 		if @button? and @button.hasAttribute "disabled"
+			console.log @button
 			@button.removeAttribute "disabled"
 
 

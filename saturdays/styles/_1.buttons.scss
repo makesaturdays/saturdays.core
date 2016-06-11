@@ -7,17 +7,17 @@ button,
 	display: inline-block;
 	
 	font-family: $headings_font;
-	font-weight: bold;
+	font-weight: normal;
 	font-size: 1rem;
 	line-height: 1;
 	text-align: center;
 	text-decoration: none;
 	color: $white;
-	background: $black;
 	
 	position: relative;
-	padding: $vertical_rythm/2 $vertical_rythm;
-	border: 1px solid transparent;
+	padding: $vertical_rythm/2;
+	background: $highlight;
+	border: 2px solid transparent;
 	border-radius: $border_radius;
 
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
@@ -25,11 +25,11 @@ button,
 
 	&:hover,
 	&:focus {
-		background: $highlight;
+		background: $secondary;
 	}
 
 	&:active {
-		top: 1px;
+		@include shadow(inset 0 0.25rem 2rem fade-out($black, 0.8));
 	}
 
 	&:disabled {
@@ -37,18 +37,23 @@ button,
 		opacity: 0.2;
 	}
 
-	.body--dark & {
-		color: $white;
-		background: $highlight;
+	// .body--dark & {
+	// 	color: $white;
+	// 	background: $highlight;
 
-		&:hover,
-		&:focus {
-			background: $black--dark;
-		}
-	}
+	// 	&:hover,
+	// 	&:focus {
+	// 		background: $black--dark;
+	// 	}
+	// }
 
 	&.button--tight {
 		padding: $vertical_rythm/4 $vertical_rythm/2;
+	}
+
+	&.button--medium {
+		font-size: $medium_size;
+		padding: $vertical_rythm;
 	}
 
 	&.button--full {
@@ -63,9 +68,23 @@ button,
 		}
 	}
 
+	&.button--bordered {
+		color: $highlight;
+		border: 2px solid;
+		background: $white;
+
+		&:hover,
+		&:focus {
+			color: $white;
+			background: $highlight;
+			border-color: transparent;
+		}
+	}
+
 	&.button--black {
 		color: $white;
 		background: $black--dark;
+		border-color: transparent;
 
 		&:hover,
 		&:focus {
@@ -76,6 +95,7 @@ button,
 	&.button--facebook {
 		color: $white;
 		background: $facebook_blue;
+		border-color: transparent;
 
 		&:hover,
 		&:focus {
@@ -87,6 +107,7 @@ button,
 		color: $primary;
 		background: transparent;
 		padding: 0;
+		border: 0;
 
 		&:hover,
 		&:focus {
@@ -94,7 +115,8 @@ button,
 		}
 
 		&:active {
-			color: fade-out($highlight, 0.5);
+			top: 1px;
+			@include shadow(none);
 		}
 	}
 }
