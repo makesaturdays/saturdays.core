@@ -34,7 +34,8 @@ footer {
 
 				&:hover,
 				&:focus {
-					color: $primary;
+					color: $white;
+					text-decoration: underline;
 				}
 			}
 		}
