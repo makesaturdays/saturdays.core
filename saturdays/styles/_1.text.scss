@@ -28,33 +28,16 @@ body {
 	overflow-x: hidden;
 
 	@include transition(background-color $fast);
-	// @include gradient_overlay();
 
 	&.body--dark {
 		color: $white;
 		background-color: $black;
-		// @include gradient_overlay($color: $black--light);
 	}
 }
 
-
-// #FOOTER
-
-footer {
-	font-family: $headings_font;
-	background-color: $grey--light;
-
-	.body--dark & {
-		background-color: $black--dark;
-	}
-
-	.blog & {
-		background-color: $grey;
-	}
+.main {
+	background-color: $white;
 }
-
-
-
 
 
 // #HEADINGS
@@ -80,6 +63,10 @@ h1, h2, h3, h4, h5, h6 {
 
 	h1 {
 		font-size: $huge_size;
+
+		@media #{$small} {
+			font-size: $big_size;
+		}
 
 		&.h1--base {
 			font-size: $base_size;
@@ -171,7 +158,6 @@ a {
 	&:focus,
 	&:hover {
 		color: $highlight;
-		opacity: 1 !important;
 	}
 
 	&:active {

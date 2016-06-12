@@ -78,17 +78,26 @@
 
         <footer id="footer">
             {% block footer %}
-            <nav class="padded max_width max_width--center text_center">
-                It's <strong data-day></strong>.
-                Make Saturdays has events on <a href="{{pieces.navigation.facebook_link}}" data-link-key="facebook_link" class="a--underline" target="_blank">{{pieces.navigation.facebook}}</a>.
-                Our code is <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" class="a--underline" target="_blank"><span data-key="github">{{pieces.navigation.github}}</span></a>.
-                We're also <a href="{{pieces.navigation.twitter_link}}" data-link-key="twitter_link" class="a--underline" target="_blank">{{pieces.navigation.twitter}}</a>.
-                Our pics are on <a href="{{pieces.navigation.instagram_link}}" data-link-key="instagram_link" class="a--underline" target="_blank">{{pieces.navigation.instagram}}</a>.
-                Read the books from our <a href="/lists/library" class="a--underline"><span data-key="library">{{pieces.navigation.library}}</span></a>.
-                And get to know our process on the <a href="/lists/blog" class="a--underline"><span data-key="blog">{{pieces.navigation.blog}}</span></a>.
+            <div class="footer__fixed">
+                
+                <div class="footer__fixed__top"></div>
 
-                <span data-piece-admin></span></p>
-            </nav>
+                <h1 class="footer__fixed__middle text_center"><a href="">Join us at our upcoming workshop.</a></h1>
+
+                <nav class="footer__fixed__bottom">
+                    <div class="padded max_width max_width--center text_center">
+                        It's <strong data-day></strong>.
+                        Make Saturdays has events on <a href="{{pieces.navigation.facebook_link}}" data-link-key="facebook_link" class="a--underline" target="_blank">{{pieces.navigation.facebook}}</a>.
+                        Our code is <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" class="a--underline" target="_blank"><span data-key="github">{{pieces.navigation.github}}</span></a>.
+                        We're also <a href="{{pieces.navigation.twitter_link}}" data-link-key="twitter_link" class="a--underline" target="_blank">{{pieces.navigation.twitter}}</a>.
+                        Our pics are on <a href="{{pieces.navigation.instagram_link}}" data-link-key="instagram_link" class="a--underline" target="_blank">{{pieces.navigation.instagram}}</a>.
+                        Read the books from our <a href="/lists/library" class="a--underline"><span data-key="library">{{pieces.navigation.library}}</span></a>.
+                        And get to know our process on the <a href="/lists/blog" class="a--underline"><span data-key="blog">{{pieces.navigation.blog}}</span></a>.
+
+                        <span data-piece-admin></span></p>
+                    </div>
+                </nav>
+            </div>
             {% endblock %}
         </footer>
 

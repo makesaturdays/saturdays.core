@@ -53,7 +53,7 @@ class Saturdays.Views.Slider extends Saturdays.View
 
 		@previous_slide_height = slide_height
 
-		this.$el.find("[data-slide]").css "transform", "translateX(-"+index+"00%)"
+		this.$el.find("[data-slide]").css "transform", "translateX(-"+@current_slide+"00%)"
 
 
 

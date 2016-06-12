@@ -1,0 +1,49 @@
+
+
+// #FOOTER
+
+footer {
+	font-family: $headings_font;
+}
+
+	.footer__fixed {
+		@extend .grid;
+		@extend .grid--vertically_spaced;
+
+		position: fixed;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+		min-height: 100vh;
+
+		z-index: -1;
+
+		color: $white;
+		background: $highlight;
+	}
+
+	.footer__fixed__top,
+	.footer__fixed__middle,
+	.footer__fixed__bottom {
+		width: 100%;
+	}
+
+		.footer__fixed__middle {
+
+			a {
+
+				&:hover,
+				&:focus {
+					color: $primary;
+				}
+			}
+		}
+
+		.footer__fixed__bottom {
+			color: $primary;
+			background-color: $grey--light;
+
+			.blog & {
+				background-color: $grey;
+			}
+		}

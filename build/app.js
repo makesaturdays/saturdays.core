@@ -1230,7 +1230,7 @@
       slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
       this.$el.find("[data-slider-container]").css("height", "-=" + (this.previous_slide_height - slide_height) + "px");
       this.previous_slide_height = slide_height;
-      return this.$el.find("[data-slide]").css("transform", "translateX(-" + index + "00%)");
+      return this.$el.find("[data-slide]").css("transform", "translateX(-" + this.current_slide + "00%)");
     };
 
     return Slider;
