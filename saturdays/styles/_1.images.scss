@@ -32,10 +32,13 @@ img {
 
 	&.img--bottom_right {
 		position: absolute;
-		bottom: 0;
-		right: 0;
+		bottom: 10%;
+		right: -20%;
 
-		z-index: -1;
-		width: 66%
+		width: 12rem;
+	}
+
+	&.img--big_icon {
+		width: 14rem;
 	}
 }
