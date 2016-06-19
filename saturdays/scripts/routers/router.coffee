@@ -7,6 +7,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 		"vendor_shops(/:pretty_url)(/)": "vendor_shops"
 		"lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list"
 		"request_access(/)": "request_access"
+		"manifesto(/)": "page"
 		"(/)": "home"
 	}
 
@@ -90,6 +91,10 @@ class Saturdays.Routers.Router extends Backbone.Router
 				el: element, 
 				model: model
 			})
+
+
+	page: ->
+
 
 
 

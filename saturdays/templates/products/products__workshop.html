@@ -4,7 +4,7 @@
 
 		<h6>{{product.metadata.location}}</h6>
 		<h3>
-			{{product.name}} – {{product.description}}<br><strong>{{product.metadata.designer}}</strong>
+			{{product.name}}<br><strong>{{product.metadata.designer}}</strong>
 		</h3>
 		<h3>
 			{% if product.metadata.is_tbd %}{{pieces.workshops.tbd}}{% else %}{{product.metadata.date|date('%b %d')}}{% endif %}

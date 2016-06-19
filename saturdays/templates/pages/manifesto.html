@@ -1,0 +1,26 @@
+
+{% extends "layout.html" %}
+
+
+{% block body_classes %}manifesto{% endblock %}
+
+{% block main %}
+
+<section data-piece-id="{{pieces.manifesto._id}}">
+	<div class="main__center">
+		<p class="p--big">
+			<span data-key="introduction">{{pieces.manifesto.introduction|safe}}</span>
+		</p>
+
+		<p class="p--medium">
+			<span data-key="body">{{pieces.manifesto.body|safe}}</span>
+		</p>
+
+		<span data-piece-admin></span>
+	</div>
+</section>
+
+{% endblock %}
+
+
+

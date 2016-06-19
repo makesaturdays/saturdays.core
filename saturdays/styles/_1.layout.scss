@@ -14,8 +14,7 @@ html {
 
 body {
 	position: relative;
-
-	min-height: 100vh;
+	
 	margin-bottom: 100vh;
 }
 
@@ -40,10 +39,8 @@ header {
 	@extend .padded;
 	@extend .padded--vertically_thick;
 
-	position: relative;
-
 	max-width: 1600px;
-	min-height: 600px;
+	min-height: 100vh;
 	margin: 0 auto;
 }
 

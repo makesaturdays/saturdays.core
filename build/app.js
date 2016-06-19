@@ -1952,6 +1952,7 @@
       "vendor_shops(/:pretty_url)(/)": "vendor_shops",
       "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
       "request_access(/)": "request_access",
+      "manifesto(/)": "page",
       "(/)": "home"
     };
 
@@ -2061,6 +2062,8 @@
         };
       })(this));
     };
+
+    Router.prototype.page = function() {};
 
     return Router;
 

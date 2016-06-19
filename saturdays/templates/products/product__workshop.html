@@ -1,13 +1,13 @@
 
 <article class="product" data-product-id="{{product._id}}">
 	<div class="padded padded--vertically_thick">
-		<h1 class="h1--massive max_width max_width--center text_center">{{product.name}}</h1>
+		<h1 class="h1--massive max_width max_width--center text_center">{# {{product.name}} #}Coming Soon</h1>
 	</div>
 
 	<div class="product__cta_box">
 		<div class="product__cta_box__container">
 			<strong>{{product.name}}</strong><br>
-			<a href="{{product.metadata.location_link}}">{{product.metadata.location}}</a> – {{product.metadata.date|date('%B %d, %Y')}}<br>
+			<a href="{{product.metadata.location_link}}">{{product.metadata.location}}</a> – {% if product.metadata.is_tbd %}{{pieces.workshops.tbd}}{% else %}{{product.metadata.date|date('%b %d')}}{% endif %}<br>
 
 			<h3 class="small_bottom">{{product.price}}CAD</h3>
 
@@ -19,13 +19,13 @@
 			{% endfor %}
 
 			<button class="button--black button--full" data-add-to-cart {% if product.is_salable %}>Reserve your spot{% else %}disabled>{% if product.is_out_of_stock %}Sold Out{% else %}Not yet available{% endif %}{% endif %}</button>
-			<button class="button--facebook button--full">View Fb Event</button>
+			<a href="{{pieces.navigation.facebook_link}}" target="_blank" class="button button--facebook button--full">Like Us on Facebook</a>
 
 			<small class="strong">{{product.metadata.hint}}</small>
 		</div>
 	</div>
 
-	<div class="padded">
+	{# <div class="padded">
 		<p class="p--medium max_width max_width--center text_center">{{product.metadata.designer_intro|safe}}</p>
-	</div>
+	</div> #}
 </article>
