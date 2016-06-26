@@ -131,40 +131,56 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
     + "\" class=\"cart__back\" data-hide-cart></a>\n\n<div class=\"cart__container slider\">\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"cart__close\" data-hide-cart><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"slider__markers\">\n<button class=\"slider__marker\" data-slide-marker=0>0</button>\n<button class=\"slider__marker\" data-slide-marker=1>1</button>\n</div>\n\n<div class=\"slider__container slider__container--2\" data-slider-container>\n<div class=\"slide\" data-slide=0>\n<div class=\"grid grid--tight_guttered grid--middle grid--center\" data-slide-content>\n"
-    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" class=\"cart__close\" data-hide-cart><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"slider__markers\">\n<button class=\"slider__marker "
+    + ((stack1 = (helpers.if_equal || (depth0 && depth0.if_equal) || alias2).call(alias1,(depth0 != null ? depth0.current_slide : depth0),0,{"name":"if_equal","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-slide-marker=0>0</button>\n<button class=\"slider__marker "
+    + ((stack1 = (helpers.if_equal || (depth0 && depth0.if_equal) || alias2).call(alias1,(depth0 != null ? depth0.current_slide : depth0),1,{"name":"if_equal","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-slide-marker=1>1</button>\n</div>\n\n<div class=\"slider__container slider__container--2\" data-slider-container>\n<div class=\"slide\" data-slide=0 style=\"transform: translateX(-"
+    + alias4(((helper = (helper = helpers.current_slide || (depth0 != null ? depth0.current_slide : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_slide","hash":{},"data":data}) : helper)))
+    + "00%);\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\" data-slide-content>\n"
+    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n"
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.available_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.available_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(10, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.sub_total : stack1),{"name":"money","hash":{},"data":data}))
     + " <span class=\"spaced\"></span>\nTaxes: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.taxes_total : stack1),{"name":"money","hash":{},"data":data}))
     + "<br>\n"
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(11, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(13, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n<strong>Total: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"money","hash":{},"data":data}))
-    + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-next-slide-button>Next</button>\n</div>\n\n<div class=\"slide slide--moved_right\" data-slide=1>\n<div class=\"grid grid--tight_guttered grid--middle grid--center\" data-slide-content>\n<div class=\"col col--12of12 text_center\">\n\n"
-    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(13, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-next-slide-button>Next</button>\n</div>\n\n<div class=\"slide slide--moved_right\" data-slide=1 style=\"transform: translateX(-"
+    + alias4(((helper = (helper = helpers.current_slide || (depth0 != null ? depth0.current_slide : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_slide","hash":{},"data":data}) : helper)))
+    + "00%);\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\" data-slide-content>\n<div class=\"col col--12of12 text_center\">\n\n"
+    + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(15, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n<p>All fields are required</p>\n</div>\n\n\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
     + alias4(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
     + "</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"email\" id=\"email\" name=\"email\" value=\""
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1),{"name":"if","hash":{},"fn":container.program(15, data, 0),"inverse":container.program(17, data, 0),"data":data})) != null ? stack1 : "")
-    + "\" required autocomplete=\"email\" placeholder=\"email.address@gmail.com\">\n</div>\n</div>\n</div>\n</div>\n\n<form class=\"col col--12of12\" data-credit-card-form>\n<div class=\"padded padded--tight\">\n<div class=\"grid grid--tight_guttered grid--middle\">\n<div class=\"col col--2of12\">\n<label for=\"number\">Credit Card No.</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"tel\" id=\"number\" name=\"number\" placeholder=\"4242 4242 4242 4242\" required autocomplete=\"cc-number\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"expiry\">Exp. Date</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"expiry\" name=\"expiry\" placeholder=\"MM / YY\" required autocomplete=\"cc-exp\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"cvc\">CCV</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"cvc\" name=\"cvc\" placeholder=\"123\" required value=\"\">\n</div>\n\n<div class=\"col col--12of12\"></div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_street\">Billing Street</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"text\" id=\"billing_street\" name=\"billing_street\" placeholder=\"1234 Your billing address ave.\" required autocomplete=\"street-address\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_zip\">Billing Zip</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"billing_zip\" name=\"billing_zip\" placeholder=\"X0X 0X0\" required autocomplete=\"postal-code\" value=\"\">\n</div>\n</div>\n</div>\n</form>\n\n\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1),{"name":"if","hash":{},"fn":container.program(17, data, 0),"inverse":container.program(19, data, 0),"data":data})) != null ? stack1 : "")
+    + "\" required autocomplete=\"email\" placeholder=\"email.address@gmail.com\">\n</div>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n</div>\n</div>\n\n<form class=\"col col--12of12\" data-credit-card-form "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(23, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n<div class=\"padded padded--tight\">\n<div class=\"grid grid--tight_guttered grid--middle\">\n<div class=\"col col--2of12\">\n<label for=\"number\">Credit Card No.</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"tel\" id=\"number\" name=\"number\" placeholder=\"4242 4242 4242 4242\" required autocomplete=\"cc-number\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"expiry\">Exp. Date</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"expiry\" name=\"expiry\" placeholder=\"MM / YY\" required autocomplete=\"cc-exp\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"cvc\">CCV</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"cvc\" name=\"cvc\" placeholder=\"123\" required value=\"\">\n</div>\n\n<div class=\"col col--12of12\"></div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_street\">Billing Street</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"text\" id=\"billing_street\" name=\"billing_street\" placeholder=\"1234 Your billing address ave.\" required autocomplete=\"street-address\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_zip\">Billing Zip</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"billing_zip\" name=\"billing_zip\" placeholder=\"X0X 0X0\" required autocomplete=\"postal-code\" value=\"\">\n</div>\n</div>\n</div>\n</form>\n\n\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.sub_total : stack1),{"name":"money","hash":{},"data":data}))
     + " <span class=\"spaced\"></span>\nTaxes: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.taxes_total : stack1),{"name":"money","hash":{},"data":data}))
     + "<br>\n"
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(11, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(13, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n<strong>Total: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"money","hash":{},"data":data}))
-    + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-previous-slide-button>Pay "
+    + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-previous-slide-button "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(23, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">Pay "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"money","hash":{},"data":data}))
     + "</button>\n</div>\n</div>\n</div>\n";
 },"2":function(container,depth0,helpers,partials,data) {
+    return "slider__marker--active";
+},"4":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return ((stack1 = (helpers.if_in_array || (depth0 && depth0.if_in_array) || helpers.helperMissing).call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.product : depth0)) != null ? stack1.tags : stack1),"workshop",{"name":"if_in_array","hash":{},"fn":container.program(3, data, 0),"inverse":container.program(5, data, 0),"data":data})) != null ? stack1 : "");
-},"3":function(container,depth0,helpers,partials,data) {
+  return ((stack1 = (helpers.if_in_array || (depth0 && depth0.if_in_array) || helpers.helperMissing).call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.product : depth0)) != null ? stack1.tags : stack1),"workshop",{"name":"if_in_array","hash":{},"fn":container.program(5, data, 0),"inverse":container.program(7, data, 0),"data":data})) != null ? stack1 : "");
+},"5":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression, alias5=container.lambda;
 
   return "\n<h4 class=\"col col--12of12 text_center\">"
@@ -186,11 +202,11 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + "\" class=\"input--tight flat_bottom\">\n</div>\n<div class=\"col col--1of12\">\n<button class=\"button--transparent\" data-remove-from-cart data-item-id=\""
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
     + "\"><svg class=\"icon-x\"><use xlink:href=\"/build/images/icons.svg#icon-x\"></use></svg></button>\n</div>\n</div>\n</div>\n</div>\n\n";
-},"5":function(container,depth0,helpers,partials,data) {
+},"7":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "\n<div class=\"col col--4of12\">"
-    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.vendor_shop : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.vendor_shop : depth0),{"name":"if","hash":{},"fn":container.program(8, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "</div>\n<div class=\"col col--2of12\"><input type=\"tel\" name=\"quantity\" data-item-id=\""
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
@@ -205,29 +221,29 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + "</div>\n<div class=\"col col--1of12\"><button class=\"button--transparent\" data-remove-from-cart data-item-id=\""
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
     + "\"><svg class=\"icon-x\"><use xlink:href=\"/build/images/icons.svg#icon-x\"></use></svg></button></div>\n\n";
-},"6":function(container,depth0,helpers,partials,data) {
+},"8":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "<strong>"
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.vendor_shop : depth0)) != null ? stack1.name : stack1), depth0))
     + ":</strong> ";
-},"8":function(container,depth0,helpers,partials,data) {
+},"10":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "<div class=\"col col--12of12\">\n<input type=\"checkbox\" id=\"with_store_credit\" name=\"with_store_credit\" "
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(9, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(11, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">\n<label for=\"with_store_credit\">With store credit ("
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.available_store_credit : stack1), depth0))
     + ")</label>\n</div>\n";
-},"9":function(container,depth0,helpers,partials,data) {
-    return "checked";
 },"11":function(container,depth0,helpers,partials,data) {
+    return "checked";
+},"13":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "Store credit: -"
     + container.escapeExpression((helpers.money || (depth0 && depth0.money) || helpers.helperMissing).call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.store_credit_total : stack1),{"name":"money","hash":{},"data":data}))
     + "<br>";
-},"13":function(container,depth0,helpers,partials,data) {
+},"15":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "<h4>\n"
@@ -237,14 +253,22 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + " <small>X "
     + alias4(((helper = (helper = helpers.quantity || (depth0 != null ? depth0.quantity : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"quantity","hash":{},"data":data}) : helper)))
     + "</small><br>\n</h4>\n";
-},"15":function(container,depth0,helpers,partials,data) {
-    var stack1;
-
-  return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1), depth0));
 },"17":function(container,depth0,helpers,partials,data) {
     var stack1;
 
+  return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1), depth0));
+},"19":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
   return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.email : stack1), depth0));
+},"21":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<div class=\"col col--2of12\">\n<label for=\"password\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
+    + "</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"password\" id=\"password\" name=\"password\" value=\"\" required autocomplete=\"password\" placeholder=\"********\">\n</div>\n";
+},"23":function(container,depth0,helpers,partials,data) {
+    return "disabled";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 

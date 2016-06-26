@@ -1,5 +1,6 @@
 from saturdays import app
 from flask import request, abort
+from werkzeug.exceptions import NotFound
 
 from saturdays.models.core.model import Model
 from saturdays.models.core.has_routes import HasRoutes
@@ -101,6 +102,17 @@ with app.app_context():
 			try:
 				document['coupon_code'] = document['coupon_code'].upper().strip()
 				document['coupon'] = Promotion.get_where({'code': document['coupon_code'], 'is_online': True})
+
+			except KeyError:
+				pass
+
+
+			try:
+				from saturdays.models.auth.user import User
+				if User.count({'email': document['email']}):
+					document['requires_user'] = True
+				else:
+					document['requires_user'] = False
 
 			except KeyError:
 				pass

@@ -7,12 +7,12 @@
 	<a href="{{current_path}}" class="cart__close" data-hide-cart><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
 
 	<div class="slider__markers">
-		<button class="slider__marker" data-slide-marker=0>0</button>
-		<button class="slider__marker" data-slide-marker=1>1</button>
+		<button class="slider__marker {{#if_equal current_slide 0}}slider__marker--active{{/if_equal}}" data-slide-marker=0>0</button>
+		<button class="slider__marker {{#if_equal current_slide 1}}slider__marker--active{{/if_equal}}" data-slide-marker=1>1</button>
 	</div>
 
 	<div class="slider__container slider__container--2" data-slider-container>
-		<div class="slide" data-slide=0>
+		<div class="slide" data-slide=0 style="transform: translateX(-{{current_slide}}00%);">
 			<div class="grid grid--tight_guttered grid--middle grid--center" data-slide-content>
 			{{#each cart.items}}
 				{{#if_in_array product.tags "workshop"}}
@@ -69,7 +69,7 @@
 			<button class="overlay__button" data-next-slide-button>Next</button>
 		</div>
 
-		<div class="slide slide--moved_right" data-slide=1>
+		<div class="slide slide--moved_right" data-slide=1 style="transform: translateX(-{{current_slide}}00%);">
 			<div class="grid grid--tight_guttered grid--middle grid--center" data-slide-content>
 				<div class="col col--12of12 text_center">
 					
@@ -92,11 +92,20 @@
 							<div class="col col--10of12">
 								<input type="email" id="email" name="email" value="{{#if cart.email}}{{cart.email}}{{else}}{{user.email}}{{/if}}" required autocomplete="email" placeholder="email.address@gmail.com">
 							</div>
+
+							{{#if cart.requires_user}}
+							<div class="col col--2of12">
+								<label for="password">{{pieces.admin.password_label}}</label>
+							</div>
+							<div class="col col--10of12">
+								<input type="password" id="password" name="password" value="" required autocomplete="password" placeholder="********">
+							</div>
+							{{/if}}
 						</div>
 					</div>
 				</div>
 
-				<form class="col col--12of12" data-credit-card-form>
+				<form class="col col--12of12" data-credit-card-form {{#if cart.requires_user}}disabled{{/if}}>
 					<div class="padded padded--tight">
 						<div class="grid grid--tight_guttered grid--middle">
 							<div class="col col--2of12">
@@ -148,7 +157,7 @@
 				</div>
 			</div>
 
-			<button class="overlay__button" data-previous-slide-button>Pay {{money cart.total}}</button>
+			<button class="overlay__button" data-previous-slide-button {{#if cart.requires_user}}disabled{{/if}}>Pay {{money cart.total}}</button>
 		</div>
 	</div>
 </div>

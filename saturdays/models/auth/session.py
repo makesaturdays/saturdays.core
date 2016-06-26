@@ -7,7 +7,10 @@ from saturdays.models.core.has_routes import HasRoutes
 
 from saturdays.models.auth.token import Token
 from saturdays.models.auth.user import User
+from saturdays.models.ecom.cart import Cart
+
 from saturdays.helpers.validation_rules import validation_rules
+from saturdays.helpers.raise_error import raise_error
 
 from bson.objectid import ObjectId
 
@@ -23,7 +26,8 @@ with app.app_context():
 		schema = {
 			'token_id': validation_rules['text'],
 			'email': validation_rules['email'],
-			'password': validation_rules['password']
+			'password': validation_rules['password'],
+			'cart_id': validation_rules['object_id']
 		}
 
 
@@ -100,6 +104,12 @@ with app.app_context():
 
 					document['user_id'] = user['_id']
 					request.user_id = document['user_id']
+
+					try:
+						cart = Cart.get(document['cart_id'])
+						User.update(document['user_id'], {'cart_items': cart['items']})
+					except KeyError:
+						pass
 
 					try:
 						document['is_vendor'] = user['is_vendor']

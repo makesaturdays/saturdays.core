@@ -1,6 +1,7 @@
 
 class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
+
 	el: $("#cart")
 	template: templates["ecom/cart"]
 
@@ -78,12 +79,15 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		regex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$", "g")
 		if regex.test(e.currentTarget.value)
 			window.clearTimeout(@email_timeout)
-			@email_timeout = window.setTimeout ->
+			@email_timeout = window.setTimeout ()=>
 				Saturdays.cart.save
 					email: e.currentTarget.value
 				,
 					patch: true
-					silent: true
+					# silent: true
+					# success: (model, response)=>
+					# 	if response.requires_user
+					# 		this.render()
 
 			, 1000
 

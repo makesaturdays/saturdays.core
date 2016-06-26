@@ -2,7 +2,7 @@
 class Saturdays.Views.Slider extends Saturdays.View
 
 
-	current_slide: 0
+	current_slide: 1
 
 
 
@@ -20,12 +20,15 @@ class Saturdays.Views.Slider extends Saturdays.View
 
 	render: ->
 
+		_.extend @data,
+			current_slide: @current_slide
+
 		super()
 
 		@previous_slide_height = this.$el.find("[data-slide="+@current_slide+"] [data-slide-content]").height()
 		this.$el.find("[data-slider-container]").css "height", "-="+(this.$el.find("[data-slide="+@current_slide+"]").height() - @previous_slide_height)+"px"
-		this.$el.find("[data-slide-marker="+@current_slide+"]").addClass "slider__marker--active"
-
+		# this.$el.find("[data-slide-marker="+@current_slide+"]").addClass "slider__marker--active"
+		# this.$el.find("[data-slide]").css "transform", "translateX(-"+@current_slide+"00%)"
 
 		this
 

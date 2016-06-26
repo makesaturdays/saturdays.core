@@ -5,7 +5,7 @@ from saturdays.helpers.json import to_json, json_formater
 from saturdays.models.cms.error import Error
 
 
-def raise_error(category, key, code=500, fields=None):
+def raise_error(category, key, code=500, fields=None, no_abort=False):
 	errors = Error._values()
 	document = {
 		'category': category,
@@ -22,4 +22,8 @@ def raise_error(category, key, code=500, fields=None):
 		pass
 	
 
-	abort(to_json(document, code))
+	if no_abort:
+		return to_json(document, code)
+
+	else:
+		abort(to_json(document, code))

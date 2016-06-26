@@ -1193,7 +1193,7 @@
       return Slider.__super__.constructor.apply(this, arguments);
     }
 
-    Slider.prototype.current_slide = 0;
+    Slider.prototype.current_slide = 1;
 
     Slider.prototype.initialize = function() {
       this.events["click [data-next-slide-button]"] = "next_slide";
@@ -1203,10 +1203,12 @@
     };
 
     Slider.prototype.render = function() {
+      _.extend(this.data, {
+        current_slide: this.current_slide
+      });
       Slider.__super__.render.call(this);
       this.previous_slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
       this.$el.find("[data-slider-container]").css("height", "-=" + (this.$el.find("[data-slide=" + this.current_slide + "]").height() - this.previous_slide_height) + "px");
-      this.$el.find("[data-slide-marker=" + this.current_slide + "]").addClass("slider__marker--active");
       return this;
     };
 
@@ -1711,14 +1713,15 @@
       regex = new RegExp("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$", "g");
       if (regex.test(e.currentTarget.value)) {
         window.clearTimeout(this.email_timeout);
-        return this.email_timeout = window.setTimeout(function() {
-          return Saturdays.cart.save({
-            email: e.currentTarget.value
-          }, {
-            patch: true,
-            silent: true
-          });
-        }, 1000);
+        return this.email_timeout = window.setTimeout((function(_this) {
+          return function() {
+            return Saturdays.cart.save({
+              email: e.currentTarget.value
+            }, {
+              patch: true
+            });
+          };
+        })(this), 1000);
       }
     };
 

@@ -90,6 +90,12 @@ with app.app_context():
 					user = None
 					document['cart'] = Cart.get(document['cart_id'])
 
+					try:
+						if document['cart']['requires_user']:
+							raise_error('ecom', 'user_required', 400)
+					except KeyError:
+						pass
+
 
 			try:
 				del document['cart']['updated_at']
