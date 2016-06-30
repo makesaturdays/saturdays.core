@@ -12,7 +12,7 @@ Flask-PyMongo==0.4.0
 Flask-Script==2.0.5
 itsdangerous==0.24
 Jinja2==2.8
-kombu==3.0.29
+kombu==3.0.35
 MarkupSafe==0.23
 oauthlib==1.0.3
 pybars3==0.9.1
@@ -33,3 +33,4 @@ cerberus==0.9.2
 gunicorn==19.4.5
 tornado==4.1
 markdown==2.6.5
+uuid==1.30
