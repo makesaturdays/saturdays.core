@@ -10,7 +10,7 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		"click [data-remove-from-cart]": "remove_from_cart"
 		"change [name='with_store_credit']": "change_store_credit"
 		"input [name='email']": "input_email"
-		"input [name='password']": "input_password"
+		# "input [name='password']": "input_password"
 		"submit [data-credit-card-form]": "submit_credit_card_form"
 		"click [data-reset-credit-card-form]": "reset_credit_card_form"
 		"click [data-hide-cart]": "hide"
