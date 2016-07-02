@@ -10,7 +10,9 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		"click [data-remove-from-cart]": "remove_from_cart"
 		"change [name='with_store_credit']": "change_store_credit"
 		"input [name='email']": "input_email"
+		"input [name='password']": "input_password"
 		"submit [data-credit-card-form]": "submit_credit_card_form"
+		"click [data-reset-credit-card-form]": "reset_credit_card_form"
 		"click [data-hide-cart]": "hide"
 	}
 
@@ -84,10 +86,31 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 					email: e.currentTarget.value
 				,
 					patch: true
-					# silent: true
-					# success: (model, response)=>
-					# 	if response.requires_user
-					# 		this.render()
+					silent: true
+					success: (model, response)=>
+						if response.requires_user
+							this.$el.find("[data-password-box]").removeClass "hide"
+							this.$el.find("[data-credit-card-form]").attr "disabled", "disabled"
+							this.$el.find("[data-credit-card-form] [type='submit']").attr "disabled", "disabled"
+							this.$el.find("[name='password']").focus()
+
+						else
+							this.$el.find("[data-password-box]").addClass "hide"
+							this.$el.find("[data-credit-card-form]").removeAttr "disabled"
+							this.$el.find("[data-credit-card-form] [type='submit']").removeAttr "disabled"
+
+			, 1000
+
+
+	input_password: (e)->
+
+		if e.currentTarget.value.length >= 8
+			window.clearTimeout(@password_timeout)
+			@password_timeout = window.setTimeout ()=>
+				Saturdays.session.login
+					email: Saturdays.cart.get("email")
+					password: e.currentTarget.value
+					cart_id: Saturdays.cart.id
 
 			, 1000
 
@@ -116,20 +139,26 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 					credit_card: model.toJSON()
 				, 
 					success: (model, response)->
-						order = new Saturdays.Models.Order()
-						console.log order
-						order.save {
-							cart_id: Saturdays.cart.id unless Saturdays.user.id?,
-							user_id: Saturdays.user.id if Saturdays.user.id?
-						}, 
-							success: (model, response)->
+						# order = new Saturdays.Models.Order()
+						# console.log order
+						# order.save {
+						# 	cart_id: Saturdays.cart.id unless Saturdays.user.id?,
+						# 	user_id: Saturdays.user.id if Saturdays.user.id?
+						# }, 
+						# 	success: (model, response)->
 
-								Saturdays.cookies.delete("Cart-Id") 
-								Saturdays.cart.clear()
-
-
+						# 		Saturdays.cookies.delete("Cart-Id") 
+						# 		Saturdays.cart.clear()
 
 		, not Saturdays.user.id?
+
+
+	reset_credit_card_form: (e)->
+		Saturdays.cart.unset "credit_card"
+		this.render()
+
+		this.$el.find("[name='number']").focus()
+
 
 
 	show: (e)->

@@ -149,19 +149,19 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.with_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(13, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n<strong>Total: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"money","hash":{},"data":data}))
-    + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-next-slide-button>Next</button>\n</div>\n\n<div class=\"slide slide--moved_right\" data-slide=1 style=\"transform: translateX(-"
+    + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-next-slide-button>Next</button>\n</div>\n\n<div class=\"slide\" data-slide=1 style=\"transform: translateX(-"
     + alias4(((helper = (helper = helpers.current_slide || (depth0 != null ? depth0.current_slide : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_slide","hash":{},"data":data}) : helper)))
     + "00%);\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\" data-slide-content>\n<div class=\"col col--12of12 text_center\">\n\n"
     + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(15, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n<p>All fields are required</p>\n</div>\n\n\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
     + alias4(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
-    + "</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"email\" id=\"email\" name=\"email\" value=\""
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1),{"name":"if","hash":{},"fn":container.program(17, data, 0),"inverse":container.program(19, data, 0),"data":data})) != null ? stack1 : "")
-    + "\" required autocomplete=\"email\" placeholder=\"email.address@gmail.com\">\n</div>\n\n"
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\n</div>\n</div>\n\n<form class=\"col col--12of12\" data-credit-card-form "
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(23, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + ">\n<div class=\"padded padded--tight\">\n<div class=\"grid grid--tight_guttered grid--middle\">\n<div class=\"col col--2of12\">\n<label for=\"number\">Credit Card No.</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"tel\" id=\"number\" name=\"number\" placeholder=\"4242 4242 4242 4242\" required autocomplete=\"cc-number\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"expiry\">Exp. Date</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"expiry\" name=\"expiry\" placeholder=\"MM / YY\" required autocomplete=\"cc-exp\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"cvc\">CCV</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"cvc\" name=\"cvc\" placeholder=\"123\" required value=\"\">\n</div>\n\n<div class=\"col col--12of12\"></div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_street\">Billing Street</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"text\" id=\"billing_street\" name=\"billing_street\" placeholder=\"1234 Your billing address ave.\" required autocomplete=\"street-address\" value=\"\">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_zip\">Billing Zip</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"billing_zip\" name=\"billing_zip\" placeholder=\"X0X 0X0\" required autocomplete=\"postal-code\" value=\"\">\n</div>\n</div>\n</div>\n</form>\n\n\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
+    + "</label>\n</div>\n<div class=\"col col--10of12\">\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"if","hash":{},"fn":container.program(17, data, 0),"inverse":container.program(19, data, 0),"data":data})) != null ? stack1 : "")
+    + "</div>\n\n"
+    + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"unless","hash":{},"fn":container.program(21, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n</div>\n</div>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"if","hash":{},"fn":container.program(24, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.sub_total : stack1),{"name":"money","hash":{},"data":data}))
     + " <span class=\"spaced\"></span>\nTaxes: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.taxes_total : stack1),{"name":"money","hash":{},"data":data}))
@@ -170,7 +170,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + "\n<strong>Total: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"money","hash":{},"data":data}))
     + "</strong>\n</div>\n</div>\n\n<button class=\"overlay__button\" data-previous-slide-button "
-    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(23, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + ">Pay "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"money","hash":{},"data":data}))
     + "</button>\n</div>\n</div>\n</div>\n";
@@ -256,19 +256,81 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
 },"17":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1), depth0));
+  return "<input type=\"email\" id=\"email\" name=\"email\" value=\""
+    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.email : stack1), depth0))
+    + "\" disabled>\n";
 },"19":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.email : stack1), depth0));
+  return "<input type=\"email\" id=\"email\" name=\"email\" value=\""
+    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1), depth0))
+    + "\" required autocomplete=\"email\" placeholder=\"email.address@gmail.com\">\n";
 },"21":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=depth0 != null ? depth0 : {};
+
+  return "<div class=\"col col--2of12 "
+    + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"unless","hash":{},"fn":container.program(22, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-password-box>\n<label for=\"password\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
+    + "</label>\n</div>\n<div class=\"col col--10of12 "
+    + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"unless","hash":{},"fn":container.program(22, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" data-password-box>\n<input type=\"password\" id=\"password\" name=\"password\" value=\"\" required autocomplete=\"password\" placeholder=\"********\">\n</div>\n";
+},"22":function(container,depth0,helpers,partials,data) {
+    return "hide";
+},"24":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=depth0 != null ? depth0 : {};
+
+  return "<form class=\"col col--12of12\" data-credit-card-form "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n<div class=\"padded padded--tight\">\n<div class=\"grid grid--tight_guttered grid--middle\">\n<div class=\"col col--2of12\">\n<label for=\"number\">Credit Card No.</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"tel\" id=\"number\" name=\"number\" placeholder=\"4242 4242 4242 4242\" required autocomplete=\"cc-number\" value=\""
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(27, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"expiry\">Exp. Date</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"expiry\" name=\"expiry\" placeholder=\"MM / YY\" required autocomplete=\"cc-exp\" value=\""
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(29, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n</div>\n\n<div class=\"col col--2of12 text_right\">\n<label for=\"cvc\">CCV</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"tel\" id=\"cvc\" name=\"cvc\" placeholder=\"123\" required value=\""
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(31, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n</div>\n\n<div class=\"col col--12of12\"></div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_street\">Billing Street</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"text\" id=\"billing_street\" name=\"billing_street\" placeholder=\"1234 Your billing address ave.\" required autocomplete=\"street-address\" value=\""
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(33, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n</div>\n\n<div class=\"col col--2of12\">\n<label for=\"billing_zip\">Billing Zip</label>\n</div>\n<div class=\"col col--4of12\">\n<input type=\"text\" id=\"billing_zip\" name=\"billing_zip\" placeholder=\"X0X 0X0\" required autocomplete=\"postal-code\" value=\""
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(35, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\" "
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + ">\n</div>\n</div>\n</div>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1),{"name":"if","hash":{},"fn":container.program(37, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "\n</form>\n";
+},"25":function(container,depth0,helpers,partials,data) {
+    return "disabled";
+},"27":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
+
+  return alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1)) != null ? stack1.brand : stack1), depth0))
+    + " **** **** **** "
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1)) != null ? stack1.last4 : stack1), depth0));
+},"29":function(container,depth0,helpers,partials,data) {
+    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
+
+  return alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1)) != null ? stack1.exp_month : stack1), depth0))
+    + " / "
+    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1)) != null ? stack1.exp_year : stack1), depth0));
+},"31":function(container,depth0,helpers,partials,data) {
+    return "***";
+},"33":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"col col--2of12\">\n<label for=\"password\">"
-    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
-    + "</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"password\" id=\"password\" name=\"password\" value=\"\" required autocomplete=\"password\" placeholder=\"********\">\n</div>\n";
-},"23":function(container,depth0,helpers,partials,data) {
-    return "disabled";
+  return container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1)) != null ? stack1.billing_street : stack1), depth0));
+},"35":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.credit_card : stack1)) != null ? stack1.billing_zip : stack1), depth0));
+},"37":function(container,depth0,helpers,partials,data) {
+    return "<div class=\"small_bottom text_center\"><a data-reset-credit-card-form>Use different credit card?</a></div>";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 

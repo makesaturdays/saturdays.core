@@ -1193,7 +1193,7 @@
       return Slider.__super__.constructor.apply(this, arguments);
     }
 
-    Slider.prototype.current_slide = 1;
+    Slider.prototype.current_slide = 0;
 
     Slider.prototype.initialize = function() {
       this.events["click [data-next-slide-button]"] = "next_slide";
@@ -1232,7 +1232,12 @@
       slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
       this.$el.find("[data-slider-container]").css("height", "-=" + (this.previous_slide_height - slide_height) + "px");
       this.previous_slide_height = slide_height;
-      return this.$el.find("[data-slide]").css("transform", "translateX(-" + this.current_slide + "00%)");
+      this.$el.find("[data-slide]").css("transform", "translateX(-" + this.current_slide + "00%)");
+      return setTimeout((function(_this) {
+        return function() {
+          return _this.$el.find("[data-slide=" + _this.current_slide + "] input:not([disabled]):first").focus();
+        };
+      })(this), 333);
     };
 
     return Slider;
@@ -1648,7 +1653,9 @@
       "click [data-remove-from-cart]": "remove_from_cart",
       "change [name='with_store_credit']": "change_store_credit",
       "input [name='email']": "input_email",
+      "input [name='password']": "input_password",
       "submit [data-credit-card-form]": "submit_credit_card_form",
+      "click [data-reset-credit-card-form]": "reset_credit_card_form",
       "click [data-hide-cart]": "hide"
     };
 
@@ -1718,7 +1725,35 @@
             return Saturdays.cart.save({
               email: e.currentTarget.value
             }, {
-              patch: true
+              patch: true,
+              silent: true,
+              success: function(model, response) {
+                if (response.requires_user) {
+                  _this.$el.find("[data-password-box]").removeClass("hide");
+                  _this.$el.find("[data-credit-card-form]").attr("disabled", "disabled");
+                  _this.$el.find("[data-credit-card-form] [type='submit']").attr("disabled", "disabled");
+                  return _this.$el.find("[name='password']").focus();
+                } else {
+                  _this.$el.find("[data-password-box]").addClass("hide");
+                  _this.$el.find("[data-credit-card-form]").removeAttr("disabled");
+                  return _this.$el.find("[data-credit-card-form] [type='submit']").removeAttr("disabled");
+                }
+              }
+            });
+          };
+        })(this), 1000);
+      }
+    };
+
+    Cart.prototype.input_password = function(e) {
+      if (e.currentTarget.value.length >= 8) {
+        window.clearTimeout(this.password_timeout);
+        return this.password_timeout = window.setTimeout((function(_this) {
+          return function() {
+            return Saturdays.session.login({
+              email: Saturdays.cart.get("email"),
+              password: e.currentTarget.value,
+              cart_id: Saturdays.cart.id
             });
           };
         })(this), 1000);
@@ -1744,23 +1779,16 @@
           return Saturdays.cart.save({
             credit_card: model.toJSON()
           }, {
-            success: function(model, response) {
-              var order;
-              order = new Saturdays.Models.Order();
-              console.log(order);
-              return order.save({
-                cart_id: Saturdays.user.id == null ? Saturdays.cart.id : void 0,
-                user_id: Saturdays.user.id != null ? Saturdays.user.id : void 0
-              }, {
-                success: function(model, response) {
-                  Saturdays.cookies["delete"]("Cart-Id");
-                  return Saturdays.cart.clear();
-                }
-              });
-            }
+            success: function(model, response) {}
           });
         }
       }, Saturdays.user.id == null);
+    };
+
+    Cart.prototype.reset_credit_card_form = function(e) {
+      Saturdays.cart.unset("credit_card");
+      this.render();
+      return this.$el.find("[name='number']").focus();
     };
 
     Cart.prototype.show = function(e) {

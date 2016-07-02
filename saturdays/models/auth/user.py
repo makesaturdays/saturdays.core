@@ -121,6 +121,12 @@ with app.app_context():
 			document['cart'] = Cart.preprocess({'user_id': document['_id']})
 
 
+			if 'password' not in document:
+				document['password'] = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(9))
+				document['password'] = '-'.join([document['password'][:3], document['password'][3:6], document['password'][6:]])
+
+
+
 			trigger_tasks.apply_async(('user_created', {
 				'user': document
 			}))
@@ -178,6 +184,7 @@ with app.app_context():
 
 		@classmethod
 		def postprocess(cls, document):
+			print(document)
 
 			try:
 				document['cart']['available_store_credit'] = document['store_credit']

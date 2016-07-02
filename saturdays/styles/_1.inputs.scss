@@ -51,8 +51,13 @@ textarea,
 		background: fade-out($white, 0.2);
 	}
 
-	&:disabled {
-		opacity: 0.5;
+	&:disabled,
+	form:disabled & {
+		opacity: 0.8;
+		background: transparent;
+		border: none;
+		@include shadow(none);
+
 		pointer-events: none;
 	}
 
