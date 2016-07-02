@@ -69,7 +69,7 @@
 			<button class="overlay__button" data-next-slide-button>Next</button>
 		</div>
 
-		<div class="slide slide--moved_right" data-slide=1 style="transform: translateX(-{{current_slide}}00%);">
+		<div class="slide" data-slide=1 style="transform: translateX(-{{current_slide}}00%);">
 			<div class="grid grid--tight_guttered grid--middle grid--center" data-slide-content>
 				<div class="col col--12of12 text_center">
 					
@@ -90,21 +90,26 @@
 								<label for="email">{{pieces.admin.email_label}}</label>
 							</div>
 							<div class="col col--10of12">
-								<input type="email" id="email" name="email" value="{{#if cart.email}}{{cart.email}}{{else}}{{user.email}}{{/if}}" required autocomplete="email" placeholder="email.address@gmail.com">
+								{{#if user._id}}
+								<input type="email" id="email" name="email" value="{{user.email}}" disabled>
+								{{else}}
+								<input type="email" id="email" name="email" value="{{cart.email}}" required autocomplete="email" placeholder="email.address@gmail.com">
+								{{/if}}
 							</div>
-
-							{{#if cart.requires_user}}
-							<div class="col col--2of12">
+							
+							{{#unless user._id}}
+							<div class="col col--2of12 {{#unless cart.requires_user}}hide{{/unless}}" data-password-box>
 								<label for="password">{{pieces.admin.password_label}}</label>
 							</div>
-							<div class="col col--10of12">
+							<div class="col col--10of12 {{#unless cart.requires_user}}hide{{/unless}}" data-password-box>
 								<input type="password" id="password" name="password" value="" required autocomplete="password" placeholder="********">
 							</div>
-							{{/if}}
+							{{/unless}}
 						</div>
 					</div>
 				</div>
 
+				{{#if cart.total}}
 				<form class="col col--12of12" data-credit-card-form {{#if cart.requires_user}}disabled{{/if}}>
 					<div class="padded padded--tight">
 						<div class="grid grid--tight_guttered grid--middle">
@@ -112,21 +117,21 @@
 								<label for="number">Credit Card No.</label>
 							</div>
 							<div class="col col--10of12">
-								<input type="tel" id="number" name="number" placeholder="4242 4242 4242 4242" required autocomplete="cc-number" value="">
+								<input type="tel" id="number" name="number" placeholder="4242 4242 4242 4242" required autocomplete="cc-number" value="{{#if cart.credit_card}}{{cart.credit_card.brand}} **** **** **** {{cart.credit_card.last4}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 
 							<div class="col col--2of12">
 								<label for="expiry">Exp. Date</label>
 							</div>
 							<div class="col col--4of12">
-								<input type="tel" id="expiry" name="expiry" placeholder="MM / YY" required autocomplete="cc-exp" value="">
+								<input type="tel" id="expiry" name="expiry" placeholder="MM / YY" required autocomplete="cc-exp" value="{{#if cart.credit_card}}{{cart.credit_card.exp_month}} / {{cart.credit_card.exp_year}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 
-							<div class="col col--2of12">
+							<div class="col col--2of12 text_right">
 								<label for="cvc">CCV</label>
 							</div>
 							<div class="col col--4of12">
-								<input type="tel" id="cvc" name="cvc" placeholder="123" required value="">
+								<input type="tel" id="cvc" name="cvc" placeholder="123" required value="{{#if cart.credit_card}}***{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 
 							<div class="col col--12of12"></div>
@@ -135,18 +140,21 @@
 								<label for="billing_street">Billing Street</label>
 							</div>
 							<div class="col col--10of12">
-							<input type="text" id="billing_street" name="billing_street" placeholder="1234 Your billing address ave." required autocomplete="street-address" value="">
+							<input type="text" id="billing_street" name="billing_street" placeholder="1234 Your billing address ave." required autocomplete="street-address" value="{{#if cart.credit_card}}{{cart.credit_card.billing_street}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 
 							<div class="col col--2of12">
 								<label for="billing_zip">Billing Zip</label>
 							</div>
 							<div class="col col--4of12">
-								<input type="tel" id="billing_zip" name="billing_zip" placeholder="X0X 0X0" required autocomplete="postal-code" value="">
+								<input type="text" id="billing_zip" name="billing_zip" placeholder="X0X 0X0" required autocomplete="postal-code" value="{{#if cart.credit_card}}{{cart.credit_card.billing_zip}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 						</div>
 					</div>
+
+					{{#if cart.credit_card}}<div class="small_bottom text_center"><a data-reset-credit-card-form>Use different credit card?</a></div>{{/if}}
 				</form>
+				{{/if}}
 				
 
 				<div class="col col--7of12 col--small--10of12 small_bottom">

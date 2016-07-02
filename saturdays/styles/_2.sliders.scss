@@ -52,10 +52,6 @@
 
 		@include transformer();
 		@include translate(0, 0);
-
-		&.slide--moved_right {
-			// @include translate(100%, 0);
-		}
 	}
 
 

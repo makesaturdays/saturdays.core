@@ -73,6 +73,11 @@ with app.app_context():
 				metadata={'_id': document['_id']}
 			)
 
+			document['brand'] = document['provider_data']['brand']
+			document['exp_month'] = document['provider_data']['exp_month']
+			document['exp_year'] = document['provider_data']['exp_year']
+			document['last4'] = document['provider_data']['last4']
+
 
 			return super().create(parent_id, document)
 

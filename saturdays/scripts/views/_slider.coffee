@@ -2,7 +2,7 @@
 class Saturdays.Views.Slider extends Saturdays.View
 
 
-	current_slide: 1
+	current_slide: 0
 
 
 
@@ -57,6 +57,10 @@ class Saturdays.Views.Slider extends Saturdays.View
 		@previous_slide_height = slide_height
 
 		this.$el.find("[data-slide]").css "transform", "translateX(-"+@current_slide+"00%)"
+		setTimeout =>
+			this.$el.find("[data-slide="+@current_slide+"] input:not([disabled]):first").focus()
+		, 333
+		
 
 
 
