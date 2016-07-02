@@ -184,7 +184,6 @@ with app.app_context():
 
 		@classmethod
 		def postprocess(cls, document):
-			print(document)
 
 			try:
 				document['cart']['available_store_credit'] = document['store_credit']

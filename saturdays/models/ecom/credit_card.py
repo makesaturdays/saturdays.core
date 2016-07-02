@@ -56,6 +56,22 @@ with app.app_context():
 		]
 
 
+		@classmethod
+		def preprocess(cls, document):
+
+
+			try:
+				document['brand'] = document['provider_data']['brand']
+				document['exp_month'] = document['provider_data']['exp_month']
+				document['exp_year'] = document['provider_data']['exp_year']
+				document['last4'] = document['provider_data']['last4']
+
+			except KeyError:
+				pass
+
+
+			return super().preprocess(document)
+
 
 		@classmethod
 		def create(cls, parent_id, document):
@@ -72,11 +88,6 @@ with app.app_context():
 				source=document['card_token'],
 				metadata={'_id': document['_id']}
 			)
-
-			document['brand'] = document['provider_data']['brand']
-			document['exp_month'] = document['provider_data']['exp_month']
-			document['exp_year'] = document['provider_data']['exp_year']
-			document['last4'] = document['provider_data']['last4']
 
 
 			return super().create(parent_id, document)

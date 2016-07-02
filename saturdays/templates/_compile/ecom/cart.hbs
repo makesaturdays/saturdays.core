@@ -7,11 +7,12 @@
 	<a href="{{current_path}}" class="cart__close" data-hide-cart><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
 
 	<div class="slider__markers">
-		<button class="slider__marker {{#if_equal current_slide 0}}slider__marker--active{{/if_equal}}" data-slide-marker=0>0</button>
-		<button class="slider__marker {{#if_equal current_slide 1}}slider__marker--active{{/if_equal}}" data-slide-marker=1>1</button>
+		<button class="slider__marker {{#if_equal current_slide 0}}slider__marker--active{{/if_equal}}" data-slide-marker=0 {{#if order}}disabled{{/if}}>0</button>
+		<button class="slider__marker {{#if_equal current_slide 1}}slider__marker--active{{/if_equal}}" data-slide-marker=1 {{#if order}}disabled{{/if}}>1</button>
+		{{#if order}}<button class="slider__marker {{#if_equal current_slide 2}}slider__marker--active{{/if_equal}}" data-slide-marker=2>2</button>{{/if}}
 	</div>
 
-	<div class="slider__container slider__container--2" data-slider-container>
+	<div class="slider__container {{#if order}}slider__container--3{{else}}slider__container--2{{/if}}" data-slider-container>
 		<div class="slide" data-slide=0 style="transform: translateX(-{{current_slide}}00%);">
 			<div class="grid grid--tight_guttered grid--middle grid--center" data-slide-content>
 			{{#each cart.items}}
@@ -110,7 +111,7 @@
 				</div>
 
 				{{#if cart.total}}
-				<form class="col col--12of12" data-credit-card-form {{#if cart.requires_user}}disabled{{/if}}>
+				<form class="col col--12of12" id="credit_card_form" data-credit-card-form {{#if cart.requires_user}}disabled{{/if}}>
 					<div class="padded padded--tight">
 						<div class="grid grid--tight_guttered grid--middle">
 							<div class="col col--2of12">
@@ -140,14 +141,14 @@
 								<label for="billing_street">Billing Street</label>
 							</div>
 							<div class="col col--10of12">
-							<input type="text" id="billing_street" name="billing_street" placeholder="1234 Your billing address ave." required autocomplete="street-address" value="{{#if cart.credit_card}}{{cart.credit_card.billing_street}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
+							<input type="text" id="billing_street" name="billing_street" placeholder="1234 Your billing address ave." required autocomplete="street-address" value="{{#if cart.credit_card}}{{#if cart.credit_card.billing_street}}{{cart.credit_card.billing_street}}{{else}}–{{/if}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 
 							<div class="col col--2of12">
 								<label for="billing_zip">Billing Zip</label>
 							</div>
 							<div class="col col--4of12">
-								<input type="text" id="billing_zip" name="billing_zip" placeholder="X0X 0X0" required autocomplete="postal-code" value="{{#if cart.credit_card}}{{cart.credit_card.billing_zip}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
+								<input type="text" id="billing_zip" name="billing_zip" placeholder="X0X 0X0" required autocomplete="postal-code" value="{{#if cart.credit_card}}{{#if cart.credit_card.billing_zip}}{{cart.credit_card.billing_zip}}{{else}}–{{/if}}{{/if}}" {{#if cart.credit_card}}disabled{{/if}}>
 							</div>
 						</div>
 					</div>
@@ -165,8 +166,25 @@
 				</div>
 			</div>
 
-			<button class="overlay__button" data-previous-slide-button {{#if cart.requires_user}}disabled{{/if}}>Pay {{money cart.total}}</button>
+			<button class="overlay__button" data-create-order {{#if cart.requires_user}}disabled{{/if}}>Pay {{money cart.total}}</button>
 		</div>
+
+		{{#if order}}
+		<div class="slide" data-slide=2 style="transform: translateX(-{{current_slide}}00%);">
+			<div class="padded padded--thick" data-slide-content>
+				<div class="text_center">
+					<h4>Thank you!</h4>
+
+					<p class="p--medium">We've emailed your receipt and all the details of this order to:<br>
+					<a href="mailto:{{#if cart.email}}{{cart.email}}{{else}}{{user.email}}{{/if}}" class="a--underline">{{#if cart.email}}{{cart.email}}{{else}}{{user.email}}{{/if}}</a></p>
+				</div>
+			</div>
+		</div>
+		{{/if}}
 	</div>
+
+	
+
+	
 </div>
 {{/if}}

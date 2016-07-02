@@ -10,9 +10,10 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		"click [data-remove-from-cart]": "remove_from_cart"
 		"change [name='with_store_credit']": "change_store_credit"
 		"input [name='email']": "input_email"
-		# "input [name='password']": "input_password"
+		"input [name='password']": "input_password"
 		"submit [data-credit-card-form]": "submit_credit_card_form"
 		"click [data-reset-credit-card-form]": "reset_credit_card_form"
+		"click [data-create-order]": "create_order"
 		"click [data-hide-cart]": "hide"
 	}
 
@@ -28,6 +29,7 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 		_.extend @data,
 			cart: Saturdays.cart.toJSON()
+			order: @order.toJSON() if @order?
 			
 		super()
 
@@ -104,7 +106,7 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 	input_password: (e)->
 
-		if e.currentTarget.value.length >= 8
+		if e.currentTarget.value.length >= 8 and not this.$el.hasClass "fade_out"
 			window.clearTimeout(@password_timeout)
 			@password_timeout = window.setTimeout ()=>
 				Saturdays.session.login
@@ -122,7 +124,6 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		form = e.currentTarget
 		$(form).find("[type='submit']").attr "disabled", "disabled"
 
-		
 		credit_card = new Saturdays.Models.CreditCard
 			parent: Saturdays.user if Saturdays.user.id?
 
@@ -133,22 +134,16 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 			billing_street: form["billing_street"].value
 			billing_zip: form["billing_zip"].value
 		, 
-			success: (model, response)->
+			success: (model, response)=>
 
 				Saturdays.cart.save 
 					credit_card: model.toJSON()
-				, 
-					success: (model, response)->
-						# order = new Saturdays.Models.Order()
-						# console.log order
-						# order.save {
-						# 	cart_id: Saturdays.cart.id unless Saturdays.user.id?,
-						# 	user_id: Saturdays.user.id if Saturdays.user.id?
-						# }, 
-						# 	success: (model, response)->
+				,
+					patch: true
+					silent: true
+					success: (model, response)=>
+						this.create_order()
 
-						# 		Saturdays.cookies.delete("Cart-Id") 
-						# 		Saturdays.cart.clear()
 
 		, not Saturdays.user.id?
 
@@ -161,9 +156,43 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 
 
+	create_order: (e)->
+		e.currentTarget.setAttribute "disabled", "disabled" if e?
+
+		if Saturdays.cart.has "credit_card" or Saturdays.cart.get "total" == 0
+
+			@order = new Saturdays.Models.Order()
+			@order.save {
+				cart_id: Saturdays.cart.id unless Saturdays.user.id?,
+				user_id: Saturdays.user.id if Saturdays.user.id?
+			}, 
+				success: (model, response)=>
+					Saturdays.cookies.delete("Cart-Id") 
+					Saturdays.cart.clear()
+
+					this.render()
+					this.next_slide()
+
+					delete @order
+
+					this
+
+				error: =>
+					e.currentTarget.removeAttribute "disabled" if e?
+		
+		else
+			$("[data-credit-card-form]").submit()
+
+
+
+
+
 	show: (e)->
 		if e?
 			e.preventDefault()
+
+		this.current_slide = 0
+		this.render()
 		
 		Saturdays.router.navigate window.location.pathname+"?cart=true"
 		this.$el.removeClass "fade_out"
@@ -172,8 +201,8 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 	hide: (e)->
 		if e?
 			e.preventDefault()
-			Saturdays.router.navigate e.currentTarget.getAttribute("href")
-
+		
+		Saturdays.router.navigate window.location.pathname
 		this.$el.addClass "fade_out"
 			
 

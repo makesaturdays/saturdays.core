@@ -34,17 +34,17 @@ class Saturdays.Views.Slider extends Saturdays.View
 
 
 
-	next_slide: (e)->
+	next_slide: ->
 		this.slide_to(null, @current_slide + 1)
 
 
-	previous_slide: (e)->
+	previous_slide: ->
 		this.slide_to(null, @current_slide - 1)
 
 
 	slide_to: (e, index)->
 		if e?
-			index = e.currentTarget.getAttribute "data-slide-marker"
+			index = parseInt(e.currentTarget.getAttribute "data-slide-marker")
 			e.currentTarget.blur()
 
 		@current_slide = index

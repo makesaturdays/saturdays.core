@@ -1212,18 +1212,18 @@
       return this;
     };
 
-    Slider.prototype.next_slide = function(e) {
+    Slider.prototype.next_slide = function() {
       return this.slide_to(null, this.current_slide + 1);
     };
 
-    Slider.prototype.previous_slide = function(e) {
+    Slider.prototype.previous_slide = function() {
       return this.slide_to(null, this.current_slide - 1);
     };
 
     Slider.prototype.slide_to = function(e, index) {
       var slide_height;
       if (e != null) {
-        index = e.currentTarget.getAttribute("data-slide-marker");
+        index = parseInt(e.currentTarget.getAttribute("data-slide-marker"));
         e.currentTarget.blur();
       }
       this.current_slide = index;
@@ -1653,8 +1653,10 @@
       "click [data-remove-from-cart]": "remove_from_cart",
       "change [name='with_store_credit']": "change_store_credit",
       "input [name='email']": "input_email",
+      "input [name='password']": "input_password",
       "submit [data-credit-card-form]": "submit_credit_card_form",
       "click [data-reset-credit-card-form]": "reset_credit_card_form",
+      "click [data-create-order]": "create_order",
       "click [data-hide-cart]": "hide"
     };
 
@@ -1668,7 +1670,8 @@
 
     Cart.prototype.render = function() {
       _.extend(this.data, {
-        cart: Saturdays.cart.toJSON()
+        cart: Saturdays.cart.toJSON(),
+        order: this.order != null ? this.order.toJSON() : void 0
       });
       Cart.__super__.render.call(this);
       $("[name='number']").payment('formatCardNumber');
@@ -1745,7 +1748,7 @@
     };
 
     Cart.prototype.input_password = function(e) {
-      if (e.currentTarget.value.length >= 8) {
+      if (e.currentTarget.value.length >= 8 && !this.$el.hasClass("fade_out")) {
         window.clearTimeout(this.password_timeout);
         return this.password_timeout = window.setTimeout((function(_this) {
           return function() {
@@ -1774,13 +1777,19 @@
         billing_street: form["billing_street"].value,
         billing_zip: form["billing_zip"].value
       }, {
-        success: function(model, response) {
-          return Saturdays.cart.save({
-            credit_card: model.toJSON()
-          }, {
-            success: function(model, response) {}
-          });
-        }
+        success: (function(_this) {
+          return function(model, response) {
+            return Saturdays.cart.save({
+              credit_card: model.toJSON()
+            }, {
+              patch: true,
+              silent: true,
+              success: function(model, response) {
+                return _this.create_order();
+              }
+            });
+          };
+        })(this)
       }, Saturdays.user.id == null);
     };
 
@@ -1790,10 +1799,45 @@
       return this.$el.find("[name='number']").focus();
     };
 
+    Cart.prototype.create_order = function(e) {
+      if (e != null) {
+        e.currentTarget.setAttribute("disabled", "disabled");
+      }
+      if (Saturdays.cart.has("credit_card" || Saturdays.cart.get("total" === 0))) {
+        this.order = new Saturdays.Models.Order();
+        return this.order.save({
+          cart_id: Saturdays.user.id == null ? Saturdays.cart.id : void 0,
+          user_id: Saturdays.user.id != null ? Saturdays.user.id : void 0
+        }, {
+          success: (function(_this) {
+            return function(model, response) {
+              Saturdays.cookies["delete"]("Cart-Id");
+              Saturdays.cart.clear();
+              _this.render();
+              _this.next_slide();
+              delete _this.order;
+              return _this;
+            };
+          })(this),
+          error: (function(_this) {
+            return function() {
+              if (e != null) {
+                return e.currentTarget.removeAttribute("disabled");
+              }
+            };
+          })(this)
+        });
+      } else {
+        return $("[data-credit-card-form]").submit();
+      }
+    };
+
     Cart.prototype.show = function(e) {
       if (e != null) {
         e.preventDefault();
       }
+      this.current_slide = 0;
+      this.render();
       Saturdays.router.navigate(window.location.pathname + "?cart=true");
       return this.$el.removeClass("fade_out");
     };
@@ -1801,8 +1845,8 @@
     Cart.prototype.hide = function(e) {
       if (e != null) {
         e.preventDefault();
-        Saturdays.router.navigate(e.currentTarget.getAttribute("href"));
       }
+      Saturdays.router.navigate(window.location.pathname);
       return this.$el.addClass("fade_out");
     };
 

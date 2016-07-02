@@ -13,7 +13,7 @@ from saturdays.models.ecom.promotion import Promotion
 
 
 from bson.objectid import ObjectId
-
+import stripe
 
 
 with app.app_context():
@@ -94,6 +94,17 @@ with app.app_context():
 
 			try:
 				document['shipping_option_id'] = ObjectId(document['shipping_option_id'])
+
+			except KeyError:
+				pass
+
+
+			try:
+				from saturdays.models.ecom.credit_card import CreditCard
+				
+				stripe.api_key = app.config['STRIPE_API_KEY']
+				document['credit_card']['provider_data'] = stripe.Token.retrieve(document['credit_card']['card_token'])['card']
+				document['credit_card'] = CreditCard.preprocess(document['credit_card'])
 
 			except KeyError:
 				pass

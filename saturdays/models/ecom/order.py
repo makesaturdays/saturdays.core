@@ -150,17 +150,20 @@ with app.app_context():
 
 
 
-			for item in document['items']:
-				if 'option_id' in item:
-					item['option'] = ProductOption.update(item['product']['_id'], item['option']['_id'], {
-						'inventory': item['option']['inventory'] - item['quantity']
-					})
+			try:
+				for item in document['items']:
+					if 'option_id' in item:
+						item['option'] = ProductOption.update(item['product']['_id'], item['option']['_id'], {
+							'$inc': {'inventory': -item['quantity']}
+						})
 
+					else:
+						item['product'] = Product.update(item['product']['_id'], {}, other_operators={
+							'$inc': {'inventory': -item['quantity']}
+						})
 
-				else:
-					item['product'] = Product.update(item['product']['_id'], {
-						'inventory': item['product']['inventory'] - item['quantity']
-					})
+			except KeyError:
+				pass
 
 
 
