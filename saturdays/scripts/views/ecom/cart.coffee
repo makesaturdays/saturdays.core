@@ -100,6 +100,8 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 							this.$el.find("[data-password-box]").addClass "hide"
 							this.$el.find("[data-credit-card-form]").removeAttr "disabled"
 							this.$el.find("[data-credit-card-form] [type='submit']").removeAttr "disabled"
+				,
+					Saturdays.cart.isNew()
 
 			, 1000
 
@@ -109,10 +111,11 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		if e.currentTarget.value.length >= 8 and not this.$el.hasClass "fade_out"
 			window.clearTimeout(@password_timeout)
 			@password_timeout = window.setTimeout ()=>
-				Saturdays.session.login
-					email: Saturdays.cart.get("email")
-					password: e.currentTarget.value
-					cart_id: Saturdays.cart.id
+				unless Saturdays.cart.isNew()
+					Saturdays.session.login
+						email: Saturdays.cart.get("email")
+						password: e.currentTarget.value
+						cart_id: Saturdays.cart.id
 
 			, 1000
 
@@ -144,6 +147,9 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 					success: (model, response)=>
 						this.create_order()
 
+			error: (reponse)=>
+				$(form).find("[type='submit']").removeAttr "disabled"
+
 
 		, not Saturdays.user.id?
 
@@ -167,16 +173,17 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 				user_id: Saturdays.user.id if Saturdays.user.id?
 			}, 
 				success: (model, response)=>
-					Saturdays.cookies.delete("Cart-Id") 
-					Saturdays.cart.clear()
 
 					this.render()
 					this.next_slide()
 
+					Saturdays.cookies.delete("Cart-Id") 
+					Saturdays.cart.attributes = {}
+					Saturdays.cart.id = undefined
+
 					delete @order
 
-					this
-
+ 
 				error: =>
 					e.currentTarget.removeAttribute "disabled" if e?
 		

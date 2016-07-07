@@ -1741,7 +1741,7 @@
                   return _this.$el.find("[data-credit-card-form] [type='submit']").removeAttr("disabled");
                 }
               }
-            });
+            }, Saturdays.cart.isNew());
           };
         })(this), 1000);
       }
@@ -1752,11 +1752,13 @@
         window.clearTimeout(this.password_timeout);
         return this.password_timeout = window.setTimeout((function(_this) {
           return function() {
-            return Saturdays.session.login({
-              email: Saturdays.cart.get("email"),
-              password: e.currentTarget.value,
-              cart_id: Saturdays.cart.id
-            });
+            if (!Saturdays.cart.isNew()) {
+              return Saturdays.session.login({
+                email: Saturdays.cart.get("email"),
+                password: e.currentTarget.value,
+                cart_id: Saturdays.cart.id
+              });
+            }
           };
         })(this), 1000);
       }
@@ -1789,6 +1791,11 @@
               }
             });
           };
+        })(this),
+        error: (function(_this) {
+          return function(reponse) {
+            return $(form).find("[type='submit']").removeAttr("disabled");
+          };
         })(this)
       }, Saturdays.user.id == null);
     };
@@ -1811,12 +1818,12 @@
         }, {
           success: (function(_this) {
             return function(model, response) {
-              Saturdays.cookies["delete"]("Cart-Id");
-              Saturdays.cart.clear();
               _this.render();
               _this.next_slide();
-              delete _this.order;
-              return _this;
+              Saturdays.cookies["delete"]("Cart-Id");
+              Saturdays.cart.attributes = {};
+              Saturdays.cart.id = void 0;
+              return delete _this.order;
             };
           })(this),
           error: (function(_this) {

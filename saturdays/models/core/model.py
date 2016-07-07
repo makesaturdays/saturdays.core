@@ -152,6 +152,3 @@ with app.app_context():
 			return merged_projections
 
 
-
-
-
