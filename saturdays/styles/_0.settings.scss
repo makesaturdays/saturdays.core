@@ -56,7 +56,7 @@ $very_slow: 1.666s;
 
 // #BREAKPOINTS
 
-$small: "all and (max-device-width:700px), all and (max-width:700px)";
+$small: "all and (max-device-width:650px), all and (max-width:650px)";
 $medium: "all and (max-device-width:1100px), all and (max-width:1100px)";
 $breakpoints: "medium" $medium, "small" $small;
 

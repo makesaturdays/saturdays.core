@@ -30,10 +30,18 @@ img {
 		}
 	}
 
+	&.img--top_right {
+		position: absolute;
+		top: -30%;
+		right: 10%;
+
+		width: 11rem;
+	}
+
 	&.img--bottom_right {
 		position: absolute;
-		bottom: 10%;
-		right: -20%;
+		bottom: -5%;
+		right: -10%;
 
 		width: 12rem;
 	}
