@@ -55,20 +55,12 @@ with app.app_context():
 			try:
 				parent = cls.parent.get(parent_id, projection=projection)
 				for child in parent[cls.list_name]:
-					if ObjectId.is_valid(_id):
-						if child['_id'] == ObjectId(_id):
-							child['parent'] = parent.copy()
-							del child['parent'][cls.list_name]
-							
-							return cls.postprocess(child, parent_id)
-
-					else:
-						if child[cls.alternate_index] == _id:
-							child['parent'] = parent.copy()
-							del child['parent'][cls.list_name]
-							
-							return cls.postprocess(child, parent_id)
-
+					if (ObjectId.is_valid(_id) and child['_id'] == ObjectId(_id)) or (child[cls.alternate_index] == _id):
+						child['parent'] = parent.copy()
+						del child['parent'][cls.list_name]
+						
+						return cls.postprocess(child, parent_id)
+				
 				abort(404)
 
 			except KeyError:

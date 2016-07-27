@@ -41,8 +41,9 @@
             {% block header %}
             <nav class="grid" data-navigation>
                 <div class="col col--6of12" data-piece-id="{{pieces.metadata._id}}">
-                    <a href="{% block title_link %}/{% endblock %}">
-                        <h1 class="h1--base"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
+                    <a href="{% block title_link %}/{% endblock %}" class="grid grid--middle">
+                        <img src="/build/images/logo.svg" class="img--logo">
+                        <h1 class="h1--base spaced"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
                     </a>
                     <span data-piece-admin></span>
                 </div>
@@ -78,7 +79,10 @@
                 
                 <div class="footer__fixed__top"></div>
 
-                <h1 class="footer__fixed__middle text_center"><a href="">Join us at our upcoming workshop.</a></h1>
+                <a href="/" class="footer__fixed__middle text_center">
+                    <h2>Are you a maker?</h2>
+                    <h1 class="h1--massive">Host a workshop</h1>
+                </a>
 
                 <nav class="footer__fixed__bottom">
                     <div class="padded max_width max_width--center text_center">

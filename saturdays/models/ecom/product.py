@@ -138,7 +138,7 @@ with app.app_context():
 				document['is_out_of_stock'] = True
 				document['is_salable'] = False
 
-			del document['inventory']
+			# del document['inventory']
 
 			document['price'] = round(document['price'], 2)
 			return document

@@ -17,7 +17,7 @@ button,
 	position: relative;
 	padding: $vertical_rythm/2;
 	background: $highlight;
-	border: 2px solid transparent;
+	border: 1px solid transparent;
 	border-radius: $border_radius;
 
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
@@ -34,7 +34,7 @@ button,
 
 	&:disabled {
 		pointer-events: none;
-		opacity: 0.2;
+		opacity: 0.5;
 	}
 
 	// .body--dark & {
@@ -70,7 +70,7 @@ button,
 
 	&.button--bordered {
 		color: $highlight;
-		border: 2px solid;
+		border: 1px solid;
 		background: $white;
 
 		&:hover,
@@ -93,13 +93,14 @@ button,
 	}
 
 	&.button--facebook {
-		color: $white;
-		background: $facebook_blue;
-		border-color: transparent;
+		color: $facebook_blue;
+		background: transparent;
+		border-color: $facebook_blue;
 
 		&:hover,
 		&:focus {
-			background: $highlight;
+			color: $white;
+			background: $facebook_blue;
 		}
 	}
 

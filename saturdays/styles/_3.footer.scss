@@ -19,7 +19,7 @@ footer {
 		z-index: -1;
 
 		color: $white;
-		background: $highlight;
+		background: $red;
 	}
 
 	.footer__fixed__top,
@@ -30,13 +30,10 @@ footer {
 
 		.footer__fixed__middle {
 
-			a {
-
-				&:hover,
-				&:focus {
-					color: $white;
-					text-decoration: underline;
-				}
+			&:hover,
+			&:focus {
+				color: $white;
+				text-decoration: underline;
 			}
 		}
 

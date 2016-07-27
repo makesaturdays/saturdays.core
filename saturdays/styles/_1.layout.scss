@@ -66,6 +66,10 @@ footer {
 	width: 100%;
 	max-width: 64rem;
 
+	p {
+		max-width: 42rem;
+	}
+
 	&.max_width--center {
 		margin-right: auto;
 		margin-left: auto; 

@@ -5,36 +5,17 @@
 
 {% block main %}
 
-<section class="max_width max_width--center relative huge_bottom" data-piece-id="{{pieces.index._id}}">
+<section class="huge_bottom" data-piece-id="{{pieces.index._id}}">
 	<div class="grid huge_bottom">
-		<h1 class="col col--12of12">
-			<span data-key="_introduction">{{pieces.index._introduction|safe}}</span>
+		<h1 class="col col--11of12 col--small--12of12">
+			<span data-key="_introduction" class="underline_links">{{pieces.index._introduction|safe}}</span><br>
+			<span data-piece-admin></span>
 		</h1>
-		<p class="col col--8of12 col--medium--10of12 col--small--12of12 p--medium">
-			<span data-key="_concept">{{pieces.index._concept|safe}}</span>
-		</p>
+
 	</div>
-
-	<div class="grid grid--guttered">
-		<div class="col col--5of12 col--small--12of12">
-			<h3><span data-key="who_1_title">{{pieces.index.who_1_title}}</span></h3>
-			<p class="p--medium"><span data-key="who_1">{{pieces.index.who_1|safe}}</span></p>
-		</div>
-
-		<div class="col col--5of12 col--small--12of12">
-			<h3><span data-key="who_2_title">{{pieces.index.who_2_title}}</span></h3>
-			<p class="p--medium"><span data-key="who_2">{{pieces.index.who_2|safe}}</span></p>
-		</div>
-		
-		<span data-piece-admin></span>
-	</div>
-
-	<img src="/build/images/logo.svg" class="img--bottom_right hide_on_small">
 </section>
 
-<div class="padded">
-	{# <img src="/build/images/eye.svg" class="img--big_icon"> #}
-</div>
+
 
 {% include 'products/workshops.html' %}
 

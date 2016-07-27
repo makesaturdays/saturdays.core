@@ -54,11 +54,6 @@ h1, h2, h3, h4, h5, h6 {
 	&:last-child {
 		margin-bottom: 0;
 	}
-
-	p + &,
-	blockquote + & {
-		margin-top: $vertical_rythm*2;
-	}
 }
 
 	h1 {
@@ -353,8 +348,11 @@ em,
 	font-weight: normal;
 }
 
+.uppercase { text-transform: uppercase; letter-spacing: 0.1em; }
 .capitalize { text-transform: capitalize; }
 .strike { text-decoration: line-through; }
+.thick_line_height { line-height: 2; }
+.tight_line_height { line-height: 0.75; }
 
 
 .slash_seperated,
