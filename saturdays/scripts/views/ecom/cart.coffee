@@ -10,11 +10,11 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 		"click [data-remove-from-cart]": "remove_from_cart"
 		"change [name='with_store_credit']": "change_store_credit"
 		"input [name='email']": "input_email"
-		"input [name='password']": "input_password"
+		"submit [data-login-form]": "login"
+		"click [data-logout]": "logout"
 		"submit [data-credit-card-form]": "submit_credit_card_form"
 		"click [data-reset-credit-card-form]": "reset_credit_card_form"
 		"click [data-create-order]": "create_order"
-		"click [data-hide-cart]": "hide"
 	}
 
 
@@ -106,18 +106,18 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 			, 1000
 
 
-	input_password: (e)->
+	login: (e)->
+		e.preventDefault()
 
-		if e.currentTarget.value.length >= 8 and not this.$el.hasClass "fade_out"
-			window.clearTimeout(@password_timeout)
-			@password_timeout = window.setTimeout ()=>
-				unless Saturdays.cart.isNew()
-					Saturdays.session.login
-						email: Saturdays.cart.get("email")
-						password: e.currentTarget.value
-						cart_id: Saturdays.cart.id
+		unless Saturdays.cart.isNew()
+			Saturdays.session.login
+				email: e.currentTarget["email"].value
+				password: e.currentTarget["password"].value
+				cart_id: Saturdays.cart.id
 
-			, 1000
+
+	logout: (e)->
+		Saturdays.session.logout()
 
 
 
@@ -195,22 +195,17 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 
 	show: (e)->
-		if e?
-			e.preventDefault()
-
-		this.current_slide = 0
-		this.render()
 		
+		super()
+
 		Saturdays.router.navigate window.location.pathname+"?cart=true"
-		this.$el.removeClass "fade_out"
 
 
 	hide: (e)->
-		if e?
-			e.preventDefault()
 		
+		super()
+
 		Saturdays.router.navigate window.location.pathname
-		this.$el.addClass "fade_out"
 			
 
 

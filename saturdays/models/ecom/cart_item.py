@@ -85,8 +85,6 @@ with app.app_context():
 			try:
 				if document['product']['vendor_shop_id'] is not None:
 					document['vendor_shop'] = VendorShop.get(document['product']['vendor_shop_id'])
-					document['vendor_shop']['provider_id'] = document['vendor_shop']['provider_data']['id']
-					del document['vendor_shop']['provider_data']
 					
 			except KeyError:
 				pass

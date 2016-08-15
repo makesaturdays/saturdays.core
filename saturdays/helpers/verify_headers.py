@@ -47,8 +47,12 @@ def verify_headers():
 		if request.requires_admin or request.requires_vendor or request.requires_user or request.requires_session:
 			try:
 				if hasattr(request, 'current_session'):
-					if request.headers['X-Session-Secret'] != request.cookies['X-Session-Secret']:
-						raise_error('auth', 'cookies_dont_match', 403)
+					try:
+						if request.headers['X-Session-Secret'] != request.cookies['X-Session-Secret']:
+							raise_error('auth', 'cookies_dont_match', 403)
+					except KeyError:
+						pass
+
 				else:
 					request.current_session = Session.get_where({'secret_hash': hashlib.sha256(request.headers['X-Session-Secret'].encode('utf-8')).hexdigest()})
 

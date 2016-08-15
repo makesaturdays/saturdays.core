@@ -11,6 +11,7 @@ class Saturdays.Views.Slider extends Saturdays.View
 		this.events["click [data-next-slide-button]"] = "next_slide"
 		this.events["click [data-previous-slide-button]"] = "previous_slide"
 		this.events["click [data-slide-marker]"] = "slide_to"
+		this.events["click [data-hide]"] = "hide"
 
 		super()
 
@@ -60,6 +61,23 @@ class Saturdays.Views.Slider extends Saturdays.View
 		setTimeout =>
 			this.$el.find("[data-slide="+@current_slide+"] input:not([disabled]):first").focus()
 		, 333
+
+
+	show: (e)->
+		if e?
+			e.preventDefault()
+
+		this.current_slide = 0
+		this.render()
+	
+		this.$el.removeClass "fade_out"
+
+
+	hide: (e)->
+		if e?
+			e.preventDefault()
+		
+		this.$el.addClass "fade_out"
 		
 
 

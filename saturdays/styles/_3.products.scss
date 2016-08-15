@@ -4,6 +4,11 @@
 
 .product {
 	
+	&.product--box {
+		@extend .padded;
+		border: 1px solid;
+		border-radius: $border_radius;
+	}
 
 	&.product--workshop_box {
 		@extend .padded;
@@ -15,7 +20,7 @@
 		border-radius: $border_radius;
 		min-height: $vertical_rythm*18;
 
-		@include transition(top $fast);
+		// @include transition(top $fast);
 
 		&.product--workshop_box--active {
 			color: $white;
@@ -32,8 +37,7 @@
 
 		&:hover,
 		&:focus {
-			top: -2px;
-			@include shadow(0 0.3rem 0.5rem fade-out($black, 0.85));
+			
 		}
 
 		&:active {

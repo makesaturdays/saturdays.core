@@ -48,5 +48,9 @@ img {
 
 	&.img--logo {
 		width: 3.5rem;
+
+		@media #{$small} {
+			width: 2rem;
+		}
 	}
 }

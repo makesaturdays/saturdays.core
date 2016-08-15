@@ -59,6 +59,13 @@ footer {
 	
 }
 
+// #IFRAME
+
+iframe {
+	display: block;
+	max-width: 100%;
+}
+
 
 // #MIXINS
 
@@ -112,6 +119,11 @@ footer {
 	}
 }
 
+.bordered { border: 1px solid $grey--light; }
+	.bordered--thick { border: 1rem solid $primary; }
+.border--right { border-right: 1px solid $grey--light; }
+.border--bottom { border-bottom: 1px solid $grey--light; }
+
 .huge_bottom { 
 	margin-bottom: $vertical_rythm*8;
 
@@ -121,6 +133,7 @@ footer {
 }
 .big_bottom { margin-bottom: $vertical_rythm*4; }
 .medium_bottom { margin-bottom: $vertical_rythm*2; }
+.normal_bottom { margin-bottom: $vertical_rythm; }
 .small_bottom { margin-bottom: $vertical_rythm/2; }
 .flat_bottom { margin-bottom: 0 !important; }
 .medium_top { margin-top: $vertical_rythm*2; }

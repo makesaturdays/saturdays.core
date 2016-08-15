@@ -1,0 +1,81 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Profile - {{super()}}
+{% endblock %}
+
+{% block og_title %}
+	Profile - {{super()}}
+{% endblock %}
+
+{% block body_classes %}profile{% endblock %}
+
+{% block title_link %}/{% endblock %}
+
+
+{% block main %}
+
+<div class="grid grid--stretch">
+	<div class="col col--4of12 col--medium--6of12 col--small--12of12 padded border--right">
+		<h4>Your details</h4>
+		<p class="medium_bottom">
+			<em>{{user.email}}</em><br>
+			Password: ********<br><br>
+			<a href="#">Edit</a>
+		</p>
+
+		<p class="medium_bottom">
+			<em>Credit card information</em><br>
+			{{user.cart.credit_card.brand}} ending in {{user.cart.credit_card.last4}}<br>
+			Exp. {{user.cart.credit_card.exp_month}} / {{user.cart.credit_card.exp_year}}<br><br>
+			<a href="#">Edit</a>
+		</p>
+		
+		<p><a href="#" class="a--underline" data-logout><h4>Edit preferences</h4></a></p>
+		<p><a href="#" class="a--underline" data-logout><h4>Log out</h4></a></p>
+	</div>
+	<div class="col col--4of12 col--medium--6of12 col--small--12of12 padded border--right">
+		<h4>Upcoming workshops</h4>
+
+		
+		{% for order in user.orders %}
+			{% for item in order['items'] %}
+			<article class="normal_bottom product product--box">
+				<p>
+					<em>{{item.name}}</em><br>
+					{{item.product.metadata.date|date('%B %d, %Y at %I:%M%p')}}
+				</p>
+				<p>
+					{{item.product.metadata.location}}
+				</p>
+
+				<div class="grid grid--spaced">
+					<a href="#" class="a--underline">Download Receipt</a>
+					<a href="#" class="a--underline">View Event Page</a>
+				</div>
+			</article>
+			{% endfor %}
+		{% endfor %}
+
+		<div class="big_bottom">
+			<a href="/products" class="button button--full button--big">
+				<strong>View all workshops</strong><br>
+				<span class="underline">Learn something new</span>
+			</a>
+		</div>
+
+		<h4>Past workshops</h4>
+	</div>
+	<div class="col col--4of12 col--medium--6of12 col--small--12of12 padded">
+		<h4>Workshops you are hosting</h4>
+
+		<div class="big_bottom">
+			<a href="mailto:makesaturdays@gmail.com" target="_blank" class="button button--full button--big button--grey">
+				<strong>Host a workshop</strong><br>
+				<span class="underline">Share your knowledge</span>
+			</a>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

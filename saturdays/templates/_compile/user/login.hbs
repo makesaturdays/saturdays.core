@@ -1,0 +1,46 @@
+
+<a href="{{current_path}}" class="login__back" data-hide></a>
+
+<form class="login__container" data-login-form>
+	<a href="{{current_path}}" class="login__close" data-hide><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
+
+	<div class="grid grid--tight_guttered grid--middle grid--center slide">
+		<div class="col col--12of12 text_center">
+			<h3>Login</h3>
+			<p>All fields are required</p>
+		</div>
+		<div class="col col--12of12">
+			<div class="padded padded--tight light_grey_back">
+				<div class="grid grid--tight_guttered grid--middle grid--center">
+					<div class="col col--2of12">
+						<label for="email">{{pieces.admin.email_label}}</label>
+					</div>
+					<div class="col col--10of12">
+						{{#if user._id}}
+						<input type="email" id="email" name="email" value="{{user.email}}" disabled>
+						{{else}}
+						<input type="email" id="email" name="email" value="" required autocomplete="email" placeholder="email.address@gmail.com">
+						{{/if}}
+					</div>
+					
+					{{#unless user._id}}
+					<div class="col col--2of12">
+						<label for="password">{{pieces.admin.password_label}}</label>
+					</div>
+					<div class="col col--10of12">
+						<input type="password" id="password" name="password" value="" required autocomplete="off" placeholder="********">
+					</div>
+					{{/unless}}
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	{{#if user._id}}
+	<button class="overlay__button" data-logout>{{pieces.admin.logout}}</button>
+	{{else}}
+	<button class="overlay__button" type="submit">{{pieces.admin.submit}}</button>
+	{{/if}}
+	
+</form>

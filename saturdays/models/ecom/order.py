@@ -8,6 +8,7 @@ from saturdays.helpers.validation_rules import validation_rules
 from saturdays.tasks.trigger import trigger_tasks
 
 from saturdays.models.auth.user import User
+from saturdays.models.ecom.credit_card import CreditCard
 from saturdays.models.ecom.cart import Cart
 from saturdays.models.ecom.cart_item import UserCartItem
 from saturdays.models.ecom.product import Product
@@ -87,7 +88,6 @@ with app.app_context():
 					raise_error('ecom', 'cart_id_required', 400)
 
 				else:
-					user = None
 					document['cart'] = Cart.get(document['cart_id'])
 
 					try:
@@ -95,6 +95,13 @@ with app.app_context():
 							raise_error('ecom', 'user_required', 400)
 					except KeyError:
 						pass
+
+					user = User.get(User.create({'email': document['cart']['email']})['_id'])
+					CreditCard.create(user['_id'], {
+						'card_token': document['cart']['credit_card']['card_token'],
+						'billing_street': document['cart']['credit_card']['billing_street'],
+						'billing_zip': document['cart']['credit_card']['billing_zip']
+					}, user)
 
 
 			try:
@@ -116,12 +123,8 @@ with app.app_context():
 			if document['total'] != 0:
 				stripe.api_key = app.config['STRIPE_API_KEY']
 
-				if user is None:
-					stripe_customer = None
-					stripe_card = document['credit_card']['card_token']
-				else:
-					stripe_customer = stripe.Customer.retrieve(user['provider_data']['id'])
-					stripe_card = stripe_customer.sources.retrieve(document['credit_card']['provider_data']['id'])
+				stripe_customer = stripe.Customer.retrieve(user['provider_id'])
+				stripe_card = stripe_customer.sources.retrieve(document['credit_card']['provider_id'])
 
 				document['charges'] = []
 				total_left = document['total']
@@ -166,21 +169,19 @@ with app.app_context():
 				pass
 
 
+			user = User.update(user['_id'], {}, other_operators={
+				'$unset': {UserCartItem.list_name: None}
+			})
 
-			if user is not None:
-				user = User.update(user['_id'], {}, other_operators={
-					'$unset': {UserCartItem.list_name: None}
-				})
+			try:
+				if document['store_credit_total'] > 0:
+					CreditUpdate.create(user['_id'], {
+						'value': -document['store_credit_total'],
+						'description': 'order_id: ' + str(document['_id'])
+					})
 
-				try:
-					if document['store_credit_total'] > 0:
-						CreditUpdate.create(user['_id'], {
-							'value': -document['store_credit_total'],
-							'description': 'order_id: ' + str(document['_id'])
-						})
-
-				except KeyError:
-					pass
+			except KeyError:
+				pass
 
 
 

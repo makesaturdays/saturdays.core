@@ -69,6 +69,10 @@ h1, h2, h3, h4, h5, h6 {
 
 		&.h1--massive {
 			font-size: $massive_size;
+
+			@media #{$small} {
+				font-size: $huge_size;
+			}
 		}
 	}
 
@@ -325,8 +329,10 @@ sub {
 	}
 }
 
-iframe {
-	display: block;
+.turbolinks-progress-bar {
+	height: 3px;
+	background-color: $highlight;
+	z-index: 20;
 }
 
 small,
@@ -350,6 +356,7 @@ em,
 
 .uppercase { text-transform: uppercase; letter-spacing: 0.1em; }
 .capitalize { text-transform: capitalize; }
+.underline { text-decoration: underline; }
 .strike { text-decoration: line-through; }
 .thick_line_height { line-height: 2; }
 .tight_line_height { line-height: 0.75; }

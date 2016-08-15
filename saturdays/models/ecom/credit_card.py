@@ -65,6 +65,7 @@ with app.app_context():
 				document['exp_month'] = document['provider_data']['exp_month']
 				document['exp_year'] = document['provider_data']['exp_year']
 				document['last4'] = document['provider_data']['last4']
+				document['provider_id'] = document['provider_data']['id']
 
 			except KeyError:
 				pass
@@ -74,16 +75,16 @@ with app.app_context():
 
 
 		@classmethod
-		def create(cls, parent_id, document):
+		def create(cls, parent_id, document, user=None):
 
-
-			user = User.get(parent_id)
+			if user is None:
+				user = User.get(parent_id)
 
 			document['_id'] = ObjectId()
 
 
 			stripe.api_key = app.config['STRIPE_API_KEY']
-			customer = stripe.Customer.retrieve(user['provider_data']['id'])
+			customer = stripe.Customer.retrieve(user['provider_id'])
 			document['provider_data'] = customer.sources.create(
 				source=document['card_token'],
 				metadata={'_id': document['_id']}

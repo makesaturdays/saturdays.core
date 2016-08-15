@@ -5,6 +5,7 @@ from flask import request, abort
 from saturdays.helpers.json import to_json
 from saturdays.models.core.model import Model
 from saturdays.models.core.has_routes import HasRoutes
+from saturdays.models.core.with_templates import WithTemplates
 
 from saturdays.models.ecom.cart import Cart
 
@@ -22,7 +23,7 @@ import hashlib
 
 
 with app.app_context():
-	class User(HasRoutes, Model):
+	class User(WithTemplates, HasRoutes, Model):
 
 		collection_name = 'users'
 		collection_sort = [('updated_at', -1), ('created_at', -1)]
@@ -86,6 +87,20 @@ with app.app_context():
 				'view_function': 'update_cart_view',
 				'methods': ['PATCH', 'PUT'],
 				'requires_user': True
+			},
+			{
+				'route': '/<ObjectId:_id>/profile',
+				'view_function': 'profile_view',
+				'methods': ['GET'],
+				'requires_user': True
+			}
+		]
+
+		templates = [
+			{
+				'view_function': 'profile_view',
+				'template': 'users/user.html',
+				'response_key': 'user'
 			}
 		]
 
@@ -112,10 +127,10 @@ with app.app_context():
 
 
 			stripe.api_key = app.config['STRIPE_API_KEY']
-			document['provider_data'] = stripe.Customer.create(
+			document['provider_id'] = stripe.Customer.create(
 				email=document['email'],
 				metadata={'_id': document['_id']}
-			)
+			)['id']
 
 
 			document['cart'] = Cart.preprocess({'user_id': document['_id']})
@@ -124,11 +139,15 @@ with app.app_context():
 			if 'password' not in document:
 				document['password'] = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(9))
 				document['password'] = '-'.join([document['password'][:3], document['password'][3:6], document['password'][6:]])
+				has_generated_password = True
 
+			else:
+				has_generated_password = False
 
 
 			trigger_tasks.apply_async(('user_created', {
-				'user': document
+				'user': document,
+				'has_generated_password': has_generated_password
 			}))
 
 
@@ -197,7 +216,13 @@ with app.app_context():
 				pass
 
 			document['cart'] = Cart.postprocess(document['cart'])
+			document['cart']['requires_user'] = False
 
+			try:
+				if 'credit_card' not in document['cart']:
+					document['cart']['credit_card'] = document['credit_cards'][0]
+			except KeyError:
+				pass
 
 			try:
 				del document['password']
@@ -209,7 +234,7 @@ with app.app_context():
 
 
 
-		
+		# VIEWS
 		@classmethod
 		def get_cart_view(cls, _id):
 			document = cls.get(_id)
@@ -229,6 +254,18 @@ with app.app_context():
 				document['cart.'+key] = document.pop(key)
 
 			return to_json(cls.update(_id, document)['cart'])
+
+
+		@classmethod
+		def profile_view(cls, _id):
+			document = cls.get(_id)
+
+			from saturdays.models.ecom.order import Order
+			document['orders'] = Order.list({'user_id': document['_id']})
+			print(document['orders'])
+
+			return cls._format_response(document)
+
 
 
 

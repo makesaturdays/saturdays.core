@@ -1,6 +1,5 @@
 
 from flask import Flask
-from flask.ext.mail import Mail
 from flask.ext.pymongo import PyMongo
 
 from celery import Celery
@@ -17,8 +16,6 @@ try:
 except ImportError:
 	pass
 
-
-app.mail = Mail(app)
 app.mongo = PyMongo(app)
 app.caches = {}
 
@@ -39,6 +36,17 @@ from saturdays.tasks.execute import execute_task
 from saturdays.tasks.trigger import trigger_tasks
 from saturdays.tasks.scheduled import scheduled_tasks
 from saturdays.tasks.search import search_index, search_delete
+
+# execute_task(task={
+# 	'has_email': True,
+# 	'email_subject': 'TEST2',
+# 	'email_to': 'phil@boeuf.coffee',
+# 	'email_template': 'order-workshop',
+# }, data={
+# 	'order': {
+# 		'_id': '12222'
+# 	}
+# })
 
 from saturdays.pages.pages import *
 from saturdays.pages.docs import *

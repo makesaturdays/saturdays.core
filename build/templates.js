@@ -1,37 +1,5 @@
 this["templates"] = this["templates"] || {};
 
-this["templates"]["admin/admin"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
-    var stack1;
-
-  return "<div class=\"grid grid--guttered grid--bottom\">\n"
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.list_id : depth0),{"name":"if","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "<div class=\"col\">\n<button class=\"js-logout\">"
-    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
-    + "</button>\n</div>\n</div>\n";
-},"2":function(container,depth0,helpers,partials,data) {
-    var stack1;
-
-  return "<div class=\"col\">\n<button class=\"js-show_new_post\">New</button>\n\n<form action=\"#\" class=\"hide js-new_post_form\">\n<label for=\"title\">Title</label>\n<input type=\"text\" id=\"title\" name=\"title\">\n<label for=\"route\">Url Route</label>\n<input type=\"text\" id=\"route\" name=\"route\">\n<button type=\"submit\">"
-    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
-    + "</button>\n</form>\n</div>\n";
-},"4":function(container,depth0,helpers,partials,data) {
-    var stack1, alias1=container.lambda, alias2=container.escapeExpression;
-
-  return "<form action=\"#\" class=\"js-submit_login\">\n<label for=\"email\">"
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
-    + "</label>\n<input type=\"email\" id=\"email\" name=\"email\">\n<label for=\"password\">"
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
-    + "</label>\n<input type=\"password\" id=\"password\" name=\"password\">\n<button type=\"submit\">"
-    + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
-    + "</button>\n</form>\n";
-},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1;
-
-  return "<div class=\"admin__container\">\n"
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(4, data, 0),"data":data})) != null ? stack1 : "")
-    + "</div>\n";
-},"useData":true});
-
 this["templates"]["answers"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<p class=\"p--big text_center highlight\">\n<strong>Thanks, we'll keep in touch!</strong>\n</p>\n";
 },"useData":true});
@@ -129,9 +97,9 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
 
   return "\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"cart__back\" data-hide-cart></a>\n\n<div class=\"cart__container slider\">\n<a href=\""
+    + "\" class=\"cart__back\" data-hide></a>\n\n<div class=\"cart__container slider\">\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"cart__close\" data-hide-cart><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"slider__markers\">\n<button class=\"slider__marker "
+    + "\" class=\"cart__close\" data-hide><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"slider__markers\">\n<button class=\"slider__marker "
     + ((stack1 = (helpers.if_equal || (depth0 && depth0.if_equal) || alias2).call(alias1,(depth0 != null ? depth0.current_slide : depth0),0,{"name":"if_equal","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\" data-slide-marker=0 "
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.order : depth0),{"name":"if","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -161,13 +129,13 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + alias4(((helper = (helper = helpers.current_slide || (depth0 != null ? depth0.current_slide : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_slide","hash":{},"data":data}) : helper)))
     + "00%);\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\" data-slide-content>\n<div class=\"col col--12of12 text_center\">\n\n"
     + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(23, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n<p>All fields are required</p>\n</div>\n\n\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
+    + "\n<p>All fields are required</p>\n</div>\n\n\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<form class=\"grid grid--tight_guttered grid--middle grid--center\" data-login-form>\n<div class=\"col col--2of12\">\n<label for=\"email\">"
     + alias4(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
     + "</label>\n</div>\n<div class=\"col col--10of12\">\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"if","hash":{},"fn":container.program(25, data, 0),"inverse":container.program(27, data, 0),"data":data})) != null ? stack1 : "")
     + "</div>\n\n"
     + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"unless","hash":{},"fn":container.program(29, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "</div>\n</div>\n</div>\n\n"
+    + "</form>\n</div>\n</div>\n\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"if","hash":{},"fn":container.program(32, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.sub_total : stack1),{"name":"money","hash":{},"data":data}))
@@ -278,9 +246,9 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
 },"25":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<input type=\"email\" id=\"email\" name=\"email\" value=\""
+  return "<div class=\"grid grid--nowrap\">\n<input type=\"email\" id=\"email\" name=\"email\" value=\""
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.email : stack1), depth0))
-    + "\" disabled>\n";
+    + "\" disabled>\n<button class=\"button--transparent\" data-logout>Logout</button>\n</div>\n";
 },"27":function(container,depth0,helpers,partials,data) {
     var stack1;
 
@@ -296,7 +264,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
     + "</label>\n</div>\n<div class=\"col col--10of12 "
     + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.requires_user : stack1),{"name":"unless","hash":{},"fn":container.program(30, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\" data-password-box>\n<input type=\"password\" id=\"password\" name=\"password\" value=\"\" required autocomplete=\"password\" placeholder=\"********\">\n</div>\n";
+    + "\" data-password-box>\n<div class=\"grid grid--nowrap\">\n<input type=\"password\" id=\"password\" name=\"password\" value=\"\" required autocomplete=\"new-password\" placeholder=\"********\">\n<button type=\"submit\" class=\"button--transparent spaced\">Login</button>\n</div>\n</div>\n";
 },"30":function(container,depth0,helpers,partials,data) {
     return "hide";
 },"32":function(container,depth0,helpers,partials,data) {
@@ -421,4 +389,56 @@ this["templates"]["ecom/shop_edit"] = Handlebars.template({"compiler":[7,">= 4.0
   return "<label for=\"email\">Email Address</label>\n<input class=\"input--underline\" type=\"text\" id=\"email\" name=\"email\" value=\""
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.model : depth0)) != null ? stack1.email : stack1), depth0))
     + "\" disabled>\n";
+},"useData":true});
+
+this["templates"]["user/links"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<span class=\"button_group\">\n<a href=\"/products\" class=\"button button--bordered\">Workshops</a><a href=\"/users/"
+    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.session : depth0)) != null ? stack1.user_id : stack1), depth0))
+    + "/profile\" class=\"button button--bordered button--black\">Profile</a>\n</span>\n";
+},"useData":true});
+
+this["templates"]["user/login"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<input type=\"email\" id=\"email\" name=\"email\" value=\""
+    + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.email : stack1), depth0))
+    + "\" disabled>\n";
+},"3":function(container,depth0,helpers,partials,data) {
+    return "<input type=\"email\" id=\"email\" name=\"email\" value=\"\" required autocomplete=\"email\" placeholder=\"email.address@gmail.com\">\n";
+},"5":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<div class=\"col col--2of12\">\n<label for=\"password\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.password_label : stack1), depth0))
+    + "</label>\n</div>\n<div class=\"col col--10of12\">\n<input type=\"password\" id=\"password\" name=\"password\" value=\"\" required autocomplete=\"off\" placeholder=\"********\">\n</div>\n";
+},"7":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<button class=\"overlay__button\" data-logout>"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.logout : stack1), depth0))
+    + "</button>\n";
+},"9":function(container,depth0,helpers,partials,data) {
+    var stack1;
+
+  return "<button class=\"overlay__button\" type=\"submit\">"
+    + container.escapeExpression(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.submit : stack1), depth0))
+    + "</button>\n";
+},"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
+    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+
+  return "<a href=\""
+    + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
+    + "\" class=\"login__back\" data-hide></a>\n\n<form class=\"login__container\" data-login-form>\n<a href=\""
+    + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
+    + "\" class=\"login__close\" data-hide><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"grid grid--tight_guttered grid--middle grid--center slide\">\n<div class=\"col col--12of12 text_center\">\n<h3>Login</h3>\n<p>All fields are required</p>\n</div>\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
+    + alias4(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
+    + "</label>\n</div>\n<div class=\"col col--10of12\">\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")
+    + "</div>\n\n"
+    + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"unless","hash":{},"fn":container.program(5, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
+    + "</div>\n</div>\n</div>\n\n</div>\n\n"
+    + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"if","hash":{},"fn":container.program(7, data, 0),"inverse":container.program(9, data, 0),"data":data})) != null ? stack1 : "")
+    + "\n</form>\n";
 },"useData":true});

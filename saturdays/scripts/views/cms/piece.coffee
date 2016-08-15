@@ -20,9 +20,12 @@ class Saturdays.Views.Piece extends Saturdays.View
 		this.listenTo @model, "sync", this.render
 
 		if Saturdays.user?
-			this.listenToOnce Saturdays.user, "sync", =>
-				if Saturdays.user.get("is_admin")
-					@model.fetch()
+			if Saturdays.user.get("is_admin")
+				@model.fetch()
+			else
+				this.listenToOnce Saturdays.user, "sync", =>
+					if Saturdays.user.get("is_admin")
+						@model.fetch()
 
 		super()
 

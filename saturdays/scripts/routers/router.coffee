@@ -5,6 +5,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 	routes: {
 		"products(/:pretty_url)(/)": "products"
 		"vendor_shops(/:pretty_url)(/)": "vendor_shops"
+		"users/:_id(/profile)(/)": "users"
 		"lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list"
 		"request_access(/)": "request_access"
 		"manifesto(/)": "page"
@@ -15,6 +16,10 @@ class Saturdays.Routers.Router extends Backbone.Router
 	
 
 	initialize: ->
+		document.addEventListener "turbolinks:render", (e)=>
+			this.navigate window.location.pathname,
+				trigger: true
+				replace: true
 
 
 
@@ -54,6 +59,13 @@ class Saturdays.Routers.Router extends Backbone.Router
 			Saturdays.cart_view.hide()
 
 
+		if @query.login?
+			Saturdays.login_view.show()
+
+		else
+			Saturdays.login_view.hide()
+
+
 
 	home: ->
 
@@ -81,6 +93,9 @@ class Saturdays.Routers.Router extends Backbone.Router
 				el: element, 
 				model: model
 			})
+
+	users: (_id)->
+		
 
 
 	list: (list_route, route)->

@@ -1,10 +1,10 @@
 
 {{#if cart}}
 
-<a href="{{current_path}}" class="cart__back" data-hide-cart></a>
+<a href="{{current_path}}" class="cart__back" data-hide></a>
 
 <div class="cart__container slider">
-	<a href="{{current_path}}" class="cart__close" data-hide-cart><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
+	<a href="{{current_path}}" class="cart__close" data-hide><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
 
 	<div class="slider__markers">
 		<button class="slider__marker {{#if_equal current_slide 0}}slider__marker--active{{/if_equal}}" data-slide-marker=0 {{#if order}}disabled{{/if}}>0</button>
@@ -86,13 +86,16 @@
 
 				<div class="col col--12of12">
 					<div class="padded padded--tight light_grey_back">
-						<div class="grid grid--tight_guttered grid--middle grid--center">
+						<form class="grid grid--tight_guttered grid--middle grid--center" data-login-form>
 							<div class="col col--2of12">
 								<label for="email">{{pieces.admin.email_label}}</label>
 							</div>
 							<div class="col col--10of12">
 								{{#if user._id}}
-								<input type="email" id="email" name="email" value="{{user.email}}" disabled>
+								<div class="grid grid--nowrap">
+									<input type="email" id="email" name="email" value="{{user.email}}" disabled>
+									<button class="button--transparent" data-logout>Logout</button>
+								</div>
 								{{else}}
 								<input type="email" id="email" name="email" value="{{cart.email}}" required autocomplete="email" placeholder="email.address@gmail.com">
 								{{/if}}
@@ -103,10 +106,13 @@
 								<label for="password">{{pieces.admin.password_label}}</label>
 							</div>
 							<div class="col col--10of12 {{#unless cart.requires_user}}hide{{/unless}}" data-password-box>
-								<input type="password" id="password" name="password" value="" required autocomplete="password" placeholder="********">
+								<div class="grid grid--nowrap">
+									<input type="password" id="password" name="password" value="" required autocomplete="new-password" placeholder="********">
+									<button type="submit" class="button--transparent spaced">Login</button>
+								</div>
 							</div>
 							{{/unless}}
-						</div>
+						</form>
 					</div>
 				</div>
 

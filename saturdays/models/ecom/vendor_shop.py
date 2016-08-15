@@ -98,7 +98,7 @@ with app.app_context():
 
 
 			stripe.api_key = app.config['STRIPE_API_KEY']
-			document['provider_data'] = stripe.Account.create(
+			document['provider_id'] = stripe.Account.create(
 				country=document['address']['country'],
 				managed=False,
 				email=document['email'],
@@ -108,7 +108,7 @@ with app.app_context():
 				support_phone=document['support_phone'] if 'support_phone' in document else None,
 				support_url=document['support_url'] if 'support_url' in document else None,
 				metadata={'_id': document['_id']}
-			)
+			)['id']
 
 
 			return super().create(document)
@@ -118,9 +118,7 @@ with app.app_context():
 		# HELPERS
 		@classmethod
 		def _shop_products(cls, response):
-			print(response['_id'])
 			response['products'] = Product.list({'vendor_shop_id': response['_id']})
-			print(response['products'])
 
 			return response
 

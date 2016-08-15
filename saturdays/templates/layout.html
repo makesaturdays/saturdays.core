@@ -3,8 +3,9 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta http-equiv="Accept-CH" content="DPR,Width,Viewport-Width">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="theme-color" content="#FAFAFA">
+        <meta name="theme-color" content="#292E31">
 
         <title>
         {% block title %}
@@ -20,9 +21,7 @@
         <meta property="og:description" content="{% block og_description %}{{pieces.metadata.description|striptags}}{% endblock %}">
         <meta property="og:site_name" content="{{pieces.metadata.title|striptags}}">
         <meta name="google-site-verification" content="Hpbj_9sT1yAFbzMn89rc-tOP0JwUfyrFPi_2omZaEY8" />
-
-
-        <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+        <meta name="turbolinks-cache-control" content="no-cache">
 
 
         <link rel="icon" type="image/png" href="/build/images/favicon/favicon-32x32.png" sizes="32x32" />
@@ -43,19 +42,17 @@
                 <div class="col col--6of12" data-piece-id="{{pieces.metadata._id}}">
                     <a href="{% block title_link %}/{% endblock %}" class="grid grid--middle">
                         <img src="/build/images/logo.svg" class="img--logo">
-                        <h1 class="h1--base spaced"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
+                        <h1 class="h1--base spaced hide_on_small"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
                     </a>
                     <span data-piece-admin></span>
                 </div>
                 <div class="col col--6of12 text_right" data-piece-id="{{pieces.navigation._id}}">
-                    {# <a href="{{current_path}}?cart=true" class="a--alternate hide_on_small" data-show-cart><span data-key="about">Cart</span></a>
-                    <span class="spaced hide_on_small"></span> #}
                     <a href="/manifesto" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
                     <span class="spaced hide_on_small"></span>
-                    <a href="/products" class="button button--bordered">Upcoming Workshop</a>
+                    <span id="user_links" data-user-links data-turbolinks-permanent>
+                        <a href="/products" class="button button--bordered">Upcoming Workshops</a>
+                    </span>
                     <span data-piece-admin></span>
-                    {# <a href="/request_access" class="a--highlight"><span data-key="request_access">{{pieces.navigation.request_access}}</span></a>
-                    <span data-piece-admin></span> #}
                 </div>
             </nav>
             {% endblock %}
@@ -69,8 +66,8 @@
 
 
 
-        <div class="cart fades_out fade_out" id="cart"></div>
-        <div class="admin fades_out fade_out" id="admin"></div>
+        <div class="cart fades_out fade_out" id="cart" data-turbolinks-permanent></div>
+        <div class="login fades_out fade_out" id="login" data-turbolinks-permanent></div>
 
 
         <footer id="footer">
@@ -79,7 +76,7 @@
                 
                 <div class="footer__fixed__top"></div>
 
-                <a href="/" class="footer__fixed__middle text_center">
+                <a href="mailto:makesaturdays@gmail.com" target="_blank" class="footer__fixed__middle text_center">
                     <h2>Are you a maker?</h2>
                     <h1 class="h1--massive">Host a workshop</h1>
                 </a>
@@ -104,9 +101,10 @@
 
 
 
-        <script src="//cdn.jsdelivr.net/g/jquery@3.0.0-beta1(jquery.min.js),underscorejs@1.8.3,backbonejs@1.2.3,handlebarsjs@4.0.5,typeahead.js@0.11.1,to-markdown@1.3.0,marked@0.3.5,jquery.payment@1.4.1"></script>
+        <script src="//cdn.jsdelivr.net/g/jquery@3.0.0-beta1(jquery.min.js),underscorejs@1.8.3,backbonejs@1.2.3,handlebarsjs@4.0.5,typeahead.js@0.11.1,to-markdown@1.3.0,marked@0.3.5,jquery.payment@1.4.1" data-turbolinks-eval="false"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/turbolinks/5.0.0/turbolinks.min.js" async data-turbolinks-eval="false"></script>
 
-        <script src="https://js.stripe.com/v2/"></script>
+        <script src="https://js.stripe.com/v2/" data-turbolinks-eval="false"></script>
 
 
         <script>
@@ -117,8 +115,8 @@
                 stripe_key: "{{stripe_key}}"
             }
         </script>
-        <script src="/build/templates.js"></script>
-        <script src="/build/app.js"></script>
+        <script src="/build/templates.js" data-turbolinks-eval="false"></script>
+        <script src="/build/app.js" data-turbolinks-eval="false"></script>
 
 
         <script>

@@ -71,7 +71,7 @@ with app.app_context():
 
 								template_name = template['template']
 								try:
-									template_name = template_name.replace('<route>', request.view_args['_id'])
+									template_name = template_name.replace('<route>', str(request.view_args['_id']))
 								except KeyError:
 									pass
 

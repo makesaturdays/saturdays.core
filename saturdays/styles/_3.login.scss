@@ -1,0 +1,29 @@
+
+
+// #LOGIN
+
+.login {
+	@extend .overlay;
+	@extend .overlay--full;
+
+	font-family: $alternate_font;
+}
+
+	.login__back {
+		@extend .overlay__back;
+	}
+
+
+	.login__container {
+		@extend .overlay__container;
+		@extend .overlay__container--with_button;
+
+		padding: $gutter 0 0;
+
+		max-width: 34rem;
+		background-color: $white;
+	}
+
+		.login__close {
+			@extend .overlay__close;
+		}

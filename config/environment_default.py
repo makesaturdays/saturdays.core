@@ -28,11 +28,14 @@ STRIPE_PUBLISHABLE_KEY = os.getenv('STRIPE_PUBLISHABLE_KEY', 'pk_test_2HjgvpC2f4
 
 
 # Email
-MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
-MAIL_PORT = os.getenv('MAIL_PORT', 465)
-MAIL_USE_SSL = os.getenv('MAIL_USE_SSL', True)
-MAIL_USERNAME = os.getenv('MAIL_USERNAME', '')
-MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '')
+MANDRILL_API_KEY = os.getenv('MANDRILL_API_KEY', '')
+MANDRILL_FROM_EMAIL = os.getenv('MANDRILL_FROM_EMAIL', 'makers@makes.at')
+MANDRILL_FROM_NAME = os.getenv('MANDRILL_FROM_NAME', 'Make Saturdays')
+# MAIL_SERVER = os.getenv('MAIL_SERVER', 'smtp.sendgrid.net')
+# MAIL_PORT = os.getenv('MAIL_PORT', 465)
+# MAIL_USE_SSL = os.getenv('MAIL_USE_SSL', True)
+# MAIL_USERNAME = os.getenv('MAIL_USERNAME', '')
+# MAIL_PASSWORD = os.getenv('MAIL_PASSWORD', '')
 
 
 # S3
@@ -45,12 +48,6 @@ S3_BUCKET = os.getenv('S3_BUCKET', '')
 CELERY_TIMEZONE = TIMEZONE
 CELERY_BROKER_URL =	os.getenv('CELERY_BROKER_URL', 'redis://127.0.0.1:6379')
 CELERY_RESULT_BACKEND =	os.getenv('CELERY_RESULT_BACKEND', 'redis://127.0.0.1:6379')
-CELERY_SEND_TASK_ERROR_EMAILS = True
-EMAIL_HOST = MAIL_SERVER
-EMAIL_PORT = MAIL_PORT
-EMAIL_HOST_USER = MAIL_USERNAME
-EMAIL_HOST_PASSWORD = MAIL_PASSWORD
-EMAIL_USE_TLS = MAIL_USE_SSL
 CELERYBEAT_SCHEDULE = {
     'subscriptions': {
         'task': 'subscriptions.charge',

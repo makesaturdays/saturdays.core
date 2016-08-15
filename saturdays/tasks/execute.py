@@ -1,10 +1,10 @@
 from saturdays import app
 from saturdays import celery
 from flask import request, abort, json
-from flask.ext.mail import Message
 
 from pybars import Compiler
 import requests
+from mandrill import Mandrill
 
 
 @celery.task(name='execute_task')
@@ -46,16 +46,34 @@ def execute_task(task, data={}):
 	try:
 		if task['has_email']:
 			subject_template = compiler.compile(task['email_subject'])
-			sender_template = compiler.compile(task['email_from'])
 			recipients_template = compiler.compile(task['email_to'])
-			body_template = compiler.compile(task['email_body'])
+			
+			mandrill = Mandrill(app.config['MANDRILL_API_KEY'])
+			body_template = compiler.compile(mandrill.templates.info(name=task['email_template'])['code'])
 
-			message = Message(subject_template(data),
-				sender=sender_template(data),
-				recipients=recipients_template(data).split(','))
-			message.html = body_template(data)
 
-			app.mail.send(message)
+			message = mandrill.messages.send(
+				message={
+					'from_email': app.config['MANDRILL_FROM_EMAIL'],
+					'from_name': app.config['MANDRILL_FROM_NAME'],
+					'subject': subject_template(data),
+					'html': body_template(data),
+					'inline_css': True,
+					'to': [{'email': recipients_template(data), 'type': 'to'}]
+				},
+				async=False
+			)
+
+			print(message)
+
+			# body_template = compiler.compile(task['email_body'])
+
+			# message = Message(subject_template(data),
+			# 	sender=sender_template(data),
+			# 	recipients=recipients_template(data).split(','))
+			# message.html = body_template(data)
+
+			# app.mail.send(message)
 
 	except KeyError:
 		pass

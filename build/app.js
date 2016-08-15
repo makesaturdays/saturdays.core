@@ -14,8 +14,9 @@
       this.session = new Saturdays.Models.Session();
       this.user = new Saturdays.Models.User();
       this.cart = new Saturdays.Models.Cart();
-      this.admin_view = new Saturdays.Views.Admin();
+      this.login_view = new Saturdays.Views.Login();
       this.cart_view = new Saturdays.Views.Cart();
+      this.header_view = new Saturdays.Views.Header();
       this.router = new Saturdays.Routers.Router();
       return Backbone.history.start({
         pushState: true
@@ -1199,6 +1200,7 @@
       this.events["click [data-next-slide-button]"] = "next_slide";
       this.events["click [data-previous-slide-button]"] = "previous_slide";
       this.events["click [data-slide-marker]"] = "slide_to";
+      this.events["click [data-hide]"] = "hide";
       return Slider.__super__.initialize.call(this);
     };
 
@@ -1240,100 +1242,23 @@
       })(this), 333);
     };
 
+    Slider.prototype.show = function(e) {
+      if (e != null) {
+        e.preventDefault();
+      }
+      this.current_slide = 0;
+      this.render();
+      return this.$el.removeClass("fade_out");
+    };
+
+    Slider.prototype.hide = function(e) {
+      if (e != null) {
+        e.preventDefault();
+      }
+      return this.$el.addClass("fade_out");
+    };
+
     return Slider;
-
-  })(Saturdays.View);
-
-}).call(this);
-
-(function() {
-  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  Saturdays.Views.Admin = (function(superClass) {
-    extend(Admin, superClass);
-
-    function Admin() {
-      this.check_escape = bind(this.check_escape, this);
-      return Admin.__super__.constructor.apply(this, arguments);
-    }
-
-    Admin.prototype.el = $("#admin");
-
-    Admin.prototype.template = templates["admin/admin"];
-
-    Admin.prototype.events = {
-      "submit .js-submit_login": "submit_login",
-      "click .js-show_new_post": "show_new_post",
-      "submit .js-new_post_form": "submit_new_post_form",
-      "click .js-logout": "logout"
-    };
-
-    Admin.prototype.initialize = function() {
-      $(document).on("keyup", this.check_escape);
-      return Admin.__super__.initialize.call(this);
-    };
-
-    Admin.prototype.render = function() {
-      _.extend(this.data, {
-        list_id: window.list_id
-      });
-      Admin.__super__.render.call(this);
-      if (Saturdays.user.get("is_admin")) {
-        this.$el.removeClass("fade_out");
-      }
-      return this;
-    };
-
-    Admin.prototype.submit_login = function(e) {
-      e.preventDefault();
-      return Saturdays.session.login({
-        email: e.currentTarget["email"].value,
-        password: e.currentTarget["password"].value
-      });
-    };
-
-    Admin.prototype.logout = function(e) {
-      e.preventDefault();
-      return Saturdays.session.logout();
-    };
-
-    Admin.prototype.show_new_post = function(e) {
-      this.$el.find(".js-show_new_post").addClass("hide");
-      return this.$el.find(".js-new_post_form").removeClass("hide");
-    };
-
-    Admin.prototype.submit_new_post_form = function(e) {
-      var model;
-      e.preventDefault();
-      model = new Saturdays.Models.ListPost();
-      model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
-      return model.save({
-        title: e.currentTarget["title"].value.trim(),
-        route: e.currentTarget["route"].value.trim().toLowerCase()
-      }, {
-        success: function(model, response) {
-          return window.location = "/lists/blog/posts/" + model.attributes.route;
-        }
-      });
-    };
-
-    Admin.prototype.check_escape = function(e) {
-      if (e.keyCode === 27) {
-        if (this.$el.hasClass("fade_out")) {
-          this.$el.removeClass("fade_out");
-          return this.$el.find("[name='email']").focus();
-        } else {
-          this.$el.addClass("fade_out");
-          if (Saturdays.session.is_authenticated()) {
-            return Saturdays.session.logout();
-          }
-        }
-      }
-    };
-
-    return Admin;
 
   })(Saturdays.View);
 
@@ -1365,13 +1290,17 @@
     Piece.prototype.initialize = function() {
       this.listenTo(this.model, "sync", this.render);
       if (Saturdays.user != null) {
-        this.listenToOnce(Saturdays.user, "sync", (function(_this) {
-          return function() {
-            if (Saturdays.user.get("is_admin")) {
-              return _this.model.fetch();
-            }
-          };
-        })(this));
+        if (Saturdays.user.get("is_admin")) {
+          this.model.fetch();
+        } else {
+          this.listenToOnce(Saturdays.user, "sync", (function(_this) {
+            return function() {
+              if (Saturdays.user.get("is_admin")) {
+                return _this.model.fetch();
+              }
+            };
+          })(this));
+        }
       }
       return Piece.__super__.initialize.call(this);
     };
@@ -1653,11 +1582,11 @@
       "click [data-remove-from-cart]": "remove_from_cart",
       "change [name='with_store_credit']": "change_store_credit",
       "input [name='email']": "input_email",
-      "input [name='password']": "input_password",
+      "submit [data-login-form]": "login",
+      "click [data-logout]": "logout",
       "submit [data-credit-card-form]": "submit_credit_card_form",
       "click [data-reset-credit-card-form]": "reset_credit_card_form",
-      "click [data-create-order]": "create_order",
-      "click [data-hide-cart]": "hide"
+      "click [data-create-order]": "create_order"
     };
 
     Cart.prototype.initialize = function() {
@@ -1747,21 +1676,19 @@
       }
     };
 
-    Cart.prototype.input_password = function(e) {
-      if (e.currentTarget.value.length >= 8 && !this.$el.hasClass("fade_out")) {
-        window.clearTimeout(this.password_timeout);
-        return this.password_timeout = window.setTimeout((function(_this) {
-          return function() {
-            if (!Saturdays.cart.isNew()) {
-              return Saturdays.session.login({
-                email: Saturdays.cart.get("email"),
-                password: e.currentTarget.value,
-                cart_id: Saturdays.cart.id
-              });
-            }
-          };
-        })(this), 1000);
+    Cart.prototype.login = function(e) {
+      e.preventDefault();
+      if (!Saturdays.cart.isNew()) {
+        return Saturdays.session.login({
+          email: e.currentTarget["email"].value,
+          password: e.currentTarget["password"].value,
+          cart_id: Saturdays.cart.id
+        });
       }
+    };
+
+    Cart.prototype.logout = function(e) {
+      return Saturdays.session.logout();
     };
 
     Cart.prototype.submit_credit_card_form = function(e) {
@@ -1840,21 +1767,13 @@
     };
 
     Cart.prototype.show = function(e) {
-      if (e != null) {
-        e.preventDefault();
-      }
-      this.current_slide = 0;
-      this.render();
-      Saturdays.router.navigate(window.location.pathname + "?cart=true");
-      return this.$el.removeClass("fade_out");
+      Cart.__super__.show.call(this);
+      return Saturdays.router.navigate(window.location.pathname + "?cart=true");
     };
 
     Cart.prototype.hide = function(e) {
-      if (e != null) {
-        e.preventDefault();
-      }
-      Saturdays.router.navigate(window.location.pathname);
-      return this.$el.addClass("fade_out");
+      Cart.__super__.hide.call(this);
+      return Saturdays.router.navigate(window.location.pathname);
     };
 
     return Cart;
@@ -1985,6 +1904,112 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Header = (function(superClass) {
+    extend(Header, superClass);
+
+    function Header() {
+      return Header.__super__.constructor.apply(this, arguments);
+    }
+
+    Header.prototype.el = $("#header");
+
+    Header.prototype.user_links_template = templates["user/links"];
+
+    Header.prototype.events = {};
+
+    Header.prototype.initialize = function() {
+      return Header.__super__.initialize.call(this);
+    };
+
+    Header.prototype.render = function() {
+      Header.__super__.render.call(this);
+      if (this.data.is_authenticated) {
+        this.$el.find("[data-user-links]").html(this.user_links_template(this.data));
+      }
+      return this;
+    };
+
+    return Header;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Views.Login = (function(superClass) {
+    extend(Login, superClass);
+
+    function Login() {
+      this.check_escape = bind(this.check_escape, this);
+      return Login.__super__.constructor.apply(this, arguments);
+    }
+
+    Login.prototype.el = $("#login");
+
+    Login.prototype.template = templates["user/login"];
+
+    Login.prototype.events = {
+      "submit [data-login-form]": "submit_login",
+      "click [data-logout]": "logout"
+    };
+
+    Login.prototype.initialize = function() {
+      $(document).on("keyup", this.check_escape);
+      return Login.__super__.initialize.call(this);
+    };
+
+    Login.prototype.render = function() {
+      Login.__super__.render.call(this);
+      return this;
+    };
+
+    Login.prototype.submit_login = function(e) {
+      e.preventDefault();
+      return Saturdays.session.login({
+        email: e.currentTarget["email"].value,
+        password: e.currentTarget["password"].value
+      });
+    };
+
+    Login.prototype.logout = function(e) {
+      e.preventDefault();
+      return Saturdays.session.logout();
+    };
+
+    Login.prototype.check_escape = function(e) {
+      if (e.keyCode === 27) {
+        if (this.$el.hasClass("fade_out")) {
+          return this.show();
+        } else {
+          return this.hide();
+        }
+      }
+    };
+
+    Login.prototype.show = function(e) {
+      Saturdays.router.navigate(window.location.pathname + "?login=true");
+      return Login.__super__.show.call(this);
+    };
+
+    Login.prototype.hide = function(e) {
+      Saturdays.router.navigate(window.location.pathname);
+      return Login.__super__.hide.call(this);
+    };
+
+    return Login;
+
+  })(Saturdays.Views.Slider);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Views.Navigation = (function(superClass) {
     extend(Navigation, superClass);
 
@@ -2031,6 +2056,7 @@
     Router.prototype.routes = {
       "products(/:pretty_url)(/)": "products",
       "vendor_shops(/:pretty_url)(/)": "vendor_shops",
+      "users/:_id(/profile)(/)": "users",
       "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
       "request_access(/)": "request_access",
       "manifesto(/)": "page",
@@ -2039,7 +2065,16 @@
 
     Router.prototype.views = [];
 
-    Router.prototype.initialize = function() {};
+    Router.prototype.initialize = function() {
+      return document.addEventListener("turbolinks:render", (function(_this) {
+        return function(e) {
+          return _this.navigate(window.location.pathname, {
+            trigger: true,
+            replace: true
+          });
+        };
+      })(this));
+    };
 
     Router.prototype.execute = function(callback, args) {
       var i, len, ref, today, view;
@@ -2080,9 +2115,14 @@
       })(this));
       this.query = Saturdays.helpers.get_query_string();
       if (this.query.cart != null) {
-        return Saturdays.cart_view.show();
+        Saturdays.cart_view.show();
       } else {
-        return Saturdays.cart_view.hide();
+        Saturdays.cart_view.hide();
+      }
+      if (this.query.login != null) {
+        return Saturdays.login_view.show();
+      } else {
+        return Saturdays.login_view.hide();
       }
     };
 
@@ -2127,6 +2167,8 @@
         };
       })(this));
     };
+
+    Router.prototype.users = function(_id) {};
 
     Router.prototype.list = function(list_route, route) {
       return $("[data-post-id]").each((function(_this) {
