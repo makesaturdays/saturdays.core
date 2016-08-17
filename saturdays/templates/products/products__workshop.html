@@ -1,6 +1,6 @@
 
 <article class="col col--4of12 col--medium--6of12 col--small--12of12" data-product-id="{{product._id}}">
-	<a href="/products/{% if product.pretty_url is defined %}{{product.pretty_url}}{% else %}{{product._id}}{% endif %}" class="product product--workshop_box {% if product.is_salable %}product--workshop_box--active" style="background-color: {{product.metadata.color}};"{% else %}{% if product.is_out_of_stock %}product--workshop_box--out_of_stock{% endif %}" style="color: {{product.metadata.color}};"{% endif %}>
+	<a href="/products/{% if product.pretty_url is defined %}{{product.pretty_url}}{% else %}{{product._id}}{% endif %}" class="product product--workshop_box {% if product.is_salable %}product--workshop_box--active" style="background-color:{{product.metadata.color}};border-color:{{product.metadata.color}};"{% else %}{% if product.is_out_of_stock %}product--workshop_box--out_of_stock{% endif %}" style="color: {{product.metadata.color}};"{% endif %}>
 
 		<h6 class="uppercase">{{product.metadata.location}}</h6>
 		<h3>

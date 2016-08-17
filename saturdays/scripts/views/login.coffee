@@ -59,14 +59,14 @@ class Saturdays.Views.Login extends Saturdays.Views.Slider
 		
 		Saturdays.router.navigate window.location.pathname+"?login=true"
 		
-		super()
+		super(e)
 
 
 	hide: (e)->
 		
 		Saturdays.router.navigate window.location.pathname
 		
-		super()
+		super(e)
 			
 			
 			

@@ -93,13 +93,13 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 						if response.requires_user
 							this.$el.find("[data-password-box]").removeClass "hide"
 							this.$el.find("[data-credit-card-form]").attr "disabled", "disabled"
-							this.$el.find("[data-credit-card-form] [type='submit']").attr "disabled", "disabled"
-							this.$el.find("[name='password']").focus()
+							this.$el.find("[data-create-order]").attr "disabled", "disabled"
+							# this.$el.find("[name='password']").focus()
 
 						else
 							this.$el.find("[data-password-box]").addClass "hide"
 							this.$el.find("[data-credit-card-form]").removeAttr "disabled"
-							this.$el.find("[data-credit-card-form] [type='submit']").removeAttr "disabled"
+							this.$el.find("[data-create-order]").removeAttr "disabled"
 				,
 					Saturdays.cart.isNew()
 
@@ -195,17 +195,19 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 
 	show: (e)->
-		
-		super()
-
 		Saturdays.router.navigate window.location.pathname+"?cart=true"
+
+		super(e)
+
+		
 
 
 	hide: (e)->
-		
-		super()
-
 		Saturdays.router.navigate window.location.pathname
+
+		super(e)
+
+		
 			
 
 

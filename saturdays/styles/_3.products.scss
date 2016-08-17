@@ -25,7 +25,7 @@
 		&.product--workshop_box--active {
 			color: $white;
 			background-color: $highlight;
-			border-color: transparent;
+			border-color: $highlight;
 
 			@include shadow(0 0.1rem 0.25rem fade-out($black, 0.75));
 		}
@@ -37,12 +37,13 @@
 
 		&:hover,
 		&:focus {
-			
+			top: -1px;
+			border-bottom-width: 3px;
 		}
 
 		&:active {
-			top: 1px;
-			@include shadow(none);
+			top: 0;
+			border-bottom-width: 2px;
 		}
 	}
 }

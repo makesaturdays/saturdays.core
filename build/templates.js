@@ -97,9 +97,9 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
 
   return "\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"cart__back\" data-hide></a>\n\n<div class=\"cart__container slider\">\n<a href=\""
+    + "\" class=\"cart__back\" data-hide data-turbolinks=\"false\"></a>\n\n<div class=\"cart__container slider\">\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"cart__close\" data-hide><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"slider__markers\">\n<button class=\"slider__marker "
+    + "\" class=\"cart__close\" data-hide data-turbolinks=\"false\"><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"slider__markers\">\n<button class=\"slider__marker "
     + ((stack1 = (helpers.if_equal || (depth0 && depth0.if_equal) || alias2).call(alias1,(depth0 != null ? depth0.current_slide : depth0),0,{"name":"if_equal","hash":{},"fn":container.program(2, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\" data-slide-marker=0 "
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.order : depth0),{"name":"if","hash":{},"fn":container.program(4, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
@@ -246,15 +246,15 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
 },"25":function(container,depth0,helpers,partials,data) {
     var stack1;
 
-  return "<div class=\"grid grid--nowrap\">\n<input type=\"email\" id=\"email\" name=\"email\" value=\""
+  return "<div class=\"grid grid--middle grid--nowrap\">\n<input type=\"email\" id=\"email\" name=\"email\" value=\""
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1.email : stack1), depth0))
-    + "\" disabled>\n<button class=\"button--transparent\" data-logout>Logout</button>\n</div>\n";
+    + "\" disabled>\n<a href=\"#\" class=\"button--transparent\" data-logout>Logout</a>\n</div>\n";
 },"27":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "<input type=\"email\" id=\"email\" name=\"email\" value=\""
     + container.escapeExpression(container.lambda(((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.email : stack1), depth0))
-    + "\" required autocomplete=\"email\" placeholder=\"email.address@gmail.com\">\n";
+    + "\" required autocomplete=\"off\" placeholder=\"email.address@gmail.com\">\n";
 },"29":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=depth0 != null ? depth0 : {};
 
@@ -430,9 +430,9 @@ this["templates"]["user/login"] = Handlebars.template({"1":function(container,de
 
   return "<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"login__back\" data-hide></a>\n\n<form class=\"login__container\" data-login-form>\n<a href=\""
+    + "\" class=\"login__back\" data-hide data-turbolinks=\"false\"></a>\n\n<form class=\"login__container\" data-login-form>\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"login__close\" data-hide><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"grid grid--tight_guttered grid--middle grid--center slide\">\n<div class=\"col col--12of12 text_center\">\n<h3>Login</h3>\n<p>All fields are required</p>\n</div>\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
+    + "\" class=\"login__close\" data-hide data-turbolinks=\"false\"><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"grid grid--tight_guttered grid--middle grid--center slide\">\n<div class=\"col col--12of12 text_center\">\n<h3>Login</h3>\n<p>All fields are required</p>\n</div>\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
     + alias4(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
     + "</label>\n</div>\n<div class=\"col col--10of12\">\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")

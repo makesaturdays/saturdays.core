@@ -18,7 +18,7 @@ with app.app_context():
 			'name': validation_rules['text'],
 			'description': validation_rules['text'],
 			'frequency': validation_rules['frequency'],
-			'frequency_interval': validation_rules['int'],
+			'frequency_interval': validation_rules['int'].copy(),
 			'frequency_day': validation_rules['day'],
 			'frequency_hour': validation_rules['hour'],
 			'frequency_minute': validation_rules['minute'],

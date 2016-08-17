@@ -1,10 +1,10 @@
 
 {{#if cart}}
 
-<a href="{{current_path}}" class="cart__back" data-hide></a>
+<a href="{{current_path}}" class="cart__back" data-hide data-turbolinks="false"></a>
 
 <div class="cart__container slider">
-	<a href="{{current_path}}" class="cart__close" data-hide><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
+	<a href="{{current_path}}" class="cart__close" data-hide data-turbolinks="false"><svg class="icon-close"><use xlink:href="/build/images/icons.svg#icon-close"></use></svg></a>
 
 	<div class="slider__markers">
 		<button class="slider__marker {{#if_equal current_slide 0}}slider__marker--active{{/if_equal}}" data-slide-marker=0 {{#if order}}disabled{{/if}}>0</button>
@@ -92,12 +92,12 @@
 							</div>
 							<div class="col col--10of12">
 								{{#if user._id}}
-								<div class="grid grid--nowrap">
+								<div class="grid grid--middle grid--nowrap">
 									<input type="email" id="email" name="email" value="{{user.email}}" disabled>
-									<button class="button--transparent" data-logout>Logout</button>
+									<a href="#" class="button--transparent" data-logout>Logout</a>
 								</div>
 								{{else}}
-								<input type="email" id="email" name="email" value="{{cart.email}}" required autocomplete="email" placeholder="email.address@gmail.com">
+								<input type="email" id="email" name="email" value="{{cart.email}}" required autocomplete="off" placeholder="email.address@gmail.com">
 								{{/if}}
 							</div>
 							

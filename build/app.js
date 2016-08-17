@@ -1662,12 +1662,11 @@
                 if (response.requires_user) {
                   _this.$el.find("[data-password-box]").removeClass("hide");
                   _this.$el.find("[data-credit-card-form]").attr("disabled", "disabled");
-                  _this.$el.find("[data-credit-card-form] [type='submit']").attr("disabled", "disabled");
-                  return _this.$el.find("[name='password']").focus();
+                  return _this.$el.find("[data-create-order]").attr("disabled", "disabled");
                 } else {
                   _this.$el.find("[data-password-box]").addClass("hide");
                   _this.$el.find("[data-credit-card-form]").removeAttr("disabled");
-                  return _this.$el.find("[data-credit-card-form] [type='submit']").removeAttr("disabled");
+                  return _this.$el.find("[data-create-order]").removeAttr("disabled");
                 }
               }
             }, Saturdays.cart.isNew());
@@ -1767,13 +1766,13 @@
     };
 
     Cart.prototype.show = function(e) {
-      Cart.__super__.show.call(this);
-      return Saturdays.router.navigate(window.location.pathname + "?cart=true");
+      Saturdays.router.navigate(window.location.pathname + "?cart=true");
+      return Cart.__super__.show.call(this, e);
     };
 
     Cart.prototype.hide = function(e) {
-      Cart.__super__.hide.call(this);
-      return Saturdays.router.navigate(window.location.pathname);
+      Saturdays.router.navigate(window.location.pathname);
+      return Cart.__super__.hide.call(this, e);
     };
 
     return Cart;
@@ -1992,12 +1991,12 @@
 
     Login.prototype.show = function(e) {
       Saturdays.router.navigate(window.location.pathname + "?login=true");
-      return Login.__super__.show.call(this);
+      return Login.__super__.show.call(this, e);
     };
 
     Login.prototype.hide = function(e) {
       Saturdays.router.navigate(window.location.pathname);
-      return Login.__super__.hide.call(this);
+      return Login.__super__.hide.call(this, e);
     };
 
     return Login;
