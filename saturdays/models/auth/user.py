@@ -19,6 +19,7 @@ import stripe
 import string
 import random
 import hashlib
+import uuid
 
 
 
@@ -192,9 +193,11 @@ with app.app_context():
 					pass
 			
 			try:
-				document['password'] = hashlib.sha256(document['password'].encode('utf-8')).hexdigest()
-
+				document['password_salt'] = uuid.uuid4().hex
+				document['password'] = hashlib.sha256(document['password'].encode('utf-8') + document['password_salt'].encode('utf-8')).hexdigest()
 			except KeyError:
+				del document['password_salt']
+				
 				pass
 
 			return super().preprocess(document)
@@ -226,6 +229,7 @@ with app.app_context():
 
 			try:
 				del document['password']
+				del document['password_salt']
 			except KeyError:
 				pass
 
@@ -262,7 +266,6 @@ with app.app_context():
 
 			from saturdays.models.ecom.order import Order
 			document['orders'] = Order.list({'user_id': document['_id']})
-			print(document['orders'])
 
 			return cls._format_response(document)
 

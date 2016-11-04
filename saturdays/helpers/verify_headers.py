@@ -39,7 +39,9 @@ def verify_headers():
 
 
 		try:
-			request.current_session = Session.get_where({'secret_hash': hashlib.sha256(request.cookies['X-Session-Secret'].encode('utf-8')).hexdigest()})
+			request.current_session = app.mongo.db[Session.collection_name].find_one_or_404({'_id': ObjectId(request.cookies['X-Session-Id'])})
+			if request.current_session['secret_hash'] != hashlib.sha256(request.cookies['X-Session-Secret'].encode('utf-8') + request.current_session['secret_hash_salt'].encode('utf-8')).hexdigest():
+				raise_error('auth', 'invalid_secret', 403)
 		except KeyError:
 			pass
 
@@ -54,7 +56,14 @@ def verify_headers():
 						pass
 
 				else:
-					request.current_session = Session.get_where({'secret_hash': hashlib.sha256(request.headers['X-Session-Secret'].encode('utf-8')).hexdigest()})
+					try:
+						request.current_session = app.mongo.db[Session.collection_name].find_one_or_404({'_id': request.cookies['X-Session-Id']})
+					except KeyError:
+						raise_error('auth', 'missing_session_id', 403)
+					
+					if request.current_session['secret_hash'] != hashlib.sha256(request.cookies['X-Session-Secret'].encode('utf-8') + request.current_session['secret_hash_salt'].encode('utf-8')).hexdigest():
+						raise_error('auth', 'invalid_secret', 403)
+						
 
 				if request.requires_admin and not request.current_session['is_admin']:
 					raise_error('auth', 'requires_admin', 403)

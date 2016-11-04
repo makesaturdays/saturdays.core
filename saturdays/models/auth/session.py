@@ -72,7 +72,8 @@ with app.app_context():
 
 
 			secret = uuid.uuid4().hex
-			document['secret_hash'] = hashlib.sha256(secret.encode('utf-8')).hexdigest()
+			document['secret_hash_salt'] = uuid.uuid4().hex
+			document['secret_hash'] = hashlib.sha256(secret.encode('utf-8') + document['secret_hash_salt']).hexdigest()
 
 			document['_id'] = ObjectId()
 			document['session_id'] = document['_id']
@@ -90,17 +91,17 @@ with app.app_context():
 
 			
 
-
-
 		@classmethod
 		def preprocess(cls, document):
 
 			try:
 				if 'password' in document and document['password'] is not None:
-					user = User.get_where({
-						'email': document['email'],
-						'password': hashlib.sha256(document['password'].encode('utf-8')).hexdigest()
+					user = app.mongo.db[User.collection_name].find_one_or_404({
+						'email': document['email']
 					})
+
+					if user['password'] != hashlib.sha256(document['password'].encode('utf-8') + user['password_salt'].encode('utf-8')).hexdigest():
+						raise_error('auth', 'password_incorrect', 403)
 
 					document['user_id'] = user['_id']
 					request.user_id = document['user_id']
@@ -140,10 +141,9 @@ with app.app_context():
 
 		@classmethod
 		def postprocess(cls, document):
-
 			try:
 				del document['secret_hash']
-				
+				del document['secret_hash_salt']	
 			except KeyError:
 				pass
 
