@@ -950,8 +950,10 @@
         options = {};
       }
       return this.set({
+        _id: Saturdays.cookies.get("Session-Id"),
         secret: Saturdays.cookies.get("Session-Secret"),
-        user_id: Saturdays.cookies.get("User-Id")
+        user_id: Saturdays.cookies.get("User-Id"),
+        token_id: Saturdays.cookies.get("Token-Id")
       });
     };
 
@@ -964,10 +966,14 @@
       }
       return Saturdays.session.save(data, {
         success: function(model, response) {
+          Saturdays.cookies.set("Session-Id", response._id);
           Saturdays.cookies.set("Session-Secret", response.secret);
           Saturdays.cookies.set("User-Id", response.user_id);
           Saturdays.user.initialize();
-          return Saturdays.cart.initialize();
+          if (Saturdays.router.query.token_code != null) {
+            Saturdays.cookies.set("Token-Id", response.token_id);
+            return window.location = "?edit=true";
+          }
         }
       });
     };
@@ -975,8 +981,10 @@
     Session.prototype.logout = function() {
       this.clear();
       Saturdays.user.clear();
+      Saturdays.cookies["delete"]("Session-Id");
       Saturdays.cookies["delete"]("Session-Secret");
       Saturdays.cookies["delete"]("User-Id");
+      Saturdays.cookies["delete"]("Token-Id");
       Saturdays.cookies["delete"]("Cart-Id");
       return window.location = window.location.pathname;
     };
@@ -986,6 +994,25 @@
     };
 
     return Session;
+
+  })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Models.Token = (function(superClass) {
+    extend(Token, superClass);
+
+    function Token() {
+      return Token.__super__.constructor.apply(this, arguments);
+    }
+
+    Token.prototype.urlRoot = Saturdays.settings.api + "tokens";
+
+    return Token;
 
   })(Saturdays.Model);
 
@@ -1009,13 +1036,28 @@
       if (options == null) {
         options = {};
       }
-      user_id = Saturdays.cookies.get("User-Id");
-      if (user_id != null) {
-        this.set({
-          _id: user_id
-        });
-        return this.fetch();
+      if (options._id == null) {
+        user_id = Saturdays.cookies.get("User-Id");
+        if (user_id != null) {
+          this.set({
+            _id: user_id
+          });
+          return this.fetch();
+        }
       }
+    };
+
+    User.prototype.signup = function(data, options) {
+      if (options == null) {
+        options = {};
+      }
+      return this.save(data, {
+        success: function(model, response) {
+          if (options.success != null) {
+            return options.success(model, response);
+          }
+        }
+      });
     };
 
     return User;

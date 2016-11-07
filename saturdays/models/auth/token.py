@@ -1,18 +1,25 @@
 from saturdays import app
 from flask import request, abort
+from werkzeug.exceptions import NotFound
 
 from saturdays.models.core.model import Model
 from saturdays.models.core.has_routes import HasRoutes
 
+from saturdays.helpers.validation_rules import validation_rules
+from saturdays.helpers.raise_error import raise_error
+from saturdays.tasks.trigger import trigger_tasks
+
+from saturdays.models.auth.user import User
+
 import string
 import random
+import uuid
 
 
 with app.app_context():
 	class Token(HasRoutes, Model):
 
 		collection_name = 'tokens'
-
 
 		endpoint = '/tokens'
 		routes = [
@@ -25,8 +32,7 @@ with app.app_context():
 			{
 				'route': '',
 				'view_function': 'create_view',
-				'methods': ['POST'],
-				'requires_admin': True
+				'methods': ['POST']
 			},
 			{
 				'route': '/<ObjectId:_id>',
@@ -46,7 +52,25 @@ with app.app_context():
 		@classmethod
 		def create(cls, document):
 
-			document['_id'] = ''.join(random.choice(string.ascii_lowercase + string.digits) for _ in range(7))
+			try:
+				user = User.get_where({
+					'email': document['email']
+				})
+			except NotFound:
+				raise_error('auth', 'user_not_found', 404)
+
+			document['code'] = uuid.uuid4().hex
+			document['user_id'] = user['_id']
+
+			try:
+				document['is_admin'] = user['is_admin']
+			except KeyError:
+				pass
+
+			trigger_tasks.apply_async(('token_created', {
+				'token': document,
+				'user': user
+			}))
 
 
 			return super().create(document)
