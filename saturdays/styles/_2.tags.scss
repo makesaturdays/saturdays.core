@@ -11,3 +11,16 @@
 		@extend .comma_seperated;
 	}
 }
+
+.pills {
+
+}
+
+	.pill {
+		color: $grey--dark;
+		font-weight: normal;
+
+		padding: $vertical_rythm/4 $vertical_rythm/1.5;
+		background-color: $grey;
+		border-radius: 1em;
+	}

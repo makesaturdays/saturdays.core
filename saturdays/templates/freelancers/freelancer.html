@@ -1,10 +1,26 @@
 
 {% extends "freelancers/freelancers.html" %}
 
+{% block body_classes %} {{ super() }}{% endblock %}
+
+
+{% block header %}
+<nav class="grid grid--middle" data-navigation>
+    <div class="col col--4of12">
+        <a href="/freelancers" class="grid grid--middle">
+            <img src="/build/images/available_not_available_logo.svg" class="img--logo">
+        </a>
+    </div>
+    <div class="col col--4of12">
+    </div>
+    <div class="col col--4of12 text_right">
+        
+    </div>
+</nav>
+{% endblock %}
 
 
 {% block main %}
-
 <section class="freelancer full" data-user-id="{{freelancer._id}}">
 
 	<div class="freelancer__top_right">
@@ -79,9 +95,15 @@
 	</div>
 
 </section>
-
-
 {% endblock %}
+
+
+{% block footer %}
+	
+	{{ super() }}
+{% endblock %}
+
+
 
 
 

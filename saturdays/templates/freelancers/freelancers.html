@@ -13,9 +13,9 @@
         </a>
     </div>
     <div class="col col--4of12 text_center">
-    	<h1 class="h1--base hide_on_small"><span data-key="title">{{pieces.freelancers.title|safe}}</span></h1>
+    	<h1 class="h1--base hide_on_small">{{pieces.freelancers.title|safe}}</h1>
     </div>
-    <div class="col col--4of12 text_right" data-piece-id="{{pieces.navigation._id}}">
+    <div class="col col--4of12 text_right">
         {# <a href="/manifesto" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
         <span class="spaced hide_on_small"></span> #}
         <a href="/freelancers?login=true" class="" data-show-login>{{pieces.freelancers.login}}</a>
@@ -27,14 +27,33 @@
 
 
 {% block main %}
-<div class="padded">
+<div>
 	{{ list(freelancers) }}
 </div>
 {% endblock %}
 
 
 {% block footer %}
+<div class="footer__fixed">
+    <div class="footer__fixed__top"></div>
 
-	{{ super() }}
+    <a href="mailto:makesaturdays@gmail.com" target="_blank" class="footer__fixed__middle text_center">
+        <h2>Are you a freelancer?</h2>
+        <h1 class="h1--massive">Join the network</h1>
+    </a>
+
+    <nav class="footer__fixed__bottom">
+        <div class="padded max_width max_width--center text_center">
+            Available Not Available has events on <a href="{{pieces.navigation.facebook_link}}" data-link-key="facebook_link" class="a--underline" target="_blank">{{pieces.navigation.facebook}}</a>.
+            Our code is <a href="{{pieces.navigation.github_link}}" data-link-key="github_link" class="a--underline" target="_blank"><span data-key="github">{{pieces.navigation.github}}</span></a>.
+            We're also <a href="{{pieces.navigation.twitter_link}}" data-link-key="twitter_link" class="a--underline" target="_blank">{{pieces.navigation.twitter}}</a>.
+            Our pics are on <a href="{{pieces.navigation.instagram_link}}" data-link-key="instagram_link" class="a--underline" target="_blank">{{pieces.navigation.instagram}}</a>.
+            Read the books from our <a href="/lists/library" class="a--underline"><span data-key="library">{{pieces.navigation.library}}</span></a>.
+            And get to know our process on the <a href="/lists/blog" class="a--underline"><span data-key="blog">{{pieces.navigation.blog}}</span></a>.
+
+            <span data-piece-admin></span></p>
+        </div>
+    </nav>
+</div>
 {% endblock %}
 

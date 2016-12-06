@@ -20,6 +20,10 @@ footer {
 
 		color: $white;
 		background: $red;
+
+		.freelancers & {
+			background: $green;
+		}
 	}
 
 	.footer__fixed__top,

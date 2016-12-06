@@ -37,10 +37,6 @@ body {
 
 .main {
 	background-color: $white;
-
-	.freelancers & {
-		background-color: $grey;
-	}
 }
 
 
@@ -94,8 +90,9 @@ h1, h2, h3, h4, h5, h6 {
 	}
 
 	h4 {
+		font-family: $body_font;
 		font-size: $medium_size;
-		font-weight: normal;
+		font-weight: $bold;
 	}
 	
 	h5, h6 {

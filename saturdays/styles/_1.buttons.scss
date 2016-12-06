@@ -58,8 +58,8 @@ button,
 	}
 
 	&.button--big {
-		font-size: $medium_size;
-		padding: $vertical_rythm*3;
+		font-size: $big_size;
+		padding: $vertical_rythm/1.75 $vertical_rythm*1.5 $vertical_rythm/2;
 	}
 
 	&.button--full {
