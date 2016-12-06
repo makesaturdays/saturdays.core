@@ -191,7 +191,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + alias4(((helper = (helper = helpers.quantity || (depth0 != null ? depth0.quantity : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"quantity","hash":{},"data":data}) : helper)))
     + "\" class=\"input--tight flat_bottom\">\n</div>\n<div class=\"col col--1of12\">\n<button class=\"button--transparent\" data-remove-from-cart data-item-id=\""
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
-    + "\"><svg class=\"icon-x\"><use xlink:href=\"/build/images/icons.svg#icon-x\"></use></svg></button>\n</div>\n</div>\n</div>\n</div>\n\n";
+    + "\"><svg class=\"icon\"><use xlink:href=\"#icon-x\"></use></svg></button>\n</div>\n</div>\n</div>\n</div>\n\n";
 },"15":function(container,depth0,helpers,partials,data) {
     var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
@@ -210,7 +210,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,(depth0 != null ? depth0.sub_total : depth0),{"name":"money","hash":{},"data":data}))
     + "</div>\n<div class=\"col col--1of12\"><button class=\"button--transparent\" data-remove-from-cart data-item-id=\""
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
-    + "\"><svg class=\"icon-x\"><use xlink:href=\"/build/images/icons.svg#icon-x\"></use></svg></button></div>\n\n";
+    + "\"><svg class=\"icon\"><use xlink:href=\"#icon-x\"></use></svg></button></div>\n\n";
 },"16":function(container,depth0,helpers,partials,data) {
     var stack1;
 
@@ -432,7 +432,7 @@ this["templates"]["user/login"] = Handlebars.template({"1":function(container,de
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
     + "\" class=\"login__back\" data-hide data-turbolinks=\"false\"></a>\n\n<form class=\"login__container\" data-login-form>\n<a href=\""
     + alias4(((helper = (helper = helpers.current_path || (depth0 != null ? depth0.current_path : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"current_path","hash":{},"data":data}) : helper)))
-    + "\" class=\"login__close\" data-hide data-turbolinks=\"false\"><svg class=\"icon-close\"><use xlink:href=\"/build/images/icons.svg#icon-close\"></use></svg></a>\n\n<div class=\"grid grid--tight_guttered grid--middle grid--center slide\">\n<div class=\"col col--12of12 text_center\">\n<h3>Login</h3>\n<p>All fields are required</p>\n</div>\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
+    + "\" class=\"login__close\" data-hide data-turbolinks=\"false\"><svg class=\"icon\"><use xlink:href=\"#icon-close\"></use></svg></a>\n\n<div class=\"grid grid--tight_guttered grid--middle grid--center slide\">\n<div class=\"col col--12of12 text_center\">\n<h3>Login</h3>\n<p>All fields are required</p>\n</div>\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--2of12\">\n<label for=\"email\">"
     + alias4(container.lambda(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.admin : stack1)) != null ? stack1.email_label : stack1), depth0))
     + "</label>\n</div>\n<div class=\"col col--10of12\">\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.program(3, data, 0),"data":data})) != null ? stack1 : "")

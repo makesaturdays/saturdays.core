@@ -42,8 +42,8 @@
 
 				{% if not post.source %}
 				<p class="p--medium medium_top">
-					<a href="/lists/blog/posts/{{post.route}}" class="js-maximize">{{pieces.blog.read_more}} <svg class="icon-down"><use xlink:href="/build/images/icons.svg#icon-down"></use></svg></a>
-					<a href="/lists/blog/posts/{{post.route}}" class="hide js-minimize">{{pieces.blog.read_less}} <svg class="icon-up"><use xlink:href="/build/images/icons.svg#icon-up"></use></svg></a>
+					<a href="/lists/blog/posts/{{post.route}}" class="js-maximize">{{pieces.blog.read_more}} <svg class="icon"><use xlink:href="#icon-down"></use></svg></a>
+					<a href="/lists/blog/posts/{{post.route}}" class="hide js-minimize">{{pieces.blog.read_less}} <svg class="icon"><use xlink:href="#icon-up"></use></svg></a>
 				</p>
 				{% endif %}
 			</div>
