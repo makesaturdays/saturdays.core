@@ -1,0 +1,12 @@
+
+{% extends "freelancers/freelancers.html" %}
+{% from "freelancers/list.html" import list with context %}
+
+{% block main %}
+<section>
+	<h2>{{tagged.tag|tag}} <small>({{tagged.freelancers|length}} available in Montreal)</small></h2>
+
+	{{ list(tagged.freelancers) }}
+</section>
+{% endblock %}
+
