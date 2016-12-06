@@ -214,12 +214,14 @@ with app.app_context():
 			
 			try:
 				document['cart']['items'] = document['cart_items']
-				# del document['cart_items']
 			except KeyError:
 				pass
 
-			document['cart'] = Cart.postprocess(document['cart'])
-			document['cart']['requires_user'] = False
+			try:
+				document['cart'] = Cart.postprocess(document['cart'])
+				document['cart']['requires_user'] = False
+			except KeyError:
+				pass
 
 			try:
 				if 'credit_card' not in document['cart']:

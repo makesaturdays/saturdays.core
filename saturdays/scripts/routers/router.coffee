@@ -6,6 +6,8 @@ class Saturdays.Routers.Router extends Backbone.Router
 		"products(/:pretty_url)(/)": "products"
 		"vendor_shops(/:pretty_url)(/)": "vendor_shops"
 		"users/:_id(/profile)(/)": "users"
+		"freelancers(/:route)(/)": "freelancers"
+		"freelancers/:tagged/:tag(/)": "freelancers"
 		"lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list"
 		"request_access(/)": "request_access"
 		"manifesto(/)": "page"
@@ -17,9 +19,7 @@ class Saturdays.Routers.Router extends Backbone.Router
 
 	initialize: ->
 		document.addEventListener "turbolinks:render", (e)=>
-			this.navigate window.location.pathname,
-				trigger: true
-				replace: true
+			Backbone.history.checkUrl()
 
 
 
@@ -95,7 +95,11 @@ class Saturdays.Routers.Router extends Backbone.Router
 			})
 
 	users: (_id)->
-		
+
+
+
+	freelancers: ->
+
 
 
 	list: (list_route, route)->

@@ -1,0 +1,24 @@
+
+{% macro list(freelancers=[], half=False) %}
+{% for freelancer in freelancers %}
+<div class="padded padded--tight normal_bottom white_back">
+	<div class="grid grid--middle grid--guttered">
+		<div class="col col--1of12">
+			<a href="/freelancers/{{freelancer.route}}"><img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_400,q_auto,w_400/{{freelancer.image}}" class="img--rounded {% if not freelancer.is_available %}img--faded{% endif %}"></a>
+		</div>
+		<div class="col col--5of12 col--small--7of12">
+			<small>{% for tag in freelancer.tags %}<a href="/freelancers/tagged/{{tag}}">{{tag|tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}</small>
+			<h3><a href="/freelancers/{{freelancer.route}}" class="{% if not freelancer.is_available %}strike{% endif %}">{{freelancer.first_name}} {{freelancer.last_name}}</a></h3>
+		</div>
+		<div class="col col--4of12 col--small--3of12">
+			<small>{{pieces.freelancers.rate}}</small><br>
+			<h3>{{freelancer.rate}}</h3>
+		</div>
+		<div class="col col--1of12 hide_on_small">
+			<input type="checkbox" id="{{freelancer._id}}_is_available" disabled {% if freelancer.is_available %}checked{% endif %} class="checkbox--dot">
+			<label for="{{freelancer._id}}_is_available" {% if freelancer.is_available %}title="Available">Available{% else %}title="Not Available">Not Available{% endif %}</label>
+		</div>
+	</div>
+</div>
+{% endfor %}
+{% endmacro %}

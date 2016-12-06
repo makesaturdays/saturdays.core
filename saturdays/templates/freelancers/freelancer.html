@@ -1,0 +1,87 @@
+
+{% extends "freelancers/freelancers.html" %}
+
+
+
+{% block main %}
+
+<section class="freelancer full" data-user-id="{{freelancer._id}}">
+
+	<div class="freelancer__top_right">
+		<div class="grid grid--guttered grid--middle grid--right">
+			<div class="col text_right">
+				<small>{{pieces.freelancers.rate}}</small><br>
+				<h3 data-rate>{{freelancer.rate}}</h3>
+			</div>
+
+			<div class="col col--small--first" data-admin>
+				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--big {% if not freelancer.is_available %}disabled{% endif %}">{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="grid grid--tight_guttered">
+		<div class="col col--12of12 normal_bottom" data-route-box>
+			<a href="https://avail.es/{{freelancer.route}}" class="pill"><svg class="icon icon--white"><use xlink:href="#icon-link"></use></svg> avail.es/{{freelancer.route}}</a>
+		</div>
+
+		<div class="col col--3of12 col--medium--5of12 col--small--8of12">
+			<div class="relative">
+				<img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/{{freelancer.image}}" class="img--rounded" data-image data-image-cdn="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/">
+
+				<input type="checkbox" id="{{freelancer._id}}_is_available" disabled {% if freelancer.is_available %}checked{% endif %} class="checkbox--dot checkbox--dot--top_right" data-dot>
+				<label for="{{freelancer._id}}_is_available" {% if freelancer.is_available %}title="Available">Available{% else %}title="Not Available">Not Available{% endif %}</label>
+			</div>
+		</div>
+		<div class="col col--9of12 col--medium--7of12 col--small--4of12" data-edit-box></div>
+		<div class="col col--12of12">
+			<h1 class="h1--massive medium_bottom max_width max_width--text"><span data-first-name>{{freelancer.first_name}}</span> <span data-last-name>{{freelancer.last_name}}</span> is <span data-is-available>{% if freelancer.is_available %}<span class="green">available</span>{% else %}<span class="red">not available</span>{% endif %}</span> for freelance work.</h1>
+
+
+			<h4 class="small_bottom">{{pieces.freelancers.bio}}</h4>
+			<p class="p--medium small_bottom max_width max_width--text" data-bio>{{freelancer.bio|safe}}</p>
+
+			<div class="grid grid--tight_guttered grid--middle" data-links>
+				{% for link in freelancer.links %}
+				<div class="col"><a href="{{link.url}}" class="a--underline strong">{{link.label}}</a></div>
+				{% endfor %}
+			</div>
+
+			<h4 class="small_bottom normal_top">{{pieces.freelancers.skills}}</h4>
+
+			<div class="tags" data-skills>
+				{% for skill in freelancer.skills %}
+				<span class="tag">{{skill}}</span>
+				{% endfor %}
+			</div>
+
+			<hr>
+
+			<div data-projects>
+			{% for project in freelancer.projects %}
+				<div class="grid grid--guttered grid--middle">
+					<div class="col col--6of12 col--medium--7of12 col--small--12of12">
+						<h4 class="small_bottom">{{project.contributions}}</h4>
+						<h2 class="max_width max_width--text"><a href="{{project.url}}">{{project.title}}</a></h2>
+						<p class="p--medium max_width max_width--text">{{project.description}}</p>
+						<p class=""><a href="{{project.url}}" class="a--underline">{{project.url}}</a></p>
+					</div>
+						
+					<div class="col col--4of12 col--small--10of12">
+						<a href="{{project.url}}"><img src="https://res.cloudinary.com/deming/image/fetch/f_auto,w_600,q_auto/{{project.image}}" alt="{{project.url}}"></a>
+					</div>
+				</div>
+
+				<hr>
+			{% endfor %}
+			</div>
+		</div>
+	</div>
+
+</section>
+
+
+{% endblock %}
+
+
+

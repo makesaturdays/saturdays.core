@@ -1,0 +1,40 @@
+
+{% extends "layout.html" %}
+{% from "freelancers/list.html" import list with context %}
+
+{% block body_classes %}freelancers{% endblock %}
+
+
+{% block header %}
+<nav class="grid grid--middle" data-navigation>
+    <div class="col col--4of12">
+        <a href="/freelancers" class="grid grid--middle">
+            <img src="/build/images/available_not_available_logo.svg" class="img--logo">
+        </a>
+    </div>
+    <div class="col col--4of12 text_center">
+    	<h1 class="h1--base hide_on_small"><span data-key="title">{{pieces.freelancers.title|safe}}</span></h1>
+    </div>
+    <div class="col col--4of12 text_right" data-piece-id="{{pieces.navigation._id}}">
+        {# <a href="/manifesto" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
+        <span class="spaced hide_on_small"></span> #}
+        <a href="/freelancers?login=true" class="" data-show-login>{{pieces.freelancers.login}}</a>
+        <span class="spaced hide_on_small"></span>
+        <a href="/freelancers?signup=true" class="button button--bordered button--blue" data-show-signup>{{pieces.freelancers.signup}}</a>
+    </div>
+</nav>
+{% endblock %}
+
+
+{% block main %}
+<div class="padded">
+	{{ list(freelancers) }}
+</div>
+{% endblock %}
+
+
+{% block footer %}
+
+	{{ super() }}
+{% endblock %}
+

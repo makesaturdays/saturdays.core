@@ -128,7 +128,17 @@ button,
 			&:hover,
 			&:focus {
 				color: $white;
-				background: $primary;
+				background: $black;
+			}
+		}
+
+		&.button--blue {
+			color: $blue;
+
+			&:hover,
+			&:focus {
+				color: $white;
+				background: $blue;
 			}
 		}
 	}

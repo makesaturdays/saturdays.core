@@ -4,8 +4,9 @@ class Saturdays.Views.Navigation extends Saturdays.View
 
 
 	events: {
-		"click [data-show-admin]": "show_admin"
 		"click [data-show-cart]": "show_cart"
+		"click [data-show-login]": "show_login"
+		"click [data-show-signup]": "show_signup"
 	}
 
 
@@ -20,9 +21,19 @@ class Saturdays.Views.Navigation extends Saturdays.View
 
 
 
-	show_admin: (e)->
-		# Saturdays.admin_view.show(e)
-
 	show_cart: (e)->
 		Saturdays.cart_view.show(e)
 
+
+	show_login: (e)->
+		e.preventDefault()
+
+		Saturdays.login_view.show(e)
+		Saturdays.router.navigate window.location.pathname+"?login=true"
+
+
+	show_signup: (e)->
+		e.preventDefault()
+
+		Saturdays.login_view.show(e, 1)
+		Saturdays.router.navigate window.location.pathname+"?signup=true"

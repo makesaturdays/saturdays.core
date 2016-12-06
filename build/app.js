@@ -2059,8 +2059,9 @@
     }
 
     Navigation.prototype.events = {
-      "click [data-show-admin]": "show_admin",
-      "click [data-show-cart]": "show_cart"
+      "click [data-show-cart]": "show_cart",
+      "click [data-show-login]": "show_login",
+      "click [data-show-signup]": "show_signup"
     };
 
     Navigation.prototype.initialize = function() {
@@ -2071,10 +2072,20 @@
       return Navigation.__super__.render.call(this);
     };
 
-    Navigation.prototype.show_admin = function(e) {};
-
     Navigation.prototype.show_cart = function(e) {
       return Saturdays.cart_view.show(e);
+    };
+
+    Navigation.prototype.show_login = function(e) {
+      e.preventDefault();
+      Saturdays.login_view.show(e);
+      return Saturdays.router.navigate(window.location.pathname + "?login=true");
+    };
+
+    Navigation.prototype.show_signup = function(e) {
+      e.preventDefault();
+      Saturdays.login_view.show(e, 1);
+      return Saturdays.router.navigate(window.location.pathname + "?signup=true");
     };
 
     return Navigation;
@@ -2098,6 +2109,8 @@
       "products(/:pretty_url)(/)": "products",
       "vendor_shops(/:pretty_url)(/)": "vendor_shops",
       "users/:_id(/profile)(/)": "users",
+      "freelancers(/:route)(/)": "freelancers",
+      "freelancers/:tagged/:tag(/)": "freelancers",
       "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
       "request_access(/)": "request_access",
       "manifesto(/)": "page",
@@ -2109,10 +2122,7 @@
     Router.prototype.initialize = function() {
       return document.addEventListener("turbolinks:render", (function(_this) {
         return function(e) {
-          return _this.navigate(window.location.pathname, {
-            trigger: true,
-            replace: true
-          });
+          return Backbone.history.checkUrl();
         };
       })(this));
     };
@@ -2210,6 +2220,8 @@
     };
 
     Router.prototype.users = function(_id) {};
+
+    Router.prototype.freelancers = function() {};
 
     Router.prototype.list = function(list_route, route) {
       return $("[data-post-id]").each((function(_this) {
