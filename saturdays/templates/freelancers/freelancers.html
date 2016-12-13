@@ -28,11 +28,15 @@
 
 
 {% block main %}
-<section class="huge_bottom">
+<section class="padded padded--vertically_thick main__under_header white_back shadowed">
+    <h1 class="text_center">Find an <em>available</em> freelancer for hire.</h1>
+</section>
+
+<section class="padded">
 	{{ list(freelancers) }}
 </section>
 
-<section>
+<section class="padded padded--vertically_thick">
     <div class="grid grid--spaced medium_bottom">
         <div class="col col--5of12">
             <h2>{{pieces.workshops.title|safe}}</h2>

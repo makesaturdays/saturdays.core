@@ -98,7 +98,7 @@ with app.app_context():
 			},
 			{
 				'view_function': 'tagged_view',
-				'template': 'freelancers/tagged.html',
+				'template': 'freelancers/freelancers.html',
 				'response_key': 'tagged'
 			},
 			{

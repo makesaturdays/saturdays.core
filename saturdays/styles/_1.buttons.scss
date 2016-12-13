@@ -6,7 +6,7 @@ button,
 	cursor: pointer;
 	display: inline-block;
 	
-	font-family: $alternate_font;
+	font-family: $headings_font;
 	font-weight: normal;
 	font-size: 1rem;
 	line-height: 1;
@@ -77,6 +77,16 @@ button,
 		&:hover,
 		&:focus {
 			background: $highlight;
+		}
+	}
+
+	&.button--green {
+		background: $green;
+		border-color: transparent;
+
+		&:hover,
+		&:focus {
+			background: $blue;
 		}
 	}
 

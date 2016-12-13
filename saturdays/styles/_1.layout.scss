@@ -32,17 +32,25 @@ header {
 	z-index: 1;
 }
 
+	.header__rotated {
+		padding-right: $gutter;
+		
+		@include transform_origin(100%, 0);
+		@include transform(translateX(-100%) rotate(-90deg));
+	}
+
 
 // #MAIN
 
 .main {
-	@extend .padded;
-	@extend .padded--vertically_thick;
-
 	max-width: 1600px;
 	min-height: 100vh;
 	margin: 0 auto;
 }
+
+	.main__under_header {
+		padding-top: $gutter*5 !important;
+	}
 
 	.main__center {
 		width: 100%;
@@ -140,6 +148,7 @@ iframe {
 
 .relative { position: relative; }
 .hide { display: none !important; }
+.block { display: block; }
 .inline_block { display: inline-block; }
 .right { float: right; }
 .text_center { text-align: center; }

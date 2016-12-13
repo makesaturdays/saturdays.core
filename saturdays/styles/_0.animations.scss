@@ -11,6 +11,12 @@
 	@include transform(translate($x, $y));
 }
 
+@mixin transform_origin($x, $y) {
+	-ms-transform-origin: $x $y;
+	-webkit-transform-origin: $x $y;
+	transform-origin: $x $y;
+}
+
 @mixin transition($transition...) {
 	-ms-transition: $transition;
 	-webkit-transition: $transition;

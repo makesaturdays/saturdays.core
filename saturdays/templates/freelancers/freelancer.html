@@ -2,6 +2,7 @@
 {% extends "freelancers/freelancers.html" %}
 
 {% block body_classes %} {{ super() }}{% endblock %}
+{% block main_classes %}{% endblock %}
 
 
 {% block header %}
@@ -22,19 +23,23 @@
 			</div>
 
 			<div class="col col--small--first" data-admin>
-				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--medium {% if not freelancer.is_available %}disabled{% endif %}">{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
+				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--medium {% if not freelancer.is_available %}disabled{% else %}button--green{% endif %}">{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
 			</div>
 		</div>
+    </div>
+
+    <div class="header__rotated">
+    	<h3><a href="/freelancers">Freelancers</a>&nbsp;&nbsp;<small>({% for tag in freelancer.tags %}<a href="/freelancers/tagged/{{tag}}">{{tag|tag}}</a>{% if not loop.last %} / {% endif %}{% endfor %})</small></h3>
     </div>
 </nav>
 {% endblock %}
 
 
 {% block main %}
-<section class="freelancer full" data-user-id="{{freelancer._id}}">
+<section class="grid grid--right main__under_header" data-user-id="{{freelancer._id}}">
 
 
-	<div class="grid grid--tight_guttered">
+	<div class="col col--11of12 grid grid--tight_guttered">
 		<div class="col col--3of12 col--medium--5of12 col--small--8of12">
 			<div class="relative">
 				<img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/{{freelancer.image}}" class="img--rounded" data-image data-image-cdn="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/">

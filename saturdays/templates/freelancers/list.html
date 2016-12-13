@@ -1,16 +1,16 @@
 
 {% macro list(freelancers=[], half=False) %}
 {% for freelancer in freelancers %}
-<div class="padded padded--tight normal_bottom white_back">
+<a href="/freelancers/{{freelancer.route}}" class="padded padded--tight block radiused normal_bottom white_back">
 	<div class="grid grid--middle grid--guttered">
 		<div class="col col--1of12">
-			<a href="/freelancers/{{freelancer.route}}"><img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_400,q_auto,w_400/{{freelancer.image}}" class="img--rounded {% if not freelancer.is_available %}img--faded{% endif %}"></a>
+			<img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_400,q_auto,w_400/{{freelancer.image}}" class="img--rounded {% if not freelancer.is_available %}img--faded{% endif %}">
 		</div>
 		<div class="col col--3of12">
-			<h4><a href="/freelancers/{{freelancer.route}}" class="{% if not freelancer.is_available %}strike{% endif %}">{{freelancer.first_name}} {{freelancer.last_name}}</a></h4>
+			<h4 class="{% if not freelancer.is_available %}strike{% endif %}">{{freelancer.first_name}} {{freelancer.last_name}}</h4>
 		</div>
 		<div class="col col--3of12">
-			{% for tag in freelancer.tags %}<a href="/freelancers/tagged/{{tag}}">{{tag|tag}}</a>{% if not loop.last %}, {% endif %}{% endfor %}
+			{% for tag in freelancer.tags %}{{tag|tag}}{% if not loop.last %}, {% endif %}{% endfor %}
 		</div>
 		<div class="col col--2of12">
 			<p>Montréal</p>
@@ -23,6 +23,6 @@
 			<label for="{{freelancer._id}}_is_available" {% if freelancer.is_available %}title="Available">Available{% else %}title="Not Available">Not Available{% endif %}</label>
 		</div>
 	</div>
-</div>
+</a>
 {% endfor %}
 {% endmacro %}
