@@ -57,11 +57,6 @@ button,
 		padding: $vertical_rythm;
 	}
 
-	&.button--big {
-		font-size: $big_size;
-		padding: $vertical_rythm/1.75 $vertical_rythm*1.5 $vertical_rythm/2;
-	}
-
 	&.button--full {
 		padding-right: 0;
 		padding-left: 0;

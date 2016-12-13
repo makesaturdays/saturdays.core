@@ -22,7 +22,7 @@
 			</div>
 
 			<div class="col col--small--first" data-admin>
-				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--big {% if not freelancer.is_available %}disabled{% endif %}">{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
+				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--medium {% if not freelancer.is_available %}disabled{% endif %}">{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
 			</div>
 		</div>
     </div>

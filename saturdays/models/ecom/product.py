@@ -85,6 +85,15 @@ with app.app_context():
 
 
 		@classmethod
+		def preprocess(cls, document):
+			for cache in app.caches:
+				app.caches[cache].clear()
+
+			return super().preprocess(document)
+			
+
+
+		@classmethod
 		def create(cls, document):
 
 			if 'price' not in document:

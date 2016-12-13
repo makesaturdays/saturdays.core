@@ -6,8 +6,6 @@ from flask import render_template, json
 from werkzeug.routing import Rule
 from werkzeug.contrib.cache import SimpleCache
 
-from saturdays.models.cms.piece import Piece
-
 from bson.objectid import ObjectId
 import hashlib
 
@@ -60,9 +58,13 @@ with app.app_context():
 									pass
 
 
+								from saturdays.models.cms.piece import Piece
+								from saturdays.models.ecom.product import Product
+
 								response = {
 									template['response_key']: response.copy(),
 									'pieces': Piece._values(),
+									'products': Product.list(),
 									'debugging': app.config['DEBUG'],
 									'current_path': request.path,
 									'stripe_key': app.config['STRIPE_PUBLISHABLE_KEY']

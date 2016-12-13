@@ -3,6 +3,7 @@
 {% from "freelancers/list.html" import list with context %}
 
 {% block body_classes %}freelancers{% endblock %}
+{% block main_classes %}light_grey_back{% endblock %}
 
 
 {% block header %}
@@ -13,7 +14,7 @@
         </a>
     </div>
     <div class="col col--4of12 text_center">
-    	<h1 class="h1--base hide_on_small">{{pieces.freelancers.title|safe}}</h1>
+    	<h1 class="h1--base hide_on_small"><a href="/freelancers">{{pieces.freelancers.title|safe}}</a></h1>
     </div>
     <div class="col col--4of12 text_right">
         {# <a href="/manifesto" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
@@ -27,8 +28,21 @@
 
 
 {% block main %}
-<section>
+<section class="huge_bottom">
 	{{ list(freelancers) }}
+</section>
+
+<section>
+    <div class="grid grid--spaced medium_bottom">
+        <div class="col col--5of12">
+            <h2>{{pieces.workshops.title|safe}}</h2>
+            <p>{{pieces.workshops.introduction|safe}}</p>
+        </div>
+        <div class="col">
+            <a href="/products" class="button button--medium">See all workshops</a>
+        </div>
+    </div>
+    {% include 'products/workshops.html' %}
 </section>
 {% endblock %}
 
