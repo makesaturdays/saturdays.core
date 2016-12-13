@@ -29,11 +29,15 @@
 
 {% block main %}
 <section class="padded padded--vertically_thick main__under_header white_back shadowed">
-    <h1 class="text_center">Find an <em>available</em> freelancer for hire.</h1>
+    <h1 class="text_center">Find an <em>available</em> {% if tagged %}{{tagged.tag|tag|lower}}{% else %}freelancer{% endif %} for hire.</h1>
 </section>
 
 <section class="padded">
-	{{ list(freelancers) }}
+    {% if tagged %}
+	{{ list(tagged.freelancers) }}
+    {% else %}
+    {{ list(freelancers) }}
+    {% endif %}
 </section>
 
 <section class="padded padded--vertically_thick">
