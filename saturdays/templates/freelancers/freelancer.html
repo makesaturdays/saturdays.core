@@ -58,7 +58,7 @@
 
 			<div class="grid grid--tight_guttered grid--middle" data-links>
 				{% for link in freelancer.links %}
-				<div class="col"><a href="{{link.url}}" class="a--underline strong">{{link.label}}</a></div>
+				<div class="col"><a href="{{link.url|url}}" class="a--underline strong" target="_blank">{{link.label}}</a></div>
 				{% endfor %}
 			</div>
 

@@ -4,12 +4,16 @@ categories = [
 	'key': 'graphics',
 	'tags': [
 		{
-			'title': 'Graphic Designer',
-			'key': 'graphic_designer'
+			'title': 'Designer',
+			'key': 'designer'
 		},
 		{
 			'title': 'Illustrator',
 			'key': 'illustrator'
+		},
+		{
+			'title': 'Typographer',
+			'key': 'typographer'
 		}
 	]
 },
@@ -38,6 +42,10 @@ categories = [
 		{
 			'title': 'Videographer',
 			'key': 'videographer'
+		},
+		{
+			'title': 'Animator',
+			'key': 'animator'
 		}
 	]
 },
