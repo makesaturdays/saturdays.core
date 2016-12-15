@@ -54,7 +54,7 @@
 
 
 			<h4 class="small_bottom">{{pieces.freelancers.bio}}</h4>
-			<p class="p--medium small_bottom max_width max_width--text" data-bio>{{freelancer.bio}}</p>
+			<p class="p--medium small_bottom max_width max_width--text" data-bio>{{freelancer.bio|striptags}}</p>
 
 			<div class="grid grid--tight_guttered grid--middle" data-links>
 				{% for link in freelancer.links %}
@@ -78,7 +78,7 @@
 					<div class="col col--6of12 col--medium--7of12 col--small--12of12">
 						<h4 class="small_bottom">{{project.contributions}}</h4>
 						<h2 class="max_width max_width--text"><a href="{{project.url}}">{{project.title}}</a></h2>
-						<p class="p--medium max_width max_width--text">{{project.description}}</p>
+						<p class="p--medium max_width max_width--text">{{project.description|striptags}}</p>
 						<p class=""><a href="{{project.url}}" class="a--underline">{{project.url}}</a></p>
 					</div>
 						
