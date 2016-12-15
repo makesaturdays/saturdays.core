@@ -7,7 +7,7 @@ from saturdays import app
 from saturdays.helpers.json import to_json
 
 
-from flask import request, abort
+from flask import request, abort, redirect
 import os
 
 
