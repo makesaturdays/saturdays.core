@@ -10,6 +10,7 @@
       cdn: "https://d3hy1swj29dtr7.cloudfront.net/",
       api: "http://127.0.0.1:5000/"
     },
+    views: [],
     init: function() {
       this.session = new Saturdays.Models.Session();
       this.user = new Saturdays.Models.User();
@@ -17,10 +18,110 @@
       this.login_view = new Saturdays.Views.Login();
       this.cart_view = new Saturdays.Views.Cart();
       this.header_view = new Saturdays.Views.Header();
-      this.router = new Saturdays.Routers.Router();
-      return Backbone.history.start({
-        pushState: true
-      });
+      this.render_views();
+      return document.addEventListener("turbolinks:render", this.render_views.bind(this));
+    },
+    render_views: function() {
+      var i, len, ref, today, view;
+      ref = this.views;
+      for (i = 0, len = ref.length; i < len; i++) {
+        view = ref[i];
+        view.undelegateEvents();
+      }
+      delete this.views;
+      this.views = [];
+      $("[data-product-id]").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.Product({
+            "_id": element.getAttribute("data-product-id")
+          });
+          return _this.views.push(new Saturdays.Views.Product({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
+      $("[data-shop-id]").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.VendorShop({
+            "_id": element.getAttribute("data-shop-id")
+          });
+          return _this.views.push(new Saturdays.Views.VendorShop({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
+      $("[data-post-id]").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.ListPost({
+            "_id": element.getAttribute("data-post-id")
+          });
+          model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
+          return _this.views.push(new Saturdays.Views.Post({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
+      $("[data-search]").each((function(_this) {
+        return function(index, element) {
+          return _this.views.push(new Saturdays.Views.Search({
+            el: element
+          }));
+        };
+      })(this));
+      $("[data-freelancer-id]").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.Freelancer({
+            "_id": element.getAttribute("data-freelancer-id")
+          });
+          return _this.views.push(new Saturdays.Views.Freelancer({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
+      $("[data-piece-id]").each((function(_this) {
+        return function(index, element) {
+          var model;
+          model = new Saturdays.Models.Piece({
+            "_id": element.getAttribute("data-piece-id")
+          });
+          return _this.views.push(new Saturdays.Views.Piece({
+            el: element,
+            model: model
+          }));
+        };
+      })(this));
+      $("[data-navigation]").each((function(_this) {
+        return function(index, element) {
+          return _this.views.push(new Saturdays.Views.Navigation({
+            el: element
+          }));
+        };
+      })(this));
+      today = new Date();
+      $('[data-day]').each((function(_this) {
+        return function(index, element) {
+          return element.innerHTML = pieces.navigation.weekdays[today.getDay()];
+        };
+      })(this));
+      this.query = Saturdays.helpers.get_query_string();
+      if (this.query.cart != null) {
+        Saturdays.cart_view.show();
+      } else {
+        Saturdays.cart_view.hide();
+      }
+      if (this.query.login != null) {
+        return Saturdays.login_view.show();
+      } else {
+        return Saturdays.login_view.hide();
+      }
     }
   };
 
@@ -509,9 +610,16 @@
         user: Saturdays.user.toJSON()
       } : void 0, Saturdays.session != null ? {
         is_authenticated: Saturdays.session.has("user_id")
-      } : void 0, Saturdays.user != null ? {
-        is_admin: Saturdays.user.get("is_admin")
       } : void 0);
+      if ((Saturdays.user != null) && (this.model != null) && (this.model.get("user_id") != null)) {
+        _.extend(this.data, {
+          has_permission: Saturdays.user.get("is_admin") || Saturdays.user.id === this.model.get("user_id")
+        });
+      } else {
+        _.extend(this.data, {
+          has_permission: false
+        });
+      }
       if (this.templates != null) {
         html = "";
         _.each(this.templates, (function(_this) {
@@ -936,6 +1044,25 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Models.Freelancer = (function(superClass) {
+    extend(Freelancer, superClass);
+
+    function Freelancer() {
+      return Freelancer.__super__.constructor.apply(this, arguments);
+    }
+
+    Freelancer.prototype.urlRoot = Saturdays.settings.api + "freelancers";
+
+    return Freelancer;
+
+  })(Saturdays.Model);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Models.Session = (function(superClass) {
     extend(Session, superClass);
 
@@ -1180,7 +1307,6 @@
 
     Editable.prototype.key_input = function(e) {
       if ((this.button != null) && this.button.hasAttribute("disabled")) {
-        console.log(this.button);
         return this.button.removeAttribute("disabled");
       }
     };
@@ -1808,12 +1934,10 @@
     };
 
     Cart.prototype.show = function(e) {
-      Saturdays.router.navigate(window.location.pathname + "?cart=true");
       return Cart.__super__.show.call(this, e);
     };
 
     Cart.prototype.hide = function(e) {
-      Saturdays.router.navigate(window.location.pathname);
       return Cart.__super__.hide.call(this, e);
     };
 
@@ -1945,6 +2069,197 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Freelancer = (function(superClass) {
+    extend(Freelancer, superClass);
+
+    function Freelancer() {
+      return Freelancer.__super__.constructor.apply(this, arguments);
+    }
+
+    Freelancer.prototype.edit_admin_template = templates["user/admin"];
+
+    Freelancer.prototype.route_box_template = templates["user/route_box"];
+
+    Freelancer.prototype.edit_box_template = templates["user/edit_box"];
+
+    Freelancer.prototype.is_available_template = templates["user/is_available"];
+
+    Freelancer.prototype.links_template = templates["user/links"];
+
+    Freelancer.prototype.link_template = templates["user/link"];
+
+    Freelancer.prototype.projects_template = templates["user/projects"];
+
+    Freelancer.prototype.project_template = templates["user/project"];
+
+    Freelancer.prototype.events = {
+      "click [data-add-link]": "add_link",
+      "click [data-remove-link]": "remove_link",
+      "click [data-add-project]": "add_project",
+      "click [data-remove-project]": "remove_project",
+      "change [name='is_available']": "change_is_available",
+      "click [data-project-image]": "trigger_upload",
+      "click [data-show-edit]": "show_edit"
+    };
+
+    Freelancer.prototype.initialize = function() {
+      return Freelancer.__super__.initialize.call(this);
+    };
+
+    Freelancer.prototype.render = function() {
+      Freelancer.__super__.render.call(this);
+      if (this.data.has_permission) {
+        this.$el.find("[data-rate]").attr("contenteditable", "true");
+        this.$el.find("[data-first-name]").attr("contenteditable", "true");
+        this.$el.find("[data-last-name]").attr("contenteditable", "true");
+        this.$el.find("[data-bio]").attr("contenteditable", "true");
+        this.$el.find("[data-skills]").html(this.tags_template({
+          tags: this.data.model.skills,
+          name: "skill"
+        }));
+        this.$el.find("[data-route-box]").html(this.route_box_template(this.data));
+        this.$el.find("[data-edit-box]").html(this.edit_box_template(this.data));
+        this.$el.find("[data-is-available]").html(this.is_available_template(this.data));
+        this.$el.find("[data-links]").html(this.links_template({
+          links: this.data.model.links
+        }));
+        this.$el.find("[data-projects]").html(this.projects_template({
+          projects: this.data.model.projects
+        }));
+        this.delegateEvents();
+      }
+      return this;
+    };
+
+    Freelancer.prototype.save_edit = function(e) {
+      this.model.set({
+        first_name: this.$el.find("[data-first-name]").text(),
+        last_name: this.$el.find("[data-last-name]").text(),
+        rate: this.$el.find("[data-rate]").text(),
+        bio: this.$el.find("[data-bio]").html(),
+        route: this.$el.find("[data-route]").text(),
+        is_available: this.$el.find("[name='is_available']")[0].checked,
+        skills: [],
+        links: [],
+        projects: []
+      });
+      this.$el.find("[data-skills] [data-tag]").each((function(_this) {
+        return function(index, skill) {
+          return _this.model.attributes.skills.push(skill.innerText);
+        };
+      })(this));
+      this.$el.find("[data-link]").each((function(_this) {
+        return function(index, link) {
+          return _this.model.attributes.links.push({
+            label: $(link).find("[data-link-label]").text(),
+            url: $(link).find("[data-link-url]").text()
+          });
+        };
+      })(this));
+      this.$el.find("[data-project]").each((function(_this) {
+        return function(index, project) {
+          return _this.model.attributes.projects.push({
+            title: $(project).find("[data-project-title]").text(),
+            description: $(project).find("[data-project-description]").text(),
+            contributions: $(project).find("[data-project-contributions]").text(),
+            url: $(project).find("[data-project-url]").text(),
+            image: $(project).find("[data-project-image]").attr("src").replace($(project).find("[data-project-image]").attr("data-image-cdn"), "")
+          });
+        };
+      })(this));
+      return Freelancer.__super__.save_edit.call(this);
+    };
+
+    Freelancer.prototype.change_is_available = function(e) {
+      return this.$el.find("[data-dot]").attr("checked", e.currentTarget.checked);
+    };
+
+    Freelancer.prototype.add_link = function(e) {
+      this.insert_link(e.currentTarget);
+      return this.$el.find("[data-link-label]").last().focus();
+    };
+
+    Freelancer.prototype.remove_link = function(e) {
+      return $(e.currentTarget).parents("[data-link]").remove();
+    };
+
+    Freelancer.prototype.add_project = function(e) {
+      this.insert_project(e.currentTarget);
+      return this.$el.find("[data-project-contributions]").last().focus();
+    };
+
+    Freelancer.prototype.remove_project = function(e) {
+      return $(e.currentTarget).parents("[data-project]").remove();
+    };
+
+    Freelancer.prototype.show_edit = function(e) {
+      return e.preventDefault();
+    };
+
+    Freelancer.prototype.insert_link = function(target) {
+      return $(this.link_template()).insertBefore($(target));
+    };
+
+    Freelancer.prototype.insert_project = function(target) {
+      return $(this.project_template()).insertBefore($(target));
+    };
+
+    return Freelancer;
+
+  })(Saturdays.Views.Editable);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
+  Saturdays.Views.Search = (function(superClass) {
+    extend(Search, superClass);
+
+    function Search() {
+      return Search.__super__.constructor.apply(this, arguments);
+    }
+
+    Search.prototype.events = {
+      "input [name='search']": "search_input"
+    };
+
+    Search.prototype.initialize = function() {
+      return Search.__super__.initialize.call(this);
+    };
+
+    Search.prototype.render = function() {
+      Search.__super__.render.call(this);
+      return this;
+    };
+
+    Search.prototype.search_input = function(e) {
+      if (this.input_timeout != null) {
+        clearTimeout(this.input_timeout);
+      }
+      return this.input_timeout = setTimeout(function() {
+        Turbolinks.controller.adapter.progressBar.setValue(0);
+        Turbolinks.controller.adapter.progressBar.show();
+        history.replaceState(null, null, "/freelancers/_search?query=" + e.currentTarget.value);
+        return $.get("/freelancers/_search?query=" + e.currentTarget.value, function(response) {
+          Turbolinks.controller.adapter.progressBar.setValue(100);
+          Turbolinks.controller.adapter.progressBar.hide();
+          return $("[data-freelancers]").html($(response).find("[data-freelancers]").html());
+        });
+      }, 333);
+    };
+
+    return Search;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Views.Header = (function(superClass) {
     extend(Header, superClass);
 
@@ -2032,12 +2347,10 @@
     };
 
     Login.prototype.show = function(e) {
-      Saturdays.router.navigate(window.location.pathname + "?login=true");
       return Login.__super__.show.call(this, e);
     };
 
     Login.prototype.hide = function(e) {
-      Saturdays.router.navigate(window.location.pathname);
       return Login.__super__.hide.call(this, e);
     };
 
@@ -2078,171 +2391,16 @@
 
     Navigation.prototype.show_login = function(e) {
       e.preventDefault();
-      Saturdays.login_view.show(e);
-      return Saturdays.router.navigate(window.location.pathname + "?login=true");
+      return Saturdays.login_view.show(e);
     };
 
     Navigation.prototype.show_signup = function(e) {
       e.preventDefault();
-      Saturdays.login_view.show(e, 1);
-      return Saturdays.router.navigate(window.location.pathname + "?signup=true");
+      return Saturdays.login_view.show(e, 1);
     };
 
     return Navigation;
 
   })(Saturdays.View);
-
-}).call(this);
-
-(function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  Saturdays.Routers.Router = (function(superClass) {
-    extend(Router, superClass);
-
-    function Router() {
-      return Router.__super__.constructor.apply(this, arguments);
-    }
-
-    Router.prototype.routes = {
-      "products(/:pretty_url)(/)": "products",
-      "vendor_shops(/:pretty_url)(/)": "vendor_shops",
-      "users/:_id(/profile)(/)": "users",
-      "freelancers(/:route)(/)": "freelancers",
-      "freelancers/:tagged/:tag(/)": "freelancers",
-      "lists/:list_route(/tags)(/authors)(/posts)(/:route)(/)": "list",
-      "request_access(/)": "request_access",
-      "manifesto(/)": "page",
-      "(/)": "home"
-    };
-
-    Router.prototype.views = [];
-
-    Router.prototype.initialize = function() {
-      return document.addEventListener("turbolinks:render", (function(_this) {
-        return function(e) {
-          return Backbone.history.checkUrl();
-        };
-      })(this));
-    };
-
-    Router.prototype.execute = function(callback, args) {
-      var i, len, ref, today, view;
-      ref = this.views;
-      for (i = 0, len = ref.length; i < len; i++) {
-        view = ref[i];
-        view.undelegateEvents();
-      }
-      delete this.views;
-      this.views = [];
-      if (callback != null) {
-        callback.apply(this, args);
-      }
-      $("[data-piece-id]").each((function(_this) {
-        return function(index, element) {
-          var model;
-          model = new Saturdays.Models.Piece({
-            "_id": element.getAttribute("data-piece-id")
-          });
-          return _this.views.push(new Saturdays.Views.Piece({
-            el: element,
-            model: model
-          }));
-        };
-      })(this));
-      $("[data-navigation]").each((function(_this) {
-        return function(index, element) {
-          return _this.views.push(new Saturdays.Views.Navigation({
-            el: element
-          }));
-        };
-      })(this));
-      today = new Date();
-      $('[data-day]').each((function(_this) {
-        return function(index, element) {
-          return element.innerHTML = pieces.navigation.weekdays[today.getDay()];
-        };
-      })(this));
-      this.query = Saturdays.helpers.get_query_string();
-      if (this.query.cart != null) {
-        Saturdays.cart_view.show();
-      } else {
-        Saturdays.cart_view.hide();
-      }
-      if (this.query.login != null) {
-        return Saturdays.login_view.show();
-      } else {
-        return Saturdays.login_view.hide();
-      }
-    };
-
-    Router.prototype.home = function() {};
-
-    Router.prototype.request_access = function() {
-      return $("[data-survey-id]").each((function(_this) {
-        return function(index, element) {
-          return _this.views.push(new Saturdays.Views.Survey({
-            el: element
-          }));
-        };
-      })(this));
-    };
-
-    Router.prototype.products = function(pretty_url) {
-      return $("[data-product-id]").each((function(_this) {
-        return function(index, element) {
-          var model;
-          model = new Saturdays.Models.Product({
-            "_id": element.getAttribute("data-product-id")
-          });
-          return _this.views.push(new Saturdays.Views.Product({
-            el: element,
-            model: model
-          }));
-        };
-      })(this));
-    };
-
-    Router.prototype.vendor_shops = function(pretty_url) {
-      return $("[data-shop-id]").each((function(_this) {
-        return function(index, element) {
-          var model;
-          model = new Saturdays.Models.VendorShop({
-            "_id": element.getAttribute("data-shop-id")
-          });
-          return _this.views.push(new Saturdays.Views.VendorShop({
-            el: element,
-            model: model
-          }));
-        };
-      })(this));
-    };
-
-    Router.prototype.users = function(_id) {};
-
-    Router.prototype.freelancers = function() {};
-
-    Router.prototype.list = function(list_route, route) {
-      return $("[data-post-id]").each((function(_this) {
-        return function(index, element) {
-          var model;
-          model = new Saturdays.Models.ListPost({
-            "_id": element.getAttribute("data-post-id")
-          });
-          model.urlRoot = Saturdays.settings.api + "lists/" + window.list_id + "/posts";
-          return _this.views.push(new Saturdays.Views.Post({
-            el: element,
-            model: model
-          }));
-        };
-      })(this));
-    };
-
-    Router.prototype.page = function() {};
-
-    return Router;
-
-  })(Backbone.Router);
 
 }).call(this);

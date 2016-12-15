@@ -23,11 +23,11 @@ categories = [
 	'tags': [
 		{
 			'title': 'Web Developer',
-			'key': 'web_developer'
+			'key': 'web developer'
 		},
 		{
 			'title': 'App Developer',
-			'key': 'app_developer'
+			'key': 'app developer'
 		}
 	]
 },
@@ -77,7 +77,7 @@ categories = [
 		},
 		{
 			'title': 'Real Estate',
-			'key': 'real_estate'
+			'key': 'real estate'
 		},
 		{
 			'title': 'Barber',

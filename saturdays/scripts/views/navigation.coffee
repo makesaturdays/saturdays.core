@@ -27,13 +27,11 @@ class Saturdays.Views.Navigation extends Saturdays.View
 
 	show_login: (e)->
 		e.preventDefault()
-
 		Saturdays.login_view.show(e)
-		Saturdays.router.navigate window.location.pathname+"?login=true"
 
 
 	show_signup: (e)->
 		e.preventDefault()
-
 		Saturdays.login_view.show(e, 1)
-		Saturdays.router.navigate window.location.pathname+"?signup=true"
+
+		

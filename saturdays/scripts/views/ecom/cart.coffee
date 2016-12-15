@@ -195,7 +195,6 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 
 	show: (e)->
-		Saturdays.router.navigate window.location.pathname+"?cart=true"
 
 		super(e)
 
@@ -203,7 +202,6 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 
 	hide: (e)->
-		Saturdays.router.navigate window.location.pathname
 
 		super(e)
 

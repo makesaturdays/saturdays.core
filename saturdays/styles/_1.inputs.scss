@@ -33,9 +33,9 @@ textarea,
 	position: relative;
 	width: 100%;
 
-	font-family: $alternate_font;
+	font-family: $headings_font;
 	font-size: $base_size;
-	font-weight: $bold;
+	font-weight: normal;
 	line-height: 1;
 
 	color: $primary;
@@ -84,8 +84,29 @@ textarea,
 		padding: 0;
 	}
 
+	&.input--big {
+		font-size: $medium_size;
+		padding: $vertical_rythm $vertical_rythm*3;
+		background: $grey--light;
+		border-color: transparent;
+
+		@include shadow(none);
+	}
+
 	.input_group & {
 		margin-bottom: 0;
+	}
+
+	& + .icon {
+		color: $secondary;
+		position: absolute;
+		top: $vertical_rythm*1.25;
+		left: $vertical_rythm;
+
+		height: $medium_size;
+		width: $medium_size;
+
+		// padding: $vertical_rythm;
 	}
 }
 
@@ -329,9 +350,11 @@ input[type="radio"] {
 	-moz-outline-style: none;
 }
 
-::-webkit-input-placeholder, ::-webkit-input-placeholder,
-:-moz-placeholder, :-moz-placeholder {
+::-webkit-input-placeholder,
+::-moz-placeholder,
+::placeholder, {
 	color: $primary;
+	opacity: 1;
 }
 
 

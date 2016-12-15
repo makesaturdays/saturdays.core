@@ -51,6 +51,11 @@ with app.app_context():
 			# 	'view_function': 'stats_view',
 			# 	'methods': ['GET'],
 			# 	'requires_vendor': True
+			# },
+			# {
+			# 	'route': '/_search',
+			# 	'view_function': 'search_view',
+			# 	'methods': ['GET']
 			# }
 		# ]
 
@@ -103,6 +108,26 @@ with app.app_context():
 
 
 		@classmethod
+		def search_view(cls):
+			limit = int(request.args.get('limit', 15))
+			query = request.args.get('query', '')
+
+			_results = app.search.search(index='saturdays', doc_type=cls.collection_name, q=cls._process_query(query)+'*', size=limit, analyze_wildcard=True)
+			results = []
+			for hit in _results['hits']['hits']:
+				result = cls.postprocess(hit['_source'])
+				result['_score'] = hit['_score']
+				results.append(result)
+
+			return cls._format_response({
+					'query': query,
+					'results': results,
+					'results_length': len(results),
+					'max_score': _results['hits']['max_score']
+				})
+
+
+		@classmethod
 		def stats_view(cls):
 
 			_from = request.args.get('from', datetime.now(timezone(app.config['TIMEZONE'])) + relativedelta(months=-1))
@@ -120,13 +145,11 @@ with app.app_context():
 				'$lte': _to
 			}})
 
-			stats = {
-				'from': _from,
-				'to': _to,
-				'length': len(documents)
-			}
-
-			return cls._format_response(cls._process_stats(stats, documents))
+			return cls._format_response(cls._process_stats({
+					'from': _from,
+					'to': _to,
+					'length': len(documents)
+				}, documents))
 
 
 
@@ -176,6 +199,10 @@ with app.app_context():
 		@classmethod
 		def _process_stats(cls, stats, documents):
 			return stats
+
+		@classmethod
+		def _process_query(cls, query):
+			return query
 
 
 

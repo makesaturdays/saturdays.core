@@ -103,6 +103,18 @@ ScheduledTask.define_routes()
 TriggeredTask.define_routes()
 
 
+@app.route('/', host='availablenotavailable.com')
+def available():
+	query = request.query_string.decode('utf-8')
+	if query == '':
+		return redirect('/freelancers')
+	else: 
+		return redirect('/freelancers?'+query)
+
+@app.route('/<string:route>', host='avail.es')
+def available_short_route(route):
+    return redirect('https://availablenotavailable.com/freelancers/' + route)
+
 
 
 if __name__ == '__main__':

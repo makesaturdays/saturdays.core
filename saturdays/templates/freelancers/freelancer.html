@@ -6,7 +6,7 @@
 
 
 {% block header %}
-<nav class="grid grid--middle" data-navigation>
+<nav class="nav grid grid--middle" data-navigation>
     <div class="col col--1of12">
         <a href="/freelancers" class="grid grid--middle">
             <img src="/build/images/available_not_available_logo.svg" class="img--logo">
@@ -28,7 +28,7 @@
 		</div>
     </div>
 
-    <div class="header__rotated">
+    <div class="nav__rotated">
     	<h3><a href="/freelancers">Freelancers</a>&nbsp;&nbsp;<small>({% for tag in freelancer.tags %}<a href="/freelancers/tagged/{{tag}}">{{tag|tag}}</a>{% if not loop.last %} / {% endif %}{% endfor %})</small></h3>
     </div>
 </nav>
@@ -54,7 +54,7 @@
 
 
 			<h4 class="small_bottom">{{pieces.freelancers.bio}}</h4>
-			<p class="p--medium small_bottom max_width max_width--text" data-bio>{{freelancer.bio|safe}}</p>
+			<p class="p--medium small_bottom max_width max_width--text" data-bio>{{freelancer.bio}}</p>
 
 			<div class="grid grid--tight_guttered grid--middle" data-links>
 				{% for link in freelancer.links %}
@@ -98,6 +98,7 @@
 
 
 {% block footer %}
+	{% block workshops %}{% endblock %}
 	
 	{{ super() }}
 {% endblock %}

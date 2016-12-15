@@ -69,7 +69,6 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 	key_input: (e)->
 		if @button? and @button.hasAttribute "disabled"
-			console.log @button
 			@button.removeAttribute "disabled"
 
 

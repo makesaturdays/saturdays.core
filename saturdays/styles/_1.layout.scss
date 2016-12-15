@@ -23,6 +23,12 @@ body {
 // #HEADER
 
 header {
+
+}
+
+// #NAV
+
+.nav {
 	@extend .padded;
 
 	position: fixed;
@@ -32,7 +38,7 @@ header {
 	z-index: 1;
 }
 
-	.header__rotated {
+	.nav__rotated {
 		padding-right: $gutter;
 		
 		@include transform_origin(100%, 0);
