@@ -112,19 +112,28 @@ with app.app_context():
 			limit = int(request.args.get('limit', 15))
 			query = request.args.get('query', '')
 
-			_results = app.search.search(index='saturdays', doc_type=cls.collection_name, q=cls._process_query(query)+'*', size=limit, analyze_wildcard=True)
-			results = []
-			for hit in _results['hits']['hits']:
-				result = cls.postprocess(hit['_source'])
-				result['_score'] = hit['_score']
-				results.append(result)
+			if query:
+				_results = app.search.search(index='saturdays', doc_type=cls.collection_name, q=cls._process_query(query)+'*', size=limit, analyze_wildcard=True)
+				results = []
+				for hit in _results['hits']['hits']:
+					result = cls.postprocess(hit['_source'])
+					result['_score'] = hit['_score']
+					results.append(result)
 
-			return cls._format_response({
-					'query': query,
-					'results': results,
-					'results_length': len(results),
-					'max_score': _results['hits']['max_score']
-				})
+				return cls._format_response({
+						'query': query,
+						'results': results,
+						'results_length': len(results),
+						'max_score': _results['hits']['max_score']
+					})
+
+			else:
+				results = cls.list({}, limit=limit)
+				return cls._format_response({
+						'query': query,
+						'results': results,
+						'results_length': len(results)
+					})
 
 
 		@classmethod
