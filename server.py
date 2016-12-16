@@ -5,6 +5,7 @@ from tornado.ioloop import IOLoop
 
 from saturdays import app
 from saturdays.helpers.json import to_json
+from saturdays.pages.pages import page
 
 
 from flask import request, abort, redirect
@@ -103,17 +104,24 @@ ScheduledTask.define_routes()
 TriggeredTask.define_routes()
 
 
-@app.route('/', host='availablenotavailable.com')
-def available():
-	query = request.query_string.decode('utf-8')
-	if query == '':
-		return redirect('/freelancers')
-	else: 
-		return redirect('/freelancers?'+query)
+@app.route('/')
+def index():
+	if request.host == 'availablenotavailable.com':
+		query = request.query_string.decode('utf-8')
+		if query == '':
+			return redirect('/freelancers')
+		else: 
+			return redirect('/freelancers?'+query)
+	else:
+		return page()
 
-@app.route('/<string:route>', host='avail.es')
+
+@app.route('/<string:route>')
 def available_short_route(route):
-    return redirect('https://availablenotavailable.com/freelancers/' + route)
+	if request.host == 'avail.es':
+		return redirect('https://availablenotavailable.com/freelancers/' + route)
+	else:
+		abort(404)
 
 
 

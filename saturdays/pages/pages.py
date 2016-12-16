@@ -38,8 +38,9 @@ for file in os.listdir(os.getcwd()+'/saturdays/templates/pages'):
 	
 
 	if file == 'index.html':
-		app.add_url_rule('/', 'index', methods=['GET'])
-		app.view_functions['index'] = page
+		pass
+		# app.add_url_rule('/', 'index', methods=['GET'])
+		# app.view_functions['index'] = page
 
 	else:
 		route = file.replace('.html', '')
