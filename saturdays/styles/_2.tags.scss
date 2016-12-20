@@ -1,26 +1,22 @@
 
 
 // #TAGS
-
+.pills,
 .tags {
-	
-	a,
-	em {
-		@extend .em;
-		@extend .capitalize;
-		@extend .comma_seperated;
-	}
-}
-
-.pills {
 
 }
 
-	.pill {
+	.pill,
+	.tag {
 		color: $grey--dark;
 		font-weight: normal;
 
-		padding: $vertical_rythm/4 $vertical_rythm/1.5;
+		padding: $vertical_rythm/4 $vertical_rythm/3;
 		background-color: $grey;
+		border-radius: $border_radius;
+	}
+
+	.pill {
 		border-radius: 1em;
+		padding: $vertical_rythm/4 $vertical_rythm/1.5;
 	}

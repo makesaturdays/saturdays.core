@@ -16,11 +16,11 @@
 		@extend .grid--vertically_centered;
 
 		background: $white;
-		border: 2px solid;
+		border: 2px solid transparent;
 		border-radius: $border_radius;
 		min-height: $vertical_rythm*18;
 
-		// @include transition(top $fast);
+		@include transition(border-color $fast);
 
 		&.product--workshop_box--active {
 			color: $white;
@@ -37,13 +37,11 @@
 
 		&:hover,
 		&:focus {
-			top: -1px;
-			border-bottom-width: 3px;
+			border: 2px solid;
 		}
 
 		&:active {
-			top: 0;
-			border-bottom-width: 2px;
+
 		}
 	}
 }

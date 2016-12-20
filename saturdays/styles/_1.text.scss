@@ -15,8 +15,12 @@ html {
 	-webkit-tap-highlight-color: fade-out($primary, 0.8);
 	-moz-osx-font-smoothing: grayscale;
 
-	@media #{$medium} {
+	@media #{$tablet_landscape} {
 		font-size: 12px;
+	}
+
+	@media #{$big_desktop} {
+		font-size: 18px;
 	}
 }
 
@@ -59,7 +63,7 @@ h1, h2, h3, h4, h5, h6 {
 	h1 {
 		font-size: $huge_size;
 
-		@media #{$small} {
+		@media #{$phone} {
 			font-size: $big_size;
 		}
 
@@ -70,7 +74,7 @@ h1, h2, h3, h4, h5, h6 {
 		&.h1--massive {
 			font-size: $massive_size;
 
-			@media #{$small} {
+			@media #{$phone} {
 				font-size: $huge_size;
 			}
 		}
@@ -119,7 +123,7 @@ p {
 		font-size: $huge_size;
 		line-height: $line_height/1.25;
 
-		@media #{$small} {
+		@media #{$phone} {
 			font-size: $huge_size*0.75;
 		}
 	}

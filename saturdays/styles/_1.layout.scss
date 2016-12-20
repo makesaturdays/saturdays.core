@@ -54,10 +54,6 @@ header {
 	margin: 0 auto;
 }
 
-	.main__under_header {
-		padding-top: $gutter*5 !important;
-	}
-
 	.main__center {
 		width: 100%;
 		max-width: 825px;
@@ -100,7 +96,7 @@ iframe {
 .padded {
 	padding: $gutter;
 
-	@media #{$small} {
+	@media #{$phone} {
 		padding: $gutter/2;
 	}
 
@@ -111,11 +107,11 @@ iframe {
 	&.padded--thick {
 		padding: $gutter*1.5 $gutter*2;
 
-		@media #{$medium} {
+		@media #{$tablet_landscape} {
 			padding: $gutter $gutter*1.5;
 		}
 
-		@media #{$small} {
+		@media #{$phone} {
 			padding: $gutter/2;
 		}
 	}
@@ -123,12 +119,24 @@ iframe {
 	&.padded--vertically_thick {
 		padding: $gutter*4 $gutter*2;
 
-		@media #{$medium} {
+		@media #{$tablet_landscape} {
 			padding: $gutter*3 $gutter*1.5;
 		}
 
-		@media #{$small} {
+		@media #{$phone} {
 			padding: $gutter*3 $gutter/2;
+		}
+	}
+
+	&.padded--under_header {
+		padding-top: $gutter*5;
+
+		@media #{$tablet_landscape} {
+			padding-top: $gutter*4;
+		}
+
+		@media #{$phone} {
+			padding-top: $gutter*3;
 		}
 	}
 }
@@ -141,7 +149,7 @@ iframe {
 .huge_bottom { 
 	margin-bottom: $vertical_rythm*8;
 
-	@media #{$medium} {
+	@media #{$tablet_landscape} {
 		margin-bottom: $vertical_rythm*4;
 	}
 }

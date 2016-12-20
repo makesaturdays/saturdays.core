@@ -16,10 +16,10 @@
 {% block main %}
 	<article class="blog__post" data-post-id="{{post._id}}">
 		<div class="grid grid--guttered">
-			<div class="col col--3of12 col--small--12of12">
+			<div class="col col--3of12 col--tablet_portrait--12of12">
 				<h3 data-title>{{post.title}}</h3>
 				{% for author in post.authors %}
-				<p class="p--alternate hide_on_small">
+				<p class="p--alternate hide_on_phone">
 					{{pieces.blog.by}} <a href="/lists/blog/authors/{{author.handle}}">{{author.name}}</a><br>
 					{% if post.source %}
 					<a href="{{post.source}}">Source</a>
@@ -28,7 +28,7 @@
 					{% endif %}
 				</p>
 				{% if not loop.last %}
-				<p class="p--alternate hide_on_small">&amp;</p>
+				<p class="p--alternate hide_on_phone">&amp;</p>
 				{% endif %}
 				{% endfor %}
 				
@@ -36,16 +36,20 @@
 				<div data-admin></div>
 			</div>
 
-			<div class="col col--7of12 col--small--12of12">
+			<div class="col col--7of12 col--tablet_portrait--12of12">
 				<div class="medium alternate_first_line underline_links blog__post__content" data-content-key="body" data-is-markdown>
 					{{post.body|safe}}
 				</div>
 			</div>
 
-			<div class="col col--2of12 col--small--12of12">
+			<div class="col col--2of12 col--tablet_portrait--12of12 col--tablet_portrait--first">
 				<p class="p--medium">
 					<span data-published-date>{{post.published_date|date}}</span><br>
-					<span data-tags class="tags">{% for tag in post.tags %}<a href="/lists/blog/tags/{{tag}}" data-tag>{{tag}}</a>{% endfor %} <span data-tag-input></span></span>
+					<span data-tags class="tags">
+						{% for tag in post.tags %}
+						<a href="/lists/blog/tags/{{tag}}" class="tag capitalize">{{tag}}</a>
+						{% endfor %} <span data-tag-input></span>
+					</span>
 				</p>
 			</div>
 		</div>

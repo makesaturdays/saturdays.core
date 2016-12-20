@@ -7,7 +7,7 @@ this["templates"]["answers"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"m
 this["templates"]["cms/author"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression;
 
-  return "<p class=\"p--medium hide_on_small\">\n"
+  return "<p class=\"p--medium hide_on_phone\">\n"
     + alias2(alias1(((stack1 = ((stack1 = (depth0 != null ? depth0.pieces : depth0)) != null ? stack1.blog : stack1)) != null ? stack1.by : stack1), depth0))
     + " <a href=\"/lists/blog/authors/"
     + alias2(alias1(((stack1 = (depth0 != null ? depth0.author : depth0)) != null ? stack1.handle : stack1), depth0))
@@ -117,7 +117,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + ((stack1 = helpers.each.call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.items : stack1),{"name":"each","hash":{},"fn":container.program(12, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.available_store_credit : stack1),{"name":"if","hash":{},"fn":container.program(18, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
+    + "\n<div class=\"col col--7of12 col--phone--10of12 small_bottom\">\nSubtotal: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.sub_total : stack1),{"name":"money","hash":{},"data":data}))
     + " <span class=\"spaced\"></span>\nTaxes: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.taxes_total : stack1),{"name":"money","hash":{},"data":data}))
@@ -137,7 +137,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + ((stack1 = helpers.unless.call(alias1,((stack1 = (depth0 != null ? depth0.user : depth0)) != null ? stack1._id : stack1),{"name":"unless","hash":{},"fn":container.program(29, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
     + "</form>\n</div>\n</div>\n\n"
     + ((stack1 = helpers["if"].call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.total : stack1),{"name":"if","hash":{},"fn":container.program(32, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n\n<div class=\"col col--7of12 col--small--10of12 small_bottom\">\nSubtotal: "
+    + "\n\n<div class=\"col col--7of12 col--phone--10of12 small_bottom\">\nSubtotal: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.sub_total : stack1),{"name":"money","hash":{},"data":data}))
     + " <span class=\"spaced\"></span>\nTaxes: "
     + alias4((helpers.money || (depth0 && depth0.money) || alias2).call(alias1,((stack1 = (depth0 != null ? depth0.cart : depth0)) != null ? stack1.taxes_total : stack1),{"name":"money","hash":{},"data":data}))
@@ -185,7 +185,7 @@ this["templates"]["ecom/cart"] = Handlebars.template({"1":function(container,dep
     + alias4(alias5(((stack1 = ((stack1 = (depth0 != null ? depth0.product : depth0)) != null ? stack1.metadata : stack1)) != null ? stack1.location_link : stack1), depth0))
     + "\" target=\"_blank\">"
     + alias4(alias5(((stack1 = ((stack1 = (depth0 != null ? depth0.product : depth0)) != null ? stack1.metadata : stack1)) != null ? stack1.location : stack1), depth0))
-    + "</a></div>\n\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back medium_bottom\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--7of12 col--small--8of12 text_right\">\nHow many tickets do you need?\n</div>\n<div class=\"col col--3of12\">\n<input type=\"tel\" name=\"quantity\" data-item-id=\""
+    + "</a></div>\n\n<div class=\"col col--12of12\">\n<div class=\"padded padded--tight light_grey_back medium_bottom\">\n<div class=\"grid grid--tight_guttered grid--middle grid--center\">\n<div class=\"col col--7of12 col--phone--8of12 text_right\">\nHow many tickets do you need?\n</div>\n<div class=\"col col--3of12\">\n<input type=\"tel\" name=\"quantity\" data-item-id=\""
     + alias4(((helper = (helper = helpers._id || (depth0 != null ? depth0._id : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"_id","hash":{},"data":data}) : helper)))
     + "\" value=\""
     + alias4(((helper = (helper = helpers.quantity || (depth0 != null ? depth0.quantity : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"quantity","hash":{},"data":data}) : helper)))

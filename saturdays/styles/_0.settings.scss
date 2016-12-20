@@ -25,7 +25,7 @@ $body_font: "HK Grotesk", sans-serif;
 $headings_font: "GT Walsheim", sans-serif;
 $alternate_font: "HK Grotesk", sans-serif;
 
-$bold: bold;
+$bold: 600;
 
 
 // #LAYOUT
@@ -39,7 +39,7 @@ $medium_size: 1.286rem;
 $small_size: 0.75rem;
 
 $vertical_rythm: $medium_size;
-$line_height: 1.666;
+$line_height: 1.5;
 $letter_spacing: 0;
 $border_radius: 3px;
 
@@ -56,7 +56,9 @@ $very_slow: 1.666s;
 
 // #BREAKPOINTS
 
-$small: "all and (max-device-width:650px), all and (max-width:650px)";
-$medium: "all and (max-device-width:1100px), all and (max-width:1100px)";
-$breakpoints: "medium" $medium, "small" $small;
+$phone: "all and (max-device-width:600px), all and (max-width:600px)";
+$tablet_portrait: "all and (max-device-width:900px), all and (max-width:900px)";
+$tablet_landscape: "all and (max-device-width:1200px), all and (max-width:1200px)";
+$big_desktop: "all and (min-device-width:1800px), all and (min-width:1800px)";
+$breakpoints: "big_desktop" $big_desktop, "tablet_landscape" $tablet_landscape, "tablet_portrait" $tablet_portrait, "phone" $phone;
 

@@ -18,32 +18,32 @@
             <img src="/build/images/available_not_available_logo.svg" class="img--logo">
         </a>
     </div>
-    <div class="col col--4of12 text_center">
-    	<h1 class="h1--base hide_on_small"><a href="/freelancers">{{pieces.freelancers.title|safe}}</a></h1>
+    <div class="col col--4of12 text_center hide_on_phone">
+    	<h1 class="h1--base"><a href="/freelancers">{{pieces.freelancers.title|safe}}</a></h1>
     </div>
-    <div class="col col--4of12 text_right">
-        {# <a href="/manifesto" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
-        <span class="spaced hide_on_small"></span> #}
-        <a href="/freelancers?login=true" class="" data-show-login>{{pieces.freelancers.login}}</a>
-        <span class="spaced hide_on_small"></span>
+    <div class="col col--4of12 col--phone--8of12 text_right">
+        {# <a href="/manifesto" class="a--alternate hide_on_phone"><span data-key="about">{{pieces.navigation.about}}</span></a>
+        <span class="spaced hide_on_phone"></span> #}
+        <a href="/freelancers?login=true" class="hide_on_phone" data-show-login>{{pieces.freelancers.login}}</a>
+        <span class="spaced hide_on_phone"></span>
         <a href="/freelancers?signup=true" class="button button--bordered button--blue" data-show-signup>{{pieces.freelancers.signup}}</a>
     </div>
 </nav>
 
-<section class="padded padded--thick main__under_header white_back">
+<section class="padded padded--thick padded--under_header white_back">
     <h1 class="text_center">Find an <em>available</em> {% if tagged %}{{tagged.tag|tag|lower}}{% else %}freelancer{% endif %} for hire.</h1>
 </section>
 
 <section class="padded white_back shadowed" data-search>
     <div class="grid grid--guttered">
-        <div class="col col--5of12">
+        <div class="col col--5of12 col--phone--12of12">
             <div class="relative">
                 <input type="search" name="search" class="input--big" placeholder="Search by name, field, skills, etc." value="{% if search %}{{search.query}}{% endif %}">
                 <svg class="icon"><use xlink:href="#icon-search"></use></svg>
             </div>
         </div>
 
-        <div class="col col--3of12">
+        <div class="col col--3of12 hide_on_phone">
             <div class="relative">
                 <input type="search" name="field" class="input--big" placeholder="Find a field">
                 <svg class="icon"><use xlink:href="#icon-work"></use></svg>
@@ -74,8 +74,8 @@
 {% block footer %}
 {% block workshops %}
 <section class="padded padded--vertically_thick light_grey_back">
-    <div class="grid grid--spaced medium_bottom">
-        <div class="col col--5of12">
+    <div class="grid grid--guttered grid--spaced">
+        <div class="col col--5of12 col--phone--12of12">
             <h2>{{pieces.workshops.title|safe}}</h2>
             <p>{{pieces.workshops.introduction|safe}}</p>
         </div>
@@ -83,7 +83,8 @@
             <a href="/products" class="button button--medium">See all workshops</a>
         </div>
     </div>
-    {% include 'products/workshops.html' %}
+
+    <div class="medium_top">{% include 'products/workshops.html' %}</div>
 </section>
 {% endblock %}
 

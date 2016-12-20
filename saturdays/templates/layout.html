@@ -44,13 +44,13 @@
                 <div class="col col--6of12" data-piece-id="{{pieces.metadata._id}}">
                     <a href="{% block title_link %}/{% endblock %}" class="grid grid--middle">
                         <img src="/build/images/logo.svg" class="img--logo">
-                        <h1 class="h1--base spaced hide_on_small"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
+                        <h1 class="h1--base spaced hide_on_phone"><span data-key="title">{{pieces.metadata.title|safe}}</span></h1>
                     </a>
                     <span data-piece-admin></span>
                 </div>
                 <div class="col col--6of12 text_right" data-piece-id="{{pieces.navigation._id}}">
-                    <a href="/manifesto" class="a--alternate hide_on_small"><span data-key="about">{{pieces.navigation.about}}</span></a>
-                    <span class="spaced hide_on_small"></span>
+                    <a href="/manifesto" class="a--alternate hide_on_phone"><span data-key="about">{{pieces.navigation.about}}</span></a>
+                    <span class="spaced hide_on_phone"></span>
                     <span id="user_links" data-user-links data-turbolinks-permanent>
                         <a href="/products" class="button button--bordered">Upcoming Workshops</a>
                     </span>

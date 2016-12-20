@@ -62,7 +62,7 @@
 		margin-left: -$gutter;
 		margin-bottom: -$gutter;
 
-		@media #{$small} {
+		@media #{$phone} {
 			margin-left: -$gutter/2;
 		}
 	}
@@ -79,7 +79,7 @@
 			padding-left: $gutter;
 			padding-bottom: $gutter;
 
-			@media #{$small} {
+			@media #{$phone} {
 				padding-left: $gutter/2;
 			}
 		}
@@ -92,15 +92,22 @@
 
 		@for $i from 1 through $number_of_columns { 
 			&.col--#{$i}of#{$number_of_columns} { width: (100% / $number_of_columns * $i); }
-			&.col--push_#{$i}of#{$number_of_columns} { margin-left: (100% / $number_of_columns) * $i; }
-		  	&.col--extend_#{$i}of#{$number_of_columns} { margin-right: (100% / $number_of_columns) * $i; }
 		}
 
 		@each $breakpoint in $breakpoints {
+			&.col--#{nth($breakpoint, 1)}--first { @media #{nth($breakpoint, 2)} { 
+				-ms-flex-order: -1;
+				-webkit-order: -1;
+				order: -1;
+			} }
+			&.col--#{nth($breakpoint, 1)}--last { @media #{nth($breakpoint, 2)} { 
+				-ms-flex-order: 99;
+				-webkit-order: 99;
+				order: 99;
+			} }
+
 			@for $i from 1 through $number_of_columns { 
 				&.col--#{nth($breakpoint, 1)}--#{$i}of#{$number_of_columns} { @media #{nth($breakpoint, 2)} { width: (100% / $number_of_columns) * $i; } }
-				&.col--#{nth($breakpoint, 1)}--push_#{$i}of#{$number_of_columns} { @media #{nth($breakpoint, 2)} { margin-left: (100% / $number_of_columns) * $i; } }
-				&.col--#{nth($breakpoint, 1)}--extend_#{$i}of#{$number_of_columns} { @media #{nth($breakpoint, 2)} { margin-right: (100% / $number_of_columns) * $i; } }
 			}
 		}
 	}

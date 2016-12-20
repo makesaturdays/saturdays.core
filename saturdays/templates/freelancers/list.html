@@ -9,16 +9,16 @@
 		<div class="col col--3of12">
 			<h4 class="{% if not freelancer.is_available %}strike{% endif %}">{{freelancer.first_name}} {{freelancer.last_name}} {{freelancer.password}}</h4>
 		</div>
-		<div class="col col--3of12">
+		<div class="col col--3of12 col--phone--4of12">
 			{% for tag in freelancer.tags %}{{tag|tag}}{% if not loop.last %}, {% endif %}{% endfor %}
 		</div>
-		<div class="col col--2of12">
+		<div class="col col--2of12 hide_on_phone">
 			<p>Montréal</p>
 		</div>
-		<div class="col col--2of12">
+		<div class="col col--2of12 col--phone--3of12">
 			<h4>{{freelancer.rate}}</h4>
 		</div>
-		<div class="col col--1of12 hide_on_small">
+		<div class="col col--1of12">
 			<input type="checkbox" id="{{freelancer._id}}_is_available" disabled {% if freelancer.is_available %}checked{% endif %} class="checkbox--dot">
 			<label for="{{freelancer._id}}_is_available" {% if freelancer.is_available %}title="Available">Available{% else %}title="Not Available">Not Available{% endif %}</label>
 		</div>
