@@ -2,12 +2,13 @@
 {% extends "layout.html" %}
 
 
+{% block main_classes %}{% endblock %}
 
 {% block main %}
 
-<section class="huge_bottom" data-piece-id="{{pieces.index._id}}">
-	<div class="grid huge_bottom">
-		<h1 class="col col--11of12 col--phone--12of12">
+<section class="padded padded--under_header" data-piece-id="{{pieces.index._id}}">
+	<div class="grid big_bottom">
+		<h1 class="col col--10of12 col--phone--12of12">
 			<span data-key="_introduction" class="underline_links">{{pieces.index._introduction|safe}}</span><br>
 			<span data-piece-admin></span>
 		</h1>
@@ -16,8 +17,9 @@
 </section>
 
 
-
-{% include 'products/workshops.html' %}
+<section class="padded light_grey_back">
+	{% include 'products/workshops.html' %}
+</section>
 
 {% endblock %}
 

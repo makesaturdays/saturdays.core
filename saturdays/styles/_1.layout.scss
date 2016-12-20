@@ -14,8 +14,11 @@ html {
 
 body {
 	position: relative;
-	
 	margin-bottom: 100vh;
+
+	&.body--without_bottom {
+		margin-bottom: 0;
+	}
 }
 
 

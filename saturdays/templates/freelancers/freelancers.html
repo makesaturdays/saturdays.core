@@ -35,20 +35,20 @@
 </section>
 
 <section class="padded white_back shadowed" data-search>
-    <div class="grid grid--guttered">
-        <div class="col col--5of12 col--phone--12of12">
+    <div class="grid grid--center">
+        <div class="col col--8of12 col--tablet_portrait--10of12 col--phone--12of12">
             <div class="relative">
                 <input type="search" name="search" class="input--big" placeholder="Search by name, field, skills, etc." value="{% if search %}{{search.query}}{% endif %}">
                 <svg class="icon"><use xlink:href="#icon-search"></use></svg>
             </div>
         </div>
 
-        <div class="col col--3of12 hide_on_phone">
+        {# <div class="col col--3of12 hide_on_phone">
             <div class="relative">
                 <input type="search" name="field" class="input--big" placeholder="Find a field">
                 <svg class="icon"><use xlink:href="#icon-work"></use></svg>
             </div>
-        </div>
+        </div> #}
     </div>
 </section>
 {% endblock %}

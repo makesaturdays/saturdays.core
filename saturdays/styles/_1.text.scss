@@ -86,10 +86,11 @@ h1, h2, h3, h4, h5, h6 {
 
 	h3 {
 		font-size: $bigish_size;
-		font-weight: $bold;
+		// font-weight: $bold;
 
 		strong {
 			text-decoration: underline;
+			font-weight: normal;
 		}
 
 		small {
@@ -229,7 +230,7 @@ hr {
 	border-top: 1px solid $grey;
 
 	width: 100%;
-	margin: $vertical_rythm*1.5 auto;
+	margin: $vertical_rythm*3 auto;
 
 	.black_back & {
 		border-color: $white;

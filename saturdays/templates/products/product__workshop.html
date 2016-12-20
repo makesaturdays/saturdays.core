@@ -2,24 +2,13 @@
 <article class="product" data-product-id="{{product._id}}">
 	<div class="padded padded--thick max_width">
 		<h1 class="big_bottom">{{product.name}}</h1>
-		<h3 class="huge_bottom">Hosted by {{product.metadata.designer}}</h3>
-
-		<p class="huge_bottom">{{product.metadata.designer_intro|safe}}</p>
+		
+		<h3 class="">Hosted by {{product.metadata.designer}}</h3>
+		<p class="">{{product.metadata.designer_intro|safe}}</p>
+		<p class="huge_bottom"><a href="http://thomascourboin.com" class="a--underline">http://thomascourboin.com</a></p>
 
 		<p class="p--medium">Date:</p>
-		<h2 class="medium_bottom">{{product.metadata.date|date('%A, %B %d %Y')}}</h2>
-
-		<p class="p--medium">Location:</p>
-		<h2 class="small_bottom">{{product.metadata.location}}</h2>
-		<a href="{{product.metadata.location_link}}" class="a--highlight">View Map</a><br><br>
-
-		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.817621403911!2d-73.58174468430163!3d45.52051597910164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91bcdba0fe4ff%3A0x33d750fac47577ae!2zw4lwaWNlcmllIEjDgE8!5e0!3m2!1sen!2sca!4v1469651760757" width="600" height="375" frameborder="0" allowfullscreen class="medium_bottom"></iframe>
-
-		<p class="p--medium">Price:</p>
-		<h2 class="medium_bottom">${{product.price|float}} CAD + taxes</h2>
-
-		<p class="p--medium">Open spots available:</p>
-		<h2 class="medium_bottom">{{product.inventory}} people</h2>
+		<h2 class="big_bottom">{{product.metadata.date|date('%A, %B %d %Y')}}</h2>
 
 		<p class="p--medium">About this course:</p>
 		<p class="medium_bottom underline_links">In this course, Erica will walk you through the process of creating your own bars of soap. With an emphasis on the long-lasting quality of handmade and slow-made objects, Erica’s work results in high-quality aromas and colors that are integral to a well-made product. Here, she will break down the process for you step-by-step to show you the basics of creating your own combination of scents and textures. By the end of the class, you will leave with your own batch (about 1 pound, or 4 bars) of your very own soap.</p>
@@ -27,10 +16,19 @@
 		<p class="p--medium">What you'll learn:</p>
 		<p class="medium_bottom underline_links">You will start with the basics of soap-making, including an introduction to the ingredients and techniques of creating a personalized blend. You will work with a combination of lye, oils, and scents to create the perfect mixture for your skin. This class will immerse you in the quality of a high-quality, lasting object that is tailored to you, while giving you the skills to experiment with your own creations at home.</p>
 
-		<p class="p--medium">About the designer:</p>
-		<p class="underline_links">Josh is a Brooklyn based woodworker/ fabricator/ designer, and proficient in a wide variety of woodworking/ fabrication techniques, with a specialty in hand woodworking/ joinery.  Owner of PDA, a home goods and accessories company. Josh spent 2 years making picture frames for Bark Frameworks, the premier picture framing company in NY with clients such as as MOMA, Gugenheim, Gagosian, Matthew Marks Gallery, and Skardent. Josh also build high end custom furniture for Marriot and Ritz Carlton.</p>
 
-		<p class="medium_bottom"><a href="http://thomascourboin.com" class="a--underline">http://thomascourboin.com</a></p>
+		<p class="p--medium">Price:</p>
+		<h2 class="big_bottom">${{product.price|float}} CAD + taxes</h2>
+
+		<p class="p--medium">Open spots available:</p>
+		<h2 class="big_bottom">{{product.inventory}} people</h2>
+
+
+		<p class="p--medium">Location:</p>
+		<h2 class="small_bottom">{{product.metadata.location}}</h2>
+		<a href="{{product.metadata.location_link}}" class="a--highlight">View Map</a><br><br>
+
+		<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2797.817621403911!2d-73.58174468430163!3d45.52051597910164!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4cc91bcdba0fe4ff%3A0x33d750fac47577ae!2zw4lwaWNlcmllIEjDgE8!5e0!3m2!1sen!2sca!4v1469651760757" width="600" height="375" frameborder="0" allowfullscreen class="big_bottom"></iframe>
 	</div>
 
 
