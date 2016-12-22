@@ -148,7 +148,8 @@ button,
 		}
 	}
 
-	&.button--transparent {
+	&.button--transparent,
+	&.button--underline {
 		color: $primary;
 		background: transparent;
 		padding: 0;
@@ -162,6 +163,21 @@ button,
 		&:active {
 			top: 1px;
 			@include shadow(none);
+		}
+	}
+
+	&.button--underline {
+		color: $highlight;
+		border-bottom: 1px solid;
+		border-radius: 0;
+
+		&.red {
+			color: $red;
+		}
+
+		&:hover,
+		&:focus {
+			color: $primary;
 		}
 	}
 

@@ -8,9 +8,48 @@ label,
 	cursor: pointer;
 	display: block;
 
+	color: $highlight;
 	font-family: $alternate_font;
-	font-weight: $bold;
-	line-height: 1;
+	font-weight: normal;
+	line-height: $small_size;
+
+	margin-bottom: $vertical_rythm/2;
+
+	&.label--inside {
+		position: relative;
+		z-index: 1;
+
+		color: $highlight;
+		font-size: $small_size;
+		text-align: left;
+
+		margin-bottom: -$vertical_rythm;
+		margin-left: $vertical_rythm/2;
+	}
+}
+
+// #CONTENTEDITABLE
+
+[contenteditable] {
+	position: relative;
+	display: inline-block;
+	padding: $vertical_rythm/4 $vertical_rythm/2 $vertical_rythm/6;
+	background: $white;
+
+	border: 1px solid $grey;
+	border-radius: $border_radius;
+
+	&:focus {
+		border-color: $highlight;
+	}
+
+	&:active {
+		top: 1px;
+	}
+
+	&.contenteditable--small {
+		padding: $vertical_rythm/4 $vertical_rythm/4 $vertical_rythm/6;
+	}
 }
 
 
@@ -40,9 +79,11 @@ textarea,
 
 	color: $primary;
 	background: $white;
-	padding: $vertical_rythm/2 $vertical_rythm;
-	border: 1px solid $grey;
+	padding: $vertical_rythm/2;
+	border: 1px solid $grey--dark;
 	border-radius: $border_radius;
+
+	margin-bottom: $vertical_rythm;
 
 	@include shadow(0 0.1rem 0.1rem fade-out($black, 0.9));
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
@@ -105,8 +146,11 @@ textarea,
 
 		height: $medium_size;
 		width: $medium_size;
+	}
 
-		// padding: $vertical_rythm;
+	.label--inside + & {
+		padding-top: $vertical_rythm;
+		padding-bottom: $vertical_rythm/4;
 	}
 }
 

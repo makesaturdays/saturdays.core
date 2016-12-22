@@ -1,0 +1,22 @@
+
+{{#each projects}}
+<div data-project>
+	<div class="grid grid--guttered grid--middle">
+		<div class="col col--6of12 col--medium--7of12 col--small--12of12">
+			<h4 class="small_bottom" data-project-contributions contenteditable>{{contributions}}</h4>
+			<h2 class="max_width max_width--text"><a href="{{url}}" data-project-title contenteditable>{{title}}</a></h2>
+			<p class="p--medium max_width max_width--text" data-project-description contenteditable>{{description}}</p>
+			<p class=""><a href="{{url}}" class="a--underline" data-project-url contenteditable>{{url}}</a></p>
+		</div>
+			
+		<div class="col col--4of12 col--small--10of12 text_right">
+			<button class="button--underline red normal_bottom" data-remove-project>Delete this project</button>
+			<a href="{{url}}"><img src="https://res.cloudinary.com/deming/image/fetch/f_auto,w_600,q_auto/{{image}}" data-project-image data-image-cdn="https://res.cloudinary.com/deming/image/fetch/f_auto,w_600,q_auto/" class="img--clickable" alt="{{url}}"></a>
+		</div>
+	</div>
+
+	<hr>
+</div>
+{{/each}}
+
+<button class="button--big button--underline" data-add-project>+ Add new project</button>

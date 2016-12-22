@@ -21,9 +21,7 @@
     <div class="col col--4of12 text_center hide_on_phone">
     	<h1 class="h1--base"><a href="/freelancers">{{pieces.freelancers.title|safe}}</a></h1>
     </div>
-    <div class="col col--4of12 col--phone--8of12 text_right">
-        {# <a href="/manifesto" class="a--alternate hide_on_phone"><span data-key="about">{{pieces.navigation.about}}</span></a>
-        <span class="spaced hide_on_phone"></span> #}
+    <div class="col col--4of12 col--phone--8of12 text_right" data-user-nav>
         <a href="/freelancers?login=true" class="hide_on_phone" data-show-login>{{pieces.freelancers.login}}</a>
         <span class="spaced hide_on_phone"></span>
         <a href="/freelancers?signup=true" class="button button--bordered button--blue" data-show-signup>{{pieces.freelancers.signup}}</a>
@@ -88,10 +86,10 @@
 </section>
 {% endblock %}
 
-<div class="footer__fixed">
+<div class="footer__fixed" data-navigation>
     <div class="footer__fixed__top"></div>
 
-    <a href="mailto:makesaturdays@gmail.com" target="_blank" class="footer__fixed__middle text_center">
+    <a href="/freelancers?signup=true" data-show-signup class="footer__fixed__middle text_center">
         <h2>Are you a freelancer?</h2>
         <h1 class="h1--massive">Join the network</h1>
     </a>

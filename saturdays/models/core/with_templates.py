@@ -1,6 +1,8 @@
 from saturdays import app
 from saturdays.helpers.json import to_json, json_formater
 
+from config.categories import categories
+
 from flask import request, abort
 from flask import render_template, json
 from werkzeug.routing import Rule
@@ -63,6 +65,7 @@ with app.app_context():
 
 								response = {
 									template['response_key']: response.copy(),
+									'categories': categories,
 									'pieces': Piece._values(),
 									'products': Product.list(),
 									'debugging': app.config['DEBUG'],
@@ -70,6 +73,7 @@ with app.app_context():
 									'stripe_key': app.config['STRIPE_PUBLISHABLE_KEY']
 								}
 								response['pieces_json'] = json.dumps(response['pieces'], sort_keys=False, default=json_formater)
+								response['categories_json'] = json.dumps(response['categories'], sort_keys=False, default=json_formater)
 
 								template_name = template['template']
 								try:

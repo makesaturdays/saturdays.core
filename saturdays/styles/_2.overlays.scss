@@ -72,11 +72,13 @@
 	}
 
 		.overlay__close {
+			z-index: 2;
 			position: absolute;
 			top: 0;
 			right: 0;
 
 			padding: $gutter/2;
+			color: $grey--dark;
 		}
 
 		.overlay__button {

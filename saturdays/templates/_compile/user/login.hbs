@@ -1,46 +1,108 @@
 
 <a href="{{current_path}}" class="login__back" data-hide data-turbolinks="false"></a>
 
-<form class="login__container" data-login-form>
-	<a href="{{current_path}}" class="login__close" data-hide data-turbolinks="false"><svg class="icon"><use xlink:href="#icon-close"></use></svg></a>
+<div class="slider login__container">
+	<a href="{{current_path}}" class="login__close" data-hide data-turbolinks="false">
+		<svg class="icon icon--big"><use xlink:href="#icon-close-outline"></use></svg>
+	</a>
 
-	<div class="grid grid--tight_guttered grid--middle grid--center slide">
-		<div class="col col--12of12 text_center">
-			<h3>Login</h3>
-			<p>All fields are required</p>
-		</div>
-		<div class="col col--12of12">
-			<div class="padded padded--tight light_grey_back">
-				<div class="grid grid--tight_guttered grid--middle grid--center">
-					<div class="col col--2of12">
-						<label for="email">{{pieces.admin.email_label}}</label>
-					</div>
-					<div class="col col--10of12">
-						{{#if user._id}}
-						<input type="email" id="email" name="email" value="{{user.email}}" disabled>
-						{{else}}
-						<input type="email" id="email" name="email" value="" required autocomplete="email" placeholder="email.address@gmail.com">
-						{{/if}}
-					</div>
+	<div class="slider__container" style="width: 300%;" data-slider-container>
+		<form class="slide" data-slide=0 data-login-form style="width: 33.333%;">
+			<div class="text_center" data-slide-content>
+				{{#if user._id}}
+				{{#if is_authenticated}}
+				<h2 class="h2--huge">Hi!</h2>
+
+				<p class="p--tight">Welcome back {{user.first_name}}.{{#if user.is_freelancer}} You are currently marked as {{#if user.freelancer.is_available}}<span class="green">available</span>{{else}}<span class="red">not available</span>{{/if}} for freelance work.{{/if}}</p>
+
+				{{#if user.is_freelancer}}<a href="/freelancers/{{user.freelancer.route}}" class="button button--full button--highlight button--medium small_bottom">Edit Profile</a>{{/if}}
+				<a href="?" class="a--underline" data-logout>Log out</button>
+				{{else}}
+				<h2 class="h2--huge">Success!</h2>
+
+				{{#if user.is_freelancer}}
+				<p class="p--tight medium_bottom">Thanks {{user.first_name}}, we'll get back to you within 48 hours.</p>
+				{{/if}}
+				{{/if}}
+				{{else}}
+				<h2 class="h2--huge medium_bottom">Log in <a href="#" class="dark_grey" data-slide-marker=1>or Join</a></h2>
+
+				<label for="email" class="label--inside">E-mail</label>
+				<input type="email" id="email" name="email" value="" required autocomplete="email" placeholder="email.address@gmail.com">
+
+				<label for="password" class="label--inside">Password</label>
+				<input type="password" id="password" name="password" value="" required autocomplete="off" placeholder="********">
+
+				<button class="button--full button--highlight button--medium normal_bottom" type="submit">Log in</button>
+
+				<a href="#" class="a--underline" data-slide-marker=2>Forgot password?</a>
+				{{/if}}
+			</div>
+		</form>
+
+		<form class="text_center slide" data-slide=1 data-signup-form style="width: 33.333%;">
+			<div class="text_center" data-slide-content>
+				<h2 class="h2--huge"><a href="#" class="dark_grey" data-slide-marker=0>Log in</a> or Join</h2>
+
+				<p class="p--tight normal_bottom">Fill out this form to apply for a spot on Available Not Available and we'll get back to you within 48 hours.</p>
+
+				<div class="text_left normal_bottom" data-tags>
+					<label for="tags">Your are a?</label>
 					
-					{{#unless user._id}}
-					<div class="col col--2of12">
-						<label for="password">{{pieces.admin.password_label}}</label>
+					<div class="grid">
+					{{#each categories}}
+						<div class="col col--6of12">
+							<strong class="small">{{title}}</strong><br>
+							{{#each tags}}
+							<input type="checkbox" class="checkbox--pill" name="{{key}}" id="{{key}}">
+							<label for="{{key}}">{{title}}</label><br>
+							{{/each}}
+						</div>
+					{{/each}}
+
+						<div class="col col--6of12 col--small--12of12">
+							<br>
+							<p class="p--tight small">If yours missing from the list, <a href="mailto:makesaturdays@gmail.com" class="a--underline">let us know</a>.</p>
+						</div>
 					</div>
-					<div class="col col--10of12">
-						<input type="password" id="password" name="password" value="" required autocomplete="off" placeholder="********">
+				</div>
+
+				<label for="signup_email" class="label--inside">E-mail</label>
+				<input type="email" id="signup_email" name="email" required autocomplete="email" placeholder="email.address@gmail.com">
+
+				<div class="grid grid--tight_guttered">
+					<div class="col col--6of12">
+						<label for="first_name" class="label--inside">First Name</label>
+						<input type="text" name="first_name" id="first_name" required placeholder="Charles">
 					</div>
-					{{/unless}}
+
+					<div class="col col--6of12">
+						<label for="last_name" class="label--inside">Last Name</label>
+						<input type="text" name="last_name" id="last_name" required placeholder="Babbage">
+					</div>
+				</div>
+
+				<button class="button--full button--highlight button--medium normal_bottom" type="submit">Request Access</button>
+
+				<a href="#" class="a--underline" data-slide-marker=0>You already have an account?</a>
+			</div>
+		</form>
+
+		<form class="text_center slide" data-slide=2 data-forgot-password-form style="width: 33.333%;">
+			<div class="text_center" data-slide-content>
+				<h2 class="h2--huge">Forgot Password?</h2>
+
+				<p class="p--tight medium_bottom">Enter your email address and we'll send you a temporary link where you'll be able to reset your password.</p>
+
+				<div data-success>
+					<label for="forgot_email" class="label--inside">E-mail</label>
+					<input type="email" id="forgot_email" name="email" value="" required autocomplete="email" placeholder="email.address@gmail.com">
+
+					<button class="button--full button--highlight button--medium normal_bottom" type="submit">Send Request</button>
+
+					<a href="#" class="a--underline" data-slide-marker=1>Create an account</a>
 				</div>
 			</div>
-		</div>
-
+		</form>
 	</div>
-
-	{{#if user._id}}
-	<button class="overlay__button" data-logout>{{pieces.admin.logout}}</button>
-	{{else}}
-	<button class="overlay__button" type="submit">{{pieces.admin.submit}}</button>
-	{{/if}}
-	
-</form>
+</div>

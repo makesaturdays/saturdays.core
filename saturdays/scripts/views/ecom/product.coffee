@@ -12,7 +12,9 @@ class Saturdays.Views.Product extends Saturdays.Views.Editable
 		Saturdays.vendor_shops = new Saturdays.Collections.VendorShops() unless Saturdays.vendor_shops?
 		
 		this.listenTo Saturdays.vendor_shops, "sync", this.render
-		Saturdays.vendor_shops.fetch()
+
+		if @data.is_admin
+			Saturdays.vendor_shops.fetch()
 
 		super()
 

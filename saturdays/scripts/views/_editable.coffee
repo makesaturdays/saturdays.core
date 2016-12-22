@@ -3,7 +3,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 
 	edit_admin_template: templates["cms/edit"]
-	tag_input_template: templates["cms/tag_input"]
+	tags_template: templates["cms/tags"]
 	tag_template: templates["cms/tag"]
 
 	
@@ -11,13 +11,14 @@ class Saturdays.Views.Editable extends Saturdays.View
 		this.events["input input"] = "key_input"
 		this.events["change input"] = "key_input"
 		this.events["input [contenteditable]"] = "key_input"
-		this.events["click .js-save_edit"] = "save_edit"
-		this.events["click .js-destroy"] = "destroy"
-		this.events["keypress [name='tag_input']"] = "input_tag"
-		this.events["blur [name='tag_input']"] = "blur_tag"
+		this.events["click [data-save]"] = "save_edit"
+		this.events["click [data-destroy]"] = "destroy"
+		this.events["click [data-add-tag]"] = "add_tag"
+		this.events["click [data-remove-tag]"] = "remove_tag"
+		this.events["click [data-image]"] = "trigger_upload"
+		this.events["change [data-image-input]"] = "upload_image"
 
 		this.listenTo @model, "sync", this.render
-
 		@model.fetch()
 
 		super()
@@ -31,13 +32,12 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 		super()
 
-		if @data.is_admin
-			this.$el.find("[data-tag]").attr "contenteditable", "true"
-			this.$el.find("[data-tag-input]").html this.tag_input_template(@data)
-
+		if @data.has_permission
+			this.$el.find("[data-image]").addClass "img--clickable"
+			this.$el.find("[data-tags]").html this.tags_template({tags: @data.model.tags, name: "tag"})
 			this.$el.find("[data-admin]").html this.edit_admin_template(@data)
 
-			@button = this.$el.find(".js-save_edit")[0]
+			@button = this.$el.find("[data-save]")[0]
 
 			this.delegateEvents()
 
@@ -45,17 +45,30 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 
 	save_edit: (e)->
-		@model.set
-			is_online: this.$el.find("[name='is_online']")[0].checked
+
+		Turbolinks.controller.adapter.progressBar.setValue(0)
+		Turbolinks.controller.adapter.progressBar.show()
+
+
+		# @model.set
+		# 	is_online: this.$el.find("[name='is_online']")[0].checked
 
 		tags = []
 		this.$el.find("[data-tag]").each (index, tag)=>
 			tags.push tag.innerHTML
 
 		@model.attributes.tags = tags
+
+		image = this.$el.find("[src][data-image]")
+		if image.length
+			@model.set
+				image: image.attr("src").replace(image.attr("data-image-cdn"), "")
 			
 
-		@model.save()
+		@model.save {},
+			success: (model, response)->
+				Turbolinks.controller.adapter.progressBar.setValue(100)
+				Turbolinks.controller.adapter.progressBar.hide()
 
 
 

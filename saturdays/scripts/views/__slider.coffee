@@ -28,8 +28,7 @@ class Saturdays.Views.Slider extends Saturdays.View
 
 		@previous_slide_height = this.$el.find("[data-slide="+@current_slide+"] [data-slide-content]").height()
 		this.$el.find("[data-slider-container]").css "height", "-="+(this.$el.find("[data-slide="+@current_slide+"]").height() - @previous_slide_height)+"px"
-		# this.$el.find("[data-slide-marker="+@current_slide+"]").addClass "slider__marker--active"
-		# this.$el.find("[data-slide]").css "transform", "translateX(-"+@current_slide+"00%)"
+		this.$el.find("[data-slide]").css "transform", "translateX(-"+@current_slide+"00%)"
 
 		this
 
@@ -46,6 +45,7 @@ class Saturdays.Views.Slider extends Saturdays.View
 	slide_to: (e, index)->
 		if e?
 			index = parseInt(e.currentTarget.getAttribute "data-slide-marker")
+			e.preventDefault()
 			e.currentTarget.blur()
 
 		@current_slide = index
@@ -63,11 +63,11 @@ class Saturdays.Views.Slider extends Saturdays.View
 		, 333
 
 
-	show: (e)->
+	show: (e, index=0)->
 		if e?
 			e.preventDefault()
 
-		this.current_slide = 0
+		this.current_slide = index
 		this.render()
 	
 		this.$el.removeClass "fade_out"

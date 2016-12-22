@@ -20,7 +20,8 @@ class Saturdays.Models.Session extends Saturdays.Model
 
 				Saturdays.user.initialize()
 
-				if Saturdays.router.query.token_code?
+				query = Saturdays.helpers.get_query_string()
+				if query.token_code?
 					Saturdays.cookies.set "Token-Id", response.token_id
 
 					window.location = "?edit=true"

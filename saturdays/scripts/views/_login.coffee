@@ -18,6 +18,9 @@ class Saturdays.Views.Login extends Saturdays.Views.Slider
 
 	render: ->
 
+		_.extend @data,
+			categories: window.categories
+
 
 		super()
 
@@ -55,13 +58,14 @@ class Saturdays.Views.Login extends Saturdays.Views.Slider
 				this.hide()
 
 
-	show: (e)->
+	show: (e, index)->
 		
-		super(e)
+		super(e, index)
 
 
 	hide: (e)->
 		
+		window.history.replaceState(null, null, location.pathname)
 		super(e)
 			
 			

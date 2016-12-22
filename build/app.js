@@ -16,6 +16,7 @@
       this.user = new Saturdays.Models.User();
       this.cart = new Saturdays.Models.Cart();
       this.login_view = new Saturdays.Views.Login();
+      this.edit_view = new Saturdays.Views.Edit();
       this.cart_view = new Saturdays.Views.Cart();
       this.header_view = new Saturdays.Views.Header();
       this.render_views();
@@ -120,7 +121,11 @@
       if (this.query.login != null) {
         return Saturdays.login_view.show();
       } else {
-        return Saturdays.login_view.hide();
+        if (this.query.signup != null) {
+          return Saturdays.login_view.show(null, 1);
+        } else {
+          return Saturdays.login_view.hide();
+        }
       }
     }
   };
@@ -1093,11 +1098,13 @@
       }
       return Saturdays.session.save(data, {
         success: function(model, response) {
+          var query;
           Saturdays.cookies.set("Session-Id", response._id);
           Saturdays.cookies.set("Session-Secret", response.secret);
           Saturdays.cookies.set("User-Id", response.user_id);
           Saturdays.user.initialize();
-          if (Saturdays.router.query.token_code != null) {
+          query = Saturdays.helpers.get_query_string();
+          if (query.token_code != null) {
             Saturdays.cookies.set("Token-Id", response.token_id);
             return window.location = "?edit=true";
           }
@@ -1239,6 +1246,92 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Slider = (function(superClass) {
+    extend(Slider, superClass);
+
+    function Slider() {
+      return Slider.__super__.constructor.apply(this, arguments);
+    }
+
+    Slider.prototype.current_slide = 0;
+
+    Slider.prototype.initialize = function() {
+      this.events["click [data-next-slide-button]"] = "next_slide";
+      this.events["click [data-previous-slide-button]"] = "previous_slide";
+      this.events["click [data-slide-marker]"] = "slide_to";
+      this.events["click [data-hide]"] = "hide";
+      return Slider.__super__.initialize.call(this);
+    };
+
+    Slider.prototype.render = function() {
+      _.extend(this.data, {
+        current_slide: this.current_slide
+      });
+      Slider.__super__.render.call(this);
+      this.previous_slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
+      this.$el.find("[data-slider-container]").css("height", "-=" + (this.$el.find("[data-slide=" + this.current_slide + "]").height() - this.previous_slide_height) + "px");
+      this.$el.find("[data-slide]").css("transform", "translateX(-" + this.current_slide + "00%)");
+      return this;
+    };
+
+    Slider.prototype.next_slide = function() {
+      return this.slide_to(null, this.current_slide + 1);
+    };
+
+    Slider.prototype.previous_slide = function() {
+      return this.slide_to(null, this.current_slide - 1);
+    };
+
+    Slider.prototype.slide_to = function(e, index) {
+      var slide_height;
+      if (e != null) {
+        index = parseInt(e.currentTarget.getAttribute("data-slide-marker"));
+        e.preventDefault();
+        e.currentTarget.blur();
+      }
+      this.current_slide = index;
+      this.$el.find("[data-slide-marker]").removeClass("slider__marker--active");
+      this.$el.find("[data-slide-marker=" + this.current_slide + "]").addClass("slider__marker--active");
+      slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
+      this.$el.find("[data-slider-container]").css("height", "-=" + (this.previous_slide_height - slide_height) + "px");
+      this.previous_slide_height = slide_height;
+      this.$el.find("[data-slide]").css("transform", "translateX(-" + this.current_slide + "00%)");
+      return setTimeout((function(_this) {
+        return function() {
+          return _this.$el.find("[data-slide=" + _this.current_slide + "] input:not([disabled]):first").focus();
+        };
+      })(this), 333);
+    };
+
+    Slider.prototype.show = function(e, index) {
+      if (index == null) {
+        index = 0;
+      }
+      if (e != null) {
+        e.preventDefault();
+      }
+      this.current_slide = index;
+      this.render();
+      return this.$el.removeClass("fade_out");
+    };
+
+    Slider.prototype.hide = function(e) {
+      if (e != null) {
+        e.preventDefault();
+      }
+      return this.$el.addClass("fade_out");
+    };
+
+    return Slider;
+
+  })(Saturdays.View);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Views.Editable = (function(superClass) {
     extend(Editable, superClass);
 
@@ -1248,7 +1341,7 @@
 
     Editable.prototype.edit_admin_template = templates["cms/edit"];
 
-    Editable.prototype.tag_input_template = templates["cms/tag_input"];
+    Editable.prototype.tags_template = templates["cms/tags"];
 
     Editable.prototype.tag_template = templates["cms/tag"];
 
@@ -1256,10 +1349,12 @@
       this.events["input input"] = "key_input";
       this.events["change input"] = "key_input";
       this.events["input [contenteditable]"] = "key_input";
-      this.events["click .js-save_edit"] = "save_edit";
-      this.events["click .js-destroy"] = "destroy";
-      this.events["keypress [name='tag_input']"] = "input_tag";
-      this.events["blur [name='tag_input']"] = "blur_tag";
+      this.events["click [data-save]"] = "save_edit";
+      this.events["click [data-destroy]"] = "destroy";
+      this.events["click [data-add-tag]"] = "add_tag";
+      this.events["click [data-remove-tag]"] = "remove_tag";
+      this.events["click [data-image]"] = "trigger_upload";
+      this.events["change [data-image-input]"] = "upload_image";
       this.listenTo(this.model, "sync", this.render);
       this.model.fetch();
       return Editable.__super__.initialize.call(this);
@@ -1270,21 +1365,23 @@
         model: this.model.toJSON()
       });
       Editable.__super__.render.call(this);
-      if (this.data.is_admin) {
-        this.$el.find("[data-tag]").attr("contenteditable", "true");
-        this.$el.find("[data-tag-input]").html(this.tag_input_template(this.data));
+      if (this.data.has_permission) {
+        this.$el.find("[data-image]").addClass("img--clickable");
+        this.$el.find("[data-tags]").html(this.tags_template({
+          tags: this.data.model.tags,
+          name: "tag"
+        }));
         this.$el.find("[data-admin]").html(this.edit_admin_template(this.data));
-        this.button = this.$el.find(".js-save_edit")[0];
+        this.button = this.$el.find("[data-save]")[0];
         this.delegateEvents();
       }
       return this;
     };
 
     Editable.prototype.save_edit = function(e) {
-      var tags;
-      this.model.set({
-        is_online: this.$el.find("[name='is_online']")[0].checked
-      });
+      var image, tags;
+      Turbolinks.controller.adapter.progressBar.setValue(0);
+      Turbolinks.controller.adapter.progressBar.show();
       tags = [];
       this.$el.find("[data-tag]").each((function(_this) {
         return function(index, tag) {
@@ -1292,7 +1389,18 @@
         };
       })(this));
       this.model.attributes.tags = tags;
-      return this.model.save();
+      image = this.$el.find("[src][data-image]");
+      if (image.length) {
+        this.model.set({
+          image: image.attr("src").replace(image.attr("data-image-cdn"), "")
+        });
+      }
+      return this.model.save({}, {
+        success: function(model, response) {
+          Turbolinks.controller.adapter.progressBar.setValue(100);
+          return Turbolinks.controller.adapter.progressBar.hide();
+        }
+      });
     };
 
     Editable.prototype.destroy = function() {
@@ -1352,83 +1460,75 @@
 }).call(this);
 
 (function() {
-  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
-  Saturdays.Views.Slider = (function(superClass) {
-    extend(Slider, superClass);
+  Saturdays.Views.Login = (function(superClass) {
+    extend(Login, superClass);
 
-    function Slider() {
-      return Slider.__super__.constructor.apply(this, arguments);
+    function Login() {
+      this.check_escape = bind(this.check_escape, this);
+      return Login.__super__.constructor.apply(this, arguments);
     }
 
-    Slider.prototype.current_slide = 0;
+    Login.prototype.el = $("#login");
 
-    Slider.prototype.initialize = function() {
-      this.events["click [data-next-slide-button]"] = "next_slide";
-      this.events["click [data-previous-slide-button]"] = "previous_slide";
-      this.events["click [data-slide-marker]"] = "slide_to";
-      this.events["click [data-hide]"] = "hide";
-      return Slider.__super__.initialize.call(this);
+    Login.prototype.template = templates["user/login"];
+
+    Login.prototype.events = {
+      "submit [data-login-form]": "submit_login",
+      "click [data-logout]": "logout"
     };
 
-    Slider.prototype.render = function() {
+    Login.prototype.initialize = function() {
+      $(document).on("keyup", this.check_escape);
+      return Login.__super__.initialize.call(this);
+    };
+
+    Login.prototype.render = function() {
       _.extend(this.data, {
-        current_slide: this.current_slide
+        categories: window.categories
       });
-      Slider.__super__.render.call(this);
-      this.previous_slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
-      this.$el.find("[data-slider-container]").css("height", "-=" + (this.$el.find("[data-slide=" + this.current_slide + "]").height() - this.previous_slide_height) + "px");
+      Login.__super__.render.call(this);
       return this;
     };
 
-    Slider.prototype.next_slide = function() {
-      return this.slide_to(null, this.current_slide + 1);
+    Login.prototype.submit_login = function(e) {
+      e.preventDefault();
+      return Saturdays.session.login({
+        email: e.currentTarget["email"].value,
+        password: e.currentTarget["password"].value
+      });
     };
 
-    Slider.prototype.previous_slide = function() {
-      return this.slide_to(null, this.current_slide - 1);
+    Login.prototype.logout = function(e) {
+      e.preventDefault();
+      return Saturdays.session.logout();
     };
 
-    Slider.prototype.slide_to = function(e, index) {
-      var slide_height;
-      if (e != null) {
-        index = parseInt(e.currentTarget.getAttribute("data-slide-marker"));
-        e.currentTarget.blur();
+    Login.prototype.check_escape = function(e) {
+      if (e.keyCode === 27) {
+        if (this.$el.hasClass("fade_out")) {
+          return this.show();
+        } else {
+          return this.hide();
+        }
       }
-      this.current_slide = index;
-      this.$el.find("[data-slide-marker]").removeClass("slider__marker--active");
-      this.$el.find("[data-slide-marker=" + this.current_slide + "]").addClass("slider__marker--active");
-      slide_height = this.$el.find("[data-slide=" + this.current_slide + "] [data-slide-content]").height();
-      this.$el.find("[data-slider-container]").css("height", "-=" + (this.previous_slide_height - slide_height) + "px");
-      this.previous_slide_height = slide_height;
-      this.$el.find("[data-slide]").css("transform", "translateX(-" + this.current_slide + "00%)");
-      return setTimeout((function(_this) {
-        return function() {
-          return _this.$el.find("[data-slide=" + _this.current_slide + "] input:not([disabled]):first").focus();
-        };
-      })(this), 333);
     };
 
-    Slider.prototype.show = function(e) {
-      if (e != null) {
-        e.preventDefault();
-      }
-      this.current_slide = 0;
-      this.render();
-      return this.$el.removeClass("fade_out");
+    Login.prototype.show = function(e, index) {
+      return Login.__super__.show.call(this, e, index);
     };
 
-    Slider.prototype.hide = function(e) {
-      if (e != null) {
-        e.preventDefault();
-      }
-      return this.$el.addClass("fade_out");
+    Login.prototype.hide = function(e) {
+      window.history.replaceState(null, null, location.pathname);
+      return Login.__super__.hide.call(this, e);
     };
 
-    return Slider;
+    return Login;
 
-  })(Saturdays.View);
+  })(Saturdays.Views.Slider);
 
 }).call(this);
 
@@ -1934,10 +2034,12 @@
     };
 
     Cart.prototype.show = function(e) {
+      window.history.replaceState(null, null, location.pathname + "?cart=true");
       return Cart.__super__.show.call(this, e);
     };
 
     Cart.prototype.hide = function(e) {
+      window.history.replaceState(null, null, location.pathname);
       return Cart.__super__.hide.call(this, e);
     };
 
@@ -1969,7 +2071,9 @@
         Saturdays.vendor_shops = new Saturdays.Collections.VendorShops();
       }
       this.listenTo(Saturdays.vendor_shops, "sync", this.render);
-      Saturdays.vendor_shops.fetch();
+      if (this.data.is_admin) {
+        Saturdays.vendor_shops.fetch();
+      }
       return Product.__super__.initialize.call(this);
     };
 
@@ -2069,6 +2173,55 @@
   var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
     hasProp = {}.hasOwnProperty;
 
+  Saturdays.Views.Edit = (function(superClass) {
+    extend(Edit, superClass);
+
+    function Edit() {
+      return Edit.__super__.constructor.apply(this, arguments);
+    }
+
+    Edit.prototype.el = $("#edit");
+
+    Edit.prototype.template = templates["user/edit"];
+
+    Edit.prototype.events = {
+      "submit [data-edit-form]": "submit_edit"
+    };
+
+    Edit.prototype.initialize = function() {
+      Edit.__super__.initialize.call(this);
+      return $(document).off("keyup", this.check_escape);
+    };
+
+    Edit.prototype.render = function() {
+      Edit.__super__.render.call(this);
+      return this;
+    };
+
+    Edit.prototype.submit_edit = function(e) {
+      e.preventDefault();
+      return Saturdays.user.save({
+        password: e.currentTarget["password"].value
+      }, {
+        patch: true,
+        success: (function(_this) {
+          return function(model, response) {
+            return _this.$el.find("[data-success]").html("<span class='highlight'>Your password was updated successfully.</span>");
+          };
+        })(this)
+      });
+    };
+
+    return Edit;
+
+  })(Saturdays.Views.Login);
+
+}).call(this);
+
+(function() {
+  var extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty;
+
   Saturdays.Views.Freelancer = (function(superClass) {
     extend(Freelancer, superClass);
 
@@ -2076,21 +2229,21 @@
       return Freelancer.__super__.constructor.apply(this, arguments);
     }
 
-    Freelancer.prototype.edit_admin_template = templates["user/admin"];
+    Freelancer.prototype.edit_admin_template = templates["freelancers/admin"];
 
-    Freelancer.prototype.route_box_template = templates["user/route_box"];
+    Freelancer.prototype.route_box_template = templates["freelancers/route_box"];
 
-    Freelancer.prototype.edit_box_template = templates["user/edit_box"];
+    Freelancer.prototype.edit_box_template = templates["freelancers/edit_box"];
 
-    Freelancer.prototype.is_available_template = templates["user/is_available"];
+    Freelancer.prototype.is_available_template = templates["freelancers/is_available"];
 
-    Freelancer.prototype.links_template = templates["user/links"];
+    Freelancer.prototype.links_template = templates["freelancers/links"];
 
-    Freelancer.prototype.link_template = templates["user/link"];
+    Freelancer.prototype.link_template = templates["freelancers/link"];
 
-    Freelancer.prototype.projects_template = templates["user/projects"];
+    Freelancer.prototype.projects_template = templates["freelancers/projects"];
 
-    Freelancer.prototype.project_template = templates["user/project"];
+    Freelancer.prototype.project_template = templates["freelancers/project"];
 
     Freelancer.prototype.events = {
       "click [data-add-link]": "add_link",
@@ -2109,15 +2262,15 @@
     Freelancer.prototype.render = function() {
       Freelancer.__super__.render.call(this);
       if (this.data.has_permission) {
-        this.$el.find("[data-rate]").attr("contenteditable", "true");
         this.$el.find("[data-first-name]").attr("contenteditable", "true");
         this.$el.find("[data-last-name]").attr("contenteditable", "true");
         this.$el.find("[data-bio]").attr("contenteditable", "true");
+        this.$el.find("[data-rate]").attr("contenteditable", "true");
+        this.$el.find("[data-route-box]").html(this.route_box_template(this.data));
         this.$el.find("[data-skills]").html(this.tags_template({
           tags: this.data.model.skills,
           name: "skill"
         }));
-        this.$el.find("[data-route-box]").html(this.route_box_template(this.data));
         this.$el.find("[data-edit-box]").html(this.edit_box_template(this.data));
         this.$el.find("[data-is-available]").html(this.is_available_template(this.data));
         this.$el.find("[data-links]").html(this.links_template({
@@ -2193,7 +2346,9 @@
     };
 
     Freelancer.prototype.show_edit = function(e) {
-      return e.preventDefault();
+      e.preventDefault();
+      window.history.replaceState(null, null, location.pathname + "?edit=true");
+      return Saturdays.edit_view.show(e);
     };
 
     Freelancer.prototype.insert_link = function(target) {
@@ -2269,8 +2424,6 @@
 
     Header.prototype.el = $("#header");
 
-    Header.prototype.user_links_template = templates["user/links"];
-
     Header.prototype.events = {};
 
     Header.prototype.initialize = function() {
@@ -2279,84 +2432,12 @@
 
     Header.prototype.render = function() {
       Header.__super__.render.call(this);
-      if (this.data.is_authenticated) {
-        this.$el.find("[data-user-links]").html(this.user_links_template(this.data));
-      }
       return this;
     };
 
     return Header;
 
   })(Saturdays.View);
-
-}).call(this);
-
-(function() {
-  var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    hasProp = {}.hasOwnProperty;
-
-  Saturdays.Views.Login = (function(superClass) {
-    extend(Login, superClass);
-
-    function Login() {
-      this.check_escape = bind(this.check_escape, this);
-      return Login.__super__.constructor.apply(this, arguments);
-    }
-
-    Login.prototype.el = $("#login");
-
-    Login.prototype.template = templates["user/login"];
-
-    Login.prototype.events = {
-      "submit [data-login-form]": "submit_login",
-      "click [data-logout]": "logout"
-    };
-
-    Login.prototype.initialize = function() {
-      $(document).on("keyup", this.check_escape);
-      return Login.__super__.initialize.call(this);
-    };
-
-    Login.prototype.render = function() {
-      Login.__super__.render.call(this);
-      return this;
-    };
-
-    Login.prototype.submit_login = function(e) {
-      e.preventDefault();
-      return Saturdays.session.login({
-        email: e.currentTarget["email"].value,
-        password: e.currentTarget["password"].value
-      });
-    };
-
-    Login.prototype.logout = function(e) {
-      e.preventDefault();
-      return Saturdays.session.logout();
-    };
-
-    Login.prototype.check_escape = function(e) {
-      if (e.keyCode === 27) {
-        if (this.$el.hasClass("fade_out")) {
-          return this.show();
-        } else {
-          return this.hide();
-        }
-      }
-    };
-
-    Login.prototype.show = function(e) {
-      return Login.__super__.show.call(this, e);
-    };
-
-    Login.prototype.hide = function(e) {
-      return Login.__super__.hide.call(this, e);
-    };
-
-    return Login;
-
-  })(Saturdays.Views.Slider);
 
 }).call(this);
 
@@ -2371,6 +2452,8 @@
       return Navigation.__super__.constructor.apply(this, arguments);
     }
 
+    Navigation.prototype.user_nav_template = templates["user/nav"];
+
     Navigation.prototype.events = {
       "click [data-show-cart]": "show_cart",
       "click [data-show-login]": "show_login",
@@ -2382,7 +2465,11 @@
     };
 
     Navigation.prototype.render = function() {
-      return Navigation.__super__.render.call(this);
+      Navigation.__super__.render.call(this);
+      if (this.data.is_authenticated) {
+        this.$el.find("[data-user-nav]").html(this.user_nav_template(this.data));
+      }
+      return this;
     };
 
     Navigation.prototype.show_cart = function(e) {
@@ -2391,11 +2478,13 @@
 
     Navigation.prototype.show_login = function(e) {
       e.preventDefault();
+      window.history.replaceState(null, null, location.pathname + "?login=true");
       return Saturdays.login_view.show(e);
     };
 
     Navigation.prototype.show_signup = function(e) {
       e.preventDefault();
+      window.history.replaceState(null, null, location.pathname + "?signup=true");
       return Saturdays.login_view.show(e, 1);
     };
 

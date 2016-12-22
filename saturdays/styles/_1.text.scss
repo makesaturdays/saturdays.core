@@ -294,9 +294,10 @@ sub {
 
 .white { color: $white; }
 .highlight { color: $highlight; }
+.secondary { color: $secondary; }
 .red { color: $red; }
 .green { color: $green; }
-
+.dark_grey { color: $grey--dark; }
 
 // #BACKGROUNDS
 
@@ -402,9 +403,5 @@ em,
 .spaced { margin: 0 1em; }
 .radiused { border-radius: $border_radius; }
 .shadowed { @include shadow(0 0.25rem 1rem fade-out($grey, 0.5)); }
-
-[contenteditable] {
-	background: fade-out($black, 0.95);
-}
 
 

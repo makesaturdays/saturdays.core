@@ -1,14 +1,14 @@
 
 class Saturdays.Views.Freelancer extends Saturdays.Views.Editable
 
-	edit_admin_template: templates["user/admin"]
-	route_box_template: templates["user/route_box"]
-	edit_box_template: templates["user/edit_box"]
-	is_available_template: templates["user/is_available"]
-	links_template: templates["user/links"]
-	link_template: templates["user/link"]
-	projects_template: templates["user/projects"]
-	project_template: templates["user/project"]
+	edit_admin_template: templates["freelancers/admin"]
+	route_box_template: templates["freelancers/route_box"]
+	edit_box_template: templates["freelancers/edit_box"]
+	is_available_template: templates["freelancers/is_available"]
+	links_template: templates["freelancers/links"]
+	link_template: templates["freelancers/link"]
+	projects_template: templates["freelancers/projects"]
+	project_template: templates["freelancers/project"]
 
 	events: {
 		"click [data-add-link]": "add_link"
@@ -33,13 +33,13 @@ class Saturdays.Views.Freelancer extends Saturdays.Views.Editable
 		super()
 
 		if @data.has_permission
-			this.$el.find("[data-rate]").attr "contenteditable", "true"
 			this.$el.find("[data-first-name]").attr "contenteditable", "true"
 			this.$el.find("[data-last-name]").attr "contenteditable", "true"
 			this.$el.find("[data-bio]").attr "contenteditable", "true"
+			this.$el.find("[data-rate]").attr "contenteditable", "true"
 
-			this.$el.find("[data-skills]").html this.tags_template({tags: @data.model.skills, name: "skill"})
 			this.$el.find("[data-route-box]").html this.route_box_template(@data)
+			this.$el.find("[data-skills]").html this.tags_template({tags: @data.model.skills, name: "skill"})
 			this.$el.find("[data-edit-box]").html this.edit_box_template(@data)
 			this.$el.find("[data-is-available]").html this.is_available_template(@data)
 			this.$el.find("[data-links]").html this.links_template({links: @data.model.links})
@@ -109,7 +109,8 @@ class Saturdays.Views.Freelancer extends Saturdays.Views.Editable
 	show_edit: (e)->
 		e.preventDefault()
 
-		# Available.edit_view.show(e)
+		window.history.replaceState(null, null, location.pathname+"?edit=true")
+		Saturdays.edit_view.show(e)
 
 
 

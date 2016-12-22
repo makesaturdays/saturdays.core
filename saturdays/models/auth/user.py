@@ -41,6 +41,7 @@ with app.app_context():
 				'schema': Cart.schema
 			},
 			'is_vendor': validation_rules['bool'],
+			'is_freelancer': validation_rules['bool'],
 			'is_admin': validation_rules['bool'],
 			'metadata': validation_rules['metadata']
 		}
@@ -226,6 +227,13 @@ with app.app_context():
 			try:
 				if 'credit_card' not in document['cart']:
 					document['cart']['credit_card'] = document['credit_cards'][0]
+			except KeyError:
+				pass
+
+			try:
+				if document['is_freelancer']:
+					from saturdays.models.freelancers.freelancer import Freelancer
+					document['freelancer'] = Freelancer.get_where({'user_id': document['_id']})
 			except KeyError:
 				pass
 

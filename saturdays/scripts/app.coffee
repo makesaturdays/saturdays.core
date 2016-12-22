@@ -22,6 +22,7 @@ window.Saturdays =
 		@cart = new Saturdays.Models.Cart()
 		
 		@login_view = new Saturdays.Views.Login()
+		@edit_view = new Saturdays.Views.Edit()
 		@cart_view = new Saturdays.Views.Cart()
 
 		@header_view = new Saturdays.Views.Header()
@@ -90,7 +91,13 @@ window.Saturdays =
 
 		@query = Saturdays.helpers.get_query_string()
 		if @query.cart? then Saturdays.cart_view.show() else Saturdays.cart_view.hide()
-		if @query.login? then Saturdays.login_view.show() else Saturdays.login_view.hide()
+		if @query.login?
+			Saturdays.login_view.show()
+		else
+			if @query.signup?
+				Saturdays.login_view.show(null, 1)
+			else
+				Saturdays.login_view.hide()
 		
 	
 

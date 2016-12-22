@@ -1,0 +1,9 @@
+
+{{#each links}}
+<div class="col" data-link>
+	<small class="contenteditable--small" contenteditable data-link-label>{{label}}</small> <button class="button--transparent" data-remove-link><svg class="icon"><use xlink:href="#icon-remove"></use></svg></button></span><br>
+	<span contenteditable data-link-url>{{url}}</span>
+</div>
+{{/each}}
+
+<button class="button--underline" data-add-link>+ Add new link</button>

@@ -32,7 +32,7 @@
     </head>
 
 
-    <body class="{% block body_classes %}{% endblock %}">
+    <body class="{% block body_classes %}{% endblock %}" {% block body_data %}{% endblock %}>
 
         {% include 'icons.svg' %}
 
@@ -70,6 +70,7 @@
 
         <div class="cart fades_out fade_out" id="cart" data-turbolinks-permanent></div>
         <div class="login fades_out fade_out" id="login" data-turbolinks-permanent></div>
+        <div class="login fades_out fade_out" id="edit" data-turbolinks-permanent></div>
 
 
         <footer id="footer">
@@ -111,6 +112,7 @@
 
         <script>
             var pieces = {{pieces_json|safe}};
+            var categories = {{categories_json|safe}};
             var current_path = "{{current_path}}";
             var saturdays_settings = {
                 api: window.location.origin+"/",

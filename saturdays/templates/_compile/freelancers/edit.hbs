@@ -1,0 +1,33 @@
+
+<a href="{{current_path}}" class="login__back" data-hide data-turbolinks="false"></a>
+
+<div class="slider login__container">
+	<a href="{{current_path}}" class="login__close" data-hide data-turbolinks="false">
+		<svg class="icon icon--big"><use xlink:href="#icon-close-outline"></use></svg>
+	</a>
+
+	<div class="slider__container" style="width: 100%;" data-slider-container>
+		<form class="slide" data-slide=0 data-edit-form style="width: 100%;">
+			<div class="text_center" data-slide-content>
+				<h2 class="h2--huge">Edit Password</h2>
+
+				<p class="p--tight medium_bottom">Modify your account's password for the email address {{user.email}}.</p>
+
+				{{#if user.password}}
+				<span class="highlight">Your password has been successfully updated.</span>
+				{{else}}
+
+				{{#unless session.token_id}}
+				<label for="current_password" class="label--inside">Current Password</label>
+				<input type="password" id="current_password" name="current_password" value="" required autocomplete="off" placeholder="********">
+				{{/unless}}
+
+				<label for="password" class="label--inside">New Password</label>
+				<input type="password" id="password" name="password" value="" required autocomplete="off" placeholder="********">
+
+				<button class="button--full button--highlight button--medium normal_bottom" type="submit">Edit Password</button>
+				{{/if}}
+			</div>
+		</form>
+	</div>
+</div>

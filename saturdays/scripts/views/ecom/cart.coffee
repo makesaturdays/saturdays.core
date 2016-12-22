@@ -196,6 +196,7 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 	show: (e)->
 
+		window.history.replaceState(null, null, location.pathname+"?cart=true")
 		super(e)
 
 		
@@ -203,6 +204,7 @@ class Saturdays.Views.Cart extends Saturdays.Views.Slider
 
 	hide: (e)->
 
+		window.history.replaceState(null, null, location.pathname)
 		super(e)
 
 		

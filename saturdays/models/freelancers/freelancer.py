@@ -49,7 +49,6 @@ with app.app_context():
 					}
 				}
 			},
-			'is_admin': validation_rules['bool'],
 			'metadata': validation_rules['metadata']
 		}
 
@@ -124,6 +123,14 @@ with app.app_context():
 		def create(cls, document):
 
 			document['is_online'] = False
+
+			user = User.create({
+				'email': document['email'],
+				'first_name': document['first_name'],
+				'last_name': document['last_name'],
+				'is_freelancer': True
+			})
+			document['user_id'] = user['_id']
 
 
 			trigger_tasks.apply_async(('freelancer_created', {
