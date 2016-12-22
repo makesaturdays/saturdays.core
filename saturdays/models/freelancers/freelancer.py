@@ -4,6 +4,9 @@ from flask import request, abort
 
 from saturdays.helpers.json import to_json
 from saturdays.models.auth.user import User
+from saturdays.models.core.model import Model
+from saturdays.models.core.has_routes import HasRoutes
+from saturdays.models.core.with_templates import WithTemplates
 
 from saturdays.helpers.validation_rules import validation_rules
 from saturdays.tasks.trigger import trigger_tasks
@@ -19,13 +22,12 @@ import urllib
 
 
 with app.app_context():
-	class Freelancer(User):
+	class Freelancer(WithTemplates, HasRoutes, Model):
 
 		collection_name = 'freelancers'
 
 		schema = {
 			'email': validation_rules['email'],
-			'password': validation_rules['password'],
 			'route': validation_rules['text'],
 			'image': validation_rules['text'],
 			'first_name': validation_rules['text'],
@@ -134,8 +136,7 @@ with app.app_context():
 
 
 			trigger_tasks.apply_async(('freelancer_created', {
-				'freelancer': document,
-				'has_generated_password': has_generated_password
+				'freelancer': document
 			}))
 
 

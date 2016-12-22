@@ -10,7 +10,6 @@
 		<form class="slide" data-slide=0 data-login-form style="width: 33.333%;">
 			<div class="text_center" data-slide-content>
 				{{#if user._id}}
-				{{#if is_authenticated}}
 				<h2 class="h2--huge">Hi!</h2>
 
 				<p class="p--tight">Welcome back {{user.first_name}}.{{#if user.is_freelancer}} You are currently marked as {{#if user.freelancer.is_available}}<span class="green">available</span>{{else}}<span class="red">not available</span>{{/if}} for freelance work.{{/if}}</p>
@@ -18,12 +17,10 @@
 				{{#if user.is_freelancer}}<a href="/freelancers/{{user.freelancer.route}}" class="button button--full button--highlight button--medium small_bottom">Edit Profile</a>{{/if}}
 				<a href="?" class="a--underline" data-logout>Log out</button>
 				{{else}}
-				<h2 class="h2--huge">Success!</h2>
 
 				{{#if user.is_freelancer}}
+				<h2 class="h2--huge">Success!</h2>
 				<p class="p--tight medium_bottom">Thanks {{user.first_name}}, we'll get back to you within 48 hours.</p>
-				{{/if}}
-				{{/if}}
 				{{else}}
 				<h2 class="h2--huge medium_bottom">Log in <a href="#" class="dark_grey" data-slide-marker=1>or Join</a></h2>
 
@@ -36,6 +33,7 @@
 				<button class="button--full button--highlight button--medium normal_bottom" type="submit">Log in</button>
 
 				<a href="#" class="a--underline" data-slide-marker=2>Forgot password?</a>
+				{{/if}}
 				{{/if}}
 			</div>
 		</form>

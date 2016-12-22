@@ -618,7 +618,7 @@
       } : void 0);
       if ((Saturdays.user != null) && (this.model != null)) {
         _.extend(this.data, {
-          has_permission: Saturdays.user.get("is_admin") || Saturdays.user.id === this.model.get("user_id")
+          has_permission: Saturdays.user.get("is_admin") || ((this.model.get("user_id") != null) && Saturdays.user.id === this.model.get("user_id"))
         });
       } else {
         _.extend(this.data, {
@@ -1470,6 +1470,8 @@
 
     Login.prototype.events = {
       "submit [data-login-form]": "submit_login",
+      "submit [data-signup-form]": "submit_signup",
+      "submit [data-forgot-password-form]": "submit_forgot_password",
       "click [data-logout]": "logout"
     };
 
@@ -1491,6 +1493,47 @@
       return Saturdays.session.login({
         email: e.currentTarget["email"].value,
         password: e.currentTarget["password"].value
+      });
+    };
+
+    Login.prototype.submit_signup = function(e) {
+      var freelancer, tags;
+      e.preventDefault();
+      tags = [];
+      $(e.currentTarget).find("[data-tags] [type='checkbox']:checked").each(function(index, input) {
+        return tags.push(input.name);
+      });
+      freelancer = new Saturdays.Models.Freelancer();
+      return freelancer.save({
+        email: e.currentTarget["email"].value,
+        first_name: e.currentTarget["first_name"].value,
+        last_name: e.currentTarget["last_name"].value,
+        tags: tags
+      }, {
+        success: (function(_this) {
+          return function(model, response) {
+            Saturdays.user.set({
+              is_freelancer: true
+            });
+            _this.render();
+            return _this.slide_to(null, 0);
+          };
+        })(this)
+      });
+    };
+
+    Login.prototype.submit_forgot_password = function(e) {
+      var token;
+      e.preventDefault();
+      token = new Saturdays.Models.Token();
+      return token.save({
+        email: e.currentTarget["email"].value
+      }, {
+        success: (function(_this) {
+          return function(model, response) {
+            return _this.$el.find("[data-success]").html("<span class='highlight'>A request was sent to your email address.</span>");
+          };
+        })(this)
       });
     };
 

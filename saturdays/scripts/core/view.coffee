@@ -29,7 +29,7 @@ class Saturdays.View extends Backbone.View
 
 		if Saturdays.user? and @model?
 			_.extend @data,
-				has_permission: Saturdays.user.get("is_admin") or Saturdays.user.id == @model.get("user_id")
+				has_permission: Saturdays.user.get("is_admin") or (@model.get("user_id")? and Saturdays.user.id == @model.get("user_id"))
 		else
 			_.extend @data,
 				has_permission: false
