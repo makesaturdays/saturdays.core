@@ -86,20 +86,12 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 
 
-	input_tag: (e)->
-		if e.keyCode == 13
-			e.preventDefault()
-			this.insert_tag(e.currentTarget)
+	add_tag: (e)->
+		this.insert_tag(e.currentTarget)
+		this.$el.find("[data-tag]").last().focus()
 
-
-	blur_tag: (e)->
-		value = e.currentTarget.value.trim()
-
-		unless value is ""
-			e.preventDefault()
-			this.insert_tag(e.currentTarget)
-
-			$(e.currentTarget).focus()
+	remove_tag: (e)->
+		$(e.currentTarget).parents(".tag").remove()
 
 
 
@@ -109,7 +101,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 		for value in values
 			do (value)=>
-				$(this.tag_template({tag: value.trim().toLowerCase()})).insertBefore $(target).parent()
+				$(this.tag_template({tag: value.trim()})).insertBefore $(target)
 		
 		target.value = ""
 

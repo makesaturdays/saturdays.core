@@ -616,7 +616,7 @@
       } : void 0, Saturdays.session != null ? {
         is_authenticated: Saturdays.session.has("user_id")
       } : void 0);
-      if ((Saturdays.user != null) && (this.model != null) && (this.model.get("user_id") != null)) {
+      if ((Saturdays.user != null) && (this.model != null)) {
         _.extend(this.data, {
           has_permission: Saturdays.user.get("is_admin") || Saturdays.user.id === this.model.get("user_id")
         });
@@ -1419,21 +1419,13 @@
       }
     };
 
-    Editable.prototype.input_tag = function(e) {
-      if (e.keyCode === 13) {
-        e.preventDefault();
-        return this.insert_tag(e.currentTarget);
-      }
+    Editable.prototype.add_tag = function(e) {
+      this.insert_tag(e.currentTarget);
+      return this.$el.find("[data-tag]").last().focus();
     };
 
-    Editable.prototype.blur_tag = function(e) {
-      var value;
-      value = e.currentTarget.value.trim();
-      if (value !== "") {
-        e.preventDefault();
-        this.insert_tag(e.currentTarget);
-        return $(e.currentTarget).focus();
-      }
+    Editable.prototype.remove_tag = function(e) {
+      return $(e.currentTarget).parents(".tag").remove();
     };
 
     Editable.prototype.insert_tag = function(target) {
@@ -1442,8 +1434,8 @@
       fn = (function(_this) {
         return function(value) {
           return $(_this.tag_template({
-            tag: value.trim().toLowerCase()
-          })).insertBefore($(target).parent());
+            tag: value.trim()
+          })).insertBefore($(target));
         };
       })(this);
       for (i = 0, len = values.length; i < len; i++) {

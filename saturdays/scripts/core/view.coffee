@@ -27,7 +27,7 @@ class Saturdays.View extends Backbone.View
 			user: Saturdays.user.toJSON() if Saturdays.user?
 			is_authenticated: Saturdays.session.has("user_id") if Saturdays.session?
 
-		if Saturdays.user? and @model? and @model.get("user_id")?
+		if Saturdays.user? and @model?
 			_.extend @data,
 				has_permission: Saturdays.user.get("is_admin") or Saturdays.user.id == @model.get("user_id")
 		else
