@@ -46,6 +46,9 @@ class Saturdays.Views.Login extends Saturdays.Views.Slider
 	submit_signup: (e)->
 		e.preventDefault()
 
+		Turbolinks.controller.adapter.progressBar.setValue(0)
+		Turbolinks.controller.adapter.progressBar.show()
+
 		tags = []
 		$(e.currentTarget).find("[data-tags] [type='checkbox']:checked").each (index, input)->
 			tags.push input.name
@@ -63,6 +66,9 @@ class Saturdays.Views.Login extends Saturdays.Views.Slider
 
 				this.render()
 				this.slide_to(null, 0)
+
+				Turbolinks.controller.adapter.progressBar.setValue(100)
+				Turbolinks.controller.adapter.progressBar.hide()
 
 
 	submit_forgot_password: (e)->

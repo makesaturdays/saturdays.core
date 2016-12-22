@@ -1499,6 +1499,8 @@
     Login.prototype.submit_signup = function(e) {
       var freelancer, tags;
       e.preventDefault();
+      Turbolinks.controller.adapter.progressBar.setValue(0);
+      Turbolinks.controller.adapter.progressBar.show();
       tags = [];
       $(e.currentTarget).find("[data-tags] [type='checkbox']:checked").each(function(index, input) {
         return tags.push(input.name);
@@ -1516,7 +1518,9 @@
               is_freelancer: true
             });
             _this.render();
-            return _this.slide_to(null, 0);
+            _this.slide_to(null, 0);
+            Turbolinks.controller.adapter.progressBar.setValue(100);
+            return Turbolinks.controller.adapter.progressBar.hide();
           };
         })(this)
       });
