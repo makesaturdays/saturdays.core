@@ -3,7 +3,7 @@
 {% from "freelancers/list.html" import list with context %}
 
 {% block main %}
-<section class="padded">
+<section class="padded" data-freelancers>
 	<h2>{{tagged.tag|tag}} <small>({{tagged.freelancers|length}} available in Montreal)</small></h2>
 
 	<div class="freelancers">{{ list(tagged.freelancers) }}</div>
