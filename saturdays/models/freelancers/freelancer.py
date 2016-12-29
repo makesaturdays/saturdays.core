@@ -195,13 +195,10 @@ with app.app_context():
 				'freelancers': cls.list({'tags': tag, 'is_online': True}, limit=limit, skip=skip)
 			})
 
-
-		# HELPERS
-
 		@classmethod
-		def _format_response(cls, response):
+		def list_view(cls):
 
-			response = super()._format_response(response)
+			response = super().list_view()
 
 			if isinstance(response, str):
 				html = BeautifulSoup(response, 'html.parser')
@@ -221,6 +218,9 @@ with app.app_context():
 
 			else:
 				return response
+
+
+		# HELPERS
 
 		@classmethod
 		def _process_query(cls, query):
