@@ -1400,19 +1400,19 @@
         });
       }
       return this.model.save({}, {
-        success: function(model, response) {
-          Turbolinks.controller.adapter.progressBar.setValue(100);
-          return Turbolinks.controller.adapter.progressBar.hide();
-        }
+        success: (function(_this) {
+          return function(model, response) {
+            Turbolinks.controller.adapter.progressBar.setValue(100);
+            return Turbolinks.controller.adapter.progressBar.hide();
+          };
+        })(this)
       });
     };
 
     Editable.prototype.destroy = function() {
       if (confirm("Are you sure?")) {
         return this.model.destroy({
-          success: function(model, response) {
-            return window.location = "/lists/" + window.list_route;
-          }
+          success: function(model, response) {}
         });
       }
     };
@@ -1436,7 +1436,7 @@
       e.preventDefault();
       e.stopImmediatePropagation();
       this.$el.find("[data-image-input]").click();
-      return this.upload_image = e.currentTarget;
+      return this.image_to_upload = e.currentTarget;
     };
 
     Editable.prototype.upload_image = function(e) {
@@ -1446,7 +1446,7 @@
         return Saturdays.helpers.upload(file, {
           success: (function(_this) {
             return function(response) {
-              $(_this.upload_image).attr("src", Saturdays.settings.cdn + response.url);
+              $(_this.image_to_upload).attr("src", Saturdays.settings.cdn + response.url);
               return _this.key_input();
             };
           })(this)

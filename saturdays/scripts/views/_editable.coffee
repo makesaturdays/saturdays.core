@@ -66,7 +66,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 			
 
 		@model.save {},
-			success: (model, response)->
+			success: (model, response)=>
 				Turbolinks.controller.adapter.progressBar.setValue(100)
 				Turbolinks.controller.adapter.progressBar.hide()
 
@@ -77,7 +77,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 			@model.destroy
 				success: (model, response)->
 
-					window.location = "/lists/" + window.list_route
+					# window.location = "/lists/" + window.list_route
 
 
 	key_input: (e)->
@@ -99,7 +99,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 		e.stopImmediatePropagation()
 
 		this.$el.find("[data-image-input]").click()
-		@upload_image = e.currentTarget
+		@image_to_upload = e.currentTarget
 
 
 	upload_image: (e)->
@@ -108,7 +108,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 			Saturdays.helpers.upload file,
 				success: (response)=>
 					
-					$(@upload_image).attr "src", Saturdays.settings.cdn+response.url
+					$(@image_to_upload).attr "src", Saturdays.settings.cdn+response.url
 					this.key_input()
 
 
