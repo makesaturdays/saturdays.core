@@ -84,11 +84,11 @@
 						<h4 class="small_bottom">{{project.contributions}}</h4>
 						<h2 class="max_width max_width--text"><a href="{{project.url}}">{{project.title}}</a></h2>
 						<p class="p--medium max_width max_width--text">{{project.description|striptags}}</p>
-						<p class=""><a href="{{project.url}}" class="a--underline">{{project.url}}</a></p>
+						<p class=""><a href="{{project.url|url}}" class="a--underline">{{project.url}}</a></p>
 					</div>
 						
 					<div class="col col--4of12 col--phone--10of12">
-						<a href="{{project.url}}"><img src="https://res.cloudinary.com/deming/image/fetch/f_auto,w_600,q_auto/{{project.image}}" alt="{{project.url}}"></a>
+						<a href="{{project.url}}"><img src="https://res.cloudinary.com/deming/image/fetch/f_auto,w_600,q_auto/{{project.image}}" alt="{{project.url|url}}"></a>
 					</div>
 
 					<div class="col"></div>
