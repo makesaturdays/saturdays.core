@@ -27,7 +27,7 @@ with app.app_context():
 		collection_name = 'freelancers'
 
 		schema = {
-			'email': validation_rules['email'],
+			'email': validation_rules['text'],
 			'route': validation_rules['text'],
 			'image': validation_rules['text'],
 			'first_name': validation_rules['text'],
