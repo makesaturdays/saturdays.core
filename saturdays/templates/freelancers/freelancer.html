@@ -1,6 +1,12 @@
 
 {% extends "freelancers/freelancers.html" %}
 
+
+{% block title %}Hire {{freelancer.first_name}} {{freelancer.last_name}} – {{ super() }}{% endblock %}
+{% block description %}{{freelancer.bio}} – {{ super() }}{% endblock %}
+{% block og_title %}Hire {{freelancer.first_name}} {{freelancer.last_name}} – {{ super() }}{% endblock %}
+{% block og_description %}{{freelancer.bio}} – {{ super() }}{% endblock %}
+
 {% block body_classes %}body--without_bottom {{ super() }}{% endblock %}
 {% block body_data %}data-freelancer-id="{{freelancer._id}}"{% endblock %}
 {% block main_classes %}{% endblock %}
