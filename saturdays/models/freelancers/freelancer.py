@@ -19,12 +19,15 @@ import hashlib
 import uuid
 import urllib
 
+from bs4 import BeautifulSoup
+
 
 
 with app.app_context():
 	class Freelancer(WithTemplates, HasRoutes, Model):
 
 		collection_name = 'freelancers'
+		collection_sort = [('updated_at', -1), ('created_at', -1)]
 
 		schema = {
 			'email': validation_rules['text'],
@@ -164,7 +167,7 @@ with app.app_context():
 			document_filter['is_online'] = True
 			documents = super().list(document_filter, projection, limit, skip, sort)
 
-			random.shuffle(documents)
+			# random.shuffle(documents)
 
 			return documents
 
@@ -194,6 +197,30 @@ with app.app_context():
 
 
 		# HELPERS
+
+		@classmethod
+		def _format_response(cls, response):
+
+			response = super()._format_response(response)
+
+			if isinstance(response, str):
+				html = BeautifulSoup(response, 'html.parser')
+
+				freelancers = html.find_all('a', 'freelancer')
+				random.shuffle(freelancers)
+
+				section = html.find('section', 'freelancers')
+				section.string = ''
+
+				for freelancer in freelancers:
+					section.append(freelancer)
+
+				print(section)
+
+				return str(html)
+
+			else:
+				return response
 
 		@classmethod
 		def _process_query(cls, query):

@@ -35,3 +35,4 @@ tornado==4.1
 markdown==2.6.5
 uuid==1.30
 mandrill==1.0.57
+beautifulsoup4==4.5.1

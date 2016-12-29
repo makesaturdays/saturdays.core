@@ -1,7 +1,7 @@
 
 {% macro list(freelancers=[], half=False) %}
 {% for freelancer in freelancers %}
-<a href="/freelancers/{{freelancer.route}}" class="padded padded--tight block radiused normal_bottom white_back">
+<a href="/freelancers/{{freelancer.route}}" class="freelancer padded padded--tight block radiused normal_bottom white_back">
 	<div class="grid grid--middle grid--guttered">
 		<div class="col col--1of12">
 			<img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_400,q_auto,w_400/{{freelancer.image}}" class="img--rounded {% if not freelancer.is_available %}img--faded{% endif %}">
