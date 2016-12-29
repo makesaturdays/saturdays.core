@@ -83,10 +83,10 @@ class Saturdays.Views.Piece extends Saturdays.View
 
 		file = e.currentTarget.files[0]
 		if file.type.match('image.*')
-			Dialogue.helpers.upload file,
+			Saturdays.helpers.upload file,
 				success: (response)=>
 					
-					this.$el.find("[data-image-key='"+@image_key+"']").attr "src", Dialogue.settings.cdn+response.url
+					this.$el.find("[data-image-key='"+@image_key+"']").attr "src", Saturdays.settings.cdn+response.url
 					this.key_input()
 
 

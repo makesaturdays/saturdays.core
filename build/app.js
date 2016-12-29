@@ -340,6 +340,8 @@
       }
       data = new FormData();
       data.append("file", file);
+      Turbolinks.controller.adapter.progressBar.setValue(0);
+      Turbolinks.controller.adapter.progressBar.show();
       return $.ajax({
         type: "POST",
         url: Saturdays.settings.api + "_upload",
@@ -351,6 +353,8 @@
           "X-Session-Secret": Saturdays.cookies.get("Session-Secret")
         },
         success: function(response) {
+          Turbolinks.controller.adapter.progressBar.setValue(100);
+          Turbolinks.controller.adapter.progressBar.hide();
           if (options.success != null) {
             return options.success(response);
           }
@@ -1428,6 +1432,28 @@
       return $(e.currentTarget).parents(".tag").remove();
     };
 
+    Editable.prototype.trigger_upload = function(e) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      this.$el.find("[data-image-input]").click();
+      return this.upload_image = e.currentTarget;
+    };
+
+    Editable.prototype.upload_image = function(e) {
+      var file;
+      file = e.currentTarget.files[0];
+      if (file.type.match('image.*')) {
+        return Saturdays.helpers.upload(file, {
+          success: (function(_this) {
+            return function(response) {
+              $(_this.upload_image).attr("src", Saturdays.settings.cdn + response.url);
+              return _this.key_input();
+            };
+          })(this)
+        });
+      }
+    };
+
     Editable.prototype.insert_tag = function(target) {
       var fn, i, len, value, values;
       values = target.value.trim().split(",");
@@ -1668,10 +1694,10 @@
       var file;
       file = e.currentTarget.files[0];
       if (file.type.match('image.*')) {
-        return Dialogue.helpers.upload(file, {
+        return Saturdays.helpers.upload(file, {
           success: (function(_this) {
             return function(response) {
-              _this.$el.find("[data-image-key='" + _this.image_key + "']").attr("src", Dialogue.settings.cdn + response.url);
+              _this.$el.find("[data-image-key='" + _this.image_key + "']").attr("src", Saturdays.settings.cdn + response.url);
               return _this.key_input();
             };
           })(this)

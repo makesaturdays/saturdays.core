@@ -9,6 +9,9 @@ Saturdays.helpers =
 		
 		data = new FormData()
 		data.append "file", file
+
+		Turbolinks.controller.adapter.progressBar.setValue(0)
+		Turbolinks.controller.adapter.progressBar.show()
 		
 		$.ajax
 			type: "POST",
@@ -21,6 +24,9 @@ Saturdays.helpers =
 				"X-Session-Secret": Saturdays.cookies.get("Session-Secret")
 			} 
 			success: (response)->
+				Turbolinks.controller.adapter.progressBar.setValue(100)
+				Turbolinks.controller.adapter.progressBar.hide()
+				
 				options.success(response) if options.success?
 
 

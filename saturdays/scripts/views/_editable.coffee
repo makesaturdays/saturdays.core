@@ -94,6 +94,24 @@ class Saturdays.Views.Editable extends Saturdays.View
 		$(e.currentTarget).parents(".tag").remove()
 
 
+	trigger_upload: (e)->
+		e.preventDefault()
+		e.stopImmediatePropagation()
+
+		this.$el.find("[data-image-input]").click()
+		@upload_image = e.currentTarget
+
+
+	upload_image: (e)->
+		file = e.currentTarget.files[0]
+		if file.type.match('image.*')
+			Saturdays.helpers.upload file,
+				success: (response)=>
+					
+					$(@upload_image).attr "src", Saturdays.settings.cdn+response.url
+					this.key_input()
+
+
 
 	# HELPERS
 	insert_tag: (target)->
