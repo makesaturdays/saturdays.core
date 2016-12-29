@@ -94,7 +94,7 @@ this["templates"]["cms/tags"] = Handlebars.template({"1":function(container,dept
     var stack1, helper, alias1=depth0 != null ? depth0 : {};
 
   return ((stack1 = helpers.each.call(alias1,(depth0 != null ? depth0.tags : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "<button class=\"button--underline\" data-add-tag>+ Add new "
+    + "\n<button class=\"button--underline\" data-add-tag>+ Add new "
     + container.escapeExpression(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "</button>\n";
 },"useData":true});
@@ -443,26 +443,26 @@ this["templates"]["freelancers/is_available"] = Handlebars.template({"1":functio
 this["templates"]["freelancers/link"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col\" data-link>\n<small class=\"contenteditable--small\" contenteditable data-link-label>"
+  return "<div class=\"col\" data-link>\n<strong>Label:</strong> <small class=\"contenteditable--small\" contenteditable data-link-label>"
     + alias4(((helper = (helper = helpers.label || (depth0 != null ? depth0.label : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"label","hash":{},"data":data}) : helper)))
-    + "</small> <button class=\"button--transparent\" data-remove-link><svg class=\"icon\"><use xlink:href=\"#icon-remove\"></use></svg></button></span><br>\n<span contenteditable data-link-url>"
+    + "</small><br>\n<strong>Url:</strong> <span contenteditable data-link-url>"
     + alias4(((helper = (helper = helpers.url || (depth0 != null ? depth0.url : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data}) : helper)))
-    + "</span>\n</div>\n";
+    + "</span>\n<button class=\"button--transparent\" data-remove-link><svg class=\"icon\"><use xlink:href=\"#icon-remove\"></use></svg></button>\n</div>\n";
 },"useData":true});
 
 this["templates"]["freelancers/links"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
-  return "<div class=\"col\" data-link>\n<small class=\"contenteditable--small\" contenteditable data-link-label>"
+  return "<div class=\"col\" data-link>\n<strong>Label:</strong> <small class=\"contenteditable--small\" contenteditable data-link-label>"
     + alias4(((helper = (helper = helpers.label || (depth0 != null ? depth0.label : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"label","hash":{},"data":data}) : helper)))
-    + "</small> <button class=\"button--transparent\" data-remove-link><svg class=\"icon\"><use xlink:href=\"#icon-remove\"></use></svg></button></span><br>\n<span contenteditable data-link-url>"
+    + "</small><br>\n<strong>Url:</strong> <span contenteditable data-link-url>"
     + alias4(((helper = (helper = helpers.url || (depth0 != null ? depth0.url : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"url","hash":{},"data":data}) : helper)))
-    + "</span>\n</div>\n";
+    + "</span>\n<button class=\"button--transparent\" data-remove-link><svg class=\"icon\"><use xlink:href=\"#icon-remove\"></use></svg></button>\n</div>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.links : depth0),{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "")
-    + "\n<button class=\"button--underline\" data-add-link>+ Add new link</button>\n";
+    + "\n<div class=\"col col--12of12\"><button class=\"button--underline\" data-add-link>+ Add new link</button></div>\n";
 },"useData":true});
 
 this["templates"]["freelancers/project"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
