@@ -1,0 +1,39 @@
+
+{% extends "freelancers/freelancers.html" %}
+{% from "freelancers/list.html" import list with context %}
+
+{% block header %}
+<nav class="nav grid grid--middle" data-navigation>
+    <div class="col col--4of12">
+        <a href="/freelancers" class="grid grid--middle">
+            <img src="/build/images/available_not_available_logo.svg" class="img--logo">
+        </a>
+    </div>
+    <div class="col col--4of12 text_center hide_on_phone">
+    	<h1 class="h1--base"><a href="/freelancers">{{pieces.freelancers.title|safe}}</a></h1>
+    </div>
+    <div class="col col--4of12 col--phone--8of12 text_right" data-user-nav>
+        <a href="/freelancers?login=true" class="hide_on_phone" data-show-login>{{pieces.freelancers.login}}</a>
+        <span class="spaced hide_on_phone"></span>
+        <a href="/freelancers?signup=true" class="button button--bordered button--blue" data-show-signup>{{pieces.freelancers.signup}}</a>
+    </div>
+</nav>
+
+<section class="padded padded--under_header white_back shadowed" data-search>
+    <div class="grid grid--center">
+        <div class="col col--8of12 col--tablet_portrait--10of12 col--phone--12of12">
+            <div class="relative">
+                <input type="search" name="search" class="input--big" placeholder="Search by name, field, skills, etc." value="{% if search %}{{search.query}}{% endif %}">
+                <svg class="icon"><use xlink:href="#icon-search"></use></svg>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block main %}
+<section class="padded" data-freelancers>
+    <div class="freelancers">{{ list(freelancers) }}</div>
+</section>
+{% endblock %}
+

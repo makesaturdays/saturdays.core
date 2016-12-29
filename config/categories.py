@@ -46,6 +46,10 @@ categories = [
 		{
 			'title': 'Animator',
 			'key': 'animator'
+		},
+		{
+			'title': 'Copywriter',
+			'key': 'copywriter'
 		}
 	]
 },
@@ -64,12 +68,26 @@ categories = [
 	]
 },
 {
+	'title': 'Administration',
+	'key': 'administration',
+	'tags': [
+		{
+			'title': 'Project Manager',
+			'key': 'project manager'
+		},
+		{
+			'title': 'Accountant',
+			'key': 'accountant'
+		}
+	]
+},
+{
 	'title': 'Misc.',
 	'key': 'misc',
 	'tags': [
 		{
-			'title': 'Accountant',
-			'key': 'accountant'
+			'title': 'Cook',
+			'key': 'cook'
 		},
 		{
 			'title': 'Legal',

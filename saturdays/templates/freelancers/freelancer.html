@@ -43,7 +43,7 @@
 	<div class="col col--11of12 grid grid--tight_guttered">
 		<div class="col col--3of12 col--tablet_landscape--5of12 col--phone--8of12">
 			<div class="relative medium_bottom">
-				<img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/{{freelancer.image}}" class="img--rounded" data-image data-image-cdn="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/">
+				<img src="https://res.cloudinary.com/deming/image/fetch/c_thumb,f_auto,g_faces,h_800,q_auto,w_800/{{freelancer.image}}" class="img--rounded" data-image data-image-cdn="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_800,q_auto,w_800/">
 
 				<input type="checkbox" id="{{freelancer._id}}_is_available" disabled {% if freelancer.is_available %}checked{% endif %} class="checkbox--dot checkbox--dot--top_right" data-dot>
 				<label for="{{freelancer._id}}_is_available" {% if freelancer.is_available %}title="Available">Available{% else %}title="Not Available">Not Available{% endif %}</label>

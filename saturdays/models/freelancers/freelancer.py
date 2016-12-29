@@ -20,6 +20,7 @@ import uuid
 import urllib
 
 from bs4 import BeautifulSoup
+from itertools import islice
 
 
 
@@ -96,6 +97,11 @@ with app.app_context():
 				'route': '/tagged/<string:tag>',
 				'view_function': 'tagged_view',
 				'methods': ['GET']
+			},
+			{
+				'route': '/all',
+				'view_function': 'all_view',
+				'methods': ['GET']
 			}
 		]
 
@@ -107,8 +113,13 @@ with app.app_context():
 			},
 			{
 				'view_function': 'tagged_view',
-				'template': 'freelancers/freelancers.html',
+				'template': 'freelancers/tagged.html',
 				'response_key': 'tagged'
+			},
+			{
+				'view_function': 'all_view',
+				'template': 'freelancers/all.html',
+				'response_key': 'freelancers'
 			},
 			{
 				'view_function': 'get_view',
@@ -190,14 +201,31 @@ with app.app_context():
 			limit = int(request.args.get('limit', 0))
 			skip = int(request.args.get('skip', 0))
 
-			return cls._format_response({
+			response = cls._format_response({
 				'tag': tag,
 				'freelancers': cls.list({'tags': tag, 'is_online': True}, limit=limit, skip=skip)
 			})
 
-		@classmethod
-		def list_view(cls):
+			if isinstance(response, str):
+				html = BeautifulSoup(response, 'html.parser')
 
+				freelancers = html.find_all('a', 'freelancer')
+				random.shuffle(freelancers)
+
+				div = html.find('div', 'freelancers')
+				div.string = ''
+
+				for freelancer in freelancers:
+					div.append(freelancer)
+
+				return str(html)
+
+			else:
+				return response
+
+
+		@classmethod
+		def list_view(cls, limit=16):
 			response = super().list_view()
 
 			if isinstance(response, str):
@@ -206,18 +234,22 @@ with app.app_context():
 				freelancers = html.find_all('a', 'freelancer')
 				random.shuffle(freelancers)
 
-				section = html.find('section', 'freelancers')
-				section.string = ''
+				div = html.find('div', 'freelancers')
+				div.string = ''
 
-				for freelancer in freelancers:
-					section.append(freelancer)
-
-				print(section)
+				for freelancer in islice(freelancers, 0, limit):
+					div.append(freelancer)
 
 				return str(html)
 
 			else:
 				return response
+
+
+		@classmethod
+		def all_view(cls):
+
+			return cls.list_view(limit=None)
 
 
 		# HELPERS

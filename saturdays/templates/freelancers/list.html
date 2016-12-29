@@ -4,7 +4,7 @@
 <a href="/freelancers/{{freelancer.route}}" class="freelancer padded padded--tight block radiused normal_bottom white_back">
 	<div class="grid grid--middle grid--guttered">
 		<div class="col col--1of12">
-			<img src="https://res.cloudinary.com/deming/image/fetch/c_crop,f_auto,g_auto:face,h_400,q_auto,w_400/{{freelancer.image}}" class="img--rounded {% if not freelancer.is_available %}img--faded{% endif %}">
+			<img src="https://res.cloudinary.com/deming/image/fetch/c_thumb,f_auto,g_faces,h_400,q_auto,w_400/{{freelancer.image}}" class="img--rounded {% if not freelancer.is_available %}img--faded{% endif %}">
 		</div>
 		<div class="col col--3of12">
 			<h4 class="{% if not freelancer.is_available %}strike{% endif %}">{{freelancer.first_name}} {{freelancer.last_name}} {{freelancer.password}}</h4>
