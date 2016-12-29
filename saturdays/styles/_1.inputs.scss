@@ -19,12 +19,15 @@ label,
 		position: relative;
 		z-index: 1;
 
-		color: $highlight;
 		font-size: $small_size;
 		text-align: left;
 
 		margin-bottom: -$vertical_rythm;
 		margin-left: $vertical_rythm/2;
+	}
+
+	.blue_highlight & {
+		color: $blue;
 	}
 }
 

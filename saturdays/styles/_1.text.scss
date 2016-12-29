@@ -169,6 +169,10 @@ a {
 	&:focus,
 	&:hover {
 		color: $highlight;
+
+		.blue_highlight & {
+			color: $blue;
+		}
 	}
 
 	&:active {
@@ -293,8 +297,20 @@ sub {
 // #COLORS
 
 .white { color: $white; }
-.highlight { color: $highlight; }
-.secondary { color: $secondary; }
+.highlight { 
+	color: $highlight;
+
+	.blue_highlight & {
+		color: $blue;
+	}
+}
+.secondary { 
+	color: $secondary;
+	
+	.blue_highlight & {
+		color: $highlight;
+	}
+}
 .red { color: $red; }
 .green { color: $green; }
 .dark_grey { color: $grey--dark; }

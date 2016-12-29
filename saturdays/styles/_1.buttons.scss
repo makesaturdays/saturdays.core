@@ -22,11 +22,19 @@ button,
 
 	@include transition(background $fast, color $fast, border-color $fast, opacity $fast);
 
+	.blue_highlight & {
+		background: $blue;
+	}
 
 	&:hover,
 	&:focus {
 		color: $white;
 		background: $secondary;
+
+		.blue_highlight & {
+			color: $white;
+			background: $highlight;
+		}
 	}
 
 	&:active {
