@@ -4,7 +4,7 @@ from flask import request, abort, json
 
 from pybars import Compiler
 import requests
-from mandrill import Mandrill
+# from mandrill import Mandrill
 
 
 @celery.task(name='execute_task')
