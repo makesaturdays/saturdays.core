@@ -30,7 +30,7 @@
 			</div>
 
 			<div class="col" data-admin>
-				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--medium {% if freelancer.is_available %}button--green{% endif %}" {% if not freelancer.is_available %}disabled{% endif %}>{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
+				<a href="{% if freelancer.is_available %}mailto:{{freelancer.email}}{% endif %}" class="button button--medium" {% if not freelancer.is_available %}disabled{% endif %}>{{pieces.freelancers.hire}} {{freelancer.first_name}}</a>
 			</div>
 		</div>
     </div>
@@ -61,7 +61,7 @@
 			<a href="https://avail.es/{{freelancer.route}}" class="pill"><svg class="icon icon--white"><use xlink:href="#icon-link"></use></svg> avail.es/{{freelancer.route}}</a>
 		</div>
 		<div class="col col--12of12">
-			<h1 class="medium_bottom max_width max_width--text"><span data-first-name>{{freelancer.first_name}}</span> <span data-last-name>{{freelancer.last_name}}</span> is <span data-is-available>{% if freelancer.is_available %}<span class="green">available</span>{% else %}<span class="red">not available</span>{% endif %}</span> for freelance work.</h1>
+			<h1 class="medium_bottom max_width max_width--text"><span data-first-name>{{freelancer.first_name}}</span> <span data-last-name>{{freelancer.last_name}}</span> is <span data-is-available>{% if freelancer.is_available %}<span class="blue">available</span>{% else %}<span class="dark_grey">not available</span>{% endif %}</span> for freelance work.</h1>
 
 
 			<h4 class="small_bottom">{{pieces.freelancers.bio}}</h4>

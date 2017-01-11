@@ -265,8 +265,8 @@ input[type="radio"] {
 
 				border: 0px;
 				border-radius: 50%;
-				background-color: $red;
-				box-shadow: 0 0 0.714rem $red;
+				background-color: $grey--dark;
+				box-shadow: 0 0 0.714rem $grey--dark;
 			}
 		}
 
@@ -275,8 +275,8 @@ input[type="radio"] {
 			& + label {
 
 				&:before {
-					background-color: $green;
-					box-shadow: 0 0 0.714rem $green;
+					background-color: $blue;
+					box-shadow: 0 0 0.714rem $blue;
 
 					opacity: 1;
 				}
@@ -345,10 +345,10 @@ input[type="radio"] {
 		&.checkbox--pill--with_red {
 
 			& + label {
-				color: $red;
+				color: $grey--dark;
 
 				&:before {
-					background-color: $red;
+					background-color: $grey--dark;
 				}
 			}
 		}
@@ -377,10 +377,10 @@ input[type="radio"] {
 			&.checkbox--pill--with_red {
 
 				& + label {
-					color: $green;
+					color: $blue;
 
 					&:before {
-						background-color: $green;
+						background-color: $blue;
 					}
 				}
 			}
