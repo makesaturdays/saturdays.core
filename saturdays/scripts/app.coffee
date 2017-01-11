@@ -28,10 +28,14 @@ window.Saturdays =
 		@header_view = new Saturdays.Views.Header()
 
 		this.render_views()
+
 		document.addEventListener "turbolinks:render", this.render_views.bind(this)
+		window.onpopstate = (e)->
+			Turbolinks.visit window.location.pathname+window.location.search, {action: "replace"}
 
 
 	render_views: ->
+
 		for view in @views
 			view.undelegateEvents()
 
@@ -99,8 +103,6 @@ window.Saturdays =
 			else
 				Saturdays.login_view.hide()
 		
-	
-
 
 Saturdays = window.Saturdays
 _ = window._

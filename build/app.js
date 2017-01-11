@@ -20,7 +20,12 @@
       this.cart_view = new Saturdays.Views.Cart();
       this.header_view = new Saturdays.Views.Header();
       this.render_views();
-      return document.addEventListener("turbolinks:render", this.render_views.bind(this));
+      document.addEventListener("turbolinks:render", this.render_views.bind(this));
+      return window.onpopstate = function(e) {
+        return Turbolinks.visit(window.location.pathname + window.location.search, {
+          action: "replace"
+        });
+      };
     },
     render_views: function() {
       var i, len, ref, today, view;
