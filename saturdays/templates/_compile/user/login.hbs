@@ -20,7 +20,7 @@
 
 				{{#if user.is_freelancer}}
 				<h2 class="h2--huge">Success!</h2>
-				<p class="p--tight medium_bottom">Thanks {{user.first_name}}, we'll get back to you within 48 hours.</p>
+				<p class="p--tight medium_bottom">Thanks {{user.first_name}}, we'll get back to you.</p>
 				{{else}}
 				<h2 class="h2--huge medium_bottom">Log in <a href="#" class="dark_grey" data-slide-marker=1>or Join</a></h2>
 
@@ -42,14 +42,14 @@
 			<div class="text_center" data-slide-content>
 				<h2 class="h2--huge"><a href="#" class="dark_grey" data-slide-marker=0>Log in</a> or Join</h2>
 
-				<p class="p--tight normal_bottom">Fill out this form to apply for a spot on Available Not Available and we'll get back to you within 48 hours.</p>
+				<p class="p--tight normal_bottom">Fill out this form to apply for a spot on Available Not Available and we'll get back to you.</p>
 
 				<div class="text_left normal_bottom" data-tags>
-					<label for="tags">Your are a?</label>
+					<label for="tags">Choose your fields:</label>
 					
 					<div class="grid">
 					{{#each categories}}
-						<div class="col col--6of12">
+						<div class="col col--6of12 small_bottom">
 							<strong class="small">{{title}}</strong><br>
 							{{#each tags}}
 							<input type="checkbox" class="checkbox--pill" name="{{key}}" id="{{key}}">
@@ -60,7 +60,7 @@
 
 						<div class="col col--6of12 col--small--12of12">
 							<br>
-							<p class="p--tight small">If yours missing from the list, <a href="mailto:makesaturdays@gmail.com" class="a--underline">let us know</a>.</p>
+							<p class="p--tight small">If your field is missing from the list, <a href="mailto:makesaturdays@gmail.com" class="a--underline">let us know</a>.</p>
 						</div>
 					</div>
 				</div>

@@ -72,6 +72,10 @@ categories = [
 	'key': 'administration',
 	'tags': [
 		{
+			'title': 'Marketer',
+			'key': 'marketer'
+		},
+		{
 			'title': 'Project Manager',
 			'key': 'project manager'
 		},
