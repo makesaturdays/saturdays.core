@@ -1,6 +1,7 @@
 
 {% macro list(freelancers=[], half=False) %}
 {% for freelancer in freelancers %}
+{% if freelancer.is_online %}
 <a href="/freelancers/{{freelancer.route}}" class="freelancer {% if not freelancer.is_available %}freelancer--notavailable{% endif %} padded padded--tight block radiused normal_bottom white_back">
 	<div class="grid grid--middle grid--guttered">
 		<div class="col col--1of12">
@@ -24,5 +25,6 @@
 		</div>
 	</div>
 </a>
+{% endif %}
 {% endfor %}
 {% endmacro %}
