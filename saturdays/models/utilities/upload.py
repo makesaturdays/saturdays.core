@@ -22,7 +22,7 @@ with app.app_context():
 				'route': '',
 				'view_function': 'upload_view',
 				'methods': ['POST'],
-				'requires_vendor': True
+				'requires_user': True
 			}
 		]
 
