@@ -147,6 +147,13 @@ with app.app_context():
 				has_generated_password = False
 
 
+			if 'is_admin' not in document:
+				document['is_admin'] = False
+
+			if 'is_vendor' not in document:
+				document['is_vendor'] = False
+
+
 			trigger_tasks.apply_async(('user_created', {
 				'user': document,
 				'has_generated_password': has_generated_password
