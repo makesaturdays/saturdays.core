@@ -39,6 +39,13 @@ header {
 	left: 0;
 	width: 100%;
 	z-index: 1;
+
+	pointer-events: none;
+
+	a,
+	[contenteditable] {
+		pointer-events: auto;
+	}
 }
 
 	.nav__rotated {
