@@ -88,7 +88,7 @@ class Saturdays.Views.Editable extends Saturdays.View
 
 	add_tag: (e)->
 		this.insert_tag(e.currentTarget)
-		this.$el.find("[data-tag]").last().focus()
+		$(e.currentTarget).parents("[data-tags]").find("[data-tag]").last().focus()
 
 	remove_tag: (e)->
 		$(e.currentTarget).parents(".tag").remove()

@@ -1430,7 +1430,7 @@
 
     Editable.prototype.add_tag = function(e) {
       this.insert_tag(e.currentTarget);
-      return this.$el.find("[data-tag]").last().focus();
+      return $(e.currentTarget).parents("[data-tags]").find("[data-tag]").last().focus();
     };
 
     Editable.prototype.remove_tag = function(e) {
