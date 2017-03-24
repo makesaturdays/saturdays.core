@@ -43,7 +43,8 @@ header {
 	pointer-events: none;
 
 	a,
-	[contenteditable] {
+	[contenteditable],
+	button {
 		pointer-events: auto;
 	}
 }
