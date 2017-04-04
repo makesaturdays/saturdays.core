@@ -2,8 +2,8 @@ from saturdays import app
 from saturdays.helpers.json import to_json, json_formater
 from saturdays.helpers.raise_error import raise_error
 
-from saturdays.models.cms.piece import Piece
-from saturdays.models.ecom.product import Product
+from saturdays.models.content.piece import Piece
+from saturdays.models.commerce.product import Product
 
 from flask import request, abort
 from flask import render_template, json

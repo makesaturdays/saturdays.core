@@ -122,7 +122,7 @@ with app.app_context():
 		def postprocess(cls, document):
 
 			try:
-				from saturdays.models.ecom.product_option import ProductOption
+				from saturdays.models.commerce.product_option import ProductOption
 				
 				for option in document['options']:
 					if 'discount' in document:
@@ -158,7 +158,7 @@ with app.app_context():
 		@classmethod
 		def _update_discount(cls, document):
 			try:
-				from saturdays.models.ecom.discount import Discount
+				from saturdays.models.commerce.discount import Discount
 				discounts = Discount.list({'is_online': True})
 
 				for tag in document['tags']:

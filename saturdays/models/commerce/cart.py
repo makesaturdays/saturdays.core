@@ -7,9 +7,9 @@ from saturdays.models.core.has_routes import HasRoutes
 
 from saturdays.helpers.validation_rules import validation_rules
 
-from saturdays.models.ecom.taxe_rule import TaxeRule
-from saturdays.models.ecom.shipping_option import ShippingOption
-from saturdays.models.ecom.promotion import Promotion
+from saturdays.models.commerce.taxe_rule import TaxeRule
+from saturdays.models.commerce.shipping_option import ShippingOption
+from saturdays.models.commerce.promotion import Promotion
 
 
 from bson.objectid import ObjectId
@@ -100,7 +100,7 @@ with app.app_context():
 
 
 			try:
-				from saturdays.models.ecom.credit_card import CreditCard
+				from saturdays.models.commerce.credit_card import CreditCard
 				
 				stripe.api_key = app.config['STRIPE_API_KEY']
 				document['credit_card']['provider_data'] = stripe.Token.retrieve(document['credit_card']['card_token'])['card']
@@ -135,7 +135,7 @@ with app.app_context():
 
 		@classmethod
 		def postprocess(cls, document):
-			from saturdays.models.ecom.cart_item import CartItem
+			from saturdays.models.commerce.cart_item import CartItem
 
 			document['sub_total'] = 0
 			document['taxes_total'] = 0

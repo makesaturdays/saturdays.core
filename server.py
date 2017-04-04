@@ -28,15 +28,15 @@ Session.define_routes()
 User.define_routes()
 
 
-from saturdays.models.cms.piece import Piece
-from saturdays.models.cms.author import Author
-from saturdays.models.cms.list import List
-from saturdays.models.cms.list_post import ListPost
-from saturdays.models.cms.comment import ListPostComment
-from saturdays.models.cms.error import Error
-from saturdays.models.cms.survey import Survey
-from saturdays.models.cms.survey_answer import SurveyAnswer
-from saturdays.models.cms.comment import SurveyComment
+from saturdays.models.content.piece import Piece
+from saturdays.models.content.author import Author
+from saturdays.models.content.list import List
+from saturdays.models.content.list_post import ListPost
+from saturdays.models.content.comment import ListPostComment
+from saturdays.models.content.error import Error
+from saturdays.models.content.survey import Survey
+from saturdays.models.content.survey_answer import SurveyAnswer
+from saturdays.models.content.comment import SurveyComment
 
 Piece.define_routes()
 Author.define_routes()
@@ -49,26 +49,26 @@ SurveyAnswer.define_routes()
 SurveyComment.define_routes()
 
 
-from saturdays.models.ecom.product import Product
-from saturdays.models.ecom.product_option import ProductOption
-from saturdays.models.cms.comment import ProductComment
-from saturdays.models.ecom.discount import Discount
-from saturdays.models.ecom.order import Order
-from saturdays.models.ecom.cart import Cart
-from saturdays.models.ecom.cart_item import CartItem
-from saturdays.models.ecom.cart_item import UserCartItem
-from saturdays.models.ecom.promotion import Promotion
-from saturdays.models.ecom.address import Address
-from saturdays.models.ecom.credit_card import CreditCard
-from saturdays.models.ecom.credit_update import CreditUpdate
-# from saturdays.models.ecom.plan import Plan
-# from saturdays.models.cms.comment import PlanComment
-# from saturdays.models.ecom.subscription import Subscription
-# from saturdays.models.ecom.cart_item import SubscriptionItem
-from saturdays.models.ecom.vendor_shop import VendorShop
-from saturdays.models.cms.comment import VendorShopComment
-from saturdays.models.ecom.taxe_rule import TaxeRule
-from saturdays.models.ecom.shipping_option import ShippingOption
+from saturdays.models.commerce.product import Product
+from saturdays.models.commerce.product_option import ProductOption
+from saturdays.models.content.comment import ProductComment
+from saturdays.models.commerce.discount import Discount
+from saturdays.models.commerce.order import Order
+from saturdays.models.commerce.cart import Cart
+from saturdays.models.commerce.cart_item import CartItem
+from saturdays.models.commerce.cart_item import UserCartItem
+from saturdays.models.commerce.promotion import Promotion
+from saturdays.models.commerce.address import Address
+from saturdays.models.commerce.credit_card import CreditCard
+from saturdays.models.commerce.credit_update import CreditUpdate
+# from saturdays.models.commerce.plan import Plan
+# from saturdays.models.content.comment import PlanComment
+# from saturdays.models.commerce.subscription import Subscription
+# from saturdays.models.commerce.cart_item import SubscriptionItem
+from saturdays.models.commerce.vendor_shop import VendorShop
+from saturdays.models.content.comment import VendorShopComment
+from saturdays.models.commerce.taxe_rule import TaxeRule
+from saturdays.models.commerce.shipping_option import ShippingOption
 
 Product.define_routes()
 ProductOption.define_routes()
@@ -127,7 +127,7 @@ def available_short_route(route):
 
 if __name__ == '__main__':
 	if app.config['DEBUG']:
-		app.run(threaded=True)
+		app.run(threaded=True, port=8080)
 
 	else:
 		http_server = HTTPServer(WSGIContainer(app))

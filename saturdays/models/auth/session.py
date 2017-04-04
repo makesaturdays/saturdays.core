@@ -7,7 +7,7 @@ from saturdays.models.core.has_routes import HasRoutes
 
 from saturdays.models.auth.token import Token
 from saturdays.models.auth.user import User
-from saturdays.models.ecom.cart import Cart
+from saturdays.models.commerce.cart import Cart
 
 from saturdays.helpers.validation_rules import validation_rules
 from saturdays.helpers.raise_error import raise_error

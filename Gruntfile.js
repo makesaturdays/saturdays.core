@@ -6,7 +6,7 @@ module.exports = function(grunt) {
 
     bgShell: {
       install: {
-        cmd: 'pyvenv-3.5 '+ __dirname +'/environment && source '+ __dirname +'/environment/bin/activate && pip install -r requirements.txt',
+        cmd: 'python3.6 -m venv '+ __dirname +'/environment && source '+ __dirname +'/environment/bin/activate && pip install -r requirements.txt',
         bg: false,
         stdout: false
       },
@@ -16,34 +16,6 @@ module.exports = function(grunt) {
         stdout: false
       }
     },
-
-
-    handlebars: {
-      compile: {
-        options: {
-          namespace: "templates",
-          processContent: function(content, filepath) {
-            content = content.replace(/^[\x20\t]+/mg, '').replace(/[\x20\t]+$/mg, '');
-            content = content.replace(/^[\r\n]+/, '').replace(/[\r\n]*$/, '\n');
-            return content;
-          },
-          processName: function(filePath) {
-            var name = "";
-            filePath = filePath.split(".");
-            filePath = filePath[0].split("/");
-            name += filePath[3];
-            for (var i = 4; i < filePath.length; i++) {
-                name += "/" + filePath[i];
-            };
-            return name;
-          }
-        },
-        files: {
-          "build/templates.js": ["saturdays/templates/_compile/**/*.hbs"]
-        }
-      }
-    },
-
 
 
     sass: {
@@ -57,24 +29,9 @@ module.exports = function(grunt) {
       }
     },
 
-    
-    coffee: {
-      compile: {
-        files: {
-          'build/app.js': [
-            'saturdays/scripts/app.coffee',
-            'saturdays/scripts/core/**/*.coffee',
-            'saturdays/scripts/models/**/*.coffee',
-            'saturdays/scripts/collections/**/*.coffee',
-            'saturdays/scripts/views/**/*.coffee',
-            'saturdays/scripts/routers/router.coffee']
-        }
-      }
-    },
-
     open: {
       start: {
-        path: 'http://localhost:5000',
+        path: 'http://localhost:8080',
         app: 'Google Chrome'
       }
     },
@@ -89,10 +46,6 @@ module.exports = function(grunt) {
       html: {
         files: ['saturdays/templates/**/*.html']
       },
-      handlebars: {
-        files: ['saturdays/templates/_compile/**/*.hbs'],
-        tasks: ['handlebars']
-      },
       sass: {
         options: {
           livereload: false
@@ -102,10 +55,6 @@ module.exports = function(grunt) {
       },
       css: {
         files: 'build/all.css'
-      },
-      coffee: {
-        files: ['saturdays/scripts/**/*.coffee'],
-        tasks: ['coffee']
       }
     }
 
@@ -114,15 +63,13 @@ module.exports = function(grunt) {
 
 
   grunt.loadNpmTasks('grunt-bg-shell');
-  grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-open');
 
   grunt.registerTask('install', ['bgShell:install']);
   grunt.registerTask('start', ['bgShell:server']);
-  grunt.registerTask('compilers', ['handlebars', 'sass', 'coffee', 'open', 'watch']);
+  grunt.registerTask('compilers', ['open', 'watch']);
   grunt.registerTask('default', ['compilers']);
 
 };

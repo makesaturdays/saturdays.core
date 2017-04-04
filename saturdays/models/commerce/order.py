@@ -8,13 +8,13 @@ from saturdays.helpers.validation_rules import validation_rules
 from saturdays.tasks.trigger import trigger_tasks
 
 from saturdays.models.auth.user import User
-from saturdays.models.ecom.credit_card import CreditCard
-from saturdays.models.ecom.cart import Cart
-from saturdays.models.ecom.cart_item import UserCartItem
-from saturdays.models.ecom.product import Product
-from saturdays.models.ecom.product_option import ProductOption
-from saturdays.models.ecom.vendor_shop import VendorShop
-from saturdays.models.ecom.credit_update import CreditUpdate
+from saturdays.models.commerce.credit_card import CreditCard
+from saturdays.models.commerce.cart import Cart
+from saturdays.models.commerce.cart_item import UserCartItem
+from saturdays.models.commerce.product import Product
+from saturdays.models.commerce.product_option import ProductOption
+from saturdays.models.commerce.vendor_shop import VendorShop
+from saturdays.models.commerce.credit_update import CreditUpdate
 
 from bson.objectid import ObjectId
 

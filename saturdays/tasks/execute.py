@@ -24,21 +24,21 @@ def execute_task(task, data={}):
 
 	try:
 		if task['needs_products']:
-			from saturdays.models.ecom.product import Product
+			from saturdays.models.commerce.product import Product
 			data['products'] = Product.list()
 	except KeyError:
 		pass
 
 	try:
 		if task['needs_orders']:
-			from saturdays.models.ecom.order import Order
+			from saturdays.models.commerce.order import Order
 			data['orders'] = Order.list()
 	except KeyError:
 		pass
 
 	try:
 		if task['needs_subscriptions']:
-			from saturdays.models.ecom.subscription import Subscription
+			from saturdays.models.commerce.subscription import Subscription
 			data['subscriptions'] = Subscription.list()
 	except KeyError:
 		pass

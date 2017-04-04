@@ -8,7 +8,7 @@ from saturdays.models.core.has_routes import HasRoutes
 from saturdays.helpers.validation_rules import validation_rules
 from saturdays.helpers.json import to_json
 
-from saturdays.models.cms.author import Author
+from saturdays.models.content.author import Author
 
 from bson.objectid import ObjectId
 import markdown

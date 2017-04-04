@@ -1,8 +1,8 @@
 
 from saturdays import app
 from saturdays.helpers.json import to_json, json_formater
-from saturdays.models.cms.piece import Piece
-from saturdays.models.ecom.product import Product
+from saturdays.models.content.piece import Piece
+from saturdays.models.commerce.product import Product
 
 from config.categories import categories
 

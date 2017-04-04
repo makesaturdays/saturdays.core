@@ -1,18 +1,26 @@
 {
   "name": "makesaturdays",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "",
   "devDependencies": {
-    "grunt": "^0.4.5",
-    "grunt-bg-shell": "^2.3.1",
-    "grunt-contrib-coffee": "^0.13.0",
-    "grunt-contrib-handlebars": "^0.11.0",
-    "grunt-contrib-watch": "^0.6.1",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "grunt": "^1.0.1",
+    "grunt-bg-shell": "^2.3.3",
+    "grunt-contrib-watch": "^1.0.0",
     "grunt-open": "^0.2.3",
-    "grunt-sass": "^1.0.0"
+    "grunt-sass": "^2.0.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "react-hot-loader": "^1.3.1",
+    "webpack": "^2.3.3",
+    "webpack-dev-server": "^2.4.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "grunt"
   },
   "repository": {
     "type": "git",

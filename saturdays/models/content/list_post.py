@@ -8,8 +8,8 @@ from saturdays.models.core.with_templates import WithTemplates
 
 from saturdays.helpers.validation_rules import validation_rules
 
-from saturdays.models.cms.list import List
-from saturdays.models.cms.author import Author
+from saturdays.models.content.list import List
+from saturdays.models.content.author import Author
 
 from bson.objectid import ObjectId
 from datetime import datetime

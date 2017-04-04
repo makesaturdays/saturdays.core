@@ -10,10 +10,10 @@ from saturdays.helpers.validation_rules import validation_rules
 
 
 from saturdays.models.auth.user import User
-from saturdays.models.ecom.cart import Cart
-from saturdays.models.ecom.product import Product
-from saturdays.models.ecom.vendor_shop import VendorShop
-from saturdays.models.ecom.subscription import Subscription
+from saturdays.models.commerce.cart import Cart
+from saturdays.models.commerce.product import Product
+from saturdays.models.commerce.vendor_shop import VendorShop
+from saturdays.models.commerce.subscription import Subscription
 
 
 with app.app_context():

@@ -60,8 +60,8 @@ with app.app_context():
 									pass
 
 
-								from saturdays.models.cms.piece import Piece
-								from saturdays.models.ecom.product import Product
+								from saturdays.models.content.piece import Piece
+								from saturdays.models.commerce.product import Product
 
 								response = {
 									template['response_key']: response.copy(),

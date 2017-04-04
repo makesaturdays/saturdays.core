@@ -4,11 +4,11 @@ from flask import request, abort
 from saturdays.models.core.child_model import ChildModel
 from saturdays.models.core.has_child_routes import HasChildRoutes
 
-from saturdays.models.cms.list_post import ListPost
-from saturdays.models.cms.survey import Survey
-from saturdays.models.ecom.product import Product
-from saturdays.models.ecom.plan import Plan
-from saturdays.models.ecom.vendor_shop import VendorShop
+from saturdays.models.content.list_post import ListPost
+from saturdays.models.content.survey import Survey
+from saturdays.models.commerce.product import Product
+from saturdays.models.commerce.plan import Plan
+from saturdays.models.commerce.vendor_shop import VendorShop
 
 from saturdays.helpers.validation_rules import validation_rules
 

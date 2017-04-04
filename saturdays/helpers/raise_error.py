@@ -2,7 +2,7 @@ from flask import request, abort
 from saturdays import app
 from saturdays.helpers.json import to_json, json_formater
 
-from saturdays.models.cms.error import Error
+from saturdays.models.content.error import Error
 
 
 def raise_error(category, key, code=500, fields=None, no_abort=False):

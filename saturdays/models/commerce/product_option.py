@@ -6,7 +6,7 @@ from saturdays.models.core.has_child_routes import HasChildRoutes
 
 from saturdays.helpers.validation_rules import validation_rules
 
-from saturdays.models.ecom.product import Product
+from saturdays.models.commerce.product import Product
 
 
 

@@ -4,7 +4,7 @@ from flask import request, abort
 from saturdays.models.core.child_model import ChildModel
 from saturdays.models.core.has_child_routes import HasChildRoutes
 
-from saturdays.models.cms.survey import Survey
+from saturdays.models.content.survey import Survey
 
 from saturdays.helpers.validation_rules import validation_rules
 
