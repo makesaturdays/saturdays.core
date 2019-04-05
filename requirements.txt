@@ -22,7 +22,8 @@ Markdown==2.6.8
 MarkupSafe==1.0
 pybars3==0.9.3
 pycrypto==2.6.1
-pymongo==3.4.0
+pymongo==3.7.2
+dnspython==1.16.0
 python-dateutil==2.6.0
 pytz==2017.2
 redis==2.10.5
